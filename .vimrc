@@ -73,10 +73,6 @@ autocmd VimEnter * wincmd p
 " Force setting for *.md files. More info: https://github.com/tpope/vim-markdown
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
-" fix for quicker changes for gitgutter module
-let g:gitgutter_realtime = 0
-let g:gitgutter_eager = 0
-
 " Poprawienie wyświetlania GitGutter w vim dla czarnych motywów
 autocmd ColorScheme *  highlight clear SignColumn | highlight GitGutterAdd ctermfg=green | highlight GitGutterChange ctermfg=yellow | highlight GitGutterDelete ctermfg=red | highlight GitGutterChangeDelete ctermfg=yellow
 
