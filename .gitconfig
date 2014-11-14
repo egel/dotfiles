@@ -1,45 +1,45 @@
 [include]
-	# For user, email, ect.
-	path = ~/.gitconfig.local
+  # For user, email, ect.
+  path = ~/.gitconfig.local
 
 [core]
-	editor = vim
+  editor = vim
 
 [merge]
-	tool = meld
+  tool = meld
 
 [alias]
-	st = status
+  st = status
 
-	cl = clone
-	ls = ls-tree --full-tree -r HEAD
+  cl = clone
+  ls = ls-tree --full-tree -r HEAD
 
-	ci = commit
-	cm = commit -m
-	cma = commit -a -m
-	ca = commit --amend
-	amend = commit --amend
+  ci = commit
+  cm = commit -m
+  cma = commit -a -m
+  ca = commit --amend
+  amend = commit --amend
 
-	pf = push --force
+  pf = push --force
 
-	co = checkout
-	br = branch
+  co = checkout
+  br = branch
 
-	diffword = diff --word-diff
-	dw = diff --word-diff
-	diff = diff
-	d = diff
-	dc = diff --cached
-	dcw = diff --cached --word-diff
+  diffword = diff --word-diff
+  dw = diff --word-diff
+  diff = diff
+  d = diff
+  dc = diff --cached
+  dcw = diff --cached --word-diff
 
-	# list commands
-	last = log -1 HEAD
+  # list commands
+  last = log -1 HEAD
 
-	lg = log --graph --all --format=format:'%C(bold red)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold cyan) %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
+  lg = log --graph --all --format=format:'%C(bold red)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold cyan) %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
 
 [color]
-	ui = auto
+  ui = auto
 
 [push]
-	default = simple
+  default = simple
 
