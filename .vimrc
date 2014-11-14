@@ -66,9 +66,12 @@ endif
 map <F5> :setlocal spell! spelllang=en_us<cr>
 imap <F5> <ESC>:setlocal spell! spelllang=en_us<cr>
 
-" Open NERDtree on startup and moved cursor to main window
-autocmd VimEnter * NERDTree
-autocmd VimEnter * wincmd p
+" open a NERDTree automatically when vim starts up and move cursor to main window
+autocmd vimenter * NERDTree
+autocmd vimenter * wincmd p
+
+" close vim if the only window left open is a NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " Force setting for *.md files. More info: https://github.com/tpope/vim-markdown
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
