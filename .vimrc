@@ -27,7 +27,7 @@ set number                        " Display line numbers on the left
 set ruler                         " show row and column in footer
 set scrolloff=2                   " minimum lines above/below cursor
 set laststatus=2                  " always show status bar
-set clipboard=unnamed             " use the system clipboard
+set clipboard=unnamedplus         " use the system clipboard
 set ttimeoutlen=100               " decrease timeout for faster insert with 'O'
 set list listchars=tab:»·,trail:· " show extra space characters
 set noswapfile                    " Set no swap files like *.swp
