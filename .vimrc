@@ -77,7 +77,11 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
 " Poprawienie wyświetlania GitGutter w vim dla czarnych motywów
-autocmd ColorScheme *  highlight clear SignColumn | highlight GitGutterAdd ctermfg=green | highlight GitGutterChange ctermfg=yellow | highlight GitGutterDelete ctermfg=red | highlight GitGutterChangeDelete ctermfg=yellow
+highlight clear SignColumn
+highlight GitGutterAdd ctermfg=green guifg=darkgreen
+highlight GitGutterChange ctermfg=yellow guifg=darkyellow
+highlight GitGutterDelete ctermfg=red guifg=darkred
+highlight GitGutterChangeDelete ctermfg=yellow guifg=darkyellow
 
 " <F5> key save the file
 :map <F5> :w<CR>
