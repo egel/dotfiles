@@ -36,7 +36,11 @@ set backspace=indent,eol,start    " Allow backspacing over autoindent, line brea
 
 " set theme
 set background=dark               " Set colors of vim to more convinient for black backgound
-colorscheme twilight256
+if has('gui_running')
+  colorscheme twilight
+else
+  colorscheme twilight256
+endif
 
 " highlight trailing spaces in annoying red
 highlight ExtraWhitespace ctermbg=1 guibg=red
