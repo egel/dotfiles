@@ -1,3 +1,0 @@
-" .gvimrc
-
-colorscheme twilight
