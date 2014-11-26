@@ -80,6 +80,9 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 " Force setting for *.md files. More info: https://github.com/tpope/vim-markdown
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
+" Force setting for *.jade files. More info: http://stackoverflow.com/a/6118265/1977012
+autocmd BufRead,BufNewFile *.jade setlocal ft=jade
+
 " Poprawienie wyświetlania GitGutter w vim dla czarnych motywów
 highlight clear SignColumn
 highlight GitGutterAdd ctermfg=green guifg=darkgreen
