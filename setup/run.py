@@ -15,7 +15,7 @@ tmux_conf = home_dir + "/.tmux.conf"
 print(Colors.HEADER + "=== Vim setup ===" + Colors.ENDC)
 # updating .vimrc
 if os.path.isfile(vimrc):
-    print(".vimrc config file exist.")
+    print(".vimrc config file exist")
 
     if os.path.islink(vimrc):
         # file is symlink
@@ -31,9 +31,15 @@ print("Creating symlink for .vimrc file ... ", end="")
 os.symlink(home_dir + "/dot-files/.vimrc", vimrc)
 print(Colors.OKGREEN + "DONE" + Colors.ENDC)
 
+
 # updating .vim directory
 if os.path.isdir(vim_dir):
-    print(".vim directory exist.")
+    print(".vim directory exist")
+
+    if os.path.islink(vim_dir):
+        print(".vim is a symlink")
+    else:
+        print(".vim is simple directory")
 
     print("Making save copy of .vim directory ... ", end="")
     os.rename(vim_dir, home_dir + "/.vim(" + time.strftime("%c") + ")")
@@ -42,7 +48,6 @@ if os.path.isdir(vim_dir):
 print("Creating symlink for .vim directory ... ", end="")
 os.symlink(home_dir + "/dot-files/.vim", vim_dir)
 print(Colors.OKGREEN + "DONE" + Colors.ENDC)
-
 
 
 # tmux setup
