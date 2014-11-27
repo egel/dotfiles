@@ -1,5 +1,5 @@
 # Dot-files
-Dot-files for Ubuntu 14.04
+Dot-files for Ubuntu 14.04 LTS
 
 Contains:
 
@@ -17,12 +17,22 @@ Contains:
   - bash aliases
 
 
-## Installation
+## Installation repository
 
     $ cd ~/ && git clone --recursive git@github.com:egel/dot-files.git &&
       ./dot-files/setup/run.py
 
-## Update
+If you need [instant markdown preview](https://github.com/suan/vim-instant-markdown), you can install few additional libraries:
+
+    $ sudo apt-get install ruby1.9.3 xdg-utils python-software-properties
+    $ sudo apt-add-repository ppa:chris-lea/node.js && sudo apt-get update &&
+      sudo apt-get install nodejs
+    $ sudo gem install redcarpet pygments.rb &&
+      sudo npm -g install instant-markdown-d
+      sudo chown -R `whoami` ~/.npm
+
+
+## Update repository
 
     $ cd ~/dot-files/ && git submodule update --init --recursive
 
