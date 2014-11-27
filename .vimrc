@@ -72,10 +72,6 @@ else
   au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
 
-" toggle spell check with <F5>
-map <F5> :setlocal spell! spelllang=en_us<cr>
-imap <F5> <ESC>:setlocal spell! spelllang=en_us<cr>
-
 " open a NERDTree automatically when vim starts up and move cursor to main window
 autocmd vimenter * NERDTree
 autocmd vimenter * wincmd p
@@ -99,12 +95,21 @@ highlight GitGutterChangeDelete ctermfg=yellow guifg=darkyellow
 " <F3> key to hide current higlight for searched tems
 :map <F3> :noh<CR>
 
+" toggle spell check with <F4>
+map <F4> :setlocal spell! spelllang=en_us<CR>
+imap <F4> <ESC>:setlocal spell! spelllang=en_us<CR>
+
 " <F5> key save the file
 :map <F5> :w<CR>
 
 " <F6> key save and exit the file
 :map <F6> :wq<CR>
 
+" go to next tab
+:map <F7> :tabn<CR>
+
+" go to previous tab
+:map <F8> :tabp<CR>
 
 " Key binding
 noremap <c-s-up> :call feedkeys( line('.')==1 ? '' : 'ddkP' )<CR>
