@@ -30,7 +30,7 @@ If you use [vim-instant-markdown](https://github.com/suan/vim-instant-markdown),
     $ sudo apt-add-repository ppa:chris-lea/node.js && sudo apt-get update &&
       sudo apt-get install nodejs
     $ sudo gem install redcarpet pygments.rb &&
-      sudo npm -g install instant-markdown-d
+      sudo npm -g install instant-markdown-d &&
       sudo chown -R `whoami` ~/.npm
 
 
