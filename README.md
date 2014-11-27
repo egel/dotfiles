@@ -3,13 +3,15 @@ Dot-files for Ubuntu 14.04
 
 Contains:
 
-  - [`Git`]()
+  - **Git**
     - configuration
     - useful aliases
-  - [`Vim`]()
+  - **Vim**
     - configuration
     - general most useful modules)
-  - [`conky`]()
+  - **tmux**
+    - configuration
+  - **conky**
     - configuration
     - themes
   - bash aliases
@@ -17,7 +19,8 @@ Contains:
 
 ## Installation
 
-    $ cd ~/ && git clone --recursive git@github.com:egel/dot-files.git
+    $ cd ~/ && git clone --recursive git@github.com:egel/dot-files.git &&
+      ./dot-files/setup/run.py
 
 ## Update
 
