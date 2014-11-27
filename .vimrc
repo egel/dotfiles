@@ -7,7 +7,7 @@ call pathogen#infect()
 call pathogen#helptags()
 
 syntax on                         " enable syntax highlighting
-filetype plugin indent on
+filetype plugin indent on         " detect the type of file that is edited
 set autoindent                    " set auto indent
 set tabstop=2                     " set indent to 2 spaces
 set shiftwidth=2
@@ -30,7 +30,7 @@ set laststatus=2                  " always show status bar
 set clipboard=unnamedplus         " use the system clipboard
 set ttimeoutlen=100               " decrease timeout for faster insert with 'O'
 set list listchars=tab:»·,trail:· " show extra space characters
-set noswapfile                    " Set no swap files like *.swp
+"set noswapfile                    " Set no swap files like *.swp
 set confirm                       " raise a dialogue asking if you wish to save changed files.
 set backspace=indent,eol,start    " Allow backspacing over autoindent, line breaks and start of insert action
 
@@ -90,11 +90,15 @@ highlight GitGutterChange ctermfg=yellow guifg=darkyellow
 highlight GitGutterDelete ctermfg=red guifg=darkred
 highlight GitGutterChangeDelete ctermfg=yellow guifg=darkyellow
 
+" <F3> key to hide current higlight for searched tems
+:map <F3> :noh<CR>
+
 " <F5> key save the file
 :map <F5> :w<CR>
 
 " <F6> key save and exit the file
 :map <F6> :wq<CR>
+
 
 " Key binding
 noremap <c-s-up> :call feedkeys( line('.')==1 ? '' : 'ddkP' )<CR>
