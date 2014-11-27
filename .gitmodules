@@ -61,3 +61,6 @@
 [submodule ".vim/bundle/vim-instant-markdown"]
 	path = .vim/bundle/vim-instant-markdown
 	url = git@github.com:suan/vim-instant-markdown.git
+[submodule ".vim/bundle/tmuxline.vim"]
+	path = .vim/bundle/tmuxline.vim
+	url = git@github.com:edkolev/tmuxline.vim.git
