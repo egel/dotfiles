@@ -19,10 +19,12 @@ Contains:
 
 ## Installation repository
 
+Instalator won't remove any your previous configuration. It'll save all previous by simply renaming it into its directory.
+
     $ cd ~/ && git clone --recursive git@github.com:egel/dot-files.git &&
       ./dot-files/setup/run.py
 
-If you need [instant markdown preview](https://github.com/suan/vim-instant-markdown), you can install few additional libraries:
+If you use [vim-instant-markdown](https://github.com/suan/vim-instant-markdown), you might want to install few additional libraries:
 
     $ sudo apt-get install ruby1.9.3 xdg-utils python-software-properties
     $ sudo apt-add-repository ppa:chris-lea/node.js && sudo apt-get update &&
