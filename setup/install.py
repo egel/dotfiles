@@ -7,11 +7,13 @@ from colors import Colors
 
 # helper variables
 home_dir = os.path.expanduser('~')
+vim_dir = home_dir + "/.vim"
 vimrc = home_dir + "/.vimrc"
 tmux_conf = home_dir + "/.tmux.conf"
 
 # Vim setup
 print(Colors.HEADER + "=== Vim setup ===" + Colors.ENDC)
+# updating .vimrc
 if os.path.isfile(vimrc):
     print(".vimrc config file exist.")
 
@@ -21,13 +23,26 @@ if os.path.isfile(vimrc):
     else:
         print(".vimrc is simple file")
 
-    print("Making save copy of .vimrc ... ", end="")
+    print("Making save copy of .vimrc file ... ", end="")
     os.rename(vimrc, home_dir + "/.vimrc(" + time.strftime("%c") + ")")
     print(Colors.OKGREEN + "DONE" + Colors.ENDC)
 
-print("Creating symlink for .vimrc ... ", end="")
+print("Creating symlink for .vimrc file ... ", end="")
 os.symlink(home_dir + "/dot-files/.vimrc", vimrc)
 print(Colors.OKGREEN + "DONE" + Colors.ENDC)
+
+# updating .vim directory
+if os.path.isdir(vim_dir):
+    print(".vim directory exist.")
+
+    print("Making save copy of .vim directory ... ", end="")
+    os.rename(vim_dir, home_dir + "/.vim(" + time.strftime("%c") + ")")
+    print(Colors.OKGREEN + "DONE" + Colors.ENDC)
+
+print("Creating symlink for .vim directory ... ", end="")
+os.symlink(home_dir + "/dot-files/.vim", vim_dir)
+print(Colors.OKGREEN + "DONE" + Colors.ENDC)
+
 
 
 # tmux setup
@@ -41,10 +56,10 @@ if os.path.isfile(tmux_conf):
     else:
         print(".tmux.conf is simple file")
 
-    print("Making save copy of .tmux.conf ... ", end="")
+    print("Making save copy of .tmux.conf file ... ", end="")
     os.rename(tmux_conf, home_dir + "/.tmux.conf(" + time.strftime("%c") + ")")
     print(Colors.OKGREEN + "DONE" + Colors.ENDC)
 
-print("Creating symlink for .tmux.conf ... ", end="")
+print("Creating symlink for .tmux.conf file ... ", end="")
 os.symlink(home_dir + "/dot-files/.tmux.conf", tmux_conf)
 print(Colors.OKGREEN + "DONE" + Colors.ENDC)
