@@ -1,5 +1,7 @@
 # VIM binary files for spell
 *.add.spl
+*.swp
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
