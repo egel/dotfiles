@@ -3,6 +3,7 @@
 
 import os
 import time
+import subprocess
 from colors import Colors
 
 # helper variables
@@ -10,6 +11,7 @@ home_dir = os.path.expanduser('~')
 vim_dir = home_dir + "/.vim"
 vimrc = home_dir + "/.vimrc"
 tmux_conf = home_dir + "/.tmux.conf"
+
 
 # Vim setup
 print(Colors.HEADER + "=== Vim setup ===" + Colors.ENDC)
@@ -68,3 +70,5 @@ if os.path.isfile(tmux_conf):
 print("Creating symlink for .tmux.conf file ... ", end="")
 os.symlink(home_dir + "/dot-files/.tmux.conf", tmux_conf)
 print(Colors.OKGREEN + "DONE" + Colors.ENDC)
+
+
