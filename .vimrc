@@ -37,7 +37,7 @@ set backspace=indent,eol,start    " Allow backspacing over autoindent, line brea
 " set theme
 set background=dark               " Set colors of vim to more convinient for black backgound
 if has('gui_running')
-  colorscheme twilight
+  colorscheme desert
 else
   colorscheme twilight256
 endif
@@ -58,6 +58,12 @@ fun! <SID>StripTrailingWhitespaces()
     call cursor(l, c)
 endfun
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+
+" Hightlight current line
+set cursorline
+hi CursorLine   term=bold cterm=bold guibg=Grey40
+"hi CursorLine ctermbg=8 ctermfg=15 "8 = dark gray, 15 = white
+"hi Cursor ctermbg=15 ctermfg=8
 
 " Set columns to 80 and 100
 if exists('+colorcolumn')
