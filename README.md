@@ -2,6 +2,8 @@
 
 > Dot-files for Ubuntu 14.04 LTS
 
+![Guake + Tmux + Vim - The ultimate workset](./img/terminal.png =550x)
+
 This set contains:
 
   - **Git**
