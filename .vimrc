@@ -57,6 +57,7 @@ set t_Co=256                      " 256 colors in terminal
 " different templates depends on GUI or LUI
 if has('gui_running')
   colorscheme gruvbox
+  set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
 else
   colorscheme desert
 endif
