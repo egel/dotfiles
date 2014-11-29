@@ -73,3 +73,6 @@
 [submodule ".vim/bundle/vim-latex"]
 	path = .vim/bundle/vim-latex
 	url = git://github.com/lervag/vim-latex
+[submodule ".vim/bundle/vim-nerdtree-tabs"]
+	path = .vim/bundle/vim-nerdtree-tabs
+	url = git@github.com:jistr/vim-nerdtree-tabs.git
