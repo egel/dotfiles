@@ -2,7 +2,7 @@
 
 > Dot-files for Ubuntu 14.04 LTS
 
-![Guake + Tmux + Vim - The ultimate workset](./img/terminal.png =550x)
+<img src="img/terminal.png" title="Guake + Tmux + Vim - The ultimate workset" width="550" />
 
 This set contains:
 
