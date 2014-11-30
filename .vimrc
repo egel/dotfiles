@@ -4,10 +4,9 @@
 "                        Using Pathogen plugin manager
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 set encoding=utf-8 fileencoding=utf-8 termencoding=utf-8  " saving and encoding
 
-" load up pathogen and all bundles
+" Load up Pathogen and all bundles
 call pathogen#infect()
 call pathogen#helptags()
 
@@ -28,11 +27,11 @@ set ruler                                       " show row and column in footer
 set scrolloff=3                                 " minimum lines above/below cursor
 set mouse=a                                     " Enable use of the mouse for all modes
 set laststatus=2                                " always show status bar
-set ttimeoutlen=100                             " decrease timeout for faster insert with 'O'
+set ttimeoutlen=600                             " decrease timeout for faster insert with 'O'
 set wildmenu                                    " enable bash style tab completion
 set showcmd                                     " Show partial commands in the last line of the screen
 set title                                       " change the terminal's title
-set list listchars=tab:▸\ ,trail:·,eol:¬         " show extra space characters
+set list listchars=tab:▸\ ,trail:·,eol:¬        " show extra space characters
 set expandtab                                   " use spaces, not tab characters
 set autoindent                                  " set auto indent
 set tabstop=2                                   " set indent to 2 spaces
@@ -49,10 +48,10 @@ set incsearch                                   " show search results as I type
 set guioptions-=r                               " turn off GUI right scrollbar
 set guioptions-=L                               " turn off GUI left scrollbar
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                       Appearance
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                  Appearance
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set background=dark               " Set colors of vim to more convinient for black backgound
 set t_Co=256                      " 256 colors in terminal
 
@@ -117,10 +116,46 @@ let g:airline_powerline_fonts = 1
 " vim-latex customize
 let g:Tex_DefaultTargetFormat='pdf'
 
+" Open pdf to the current location in a LaTeX file
+" Read more: http://vim.wikia.com/wiki/Open_pdf_to_the_current_location_in_a_LaTeX_file
+
+" OpenPDF function
+function! OpenPDF(file,page)
+  exec 'silent ! evince --page-label=' . a:page . ' ' . a:file . ' > /dev/null 2>&1 &'
+endfunction
+
+" function searches for the nearest label from the current position and calls LoadEvinceByLabel.
+nnoremap <buffer> <LocalLeader>e :call EvinceNearestLabel()<CR>
+
+"Load PDF to the page containing label
+function! LoadEvinceByLabel(l)
+  for f in split(glob("*.aux"))
+    let label = system('grep "^.newlabel{' . a:l . '" ' . f)
+    let page = matchstr(label, '.\{}{\zs.*\ze}}')
+    if ! empty(page)
+      call OpenPDF(substitute(f, "aux$", "pdf", ""), page)
+      return
+    endif
+  endfor
+endfunction
+
+"Load PDF to the page containing the nearest previous label to the cursor
+function! EvinceNearestLabel()
+  let line = search("\\label{", "bnW")
+  if line > 0
+    let m = matchstr(getline(line), '\\label{\zs[^}]*\ze}')
+    if empty(m)
+      echomsg "No label between here and start of file"
+    else
+      call LoadEvinceByLabel(m)
+    endif
+  endif
+endfunction
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  Features
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 " remove trailing spaces on save file
 fun! <SID>StripTrailingWhitespaces()
     let l = line(".")
