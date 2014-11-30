@@ -16,12 +16,14 @@ filetype plugin indent on                       " detect the type of file that i
 set secure                                      " disable unsafe commands in local .vimrc files
 set nocompatible                                " don't need to be compatible with old vim
 set clipboard=unnamed,unnamedplus               " use the system clipboard for yank/put/delete
-set backspace=indent,eol,start                  " Allow backspacing over autoindent, line breaks and start of insert action
+set backspace=indent,eol,start                  " allow backspacing over everything in insert mode
 set nobackup nowritebackup noswapfile autoread  " no backup or swap
 set nofoldenable                                " disable code folding
 set vb                                          " enable visual bell (disable audio bell)
-set confirm                                     " raise a dialogue asking if you wish to save changed files.
+set confirm                                     " raise a dialogue asking if you wish to save changed files
 set number                                      " Display line numbers on the left
+set history=1000                                " remember more commands and search history
+set undolevels=1000                             " use many muchos levels of undo
 set ruler                                       " show row and column in footer
 set scrolloff=3                                 " minimum lines above/below cursor
 set mouse=a                                     " Enable use of the mouse for all modes
@@ -29,8 +31,8 @@ set laststatus=2                                " always show status bar
 set ttimeoutlen=100                             " decrease timeout for faster insert with 'O'
 set wildmenu                                    " enable bash style tab completion
 set showcmd                                     " Show partial commands in the last line of the screen
-
-set list listchars=tab:»·,trail:·               " show extra space characters
+set title                                       " change the terminal's title
+set list listchars=tab:»·,trail:·,eol:¬         " show extra space characters
 set expandtab                                   " use spaces, not tab characters
 set autoindent                                  " set auto indent
 set tabstop=2                                   " set indent to 2 spaces
@@ -43,7 +45,7 @@ set hlsearch                                    " Highlight searches
 set showmatch                                   " show bracket matches
 set incsearch                                   " show search results as I type
 
-set guioptions-=T                               " turn off GUI toolbar (icons)
+"set guioptions-=T                               " turn off GUI toolbar (icons)
 set guioptions-=r                               " turn off GUI right scrollbar
 set guioptions-=L                               " turn off GUI left scrollbar
 
@@ -112,6 +114,8 @@ highlight GitGutterChangeDelete ctermfg=yellow guifg=darkyellow
 " Add powerline fonts to vim
 let g:airline_powerline_fonts = 1
 
+" vim-latex customize
+let g:Tex_DefaultTargetFormat='pdf'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  Features
@@ -136,6 +140,9 @@ autocmd BufRead,BufNewFile *.jade setlocal ft=jade
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                Key Mapping
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" open new tab
+:nmap <Leader>t <Esc>:tabnew<CR>
+
 
 " <F3> key to hide current higlight for searched tems
 :map <F3> :noh<CR>
@@ -144,8 +151,8 @@ autocmd BufRead,BufNewFile *.jade setlocal ft=jade
 map <F4> :setlocal spell! spelllang=en_us<CR>
 imap <F4> <ESC>:setlocal spell! spelllang=en_us<CR>
 
-:map <F5> :w<CR>              " <F5> key save the file
-:map <F6> :wq<CR>             " <F6> key save and exit the file
+":map <F5> :w<CR>              " <F5> key save the file
+":map <F6> :wq<CR>             " <F6> key save and exit the file
 :map <F7> :tabn<CR>           " go to next tab
 :map <F8> :tabp<CR>           " go to previous tab
 
