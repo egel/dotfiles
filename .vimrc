@@ -52,10 +52,10 @@ set guioptions-=L                               " turn off GUI left scrollbar
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  Appearance
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set background=dark               " Set colors of vim to more convinient for black backgound
-set t_Co=256                      " 256 colors in terminal
+set background=dark       " Set colors of vim to more convinient for black backgound
+set t_Co=256              " 256 colors in terminal
 
-" different templates depends on GUI or LUI
+" Different templates depends on GUI or LUI
 if has('gui_running')
   colorscheme gruvbox
   set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
@@ -65,10 +65,10 @@ endif
 
 " Hightlight current line and column
 set cursorline                      " highlight the current line
-"set cursorcolumn                    " highlight the current column
 hi CursorLine   term=bold cterm=bold guibg=Grey40
+"set cursorcolumn                    " highlight the current column
 
-" highlight the 80th column
+" Highlight the 80th column
 "
 " In Vim >= 7.3, also highlight columns 120+
 if exists('+colorcolumn')
@@ -84,7 +84,7 @@ else
   autocmd BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
 
-" highlight trailing spaces in annoying red
+" Highlight trailing spaces in annoying red
 highlight ExtraWhitespace ctermbg=1 guibg=red
 match ExtraWhitespace /\s\+$/
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
@@ -94,7 +94,7 @@ autocmd BufWinLeave * call clearmatches()
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                Plugin Helpers
+"                              Plugin Helpers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " open a NERDTree automatically when vim starts up and move cursor to main window
 autocmd vimenter * NERDTree
@@ -103,7 +103,7 @@ autocmd vimenter * wincmd p
 " close vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
-" Poprawienie wyświetlania GitGutter w vim dla czarnych motywów
+" Proper display GitGutter for darker themes
 highlight clear SignColumn
 highlight GitGutterAdd ctermfg=green guifg=darkgreen
 highlight GitGutterChange ctermfg=yellow guifg=darkyellow
@@ -116,18 +116,26 @@ let g:airline_powerline_fonts = 1
 " vim-latex customize
 let g:Tex_DefaultTargetFormat='pdf'
 
+" TIP: if you write your \label's as \label{fig:something}, then if you
+" type in \ref{fig: and press <C-n> you will automatically cycle through
+" all the figure labels. Very useful!
+set iskeyword+=:
+
 " Open pdf to the current location in a LaTeX file
 " Read more: http://vim.wikia.com/wiki/Open_pdf_to_the_current_location_in_a_LaTeX_file
-
-" OpenPDF function
+" Function: OpenPDF
 function! OpenPDF(file,page)
   exec 'silent ! evince --page-label=' . a:page . ' ' . a:file . ' > /dev/null 2>&1 &'
 endfunction
 
-" function searches for the nearest label from the current position and calls LoadEvinceByLabel.
+" Now \e will load the pdf viewer to the page containing the nearest label to
+" the current cursor position (assuming the default backslash for the LocalLeader key).
+" This works well on multi-file projects since the aux file is searched to
+" find the pdf name. So you can jump around in Vim using its wonderful tools,
+" then tell the pdf viewer to jump to the same page.
 nnoremap <buffer> <LocalLeader>e :call EvinceNearestLabel()<CR>
 
-"Load PDF to the page containing label
+" Load PDF to the page containing label
 function! LoadEvinceByLabel(l)
   for f in split(glob("*.aux"))
     let label = system('grep "^.newlabel{' . a:l . '" ' . f)
@@ -139,7 +147,7 @@ function! LoadEvinceByLabel(l)
   endfor
 endfunction
 
-"Load PDF to the page containing the nearest previous label to the cursor
+" Load PDF to the page containing the nearest previous label to the cursor
 function! EvinceNearestLabel()
   let line = search("\\label{", "bnW")
   if line > 0
@@ -156,7 +164,7 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  Features
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" remove trailing spaces on save file
+" Remove trailing spaces on save file
 fun! <SID>StripTrailingWhitespaces()
     let l = line(".")
     let c = col(".")
@@ -175,9 +183,8 @@ autocmd BufRead,BufNewFile *.jade setlocal ft=jade
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                Key Mapping
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" open new tab
+" Open new tab by press \t
 :nmap <Leader>t <Esc>:tabnew<CR>
-
 
 " <F3> key to hide current higlight for searched tems
 :map <F3> :noh<CR>
@@ -194,7 +201,5 @@ imap <F4> <ESC>:setlocal spell! spelllang=en_us<CR>
 " Key binding
 noremap <c-s-up> :call feedkeys( line('.')==1 ? '' : 'ddkP' )<CR>
 noremap <c-s-down> ddp
-
-
 
 
