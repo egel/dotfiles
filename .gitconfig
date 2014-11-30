@@ -2,11 +2,21 @@
   # For user, email, ect.
   path = ~/.gitconfig.local
 
+[color]
+  ui = auto
+
+[push]
+  default = simple
+
 [core]
   editor = vim
 
 [merge]
-  tool = meld
+  tool = fugitive
+
+[mergetool "fugitive"]
+  cmd = vim -f -c \"Gdiff\" \"$MERGED\"
+  keepBackup = false
 
 [alias]
   st = status
@@ -36,10 +46,4 @@
   last = log -1 HEAD
 
   lg = log --graph --all --format=format:'%C(bold red)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold cyan) %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
-
-[color]
-  ui = auto
-
-[push]
-  default = simple
 
