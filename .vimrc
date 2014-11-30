@@ -32,7 +32,7 @@ set ttimeoutlen=100                             " decrease timeout for faster in
 set wildmenu                                    " enable bash style tab completion
 set showcmd                                     " Show partial commands in the last line of the screen
 set title                                       " change the terminal's title
-set list listchars=tab:»·,trail:·,eol:¬         " show extra space characters
+set list listchars=tab:▸\ ,trail:·,eol:¬         " show extra space characters
 set expandtab                                   " use spaces, not tab characters
 set autoindent                                  " set auto indent
 set tabstop=2                                   " set indent to 2 spaces
@@ -66,7 +66,7 @@ endif
 
 " Hightlight current line and column
 set cursorline                      " highlight the current line
-set cursorcolumn                    " highlight the current line
+"set cursorcolumn                    " highlight the current column
 hi CursorLine   term=bold cterm=bold guibg=Grey40
 
 " highlight the 80th column
