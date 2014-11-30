@@ -85,13 +85,15 @@ else
 endif
 
 " Highlight trailing spaces in annoying red
-highlight ExtraWhitespace ctermbg=1 guibg=red
+highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
+" Show trailing whitepace and spaces before a tab:
+autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                              Plugin Helpers
@@ -111,7 +113,10 @@ highlight GitGutterDelete ctermfg=red guifg=darkred
 highlight GitGutterChangeDelete ctermfg=yellow guifg=darkyellow
 
 " Add powerline fonts to vim
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts=1
+
+" Autosession for vim-session
+let g:session_autosave=1
 
 " vim-latex customize
 let g:Tex_DefaultTargetFormat='pdf'
