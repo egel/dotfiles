@@ -102,4 +102,4 @@ print("Creating symlink for .gitconfig file ... ", end="")
 os.symlink(__dotfiles_dir__ + "/" + __gitconfig_name__, __gitconfig__)
 print(Colors.OKGREEN + "DONE" + Colors.ENDC)
 
-#
+# TODO: Conky setup
