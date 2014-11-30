@@ -76,3 +76,18 @@
 [submodule ".vim/bundle/vim-nerdtree-tabs"]
 	path = .vim/bundle/vim-nerdtree-tabs
 	url = git@github.com:jistr/vim-nerdtree-tabs.git
+[submodule ".vim/bundle/supertab"]
+	path = .vim/bundle/supertab
+	url = git@github.com:ervandew/supertab.git
+[submodule ".vim/bundle/syntastic"]
+	path = .vim/bundle/syntastic
+	url = git@github.com:scrooloose/syntastic.git
+[submodule ".vim/bundle/atp_vim"]
+	path = .vim/bundle/atp_vim
+	url = git@github.com:coot/atp_vim.git
+[submodule ".vim/bundle/vim-session"]
+	path = .vim/bundle/vim-session
+	url = git@github.com:xolox/vim-session.git
+[submodule ".vim/bundle/vim-misc"]
+	path = .vim/bundle/vim-misc
+	url = git@github.com:xolox/vim-misc.git
