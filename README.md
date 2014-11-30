@@ -46,6 +46,7 @@ If you want to have Powerline fonts as well, you need to install them first:
     $ mkdir -p ~/.local/share/fonts/ ~/.config/fontconfig/conf.d/
     $ mv PowerlineSymbols.otf ~/.fonts/
     $ mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
+    $ fc-cache -vf
 
 > To see more details for powerline installation look at [powerline install webpage]
 
@@ -58,4 +59,4 @@ The last thing is to set `Ubuntu Mono derivative Powerline` as default terminal 
     $ cd ~/dot-files/ && git submodule update --init --recursive
 
 
- [powerline install]: https://powerline.readthedocs.org/en/latest/installation/linux.html#font-installation
+ [powerline install webpage]: https://powerline.readthedocs.org/en/latest/installation/linux.html#font-installation
