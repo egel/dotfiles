@@ -49,7 +49,6 @@ If you want to have Powerline fonts as well, you need to install them first:
     $ mv PowerlineSymbols.otf ~/.local/share/fonts/ &&
       mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
     $ fc-cache -vf
-+
 
 > To see more details for powerline installation look at [powerline install webpage]
 
