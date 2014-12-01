@@ -189,22 +189,19 @@ autocmd BufRead,BufNewFile *.jade setlocal ft=jade
 "                                Key Mapping
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Open new tab by press \t
-:nmap <Leader>t <Esc>:tabnew<CR>
+nmap <Leader>t <Esc>:tabnew<CR>
 
 " <F3> key to hide current higlight for searched tems
-:map <F3> :noh<CR>
+map <F3> :noh<CR>
 
 " toggle spell check with <F4>
 map <F4> :setlocal spell! spelllang=en_us<CR>
 imap <F4> <ESC>:setlocal spell! spelllang=en_us<CR>
 
-":map <F5> :w<CR>              " <F5> key save the file
-":map <F6> :wq<CR>             " <F6> key save and exit the file
-:map <F7> :tabn<CR>           " go to next tab
-:map <F8> :tabp<CR>           " go to previous tab
-
-" Key binding
-noremap <c-s-up> :call feedkeys( line('.')==1 ? '' : 'ddkP' )<CR>
-noremap <c-s-down> ddp
+":map <F5> :w<CR>                  " <F5> key save the file
+":map <F6> :wq<CR>                 " <F6> key save and exit the file
+" go to next/previous tab
+noremap <F8> <Esc>:tabn<CR>
+noremap <F7> <Esc>:tabp<CR>
 
 
