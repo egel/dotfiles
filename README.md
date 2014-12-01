@@ -39,14 +39,17 @@ If you use [vim-instant-markdown](https://github.com/suan/vim-instant-markdown),
 
 If you want to have Powerline fonts as well, you need to install them first:
 
-    $ sudo apt-get install python-pip && pip install --upgrade pip
+    $ cd ~/ && git clone git@github.com:Lokaltog/powerline-fonts.git
+    $ ./powerline-fonts/install.py
+    $ rm ~/powerline-fonts/ -rf
     $ cd ~/ &&
       wget https://github.com/Lokaltog/powerline/raw/develop/font/PowerlineSymbols.otf &&
       wget https://github.com/Lokaltog/powerline/raw/develop/font/10-powerline-symbols.conf
     $ mkdir -p ~/.local/share/fonts/ ~/.config/fontconfig/conf.d/
-    $ mv PowerlineSymbols.otf ~/.fonts/
-    $ mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
+    $ mv PowerlineSymbols.otf ~/.local/share/fonts/ &&
+      mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
     $ fc-cache -vf
++
 
 > To see more details for powerline installation look at [powerline install webpage]
 
