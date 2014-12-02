@@ -24,17 +24,24 @@ set number                                      " Display line numbers on the le
 set history=1000                                " remember more commands and search history
 set undolevels=1000                             " use many muchos levels of undo
 set ruler                                       " show row and column in footer
-set scrolloff=3                                 " minimum lines above/below cursor
+set scrolloff=5                                 " minimum lines above/below cursor
 set mouse=a                                     " Enable use of the mouse for all modes
 set laststatus=2                                " always show status bar
 set ttimeoutlen=600                             " decrease timeout for faster insert with 'O'
-set wildmenu                                    " enable bash style tab completion
 set showcmd                                     " Show partial commands in the last line of the screen
 set title                                       " change the terminal's title
 set list listchars=tab:▸\ ,trail:·,eol:¬        " show extra space characters
 set autoindent                                  " set auto indent
 set tabstop=2 shiftwidth=2 softtabstop=2        " set indent to 2 spaces
 set expandtab                                   " use spaces, not tab characters
+
+
+set wildmenu                                    " enable bash style tab completion
+set wildignore=*.o,*.obj,*~                     "stuff to ignore when tab completing
+set wildignore+=*sass-cache*
+set wildignore+=*DS_Store*
+set wildignore+=log/**
+set wildignore+=tmp/**
 
 set ignorecase                                  " Use case insensitive search, except when using capital letters
 set smartcase                                   " pay attention to case when caps are used
@@ -115,12 +122,18 @@ let g:session_autosave = 'yes'
 let g:session_autoload = 'yes'
 
 " vim-latex customize
-let g:Tex_DefaultTargetFormat='pdf'
+let g:Tex_DefaultTargetFormat = 'pdf'
+let g:Tex_MultipleCompileFormats='pdf, aux'
 
 " TIP: if you write your \label's as \label{fig:something}, then if you
 " type in \ref{fig: and press <C-n> you will automatically cycle through
 " all the figure labels. Very useful!
 set iskeyword+=:
+
+" IMPORTANT: grep will sometimes skip displaying the file name if you
+" search in a singe file. This will confuse Latex-Suite. Set your grep
+" program to alway generate a file-name.
+set grepprg=grep\ -nH\ $*
 
 " Open pdf to the current location in a LaTeX file
 " Read more: http://vim.wikia.com/wiki/Open_pdf_to_the_current_location_in_a_LaTeX_file
@@ -161,6 +174,7 @@ function! EvinceNearestLabel()
   endif
 endfunction
 
+autocmd BufRead,BufNewFile *.tex setlocal formatoptions+=w textwidth=120
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  Features
