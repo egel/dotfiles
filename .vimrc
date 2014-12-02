@@ -200,8 +200,10 @@ imap <F4> <ESC>:setlocal spell! spelllang=en_us<CR>
 
 ":map <F5> :w<CR>                  " <F5> key save the file
 ":map <F6> :wq<CR>                 " <F6> key save and exit the file
+
 " go to next/previous tab
-noremap <F8> <Esc>:tabn<CR>
-noremap <F7> <Esc>:tabp<CR>
+" Example: Ctrl + H
+noremap <C-L> <Esc>:tabnext<CR>
+noremap <C-H> <Esc>:tabprevious<CR>
 
-
+"
