@@ -113,7 +113,8 @@ highlight GitGutterChangeDelete ctermfg=yellow guifg=darkyellow
 let g:airline_powerline_fonts=1
 
 " Autosession for vim-session
-let g:session_autosave=1
+let g:session_autosave = 'yes'
+let g:session_autoload = 'yes'
 
 " vim-latex customize
 let g:Tex_DefaultTargetFormat='pdf'
