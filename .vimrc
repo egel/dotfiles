@@ -96,12 +96,9 @@ autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                              Plugin Helpers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" open a NERDTree automatically when vim starts up and move cursor to main window
-autocmd vimenter * NERDTree
-autocmd vimenter * wincmd p
-
-" close vim if the only window left open is a NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" NerdTree_Tabs
+let g:nerdtree_tabs_open_on_gui_startup=0
+let g:nerdtree_tabs_open_on_new_tab=0
 
 " Proper display GitGutter for darker themes
 highlight clear SignColumn
@@ -114,7 +111,8 @@ highlight GitGutterChangeDelete ctermfg=yellow guifg=darkyellow
 let g:airline_powerline_fonts=1
 
 " Autosession for vim-session
-let g:session_autosave=1
+let g:session_autosave = 'yes'
+let g:session_autoload = 'yes'
 
 " vim-latex customize
 let g:Tex_DefaultTargetFormat='pdf'
@@ -200,7 +198,7 @@ autocmd BufRead,BufNewFile *.jade setlocal ft=jade
 "                                Key Mapping
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Open new tab by press \t
-nmap <Leader>t <Esc>:tabnew<CR>
+nmap <C-t> <Esc>:tabnew<CR>
 
 " <F3> key to hide current higlight for searched tems
 map <F3> :noh<CR>
@@ -211,8 +209,15 @@ imap <F4> <ESC>:setlocal spell! spelllang=en_us<CR>
 
 ":map <F5> :w<CR>                  " <F5> key save the file
 ":map <F6> :wq<CR>                 " <F6> key save and exit the file
+
 " go to next/previous tab
-noremap <F8> <Esc>:tabn<CR>
-noremap <F7> <Esc>:tabp<CR>
+" Example: Ctrl + H
+noremap <C-L> <Esc>:tabnext<CR>
+noremap <C-H> <Esc>:tabprevious<CR>
 
+" move tab to left/right position in top tab-bar
+map <F7>  :execute "tabmove" tabpagenr() - 2<CR>
+map <F8> :execute "tabmove" tabpagenr()<CR>
 
+" map NERDTreeTabsToggle
+map <Leader>n <plug>NERDTreeTabsToggle<CR>

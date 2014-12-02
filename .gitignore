@@ -1,3 +1,6 @@
+# Vim session folder
+.vim/sessions/
+
 # VIM binary files for spell
 *.add.spl
 *.swp
