@@ -32,11 +32,9 @@ set wildmenu                                    " enable bash style tab completi
 set showcmd                                     " Show partial commands in the last line of the screen
 set title                                       " change the terminal's title
 set list listchars=tab:▸\ ,trail:·,eol:¬        " show extra space characters
-set expandtab                                   " use spaces, not tab characters
 set autoindent                                  " set auto indent
-set tabstop=2                                   " set indent to 2 spaces
-set shiftwidth=2
-set softtabstop=2
+set tabstop=2 shiftwidth=2 softtabstop=2        " set indent to 2 spaces
+set expandtab                                   " use spaces, not tab characters
 
 set ignorecase                                  " Use case insensitive search, except when using capital letters
 set smartcase                                   " pay attention to case when caps are used
@@ -177,6 +175,19 @@ fun! <SID>StripTrailingWhitespaces()
     call cursor(l, c)
 endfun
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+
+" Switch from: UPPER CASE, then to lower case, then to Title Case
+function! TwiddleCase(str)
+  if a:str ==# toupper(a:str)
+    let result = tolower(a:str)
+  elseif a:str ==# tolower(a:str)
+    let result = substitute(a:str,'\(\<\w\+\>\)', '\u\1', 'g')
+  else
+    let result = toupper(a:str)
+  endif
+  return result
+endfunction
+vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
 
 " Force setting for *.md files. More info: https://github.com/tpope/vim-markdown
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
