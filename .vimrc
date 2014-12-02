@@ -206,4 +206,6 @@ imap <F4> <ESC>:setlocal spell! spelllang=en_us<CR>
 noremap <C-L> <Esc>:tabnext<CR>
 noremap <C-H> <Esc>:tabprevious<CR>
 
-"
+" move tab to left/right position in top tab-bar
+map <F7>  :execute "tabmove" tabpagenr() - 2<CR>
+map <F8> :execute "tabmove" tabpagenr()<CR>
