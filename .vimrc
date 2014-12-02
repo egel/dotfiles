@@ -98,12 +98,9 @@ autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                              Plugin Helpers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" open a NERDTree automatically when vim starts up and move cursor to main window
-autocmd vimenter * NERDTree
-autocmd vimenter * wincmd p
-
-" close vim if the only window left open is a NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" NerdTree_Tabs
+let g:nerdtree_tabs_open_on_gui_startup=0
+let g:nerdtree_tabs_open_on_new_tab=0
 
 " Proper display GitGutter for darker themes
 highlight clear SignColumn
@@ -189,7 +186,7 @@ autocmd BufRead,BufNewFile *.jade setlocal ft=jade
 "                                Key Mapping
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Open new tab by press \t
-nmap <Leader>t <Esc>:tabnew<CR>
+nmap <C-t> <Esc>:tabnew<CR>
 
 " <F3> key to hide current higlight for searched tems
 map <F3> :noh<CR>
@@ -209,3 +206,6 @@ noremap <C-H> <Esc>:tabprevious<CR>
 " move tab to left/right position in top tab-bar
 map <F7>  :execute "tabmove" tabpagenr() - 2<CR>
 map <F8> :execute "tabmove" tabpagenr()<CR>
+
+" map NERDTreeTabsToggle
+map <Leader>n <plug>NERDTreeTabsToggle<CR>
