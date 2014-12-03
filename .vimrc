@@ -18,7 +18,8 @@ set clipboard=unnamed,unnamedplus               " use the system clipboard for y
 set backspace=indent,eol,start                  " allow backspacing over everything in insert mode
 set nobackup nowritebackup noswapfile autoread  " no backup or swap
 set nofoldenable                                " disable code folding
-set vb                                          " enable visual bell (disable audio bell)
+set noerrorbells                                " no error bells
+set novisualbell                                " no annoying visual bell
 set confirm                                     " raise a dialogue asking if you wish to save changed files
 set number                                      " Display line numbers on the left
 set history=1000                                " remember more commands and search history
@@ -44,11 +45,6 @@ set hlsearch                                    " Highlight searches
 set showmatch                                   " show bracket matches
 set incsearch                                   " show search results as I type
 
-"set guioptions-=T                               " turn off GUI toolbar (icons)
-set guioptions-=r                               " turn off GUI right scrollbar
-set guioptions-=L                               " turn off GUI left scrollbar
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  Appearance
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -59,6 +55,11 @@ set t_Co=256              " 256 colors in terminal
 if has('gui_running')
   colorscheme gruvbox
   set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
+  set guioptions-=T                               " turn off GUI toolbar (icons)
+  set guioptions+=e
+  set guioptions-=r                               " turn off GUI right scrollbar
+  set guioptions-=L                               " turn off GUI left scrollbar
+  set guitablabel=%M\ %t
 else
   colorscheme desert
 endif
@@ -101,6 +102,7 @@ autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
 " NerdTree_Tabs
 let g:nerdtree_tabs_open_on_gui_startup=0
 let g:nerdtree_tabs_open_on_new_tab=0
+let g:NERDTreeWinSize=50
 
 " Proper display GitGutter for darker themes
 highlight clear SignColumn
