@@ -74,6 +74,11 @@ set cursorline                      " highlight the current line
 hi CursorLine   term=bold cterm=bold guibg=Grey40
 "set cursorcolumn                    " highlight the current column
 
+" Highlight maching braces constantly
+" 'set showmatch' option only show braces one when creating
+syn match Braces display '[{}()\[\]]'
+hi Braces guifg=red ctermfg=red
+
 " Highlight the 80th column
 "
 " In Vim >= 7.3, also highlight columns 120+
@@ -215,6 +220,14 @@ autocmd BufRead,BufNewFile *.jade setlocal ft=jade
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Open new tab by press \t
 nmap <C-t> <Esc>:tabnew<CR>
+
+" Map W, Q and WQ, WA as usuall typo
+command WQ wq
+command Wq wq
+command Wa wa
+command WA wa
+command W w
+command Q q
 
 " <F3> key to hide current higlight for searched tems
 map <F3> :noh<CR>
