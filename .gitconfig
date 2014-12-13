@@ -36,6 +36,8 @@
   co = checkout
   br = branch
 
+  pup = submodule foreach git pull
+
   diffword = diff --word-diff
   dw = diff --word-diff
   diff = diff
