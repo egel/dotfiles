@@ -61,4 +61,16 @@ The last thing is to set `Ubuntu Mono derivative Powerline` as default terminal 
     $ cd ~/dot-files/ && git submodule update --init --recursive
 
 
+## Funny
+To have nice frogs with some fortune text install:
+
+    $ sudo apt-get install cowsay fortune-mod
+
+then run:
+
+    $ echo '' >> ~/.bashrc && \
+      echo '# Add funny-dummy text to new instance of teminal' >> ~/.bashrc && \
+      echo 'fortune | cowsay -W80 -f bud-frogs' >> ~/.bashrc
+
+
  [powerline install webpage]: https://powerline.readthedocs.org/en/latest/installation/linux.html#font-installation
