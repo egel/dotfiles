@@ -19,6 +19,10 @@ __gitconfig_name__          = ".gitconfig"
 __gitconfig__               = home_dir + "/" + __gitconfig_name__
 __gitconfig_local_name__    = ".gitconfig.local"
 __gitconfig_local__         = home_dir + "/" + __gitconfig_local_name__
+__conkyrc_name__            = ".conkyrc"
+__conkyrc__                 = home_dir + "/" + __conkyrc_name__
+__conky_theme_name__        = "conky_seamod"
+
 
 # Vim setup
 print(Colors.HEADER + "=== Vim setup ===" + Colors.ENDC)
@@ -102,4 +106,24 @@ print("Creating symlink for .gitconfig file ... ", end="")
 os.symlink(__dotfiles_dir__ + "/" + __gitconfig_name__, __gitconfig__)
 print(Colors.OKGREEN + "DONE" + Colors.ENDC)
 
-# TODO: Conky setup
+
+# Conky setup
+print(Colors.HEADER + "\n=== Conky setup ===" + Colors.ENDC)
+if os.path.isfile(__conkyrc__):
+    print(__conkyrc_name__ + " file exsist.")
+
+    print(__conkyrc_name__ + " ", end="")
+    if os.path.islink(__conkyrc__):
+        # file is symlink
+        print("is " + Colors.OKBLUE + "symlink." + Colors.ENDC)
+    else:
+        print("is simple file")
+
+    print("Making save copy of " + __conkyrc_name__ + " file ... ", end="")
+    os.rename(__conkyrc__, __conkyrc__ + "(" + time.strftime("%c") + ")")
+    print(Colors.OKGREEN + "DONE" + Colors.ENDC)
+
+print("Creating symlink for " + __conkyrc__ + " file ... ", end="")
+os.symlink(__dotfiles_dir__ + "/conky-themes/" + __conky_theme_name__ + "/" + __conkyrc_name__, __conkyrc__)
+print(Colors.OKGREEN + "DONE" + Colors.ENDC)
+
