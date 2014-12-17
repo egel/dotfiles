@@ -1,0 +1,54 @@
+#!/usr/bin/conky -d -c
+##	.conkyrc configuration
+alignment top_left
+background yes
+border_margin 5
+border_width 5
+color0 555555			#
+color1 483D8B			# Dark Slate Blue
+color2 B8860B			# Dark goldenrod
+color3 4682B4			# Steelblue
+color4 8B0000			# Dark red
+color5 008080			# Teal
+color6 333333			# Gray20
+color7 8888CC			#  (COOL)
+color8 CCCC88			#  (WARM)
+color9 CC8888			#  (HOT)
+cpu_avg_samples 2
+default_color e1e1e1		# Ghost white F8F8FF
+default_outline_color 000000 	# Black
+default_shade_color 000000	# Black
+double_buffer yes
+draw_borders no
+draw_graph_borders no
+draw_outline no
+draw_shades no
+gap_x 550
+gap_y 32
+max_specials 1024
+max_user_text 1000
+maximum_width 500
+minimum_size 450 25
+net_avg_samples 2
+no_buffers yes
+override_utf8_locale yes
+own_window yes
+own_window_colour 000000	# Black
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+own_window_transparent yes
+own_window_type override 	## normal
+pad_percents 2
+short_units yes
+stippled_borders 3
+text_buffer_size 8000
+total_run_times 0
+update_interval 1.0
+uppercase no
+use_spacer right
+use_xft yes
+xftalpha 0.75
+xftfont sans:size=7
+
+TEXT
+
+${execpi 1800 conkyForecast --location=PLXX0030 --template=/home/didisoft/.conky/conkyForecast.template}

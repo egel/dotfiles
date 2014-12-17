@@ -1,0 +1,8 @@
+${voffset -1}${font DejaVu Sans:size=7}Miasto: [--datatype=OB]${voffset -1}${font DejaVu Sans:size=7}${alignr 5}Aktualizacja: [--datatype=LU]${font}
+${voffset 2}${goto 5}${font ConkyWeather:style=Bold:size=32}[--datatype=WF]${font}
+${voffset -46}${goto 82}${font Arial Black:size=10}[--datatype=CT]${font} ${goto 250}[--datatype=DW --startday=0 --shortweekday]${goto 310}[--datatype=DW --startday=1 --shortweekday]${goto 364}[--datatype=DW --startday=2 --shortweekday]${goto 421}[--datatype=DW --startday=3 --shortweekday]${goto 477}[--datatype=DW --startday=4 --shortweekday]
+${voffset 4}${goto 83}Wiatr: [--datatype=WS] - [--datatype=WD] ${voffset 4}${goto 245}${font ConkyWeather:size=22}[--datatype=WF --startday=0 --endday=4 --spaces=4]${font}
+${voffset -20}${goto 83}Windchill: [--datatype=LT --centeredwidth=3]
+${voffset 4}${goto 83}Wilgotność: [--datatype=HM]${voffset 4}${goto 211}hi/lo:  [--datatype=HT --startday=0 --hideunits --centeredwidth=4]/[--datatype=LT --startday=0 --hideunits --centeredwidth=4]${goto 298}[--datatype=HT --startday=1 --hideunits --centeredwidth=4]/[--datatype=LT --startday=1 --hideunits --centeredwidth=4]${goto 355}[--datatype=HT --startday=2 --hideunits --centeredwidth=3]/[--datatype=LT --startday=2 --hideunits --centeredwidth=4]${goto 412}[--datatype=HT --startday=3 --hideunits --centeredwidth=4]/[--datatype=LT --startday=3 --hideunits --centeredwidth=4]${goto 469}[--datatype=HT --startday=4 --hideunits --centeredwidth=4]/[--datatype=LT --startday=4 --hideunits --centeredwidth=4]
+${voffset -28}${goto 11}${font Weather:size=18}y${font} ${voffset -12}${font Arial Black:size=12}[--datatype=HT --centeredwidth=3]${font}
+${voffset 8}Wschód: [--datatype=SR]${goto 83}Zachód: [--datatype=SS]
