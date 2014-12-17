@@ -106,6 +106,9 @@ autocmd BufWinLeave * call clearmatches()
 " Show trailing whitepace and spaces before a tab:
 autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
 
+" enable code floding for vim-javascript-syntax
+au FileType javascript call JavaScriptFold()
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                              Plugin Helpers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
