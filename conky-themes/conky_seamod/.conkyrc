@@ -61,7 +61,7 @@ color4 EF5A29
 color5 77B753
 
 # Loading lua script for drawning rings
-lua_load /home/maciej/.conky-themes/conky_seamod/seamod_rings.lua
+lua_load ~/dot-files/conky-themes/conky_seamod/seamod_rings.lua
 lua_draw_hook_post main
 
 ## System information using conky capabilities
@@ -71,7 +71,7 @@ TEXT
 ${font Ubuntu:size=10,weight:bold}${color4}SYSTEM ${hr 2}
 ${offset 15}${font Ubuntu:size=10,weight:normal}${color1}$sysname Kernel: $kernel ${alignr}$nodename
 ${offset 15}${font Ubuntu:size=10,weight:normal}${color1}Uptime: $uptime ${alignr}${color}Battery: ${alignr}${battery_percent BAT0}% / ${acpitemp}°C
-${offset 15}${font Ubuntu:size=10,weight:normal}${color1}Gmail: ${execi 60 /home/maciej/.conky-themes/conky_seamod/.conky/gmail.sh}
+${offset 15}${font Ubuntu:size=10,weight:normal}${color1}Gmail: ${execi 60 ~/dot-files/conky-themes/conky_seamod/.conky/gmail.sh}
 ## ${offset 15}${font Ubuntu:size=10,weight:normal}${color1}$nodename
 ## ${offset 15}${font Ubuntu:size=10,weight:normal}${color1}Conky:${alignr}${conky_version}
 
