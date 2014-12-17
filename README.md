@@ -2,8 +2,8 @@
 
 > Dot-files for Ubuntu 14.04 LTS
 
-<img src="img/terminal.jpg" title="Guake + Tmux + Vim - The ultimate workset" width="300" />
-<img src="img/vim_gui.jpg" title="Vim GUI Interface" width="300" />
+<img src="https://raw.githubusercontent.com/egel/dot-files/master/img/terminal.jpg" title="Guake + Tmux + Vim - The ultimate workset" width="300" />
+<img src="https://raw.githubusercontent.com/egel/dot-files/master/img/vim_gui.jpg" title="Vim GUI Interface" width="300" />
 
 This set contains:
 
