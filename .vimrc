@@ -67,7 +67,17 @@ if has('gui_running')
   set guitablabel=%M\ %t
 else
   colorscheme desert
+
+  " indent guidlines for terminal
+  hi IndentGuidesOdd  ctermbg=black
+  hi IndentGuidesEven ctermbg=darkgrey
 endif
+
+" Indent guidelines from vim-indent-guides plugin
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
+
 
 " Hightlight current line and column
 set cursorline                      " highlight the current line
