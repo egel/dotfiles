@@ -19,6 +19,8 @@ __gitconfig_name__          = ".gitconfig"
 __gitconfig__               = home_dir + "/" + __gitconfig_name__
 __gitconfig_local_name__    = ".gitconfig.local"
 __gitconfig_local__         = home_dir + "/" + __gitconfig_local_name__
+__bash_aliases_name__       = ".bash_aliases"
+__bash_aliases__            = home_dir + "/" + __bash_aliases_name__
 __conkyrc_name__            = ".conkyrc"
 __conkyrc__                 = home_dir + "/" + __conkyrc_name__
 __conky_theme_name__        = "conky_seamod"
@@ -102,8 +104,29 @@ if os.path.isfile(__gitconfig__):
     os.rename(__gitconfig__, __gitconfig__ + "(" + time.strftime("%c") + ")")
     print(Colors.OKGREEN + "DONE" + Colors.ENDC)
 
-print("Creating symlink for .gitconfig file ... ", end="")
+print("Creating symlink for " + __gitconfig_name__ + " file ... ", end="")
 os.symlink(__dotfiles_dir__ + "/" + __gitconfig_name__, __gitconfig__)
+print(Colors.OKGREEN + "DONE" + Colors.ENDC)
+
+
+# bash aliases setup
+print(Colors.HEADER + "\n=== Bash aliases setup ===" + Colors.ENDC)
+if os.path.isfile(__bash_aliases__):
+    print(__bash_aliases_name__ + " file exsist.")
+
+    print(__bash_aliases_name__ + " ", end="")
+    if os.path.islink(__bash_aliases_name__):
+        # file is symlink
+        print("is " + Colors.OKBLUE + "symlink." + Colors.ENDC)
+    else:
+        print("is simple file")
+
+    print("Making save copy of " + __bash_aliases_name__ + " file ... ", end="")
+    os.rename(__bash_aliases__, __bash_aliases__ + "(" + time.strftime("%c") + ")")
+    print(Colors.OKGREEN + "DONE" + Colors.ENDC)
+
+print("Creating symlink for" + __bash_aliases_name__ + " file ... ", end="")
+os.symlink(__dotfiles_dir__ + "/" + __bash_aliases_name__, __bash_aliases__)
 print(Colors.OKGREEN + "DONE" + Colors.ENDC)
 
 
