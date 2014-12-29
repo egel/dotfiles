@@ -53,6 +53,7 @@ set incsearch                                   " show search results as I type
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  Appearance
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set linespace=5           " set space between lines
 set background=dark       " Set colors of vim to more convinient for black backgound
 set t_Co=256              " 256 colors in terminal
 
@@ -232,12 +233,12 @@ autocmd BufRead,BufNewFile *.jade setlocal ft=jade
 nmap <C-t> <Esc>:tabnew<CR>
 
 " Map W, Q and WQ, WA as usuall typo
-command WQ wq
-command Wq wq
-command Wa wa
-command WA wa
-command W w
-command Q q
+command! WQ wq
+command! Wq wq
+command! Wa wa
+command! WA wa
+command! W w
+command! Q q
 
 " <F3> key to hide current higlight for searched tems
 map <F3> :noh<CR>
