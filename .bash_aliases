@@ -3,7 +3,16 @@ alias zamknij='sudo shutdown -h now'
 alias zamknij_za_minut='sudo su && shutdown -m'
 alias instaluj='sudo apt-get install'
 
+alias rm="rm -v"
+alias mv="mv -i"
+alias cp="cp -i"
+alias du="du -c"
+alias grep="egrep -i"
+alias l='ls'
+alias ls='ls --color=auto --group-directories-first'
+alias ll='ls -lh'
 alias ..='cd ..'
+alias cd..='cd ..'
 alias show-desktop-icons='gsettings set org.gnome.desktop.background show-desktop-icons true'
 alias hide-desktop-icons='gsettings set org.gnome.desktop.background show-desktop-icons false'
 alias fix_public_html='sudo adduser $USER www-data && sudo chown -R www-data:www-data /home/$USER/public_html && sudo find /home/$USER/public_html -type d -exec chmod 775 {} \; && sudo find /home/$USER/public_html -type f -exec chmod 664 {} \;'
