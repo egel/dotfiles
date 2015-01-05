@@ -139,19 +139,26 @@ let g:airline_powerline_fonts=1
 let g:session_autosave = 'yes'
 let g:session_autoload = 'yes'
 
-" vim-latex customize
-let g:Tex_DefaultTargetFormat = 'pdf'
-let g:Tex_MultipleCompileFormats='pdf, aux'
+" ----- vim-latex customization -----
+" IMPORTANT: win32 users will need to have 'shellslash' set so that latex
+" can be called correctly.
+set shellslash
+
+" IMPORTANT: grep will sometimes skip displaying the file name if you
+" search in a singe file. This will confuse Latex-Suite. Set your grep
+" program to alway generate a file-name.
+set grepprg=grep\ -nH\ $*
 
 " TIP: if you write your \label's as \label{fig:something}, then if you
 " type in \ref{fig: and press <C-n> you will automatically cycle through
 " all the figure labels. Very useful!
 set iskeyword+=:
 
-" IMPORTANT: grep will sometimes skip displaying the file name if you
-" search in a singe file. This will confuse Latex-Suite. Set your grep
-" program to alway generate a file-name.
-set grepprg=grep\ -nH\ $*
+" Set latex flavor for code highlighting
+let g:tex_flavor='latex'
+
+let g:Tex_DefaultTargetFormat = 'pdf'
+let g:Tex_MultipleCompileFormats='pdf, aux'
 
 " Open pdf to the current location in a LaTeX file
 " Read more: http://vim.wikia.com/wiki/Open_pdf_to_the_current_location_in_a_LaTeX_file
@@ -193,6 +200,13 @@ function! EvinceNearestLabel()
 endfunction
 
 autocmd BufRead,BufNewFile *.tex setlocal formatoptions+=w textwidth=120
+
+
+
+" --- SuperTab
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
+let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  Features
