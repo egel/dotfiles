@@ -36,7 +36,6 @@ set autoindent                                  " set auto indent
 set tabstop=2 shiftwidth=2 softtabstop=2        " set indent to 2 spaces
 set expandtab                                   " use spaces, not tab characters
 
-
 set wildmenu                                    " enable bash style tab completion
 set wildignore=*.o,*.obj,*~                     "stuff to ignore when tab completing
 set wildignore+=*sass-cache*
@@ -50,22 +49,30 @@ set hlsearch                                    " Highlight searches
 set showmatch                                   " show bracket matches
 set incsearch                                   " show search results as I type
 
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  Appearance
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set linespace=5           " set space between lines
+set linespace=5           " set space between lines (option only for GUI)
 set background=dark       " Set colors of vim to more convinient for black backgound
 set t_Co=256              " 256 colors in terminal
 
 " Different templates depends on GUI or LUI
 if has('gui_running')
   colorscheme gruvbox
-  set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
   set guioptions-=T                               " turn off GUI toolbar (icons)
   set guioptions+=e
   set guioptions-=r                               " turn off GUI right scrollbar
   set guioptions-=L                               " turn off GUI left scrollbar
   set guitablabel=%M\ %t
+
+  if has("gui_gtk2")
+    set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
+  elseif has("gui_macvim")
+    set guifont=Menlo\ Regular:h14
+  elseif has("gui_win32")
+    set guifont=Consolas:h11:cANSI
+  endif
 else
   colorscheme desert
 
@@ -202,11 +209,6 @@ endfunction
 autocmd BufRead,BufNewFile *.tex setlocal formatoptions+=w textwidth=120
 
 
-
-" --- SuperTab
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
-let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  Features
