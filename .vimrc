@@ -127,15 +127,20 @@ autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                              Plugin Helpers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" NerdTree_Tabs
+" ----- NerdTree_Tabs
 let g:nerdtree_tabs_open_on_gui_startup=0
 let g:nerdtree_tabs_open_on_new_tab=0
 let g:NERDTreeWinSize=50
 
 
-" GitGutter
-set updatetime=1000
+" ----- GitGutter
 let g:gitgutter_realtime=1
+
+" this difference can be tracked by this issue: https://github.com/airblade/vim-gitgutter/issues/113
+if has('gui_running')
+  set updatetime=250
+else
+  set updatetime=1000
 
 " Proper display GitGutter for darker themes
 highlight clear SignColumn
