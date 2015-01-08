@@ -141,6 +141,7 @@ if has('gui_running')
   set updatetime=250
 else
   set updatetime=1000
+endif
 
 " Proper display GitGutter for darker themes
 highlight clear SignColumn
