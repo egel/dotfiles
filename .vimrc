@@ -132,12 +132,17 @@ let g:nerdtree_tabs_open_on_gui_startup=0
 let g:nerdtree_tabs_open_on_new_tab=0
 let g:NERDTreeWinSize=50
 
+
+" GitGutter
+set updatetime=1000
+let g:gitgutter_realtime=1
+
 " Proper display GitGutter for darker themes
 highlight clear SignColumn
-highlight GitGutterAdd ctermfg=green guifg=darkgreen
-highlight GitGutterChange ctermfg=yellow guifg=darkyellow
-highlight GitGutterDelete ctermfg=red guifg=darkred
-highlight GitGutterChangeDelete ctermfg=yellow guifg=darkyellow
+highlight GitGutterAdd ctermfg=green guifg=#9CCF31
+highlight GitGutterChange ctermfg=yellow guifg=#F7D708
+highlight GitGutterDelete ctermfg=red guifg=#CE0000
+highlight GitGutterChangeDelete ctermfg=yellow guifg=#F7D708
 
 " Add powerline fonts to vim
 let g:airline_powerline_fonts=1
