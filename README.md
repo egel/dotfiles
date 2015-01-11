@@ -44,7 +44,7 @@ If you use [vim-instant-markdown](https://github.com/suan/vim-instant-markdown),
 If you want to have Powerline fonts as well, you need to install them first:
 
     $ cd ~/ && git clone git@github.com:Lokaltog/powerline-fonts.git
-    $ ./powerline-fonts/install.py
+    $ ./powerline-fonts/install.sh
     $ rm ~/powerline-fonts/ -rf
     $ cd ~/ && \
       wget https://github.com/Lokaltog/powerline/raw/develop/font/PowerlineSymbols.otf && \
