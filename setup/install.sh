@@ -12,13 +12,13 @@ sudo gem install redcarpet pygments.rb && \
   sudo npm -g install instant-markdown-d && \
   sudo chown -R `whoami` ~/.npm
 
+
 echo "--- Installing: Powerline fonts"
-cd ~/ && git clone git@github.com:Lokaltog/powerline-fonts.git
-./powerline-fonts/install.py
+git clone git@github.com:Lokaltog/powerline-fonts.git ~/powerline-fonts
+~/powerline-fonts/install.py
 rm ~/powerline-fonts/ -rf
-cd ~/ && \
-  wget https://github.com/Lokaltog/powerline/raw/develop/font/PowerlineSymbols.otf && \
-  wget https://github.com/Lokaltog/powerline/raw/develop/font/10-powerline-symbols.conf
+wget https://github.com/Lokaltog/powerline/raw/develop/font/PowerlineSymbols.otf -P ~/
+wget https://github.com/Lokaltog/powerline/raw/develop/font/10-powerline-symbols.conf -P ~/
 mkdir -p ~/.local/share/fonts/ ~/.config/fontconfig/conf.d/
 mv PowerlineSymbols.otf ~/.local/share/fonts/ && \
 mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
@@ -27,4 +27,4 @@ fc-cache -vf
 echo -e "To see more details for powerline installation look at: https://powerline.readthedocs.org/en/latest/installation/linux.html#font-installation"
 
 echo -e "========= Configure and relocate dot-files repository files ========="
-./~/dot-files/setup/configure-files.py
+~/dot-files/setup/configure_files.py
