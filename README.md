@@ -4,6 +4,10 @@
 
 > Dot-files for Ubuntu 14.04 LTS
 
+* * *
+[Installation](#installation) | [Update](#update) | [Extra features](#extra-features)
+* * *
+
 **Sample screenshots**
 
 <img src="https://raw.githubusercontent.com/egel/dot-files/master/img/terminal.jpg" title="Guake + Tmux + Vim - The ultimate workset" width="300" />
@@ -11,60 +15,51 @@
 
 This set contains:
 
-  - **Git**
-    - configuration
-    - useful aliases
-  - **Vim**
-    - configuration (with Powerline fonts)
-    - general most useful modules
-  - **tmux**
-    - configuration
-  - **conky**
-    - configuration
-    - themes
-  - **bash**
-    - useful aliases
+  - **Git** (configuration, useful aliases)
+  - **Vim** (configuration [with Powerline fonts], general most useful modules)
+  - **tmux** (configuration [with Powerline fonts], key-bindingsi, copy-paste to clippboard)
+  - **conky** (configuration, themes)
+  - **bash** (useful aliases)
 
 
-## Installation repository
-
-Instalator won't remove any of your previous configurations. It will save them all by simply renaming it into its directories.
+## Installation
+> Instalator won't remove any of your previous configurations. It will save them all by simply renaming it into its directories.
 
     $ cd ~/ && git clone --recursive git@github.com:egel/dot-files.git && \
-      ./dot-files/setup/run.py
-
-If you use [vim-instant-markdown](https://github.com/suan/vim-instant-markdown), you might want to install few additional libraries:
-
-    $ sudo apt-add-repository ppa:chris-lea/node.js && sudo apt-get update
-    $ sudo apt-get install ruby1.9.3 xdg-utils python-software-properties nodejs
-    $ sudo gem install redcarpet pygments.rb && \
-      sudo npm -g install instant-markdown-d && \
-      sudo chown -R `whoami` ~/.npm
-
-If you want to have Powerline fonts as well, you need to install them first:
-
-    $ cd ~/ && git clone git@github.com:Lokaltog/powerline-fonts.git
-    $ ./powerline-fonts/install.py
-    $ rm ~/powerline-fonts/ -rf
-    $ cd ~/ && \
-      wget https://github.com/Lokaltog/powerline/raw/develop/font/PowerlineSymbols.otf && \
-      wget https://github.com/Lokaltog/powerline/raw/develop/font/10-powerline-symbols.conf
-    $ mkdir -p ~/.local/share/fonts/ ~/.config/fontconfig/conf.d/
-    $ mv PowerlineSymbols.otf ~/.local/share/fonts/ && \
-      mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
-    $ fc-cache -vf
-
-> To see more details for powerline installation look at [powerline install webpage]
+      ./dot-files/setup/install.sh
 
 The last thing is to set `Ubuntu Mono derivative Powerline` as default terminal font and reset X, simply by restart the computer.
 
 
+## Update
 
-## Update repository
+    $ ./~/dot-files/setup/update.sh
 
-    $ cd ~/dot-files/ && \
-      git submodule update --init --recursive && \
-      git pull --recurse-submodules
+# Extra features
+
+## Add colors to man pages
+
+    $ echo "" >> ~/.bashrc && \
+      echo ""# Add colors to man pages" >> ~/.bashrc && \
+      echo "export LESS_TERMCAP_mb=$(printf '\e[01;31m') # enter blinking mode – red" >> ~/.bashrc && \
+      echo "export LESS_TERMCAP_md=$(printf '\e[01;35m') # enter double-bright mode – bold, magenta" >> ~/.bashrc && \
+      echo "export LESS_TERMCAP_me=$(printf '\e[0m')     # turn off all appearance modes (mb, md, so, us)" >> ~/.bashrc && \
+      echo "export LESS_TERMCAP_se=$(printf '\e[0m')     # leave standout mode" >> ~/.bashrc && \
+      echo "export LESS_TERMCAP_so=$(printf '\e[01;33m') # enter standout mode – yellow" >> ~/.bashrc && \
+      echo "export LESS_TERMCAP_ue=$(printf '\e[0m')     # leave underline mode" >> ~/.bashrc && \
+      echo "export LESS_TERMCAP_us=$(printf '\e[04;36m') # enter underline mode – cyan" >> ~/.bashrc && \
+
+or
+
+    $ echo "" >> ~/.bashrc && \
+      echo "# Add colors to man pages" >> ~/.bashrc && \
+      echo "export LESS_TERMCAP_mb=$(printf '\e[01;31m')        # enter blinking mode" >> ~/.bashrc && \
+      echo "export LESS_TERMCAP_md=$(printf '\e[01;38;5;75m')   # enter double-bright mode" >> ~/.bashrc && \
+      echo "export LESS_TERMCAP_me=$(printf '\e[0m')            # turn off all appearance modes (mb, md, so, us)" >> ~/.bashrc && \
+      echo "export LESS_TERMCAP_se=$(printf '\e[0m')            # leave standout mode" >> ~/.bashrc && \
+      echo "export LESS_TERMCAP_so=$(printf '\e[01;33m')        # enter standout mode – yellow" >> ~/.bashrc && \
+      echo "export LESS_TERMCAP_ue=$(printf '\e[0m')            # leave underline mode" >> ~/.bashrc && \
+      echo "export LESS_TERMCAP_us=$(printf '\e[04;38;5;200m')  # enter underline mode" >> ~/.bashrc && \
 
 
 ## Funny
