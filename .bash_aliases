@@ -13,6 +13,7 @@ alias ls='ls --color=auto --group-directories-first'
 alias ll='ls -lh'
 alias ..='cd ..'
 alias cd..='cd ..'
+alias ...='cd ../..'
 
 alias show-gitsubmodules="git submodule status | cut -d' ' -f3-4"
 alias show-desktop-icons='gsettings set org.gnome.desktop.background show-desktop-icons true'
