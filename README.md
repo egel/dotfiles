@@ -25,15 +25,15 @@ This set contains:
 ## Installation
 > Instalator won't remove any of your previous configurations. It will save them all by simply renaming it into its directories.
 
-    $ cd ~/ && git clone --recursive git@github.com:egel/dot-files.git && \
-      ./dot-files/setup/install.sh
+    $ git clone --recursive git@github.com:egel/dot-files.git ~/dot-files && \
+      ~/dot-files/setup/install.sh
 
 The last thing is to set `Ubuntu Mono derivative Powerline` as default terminal font and reset X, simply by restart the computer.
 
 
 ## Update
 
-    $ ./~/dot-files/setup/update.sh
+    $ ~/dot-files/setup/update.sh
 
 # Extra features
 
