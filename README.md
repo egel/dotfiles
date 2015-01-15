@@ -38,40 +38,15 @@ The last thing is to set `Ubuntu Mono derivative Powerline` as default terminal 
 # Extra features
 
 ## Add colors to man pages
+Add some life to manual pages:
 
-    $ echo "" >> ~/.bashrc && \
-      echo ""# Add colors to man pages" >> ~/.bashrc && \
-      echo "export LESS_TERMCAP_mb=$(printf '\e[01;31m') # enter blinking mode – red" >> ~/.bashrc && \
-      echo "export LESS_TERMCAP_md=$(printf '\e[01;35m') # enter double-bright mode – bold, magenta" >> ~/.bashrc && \
-      echo "export LESS_TERMCAP_me=$(printf '\e[0m')     # turn off all appearance modes (mb, md, so, us)" >> ~/.bashrc && \
-      echo "export LESS_TERMCAP_se=$(printf '\e[0m')     # leave standout mode" >> ~/.bashrc && \
-      echo "export LESS_TERMCAP_so=$(printf '\e[01;33m') # enter standout mode – yellow" >> ~/.bashrc && \
-      echo "export LESS_TERMCAP_ue=$(printf '\e[0m')     # leave underline mode" >> ~/.bashrc && \
-      echo "export LESS_TERMCAP_us=$(printf '\e[04;36m') # enter underline mode – cyan" >> ~/.bashrc && \
-
-or
-
-    $ echo "" >> ~/.bashrc && \
-      echo "# Add colors to man pages" >> ~/.bashrc && \
-      echo "export LESS_TERMCAP_mb=$(printf '\e[01;31m')        # enter blinking mode" >> ~/.bashrc && \
-      echo "export LESS_TERMCAP_md=$(printf '\e[01;38;5;75m')   # enter double-bright mode" >> ~/.bashrc && \
-      echo "export LESS_TERMCAP_me=$(printf '\e[0m')            # turn off all appearance modes (mb, md, so, us)" >> ~/.bashrc && \
-      echo "export LESS_TERMCAP_se=$(printf '\e[0m')            # leave standout mode" >> ~/.bashrc && \
-      echo "export LESS_TERMCAP_so=$(printf '\e[01;33m')        # enter standout mode – yellow" >> ~/.bashrc && \
-      echo "export LESS_TERMCAP_ue=$(printf '\e[0m')            # leave underline mode" >> ~/.bashrc && \
-      echo "export LESS_TERMCAP_us=$(printf '\e[04;38;5;200m')  # enter underline mode" >> ~/.bashrc && \
+    $ ~/setup/extras/colors_man_pages.sh
 
 
 ## Funny
-To have nice frogs with some fortune text install:
+To have nice frogs with some fortune text whenever you run termial just run:
 
-    $ sudo apt-get install cowsay fortune-mod
-
-then run:
-
-    $ echo '' >> ~/.bashrc && \
-      echo '# Add funny-dummy text to new instance of teminal' >> ~/.bashrc && \
-      echo 'fortune | cowsay -W80 -f bud-frogs' >> ~/.bashrc
+    $ ~/setup/extras/funny_frogs.sh
 
 
  [powerline install webpage]: https://powerline.readthedocs.org/en/latest/installation/linux.html#font-installation
