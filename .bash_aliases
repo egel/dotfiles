@@ -13,6 +13,8 @@ alias ls='ls --color=auto --group-directories-first'
 alias ll='ls -lh'
 alias ..='cd ..'
 alias cd..='cd ..'
+
+alias show-gitsubmodules="grep path .gitmodules | sed 's/.*= //'"
 alias show-desktop-icons='gsettings set org.gnome.desktop.background show-desktop-icons true'
 alias hide-desktop-icons='gsettings set org.gnome.desktop.background show-desktop-icons false'
 alias fix_public_html='sudo adduser $USER www-data && sudo chown -R www-data:www-data /home/$USER/public_html && sudo find /home/$USER/public_html -type d -exec chmod 775 {} \; && sudo find /home/$USER/public_html -type f -exec chmod 664 {} \;'
