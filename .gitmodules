@@ -91,9 +91,6 @@
 [submodule ".vim/bundle/vim-haml"]
 	path = .vim/bundle/vim-haml
 	url = git@github.com:tpope/vim-haml.git
-[submodule "vim-hemisu"]
-	path = vim-hemisu
-	url = https://github.com/noahfrederick/vim-hemisu
 [submodule ".vim/bundle/jellybeans.vim"]
 	path = .vim/bundle/jellybeans.vim
 	url = git@github.com:nanotech/jellybeans.vim.git
