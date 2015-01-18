@@ -140,7 +140,7 @@ let g:gitgutter_realtime=1
 if has('gui_running')
   set updatetime=250
 else
-  set updatetime=1001
+  set updatetime=1200
 endif
 
 " Proper display GitGutter for darker themes
