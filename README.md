@@ -28,7 +28,7 @@ This set contains:
     $ git clone --recursive git@github.com:egel/dot-files.git ~/dot-files && \
       ~/dot-files/setup/install.sh
 
-The last thing is to set `Ubuntu Mono derivative Powerline` as default terminal font and reset X, simply by restart the computer.
+The last thing is to set `Ubuntu Mono derivative Powerline` as default `terminal` and `guake` font and reset X, simply by restart the computer.
 
 
 ## Update
