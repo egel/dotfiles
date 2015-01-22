@@ -55,7 +55,6 @@ set incsearch                                   " show search results as I type
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set linespace=5           " set space between lines (option only for GUI)
 set background=dark       " Set colors of vim to more convinient for black backgound
-set t_Co=256              " 256 colors in terminal
 
 " Different templates depends on GUI or LUI
 if has('gui_running')
@@ -75,6 +74,11 @@ if has('gui_running')
   endif
 else
   colorscheme desert
+
+  " If terminal support 256 then turn it on
+  if $TERM == "xterm-256color"
+    set t_Co=256
+  endif
 
   " indent guidlines for terminal
   hi IndentGuidesOdd  ctermbg=black
