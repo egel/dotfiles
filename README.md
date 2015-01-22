@@ -37,6 +37,11 @@ The last thing is to set `Ubuntu Mono derivative Powerline` as default terminal 
 
 # Extra features
 
+## Set 256 colors for terminal
+Run this simple script to add 256 support
+
+    $ ~/setup/extras/xterm_and_tmux_256_colors.sh
+
 ## Add colors to man pages
 Add some life to manual pages:
 
