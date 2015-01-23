@@ -73,11 +73,13 @@ if has('gui_running')
     set guifont=Consolas:h11:cANSI
   endif
 else
-  colorscheme desert
-
   " If terminal support 256 then turn it on
   if $TERM == "xterm-256color"
     set t_Co=256
+    colorscheme gruvbox
+  elseif
+    " If not support 256 then...
+    colorscheme desert
   endif
 
   " indent guidlines for terminal
