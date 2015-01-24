@@ -77,7 +77,7 @@ else
   if $TERM == "xterm-256color"
     set t_Co=256
     colorscheme gruvbox
-  elseif
+  else
     " If not support 256 then...
     colorscheme desert
   endif
