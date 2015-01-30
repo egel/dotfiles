@@ -20,6 +20,8 @@
   keepBackup = false
 
 [alias]
+  currentUser = ! git config --list | grep "user" | grep -v "currentUser"
+
   st = status
 
   cl = clone
