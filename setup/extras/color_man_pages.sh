@@ -6,14 +6,14 @@ yellow='\e[0;33m'
 purple='\e[0;35m'
 endColor='\e[0m'
 
-echo -e "${purple}====== Adding color to man pages ======${endColor}Í"
+echo -e "${purple}====== Adding color to man pages ======${endColor}"
 echo "" >> ~/.bashrc && \
 echo "# Add colors to man pages" >> ~/.bashrc && \
-echo 'export LESS_TERMCAP_mb=$"\E[01;31m"  # enter blinking mode' >> ~/.bashrc && \
-echo 'export LESS_TERMCAP_md=$"\E[01;31m"  # enter double-bright mode' >> ~/.bashrc && \
-echo 'export LESS_TERMCAP_me=$""\E[0m"  # turn off all appearance modes (mb, md, so, us)' >> ~/.bashrc && \
-echo 'export LESS_TERMCAP_se=$""\E[0m"  # leave standout mode' >> ~/.bashrc && \
-echo 'export LESS_TERMCAP_so=$""\E[01;44;33m"  # enter standout mode – yellow' >> ~/.bashrc && \
-echo 'export LESS_TERMCAP_ue=$""\E[0m"  # leave underline mode' >> ~/.bashrc && \
-echo 'export LESS_TERMCAP_us=$""\E[01;32m" # enter underline mode' >> ~/.bashrc
+printf 'export LESS_TERMCAP_mb=$"\E[01;31m"     # enter blinking mode\n' >> ~/.bashrc && \
+printf 'export LESS_TERMCAP_md=$"\E[01;31m"     # enter double-bright mode\n' >> ~/.bashrc && \
+printf 'export LESS_TERMCAP_me=$"\E[0m"         # turn off all appearance modes (mb, md, so, us)\n' >> ~/.bashrc && \
+printf 'export LESS_TERMCAP_se=$"\E[0m"         # leave standout mode\n' >> ~/.bashrc && \
+printf 'export LESS_TERMCAP_so=$"\E[01;44;33m"  # enter standout mode – yellow\n' >> ~/.bashrc && \
+printf 'export LESS_TERMCAP_ue=$"\E[0m"         # leave underline mode\n' >> ~/.bashrc && \
+printf 'export LESS_TERMCAP_us=$"\E[01;32m"     # enter underline mode\n' >> ~/.bashrc
 echo -e "${green}✔ Done${endColor}"
