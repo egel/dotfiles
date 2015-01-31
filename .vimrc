@@ -53,7 +53,7 @@ set incsearch                                   " show search results as I type
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  Appearance
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set linespace=5           " set space between lines (option only for GUI)
+set linespace=10           " set space between lines (option only for GUI)
 set background=dark       " Set colors of vim to more convinient for black backgound
 
 " Different templates depends on GUI or LUI
@@ -136,7 +136,7 @@ autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
 " ----- NerdTree_Tabs
 let g:nerdtree_tabs_open_on_gui_startup=0
 let g:nerdtree_tabs_open_on_new_tab=0
-let g:NERDTreeWinSize=50
+let g:NERDTreeWinSize=40
 
 
 " ----- GitGutter
