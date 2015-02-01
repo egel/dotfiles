@@ -10,7 +10,7 @@
 
 **Sample screenshots**
 
-<img src="https://raw.githubusercontent.com/egel/dot-files/master/img/terminal.jpg" title="Guake + Tmux + Vim - The ultimate workset" width="300" />
+<img src="https://raw.githubusercontent.com/egel/dot-files/master/img/terminal.jpg" title="Guake with Tmux + Git log + Vim + shell colors - The ultimate workset" width="300" />
 <img src="https://raw.githubusercontent.com/egel/dot-files/master/img/vim_gui.jpg" title="Vim GUI Interface" width="300" />
 
 This set contains:
@@ -23,15 +23,23 @@ This set contains:
 
 
 ## Installation
-> Instalator won't remove any of your previous configurations. It will save them all by simply renaming it into its directories.
+> Don't be afraid, **instalator won't remove any of your previous configurations**. It will save them all, simply by renaming files into its directories.
 
     $ git clone --recursive git@github.com:egel/dot-files.git ~/dot-files && \
       ~/dot-files/setup/install.sh
 
 The last thing is to set `Ubuntu Mono derivative Powerline` as default `terminal` and `guake` font and reset X, simply by restart the computer.
 
+> In case that you won't reset your PC, you can reload config files without exiting from it.
+>
+> **Refresh configs**:
+> - Bash: `source ~/.bashrc`
+> - Vim (into program): `source ~/.vimrc`
+> - tmux (into program): `source ~/.tmux.conf`
+
 
 ## Update
+To update whole **dot-files** repository and its sub-repositories (like example vim plugins) just run:
 
     $ ~/dot-files/setup/update.sh
 
@@ -40,18 +48,17 @@ The last thing is to set `Ubuntu Mono derivative Powerline` as default `terminal
 ## Set 256 colors for terminal
 Run this simple script to add 256 support
 
-    $ ~/setup/extras/xterm_and_tmux_256_colors.sh
+    $ wget https://raw.githubusercontent.com/egel/dot-files/master/setup/extras/xterm_and_tmux_256_colors.sh -q -O - | bash
 
 ## Add colors to man pages
 Add some life to manual pages:
 
-    $ ~/setup/extras/colors_man_pages.sh
+    $ wget https://raw.githubusercontent.com/egel/dot-files/master/setup/extras/color_man_pages -q -O - >> ~/.bashrc
 
 
 ## Funny
-To have nice frogs with some fortune text whenever you run termial just run:
+To have nice frogs with some fortune text whenever you run termial. hen just run:
 
-    $ ~/setup/extras/funny_frogs.sh
+    $ wget https://raw.githubusercontent.com/egel/dot-files/master/setup/extras/funny_frogs.sh -q -O - | bash
 
-
- [powerline install webpage]: https://powerline.readthedocs.org/en/latest/installation/linux.html#font-installation
+ [powerline-install-webpage]: https://powerline.readthedocs.org/en/latest/installation/linux.html#font-installation
