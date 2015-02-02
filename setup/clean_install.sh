@@ -8,4 +8,4 @@ endColor='\e[0m'
 
 echo -e "${yellow}====== Clean installation files of egel dot-files ======${endColor}"
 echo -e "${purple}Removing previous soft links to dot-files${endColor}"
-rm .vim\(* .vimrc\(* .gitconfig\(* .bash_aliases\(* .conkyrc\(* .tmux.conf\(*^
+rm ~/.vim\(* ~/.vimrc\(* ~/.gitconfig\(* ~/.bash_aliases\(* ~/.conkyrc\(* ~/.tmux.conf\(*^
