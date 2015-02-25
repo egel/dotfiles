@@ -49,6 +49,9 @@ set hlsearch                                    " Highlight searches
 set showmatch                                   " show bracket matches
 set incsearch                                   " show search results as I type
 
+" This workaround is for fluent loading files from sessions (don't "press
+" ENTER and ..." to confirm loading) http://stackoverflow.com/a/890810/1977012
+silent !<command>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  Appearance
