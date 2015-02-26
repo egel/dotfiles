@@ -97,3 +97,6 @@
 [submodule ".vim/bundle/vim-hemisu"]
 	path = .vim/bundle/vim-hemisu
 	url = git@github.com:noahfrederick/vim-hemisu.git
+[submodule ".vim/bundle/vim-monokai"]
+	path = .vim/bundle/vim-monokai
+	url = git@github.com:sickill/vim-monokai.git
