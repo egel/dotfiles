@@ -27,6 +27,8 @@
   cl = clone
   ls = ls-tree --full-tree -r HEAD
 
+  aa = add --all
+
   ci = commit
   cm = commit -m
   cma = commit -a -m
