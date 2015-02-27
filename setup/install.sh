@@ -7,6 +7,9 @@ purple='\e[0;35m'
 endColor='\e[0m'
 
 echo -e "${yellow}========== Installation of egel's dot-files ==========${endColor}"
+echo -e "--- Updating repository stuff"
+~/dot-files/setup/update.sh
+
 echo -e "--- Installing: node.js, ruby, redcarpet, pygments"
 sudo apt-get install -y python-software-properties software-properties-common
 sudo apt-add-repository -y ppa:chris-lea/node.js
