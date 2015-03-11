@@ -18,4 +18,6 @@ alias ...='cd ../..'
 alias show-gitsubmodules="git submodule status | cut -d' ' -f3-4"
 alias show-desktop-icons='gsettings set org.gnome.desktop.background show-desktop-icons true'
 alias hide-desktop-icons='gsettings set org.gnome.desktop.background show-desktop-icons false'
+
+alias show-source-list="grep ^ /etc/apt/sources.list /etc/apt/sources.list.d/*"
 alias fix_public_html='sudo adduser $USER www-data && sudo chown -R www-data:www-data /home/$USER/public_html && sudo find /home/$USER/public_html -type d -exec chmod 775 {} \; && sudo find /home/$USER/public_html -type f -exec chmod 664 {} \;'
