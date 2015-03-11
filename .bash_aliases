@@ -1,7 +1,6 @@
 alias aktualizuj='sudo apt-get clean && sudo apt-get autoclean && sudo apt-get autoremove && sudo apt-get update && sudo apt-get dist-upgrade'
-alias zamknij='sudo shutdown -h now'
-alias zamknij_za_minut='sudo su && shutdown -m'
-alias instaluj='sudo apt-get install'
+alias zamknij-teraz='sudo shutdown -h now'
+alias zamknij='sudo su && shutdown -m'
 
 alias rm="rm -v"
 alias mv="mv -i"
@@ -11,9 +10,12 @@ alias grep="egrep -i"
 alias l='ls'
 alias ls='ls --color=auto --group-directories-first'
 alias ll='ls -lh'
-alias ..='cd ..'
+
 alias cd..='cd ..'
-alias ...='cd ../..'
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
 
 alias show-gitsubmodules="git submodule status | cut -d' ' -f3-4"
 alias show-desktop-icons='gsettings set org.gnome.desktop.background show-desktop-icons true'
