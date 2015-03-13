@@ -9,6 +9,5 @@ endColor='\e[0m'
 echo -e "${purple}====== Adding config to ~/.bashrc ======${endColor}"
 echo "" >> ~/.bashrc && \
 echo "# Manually add 256colors support for xTerm and tmux" >> ~/.bashrc && \
-echo "export TERM=xterm-256color" >> ~/.bashrc && \
-echo "alias tmux=\"tmux -2\"" >> ~/.bashrc
+echo "alias tmux=\"TERM=screen-256color-bce tmux\"" >> ~/.bashrc
 echo -e "${green}✔ Done${endColor}"
