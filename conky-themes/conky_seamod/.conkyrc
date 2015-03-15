@@ -55,10 +55,10 @@ default_color FFFFFF
 color1 DDDDDD
 color2 AAAAAA
 color3 888888
-# Orange
-color4 EF5A29
+# Dark Orange
+color4 E74632
 # Green
-color5 77B753
+color5 91AA24
 
 # Loading lua script for drawning rings
 lua_load ~/dot-files/conky-themes/conky_seamod/seamod_rings.lua
@@ -109,9 +109,9 @@ ${voffset 43}
 ${offset 90}${font Ubuntu:size=10,weight:bold}${color5}ETHERNET
 ${voffset 40}
 ${offset 15}${color1}${font Ubuntu:size=9,weight:bold}Upload: ${alignr}${font Ubuntu:size=9,weight:normal}$color2${upspeed wlan0} / ${totalup}
-${offset 15}${upspeedgraph wlan0 40,285 4B1B0C FF5C2B 100 -l}
+${offset 15}${upspeedgraph wlan0 40,285 83352A FF5C2B 100 -l}
 ${offset 15}${color1}${font Ubuntu:size=9,weight:bold}Download: ${alignr}${font Ubuntu:size=9,weight:normal}$color2${downspeed wlan0} / ${totaldown}
-${offset 15}${downspeedgraph wlan0 40,285 324D23 77B753 100 -l}
+${offset 15}${downspeedgraph wlan0 40,285 6A7735 91AA24 100 -l}
 ${color4}${hr 2}
 
 
