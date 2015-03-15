@@ -1,3 +1,4 @@
+# Bash Extras - personal configuration
 RESET="\[\017\]"
 NORMAL="\[\033[00m\]"
 GREEN="\[\033[01;32m\]"
@@ -26,17 +27,17 @@ export HISTIGNORE="&:ls:[bf]g:exit"
 fortune | cowsay -W80 -f bud-frogs
 
 # Manually add 256colors support for xTerm and tmux
-export TERM=xterm-256color
-alias tmux="tmux -2"
+export TERM="xterm-256color"
+alias tmux="TERM=xterm-256color tmux"
 
-# COLOR man pages
-export LESS_TERMCAP_mb=$'\E[01;31m'
-export LESS_TERMCAP_md=$'\E[01;31m'
-export LESS_TERMCAP_me=$'\E[0m'
-export LESS_TERMCAP_se=$'\E[0m'
-export LESS_TERMCAP_so=$'\E[01;44;33m'
-export LESS_TERMCAP_ue=$'\E[0m'
-export LESS_TERMCAP_us=$'\E[01;32m'
+# Add colors to man pages
+export LESS_TERMCAP_mb=$'\E[01;31m'     # enter blinking mode
+export LESS_TERMCAP_md=$'\E[01;31m'     # enter double-bright mode
+export LESS_TERMCAP_me=$'\E[0m'         # turn off all appearance modes (mb, md, so, us)
+export LESS_TERMCAP_se=$'\E[0m'         # leave standout mode
+export LESS_TERMCAP_so=$'\E[01;44;33m'  # enter standout mode – yellow
+export LESS_TERMCAP_ue=$'\E[0m'         # leave underline mode
+export LESS_TERMCAP_us=$'\E[01;32m'     # enter underline mode
 
 # Some more ls aliases
 alias ll="ls -l"
