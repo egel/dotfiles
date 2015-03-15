@@ -5,7 +5,7 @@
 > Dot-files for Ubuntu 14.04 LTS
 
 * * *
-[Installation](#installation) | [Update](#update) | [Extra features](#extra-features)
+[Installation](#installation) | [Update](#update) | [Extra features](#extra-features) | [Egel Cheat Sheet (PDF)](http://bit.ly/1wqcChS)
 * * *
 
 **Sample screenshots**
@@ -13,13 +13,13 @@
 <img src="https://raw.githubusercontent.com/egel/dot-files/master/img/terminal.jpg" title="Guake with Tmux + Git log + Vim + shell colors - The ultimate workset" width="300" />
 <img src="https://raw.githubusercontent.com/egel/dot-files/master/img/vim_gui.jpg" title="Vim GUI Interface" width="300" />
 
-This set contains:
+This set contains configuration for:
 
-  - **Git** (configuration, useful aliases)
-  - **Vim** (configuration [with Powerline fonts], general most useful modules)
-  - **tmux** (configuration [with Powerline fonts], key-bindingsi, copy-paste to clippboard)
-  - **conky** (configuration, themes)
-  - **bash** (useful aliases)
+  - **Git** (accounts, aliases)
+  - **Vim** ([modules](.vim/bundle))
+  - **tmux** (key-bindings, copy-paste to clippboard)
+  - **conky** (themes)
+  - **bash** (256colors, history, aliases)
 
 
 ## Installation
@@ -66,3 +66,5 @@ To have nice frogs with some fortune text whenever you run termial. hen just run
     $ wget https://raw.githubusercontent.com/egel/dot-files/master/setup/extras/funny_frogs.sh -q -O - | bash
 
  [powerline-install-webpage]: https://powerline.readthedocs.org/en/latest/installation/linux.html#font-installation
+ [.vim/bundle]: https://github.com/egel/dot-files/tree/master/.vim/bundle
+ [.gitconfig]: https://github.com/egel/dot-files/blob/master/.gitconfig
