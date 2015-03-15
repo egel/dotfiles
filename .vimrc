@@ -56,12 +56,14 @@ silent !<command>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  Appearance
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set linespace=10           " set space between lines (option only for GUI)
 set background=dark       " Set colors of vim to more convinient for black backgound
 
 " Different templates depends on GUI or LUI
 if has('gui_running')
   colorscheme gruvbox
+  set linespace=10           " set space between lines (option only for GUI)
+  g:gruvbox_underline=0      " according to linespace for example markdown files
+
   set guioptions-=T                               " turn off GUI toolbar (icons)
   set guioptions+=e
   set guioptions-=r                               " turn off GUI right scrollbar
