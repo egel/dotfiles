@@ -100,3 +100,6 @@
 [submodule ".vim/bundle/vim-monokai"]
 	path = .vim/bundle/vim-monokai
 	url = git@github.com:sickill/vim-monokai.git
+[submodule ".vim/bundle/vim-git"]
+	path = .vim/bundle/vim-git
+	url = https://github.com/tpope/vim-git
