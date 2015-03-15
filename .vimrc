@@ -77,7 +77,7 @@ if has('gui_running')
   endif
 else
   " If terminal support 256 then turn it on
-  if $TERM == "screen-256color"
+  if $TERM == "xterm-256color"
     set t_Co=256
     colorscheme gruvbox
   else
