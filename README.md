@@ -45,6 +45,11 @@ To update whole **dot-files** repository and its sub-repositories (like example 
 
 # Extra features
 
+## All in one
+Install all below extra features and more (history, aliases, prompt, ect.)
+
+    $ wget https://raw.githubusercontent.com/egel/dot-files/master/setup/extras/bash_extras -q -O - >> ~/.bashrc
+
 ## Set 256 colors for terminal
 Run this simple script to add 256 support
 
@@ -54,7 +59,6 @@ Run this simple script to add 256 support
 Add some life to manual pages:
 
     $ wget https://raw.githubusercontent.com/egel/dot-files/master/setup/extras/color_man_pages -q -O - >> ~/.bashrc
-
 
 ## Funny
 To have nice frogs with some fortune text whenever you run termial. hen just run:
