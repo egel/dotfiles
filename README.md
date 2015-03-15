@@ -10,8 +10,9 @@
 
 **Sample screenshots**
 
-<img src="https://raw.githubusercontent.com/egel/dot-files/master/img/terminal.jpg" title="Guake with Tmux + Git log + Vim + shell colors - The ultimate workset" width="300" />
-<img src="https://raw.githubusercontent.com/egel/dot-files/master/img/vim_gui.jpg" title="Vim GUI Interface" width="300" />
+<img src="http://i.imgur.com/hwi7ia0.png" title="Desktop with conky" width="320" />
+<img src="http://i.imgur.com/4l1A7rP.png" title="gVim with gruvbox colorscheme and NERDTree plugin on the right side" width="320" />
+<img src="http://i.imgur.com/Z48dPBU.png" title="Guake with friends - Git + dircolors + vim + 256color test" width="320" />
 
 This set contains configuration for:
 
