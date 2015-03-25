@@ -14,14 +14,15 @@ SELECT="if [ \$? = 0 ]; then echo \"${SMILEY}\"; else echo \"${FROWNY}\"; fi"
 PS1="${debian_chroot:+($debian_chroot)}${GREEN}\u${YELLOW}@${RED}\h${NORMAL}:${BLUE}\w${NORMAL}\$ "
 
 # History helper
-export HISTFILESIZE=2000000
-export HISTSIZE=1000000
-shopt -s histappend
-# Combine multiline commands into one in history
-shopt -s cmdhist
-# Ignore duplicates, ls without options and builtin commands
-HISTCONTROL=ignoredups
-export HISTIGNORE="&:ls:[bf]g:exit"
+export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
+export HISTIGNORE="&:ls:[bf]g:exit"      # ls without options and builtin commands
+export HISTSIZE=100000                   # big big history
+export HISTFILESIZE=100000               # big big history
+shopt -s histappend                      # append to history, don't overwrite it
+shopt -s cmdhist                         # Combine multiline commands into one in history
+
+# Save and reload the history after each command finishes
+export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 # Add funny-dummy text to new instance of teminal
 fortune | cowsay -W80 -f bud-frogs
