@@ -58,6 +58,9 @@ silent !<command>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set background=dark       " Set colors of vim to more convinient for black backgound
 
+set t_Co=256
+colorscheme gruvbox
+
 " Different templates depends on GUI or LUI
 if has('gui_running')
   colorscheme gruvbox
@@ -78,15 +81,6 @@ if has('gui_running')
     set guifont=Consolas:h11:cANSI
   endif
 else
-  " If terminal support 256 then turn it on
-  if $TERM == "xterm-256color"
-    set t_Co=256
-    colorscheme gruvbox
-  else
-    " If not support 256 then...
-    colorscheme desert
-  endif
-
   " indent guidlines for terminal
   hi IndentGuidesOdd  ctermbg=black
   hi IndentGuidesEven ctermbg=darkgrey
