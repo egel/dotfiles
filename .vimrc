@@ -55,10 +55,6 @@ set incsearch                                   " show search results as I type
 set sessionoptions+=unix,slash " for unix/windows compatibility
 set nostartofline " do not go to start of line automatically when moving
 
-" This workaround is for fluent loading files from sessions (don't "press
-" ENTER and ..." to confirm loading) http://stackoverflow.com/a/890810/1977012
-silent !<command>
-
 set commentstring=#\ %s
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
