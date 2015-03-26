@@ -57,8 +57,7 @@ silent !<command>
 "                                  Appearance
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set background=dark       " Set colors of vim to more convinient for black backgound
-
-set t_Co=256
+set t_Co=256              " Set 256 colors pallete
 colorscheme gruvbox
 
 " Different templates depends on GUI or LUI
@@ -132,10 +131,16 @@ autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                              Plugin Helpers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" ----- NerdTree_Tabs
+" ----- NerdTree
+" tabs
 let g:nerdtree_tabs_open_on_gui_startup=0
 let g:nerdtree_tabs_open_on_new_tab=0
+
+" nerdtree window size
 let g:NERDTreeWinSize=40
+
+" close vim when the only window left open is a NERDTree?
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary")
 
 
 " ----- GitGutter
@@ -145,7 +150,8 @@ let g:gitgutter_realtime=1
 if has('gui_running')
   set updatetime=250
 else
-  set updatetime=1200
+  " must be more then 1200ms (internal tasks of vim)
+  set updatetime=1300
 endif
 
 " Proper display GitGutter for darker themes
@@ -161,6 +167,18 @@ let g:airline_powerline_fonts=1
 " Autosession for vim-session
 let g:session_autosave = 'yes'
 let g:session_autoload = 'yes'
+
+
+" ----- Syntastic plugin settings -----
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
 
 " ----- vim-latex customization -----
 " IMPORTANT: win32 users will need to have 'shellslash' set so that latex
