@@ -4,6 +4,8 @@
 "                        Using Pathogen plugin manager
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set nocompatible " This must be first, because it changes other options as a side effect.
+
 set encoding=utf-8 fileencoding=utf-8 termencoding=utf-8  " saving and encoding
 
 " Load up Pathogen and all bundles
@@ -12,9 +14,9 @@ call pathogen#helptags()
 
 syntax on                                       " enable syntax highlighting
 filetype plugin indent on                       " detect the type of file that is edited
-set secure                                      " disable unsafe commands in local .vimrc files
-set nocompatible                                " don't need to be compatible with old vim
+"set secure                                      " disable unsafe commands in local .vimrc files
 set clipboard=unnamed,unnamedplus               " use the system clipboard for yank/put/delete
+set fileformats=unix,dos                        " Prefer unix fileformat
 set backspace=indent,eol,start                  " allow backspacing over everything in insert mode
 set nobackup nowritebackup noswapfile autoread  " no backup or swap
 set nofoldenable                                " disable code folding
@@ -31,13 +33,13 @@ set laststatus=2                                " always show status bar
 set ttimeoutlen=600                             " decrease timeout for faster insert with 'O'
 set showcmd                                     " Show partial commands in the last line of the screen
 set title                                       " change the terminal's title
-set list listchars=tab:▸\ ,trail:·,eol:¬        " show extra space characters
+set list listchars=tab:»·,trail:·,eol:¬,nbsp:_,extends:»,precedes:« " show extra space characters
 set autoindent                                  " set auto indent
 set tabstop=2 shiftwidth=2 softtabstop=2        " set indent to 2 spaces
 set expandtab                                   " use spaces, not tab characters
 
 set wildmenu                                    " enable bash style tab completion
-set wildignore=*.o,*.obj,*~                     "stuff to ignore when tab completing
+set wildignore=*.o,*.obj,*~                     " stuff to ignore when tab completing
 set wildignore+=*sass-cache*
 set wildignore+=*DS_Store*
 set wildignore+=log/**
@@ -45,13 +47,19 @@ set wildignore+=tmp/**
 
 set ignorecase                                  " Use case insensitive search, except when using capital letters
 set smartcase                                   " pay attention to case when caps are used
+set smarttab
 set hlsearch                                    " Highlight searches
 set showmatch                                   " show bracket matches
 set incsearch                                   " show search results as I type
 
+set sessionoptions+=unix,slash " for unix/windows compatibility
+set nostartofline " do not go to start of line automatically when moving
+
 " This workaround is for fluent loading files from sessions (don't "press
 " ENTER and ..." to confirm loading) http://stackoverflow.com/a/890810/1977012
 silent !<command>
+
+set commentstring=#\ %s
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  Appearance
@@ -63,7 +71,6 @@ colorscheme gruvbox
 
 " Different templates depends on GUI or LUI
 if has('gui_running')
-  colorscheme gruvbox
   set linespace=10           " set space between lines (option only for GUI)
   g:gruvbox_underline=0      " according to linespace for example markdown files
 
@@ -74,7 +81,7 @@ if has('gui_running')
   set guitablabel=%M\ %t
 
   if has("gui_gtk2")
-    set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
+    set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12,DejaVu\ Sans\ Mono\ 10
   elseif has("gui_macvim")
     set guifont=Menlo\ Regular:h14
   elseif has("gui_win32")
@@ -103,7 +110,6 @@ syn match Braces display '[{}()\[\]]'
 hi Braces guifg=red ctermfg=red
 
 " Highlight the 80th column
-"
 " In Vim >= 7.3, also highlight columns 120+
 if exists('+colorcolumn')
   " (I picked 120-320 because you have to provide an upper bound and 500 seems to be enough.)
@@ -118,16 +124,54 @@ else
   autocmd BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
 
-" Highlight trailing spaces in annoying red
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
 
-" Show trailing whitepace and spaces before a tab:
-autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
+" Only do this part when compiled with support for autocommands.
+if has("autocmd") " Autocommands {{{1
+
+  " Highlight trailing spaces in annoying red
+  highlight ExtraWhitespace ctermbg=red guibg=red
+  match ExtraWhitespace /\s\+$/
+  autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+  autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+  autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+  autocmd BufWinLeave * call clearmatches()
+
+  " Show trailing whitepace and spaces before a tab:
+  autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
+
+  " Jump to last known cursor position on BufReadPost {{{
+  " Don't do it when the position is invalid or when inside an event handler
+  " (happens when dropping a file on gvim).
+  " NOTE: read viminfo/marks, but removed: causes issues with jumplist sync
+  " across Vim instances
+    " \   rviminfo |
+  " NOTE: removed for SVN commit messages: && fnamemodify(bufname('%'), ':t') != 'svn-commit.tmp'
+  " ref: :h last-position-jump
+  fun! AutojumpLastPosition()
+    if ! exists('b:autojumped_init')
+      let b:autojumped_init = 1
+      if &ft != 'gitcommit' && &ft != 'diff' && ! &diff && line("'\"") <= line("$") && line("'\"") > 0
+        " NOTE: `zv` is ignored with foldlevel in modeline.
+        exe 'normal! g`"zv'
+      endif
+    endif
+  endfun
+  au BufReadPost * call AutojumpLastPosition()
+  " }}}
+
+  " Automatically load .vimrc source when saved
+  "au BufWritePost $MYVIMRC,~/dot-files/.vimrc,$MYVIMRC.local source $MYVIMRC
+  "au BufWritePost $MYGVIMRC,~/dot-files/.gvimrc source $MYGVIMRC
+
+  " autocommands for fugitive {{{2
+  " Source: http://vimcasts.org/episodes/fugitive-vim-browsing-the-git-object-database/
+  au User fugitive
+    \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)' |
+    \   nnoremap <buffer> .. :edit %:h<CR> |
+    \ endif
+  au BufReadPost fugitive://* set bufhidden=delete
+
+endif " has("autocmd") }}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                              Plugin Helpers
