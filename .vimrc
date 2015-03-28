@@ -63,6 +63,7 @@ set commentstring=#\ %s
 set background=dark       " Set colors of vim to more convinient for black backgound
 set t_Co=256              " Set 256 colors pallete
 colorscheme gruvbox
+set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12,DejaVu\ Sans\ Mono\ 10
 
 " Different templates depends on GUI or LUI
 if has('gui_running')
@@ -74,14 +75,6 @@ if has('gui_running')
   set guioptions-=r                               " turn off GUI right scrollbar
   set guioptions-=L                               " turn off GUI left scrollbar
   set guitablabel=%M\ %t
-
-  if has("gui_gtk2")
-    set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12,DejaVu\ Sans\ Mono\ 10
-  elseif has("gui_macvim")
-    set guifont=Menlo\ Regular:h14
-  elseif has("gui_win32")
-    set guifont=Consolas:h11:cANSI
-  endif
 else
   " indent guidlines for terminal
   hi IndentGuidesOdd  ctermbg=black
