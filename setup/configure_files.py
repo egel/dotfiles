@@ -32,7 +32,7 @@ __conky_theme_name__        = "conky_seamod"
 print(Colors.HEADER + "=== Vim setup ===" + Colors.ENDC)
 # updating .__vimrc__
 if os.path.isfile(__vimrc__):
-    print(__vimrc_name__ + "config file exist")
+    print(__vimrc_name__ + " config file exist")
 
     print(__vimrc_name__+ " ", end="")
     if os.path.islink(__vimrc__):
