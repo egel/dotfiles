@@ -17,6 +17,7 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 
+alias livelog='~/dot-files/scripts/git-loglive.sh'
 alias show-gitsubmodules='git submodule status | cut -d" " -f3-4'
 
 alias show-desktop-icons='gsettings set org.gnome.desktop.background show-desktop-icons true'
