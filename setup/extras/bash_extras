@@ -11,7 +11,10 @@ SMILEY="${WHITE}:)${NORMAL}"
 FROWNY="${RED}:(${NORMAL}"
 SELECT="if [ \$? = 0 ]; then echo \"${SMILEY}\"; else echo \"${FROWNY}\"; fi"
 
-PS1="${debian_chroot:+($debian_chroot)}${GREEN}\u${YELLOW}@${RED}\h${NORMAL}:${BLUE}\w${NORMAL}\$ "
+# Include git-prompt.sh script to show current branch in later PS1
+source "~/dot-files/scripts/git-prompt.sh"
+
+PS1="${debian_chroot:+($debian_chroot)}${GREEN}\u${YELLOW}@${RED}\h${NORMAL}:${BLUE}\w${PURPLE}\$(__git_ps1)${NORMAL}\$ "
 
 # History helper
 export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
