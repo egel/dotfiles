@@ -17,6 +17,8 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 
+alias tmux='tmux -2'
+
 alias livelog='~/dot-files/scripts/git-loglive.sh'
 alias show-gitsubmodules='git submodule status | cut -d" " -f3-4'
 
