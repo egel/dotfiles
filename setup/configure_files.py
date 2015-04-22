@@ -91,10 +91,7 @@ copy_config_file("gitconfig", __gitconfig_name__, __gitconfig__)
 #copy_config_file("gitconfig.local", __gitconfig_local_name__, __gitconfig_local__)
 
 ## zshrc setup
-copy_config_file("zshrc", __gitconfig_name__, __gitconfig__)
-
-## dircolors setup
-
+copy_config_file("zshrc", __zshrc_name__, __zshrc__)
 
 ## Conky setup
 copy_config_file("Conky", __conkyrc_name__, __conkyrc__)
