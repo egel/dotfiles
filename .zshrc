@@ -18,7 +18,7 @@ ZSH_THEME="robbyrussell"
 # export UPDATE_ZSH_DAYS=13
 
 # Uncomment the following line to disable colors in ls.
-DISABLE_LS_COLORS="true"
+# DISABLE_LS_COLORS="true"
 
 # Uncomment the following line to disable auto-setting terminal title.
 # DISABLE_AUTO_TITLE="true"
@@ -49,11 +49,14 @@ DISABLE_LS_COLORS="true"
 plugins=(git git-prompt git-extras tmux python npm grunt)
 
 # User configuration
-
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
+
+# user files
+source ~/dot-files/.aliases
+source ~/dot-files/.dircolors
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
