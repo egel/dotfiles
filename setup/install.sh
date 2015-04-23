@@ -20,6 +20,9 @@ sudo npm -g install instant-markdown-d
 sudo chown -R `whoami` ~/.npm
 echo -e "${green}✔ Done${endColor}"
 
+echo -e "${yellow}--- Installing: NeoBundle${endColor}"
+mkdir -p ~/.vim/bundle
+git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
 
 echo -e "${purple}--- Installing: Powerline fonts${endColor}"
 git clone git@github.com:Lokaltog/powerline-fonts.git ~/powerline-fonts
