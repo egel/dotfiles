@@ -4,16 +4,83 @@
 "                        Using Pathogen plugin manager
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set nocompatible " This must be first, because it changes other options as a side effect.
+
+" Note: Skip initialization for vim-tiny or vim-small.
+if !1 | finish | endif
+
+if has('vim_starting')
+  if &compatible
+    set nocompatible               " Be iMproved
+  endif
+
+  " Required:
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
+
+" Required:
+call neobundle#begin(expand('~/.vim/bundle/'))
+
+" Let NeoBundle manage NeoBundle
+" Required:
+NeoBundleFetch 'Shougo/neobundle.vim'
+
+" My Bundles here:
+" Refer to |:NeoBundle-examples|.
+" Note: You don't set neobundle setting in .gvimrc!
+
+" atp_vim
+" gist-vim
+" javascript-libraries-syntax.vim
+" jellybeans.vim
+" tmuxline.vim
+" vim-colors-solarized
+" vim-git
+" vim-haml
+" vim-hemisu
+" vim-indent-guides
+" vim-instant-markdown
+" vim-javascript
+" vim-misc
+" vim-monokai
+" vim-rails
+NeoBundle 'git@github.com:morhetz/gruvbox.git'
+NeoBundle 'git@github.com:othree/html5.vim.git'
+NeoBundle 'git@github.com:davidhalter/jedi-vim.git'
+NeoBundle 'git@github.com:scrooloose/nerdcommenter.git'
+NeoBundle 'git@github.com:scrooloose/nerdtree.git'
+NeoBundle 'git@github.com:ervandew/supertab.git'
+NeoBundle 'git@github.com:scrooloose/syntastic.git'
+NeoBundle 'git@github.com:bling/vim-airline.git'
+NeoBundle 'git@github.com:tpope/vim-abolish.git'
+NeoBundle 'git@github.com:kchmck/vim-coffee-script.git'
+NeoBundle 'git@github.com:tpope/vim-fugitive.git'
+NeoBundle 'git@github.com:airblade/vim-gitgutter.git'
+NeoBundle 'git@github.com:tpope/vim-haml.git'
+NeoBundle 'git@github.com:nathanaelkane/vim-indent-guides.git'
+NeoBundle 'git@github.com:digitaltoad/vim-jade.git'
+NeoBundle 'git@github.com:jelera/vim-javascript-syntax.git'
+NeoBundle 'git@github.com:lervag/vimtex.git'
+NeoBundle 'git@github.com:groenewege/vim-less.git'
+NeoBundle 'git@github.com:plasticboy/vim-markdown.git'
+NeoBundle 'git@github.com:jistr/vim-nerdtree-tabs.git'
+NeoBundle 'git@github.com:tpope/vim-repeat.git'
+NeoBundle 'git@github.com:xolox/vim-session.git'
+NeoBundle 'git@github.com:tpope/vim-surround.git'
+
+
+call neobundle#end()
+
+" Required:
+filetype plugin indent on            " detect the type of file that is edited
+
+" If there are uninstalled bundles found on startup,
+" this will conveniently prompt you to install them.
+NeoBundleCheck
+
 
 set encoding=utf-8 fileencoding=utf-8 termencoding=utf-8  " saving and encoding
 
-" Load up Pathogen and all bundles
-call pathogen#infect()
-call pathogen#helptags()
-
 syntax on                                       " enable syntax highlighting
-filetype plugin indent on                       " detect the type of file that is edited
 "set secure                                      " disable unsafe commands in local .vimrc files
 set clipboard=unnamed,unnamedplus               " use the system clipboard for yank/put/delete
 set fileformats=unix,dos                        " Prefer unix fileformat
