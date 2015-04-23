@@ -1,5 +1,6 @@
 # Vim session folder
 .vim/sessions/
+.vim/bundle/
 
 # VIM binary files for spell
 *.add.spl
