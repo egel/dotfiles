@@ -54,9 +54,12 @@ export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/g
 
 source $ZSH/oh-my-zsh.sh
 
-# user files
+# Add aliases
 source ~/dot-files/.aliases
-#source ~/dot-files/.dircolors
+
+# Configure dircolors
+eval $(dircolors ~/.dir_colours)
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
