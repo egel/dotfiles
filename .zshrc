@@ -58,7 +58,7 @@ source $ZSH/oh-my-zsh.sh
 source ~/dot-files/.aliases
 
 # Configure dircolors
-eval $(dircolors ~/.dir_colours)
+eval $(dircolors ~/dot-files/dircolors-solarized/dircolors.256dark)
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # You may need to manually set your language environment
