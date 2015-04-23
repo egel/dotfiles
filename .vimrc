@@ -65,6 +65,7 @@ NeoBundle 'git@github.com:plasticboy/vim-markdown.git'
 NeoBundle 'git@github.com:jistr/vim-nerdtree-tabs.git'
 NeoBundle 'git@github.com:tpope/vim-repeat.git'
 NeoBundle 'git@github.com:xolox/vim-session.git'
+NeoBundle 'git@github.com:xolox/vim-misc.git'     " as dependency for vim-session
 NeoBundle 'git@github.com:tpope/vim-surround.git'
 
 
