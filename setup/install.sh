@@ -38,5 +38,11 @@ echo -e "${green}✔ Done${endColor}"
 
 echo -e "${yellow}To see more details for powerline installation look at: https://powerline.readthedocs.org/en/latest/installation/linux.html#font-installation${endColor}"
 
+
+echo -e "${purple}--- Downloading repository submodules${endColor}"
+git submodule update --init --recursive
+echo -e "${green}✔ Done${endColor}"
+
+
 echo -e "${purple}--- Configure and relocate dot-files repository files${endColor}"
 ~/dot-files/setup/configure_files.py
