@@ -43,7 +43,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " vim-misc
 " vim-monokai
 " vim-rails
-NeoBundle 'git@github.com:morhetz/gruvbox.git'
+" NeoBundle 'git@github.com:morhetz/gruvbox.git'
 NeoBundle 'git@github.com:othree/html5.vim.git'
 NeoBundle 'git@github.com:davidhalter/jedi-vim.git'
 NeoBundle 'git@github.com:scrooloose/nerdcommenter.git'
@@ -67,6 +67,7 @@ NeoBundle 'git@github.com:tpope/vim-repeat.git'
 NeoBundle 'git@github.com:xolox/vim-session.git'
 NeoBundle 'git@github.com:xolox/vim-misc.git'     " as dependency for vim-session
 NeoBundle 'git@github.com:tpope/vim-surround.git'
+NeoBundle 'git@github.com:flazz/vim-colorschemes.git'
 
 
 call neobundle#end()
