@@ -51,6 +51,7 @@ NeoBundle 'git@github.com:scrooloose/nerdtree.git'
 NeoBundle 'git@github.com:ervandew/supertab.git'
 NeoBundle 'git@github.com:scrooloose/syntastic.git'
 NeoBundle 'git@github.com:bling/vim-airline.git'
+NeoBundle 'git@github.com:edkolev/tmuxline.vim.git'
 NeoBundle 'git@github.com:tpope/vim-abolish.git'
 NeoBundle 'git@github.com:kchmck/vim-coffee-script.git'
 NeoBundle 'git@github.com:tpope/vim-fugitive.git'
@@ -133,6 +134,9 @@ set background=dark       " Set colors of vim to more convinient for black backg
 set t_Co=256              " Set 256 colors pallete
 colorscheme gruvbox
 set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12,DejaVu\ Sans\ Mono\ 10
+
+" Airline theme
+let g:airline_theme='understated'
 
 " Different templates depends on GUI or LUI
 if has('gui_running')
@@ -265,6 +269,7 @@ highlight GitGutterChangeDelete ctermfg=yellow guifg=#F7D708
 
 " Add powerline fonts to vim
 let g:airline_powerline_fonts=1
+
 
 " Autosession for vim-session
 let g:session_autosave = 'yes'
