@@ -61,6 +61,10 @@ source ~/dot-files/.aliases
 eval $(dircolors ~/dot-files/dircolors-solarized/dircolors.256dark)
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
+# ZSH key-bindings
+bindkey '\e.' insert-last-word
+
+
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
