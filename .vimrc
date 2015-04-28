@@ -60,6 +60,7 @@ NeoBundle 'git@github.com:tpope/vim-haml.git'
 NeoBundle 'git@github.com:nathanaelkane/vim-indent-guides.git'
 NeoBundle 'git@github.com:digitaltoad/vim-jade.git'
 NeoBundle 'git@github.com:jelera/vim-javascript-syntax.git'
+NeoBundle 'othree/javascript-libraries-syntax.vim'
 NeoBundle 'git@github.com:lervag/vimtex.git'
 NeoBundle 'git@github.com:groenewege/vim-less.git'
 NeoBundle 'git@github.com:plasticboy/vim-markdown.git'
@@ -141,7 +142,7 @@ let g:airline_theme='understated'
 " Different templates depends on GUI or LUI
 if has('gui_running')
   set linespace=10           " set space between lines (option only for GUI)
-  g:gruvbox_underline=0      " according to linespace for example markdown files
+  let g:gruvbox_underline=0      " according to linespace for example markdown files
 
   set guioptions-=T                               " turn off GUI toolbar (icons)
   set guioptions+=e
@@ -266,6 +267,14 @@ highlight GitGutterAdd ctermfg=green guifg=#9CCF31
 highlight GitGutterChange ctermfg=yellow guifg=#F7D708
 highlight GitGutterDelete ctermfg=red guifg=#CE0000
 highlight GitGutterChangeDelete ctermfg=yellow guifg=#F7D708
+
+" Highlight TODO, FIXME, NOTE, etc.
+if has("autocmd")
+  if v:version > 701
+    autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|HACK\)')
+    autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\)')
+  endif
+endif
 
 " Add powerline fonts to vim
 let g:airline_powerline_fonts=1
