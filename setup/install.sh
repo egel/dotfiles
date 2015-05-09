@@ -30,8 +30,9 @@ rm ~/powerline-fonts/ -rf
 wget https://github.com/Lokaltog/powerline/raw/develop/font/PowerlineSymbols.otf -P ~/
 wget https://github.com/Lokaltog/powerline/raw/develop/font/10-powerline-symbols.conf -P ~/
 mkdir -p ~/.local/share/fonts/ ~/.config/fontconfig/conf.d/
-mv PowerlineSymbols.otf ~/.local/share/fonts/
-mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
+mv -f ~/PowerlineSymbols.otf ~/.local/share/fonts/
+mv -f ~/10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
+rm ~/PowerlineSymbols.otf ~/10-powerline-symbols.conf
 fc-cache -vf
 echo -e "${green}✔ Done${endColor}"
 
