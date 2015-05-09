@@ -54,8 +54,11 @@ export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/g
 
 source $ZSH/oh-my-zsh.sh
 
-# Add aliases
+# Add public aliases
 source ~/dot-files/.aliases
+
+# Add private aliases
+source ~/.bash_aliases
 
 # Configure dircolors
 eval $(dircolors ~/dot-files/dircolors-solarized/dircolors.256dark)
