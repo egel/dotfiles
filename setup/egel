@@ -13,7 +13,7 @@ endColor='\e[0m'
 
 # global vars
 _name="The Egel dotfiles"
-_repo_name=".dotfiles"
+_repo_name='.dotfiles'
 _repo_dir="~/${_repo_name}/"
 _egel="${_repo_dir}setup/egel"
 
@@ -48,14 +48,17 @@ do_help() {
 
 do_update() {
   echo -e "${purple}=== Updating ${_name}${endColor}"
-  if [ ! -d "$_repo_dir" ]; then
-    echo -e "${__info__}${_name} doesn't exisit at ${blue}${_repo_dir}${endColor}. Perhaps you want to install it first?"
+  if [[ ! -d "${_repo_dir}" && "${_repo_dir}" == ^. ]]
+    then
+      echo -e "${__info__} ${_name} doesn't exisit at ${blue}${_repo_dir}${endColor}. Perhaps you want to install it first?"
+      exit 1;
+  else
+    cd ~/${_repo_name}/
+    git submodule foreach git checkout master
+    git submodule foreach git pull
+    echo -e "${green}✔ Done${endColor}"
     exit 1;
   fi
-  cd ~/${_repo_name}/
-  git submodule foreach git checkout master
-  git submodule foreach git pull
-  echo -e "${green}✔ Done${endColor}"
 }
 
 do_install() {
