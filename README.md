@@ -48,8 +48,8 @@ This set contains configuration for:
 ## Installation
 > Don't be afraid, **instalator won't remove any of your previous configurations**. It will save them all, simply by renaming files into its directories.
 
-    $ git clone --recursive git@github.com:egel/dot-files.git ~/dot-files && \
-      ~/dot-files/setup/install.sh
+    $ git clone --recursive git@github.com:egel/dot-files.git ~/.dotfiles
+    $ ~/.dotfiles/setup/egel --install
 
 The last thing is to set `Ubuntu Mono derivative Powerline` as default `terminal` and `guake` font and reset X, simply by restart the computer.
 
@@ -64,29 +64,8 @@ The last thing is to set `Ubuntu Mono derivative Powerline` as default `terminal
 ## Update
 To update whole **dot-files** repository and its sub-repositories (like example vim plugins) just run:
 
-    $ ~/dot-files/setup/update.sh
+    $ ~/.dotfiles/setup/egel --update
 
-# Extra features
-
-## All in one
-Install all below extra features and more (history, aliases, prompt, ect.)
-
-    $ wget https://raw.githubusercontent.com/egel/dot-files/master/setup/extras/bash_extras -q -O - >> ~/.bashrc
-
-## Set 256 colors for terminal
-Run this simple script to add 256 support
-
-    $ wget https://raw.githubusercontent.com/egel/dot-files/master/setup/extras/xterm_and_tmux_256_colors.sh -q -O - | bash
-
-## Add colors to man pages
-Add some life to manual pages:
-
-    $ wget https://raw.githubusercontent.com/egel/dot-files/master/setup/extras/color_man_pages -q -O - >> ~/.bashrc
-
-## Funny
-To have nice frogs with some fortune text whenever you run termial. hen just run:
-
-    $ wget https://raw.githubusercontent.com/egel/dot-files/master/setup/extras/funny_frogs.sh -q -O - | bash
 
  [powerline-install-webpage]: https://powerline.readthedocs.org/en/latest/installation/linux.html#font-installation
  [.vim/bundle]: https://github.com/egel/dot-files/tree/master/.vim/bundle
