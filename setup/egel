@@ -6,7 +6,7 @@ red='\e[0;31m'
 green='\e[0;32m' # '\e[1;32m' is too bright for white bg.
 blue='\e[1;34m'
 yellow='\e[0;33m'
-purple='\e[0;35m'
+purple='\e[1;35m'
 cyan='\e[0;36m'
 endColor='\e[0m'
 
@@ -38,19 +38,19 @@ do_help() {
   echo -e "  OPTIONS" 1>&2;
   echo -e "    -c, --clean\t\tClean old installation symlinks for current \n\t\t\t  user home directory ($HOME)." 1>&2;
   echo -e "    -h, --help\t\tShow help." 1>&2;
-  echo -e "    -i, --install\tInstall and configure egel dotfiles for\n\t\t\t  for current user." 1>&2;
+  echo -e "    -i, --install\tInstall and configure egel dotfiles for\n\t\t\t  current user." 1>&2;
   echo -e "    -r, --reconfigure\tReconfigure ${_name} symlinks for\n\t\t\t  current user." 1>&2;
   echo -e "    -u, --update\tUpdate ${_name}." 1>&2;
   echo -e "    -U, --uninstall\tUninstall ${_name} from hard drive." 1>&2;
   echo -e "\n  EXAMPLES OF USAGE" 1>&2;
   echo -e "    $0 --help" 1>&2;
   echo -e "    $0 --install" 1>&2;
-  echo -e "\n2014 License MIT --- Further info at https://github.com/egel/dotfiles." 2>&2;
+  echo -e "\n2014 License MIT --- Further info at https://github.com/egel/dotfiles" 2>&2;
   exit 1;
 }
 
 do_update() {
-  echo -e "${purple}=== Updating ${_name}${endColor}"
+  echo -e "${cyan}=== Updating ${_name}${endColor}"
   if [[ ! -d "${_repo_dir}" && "${_repo_dir}" == ^. ]]
     then
       echo -e "${__info__} ${_name} doesn't exisit at ${blue}${_repo_dir}${endColor}. Perhaps you want to install it first?"
@@ -65,15 +65,16 @@ do_update() {
 }
 
 do_install() {
-  echo -e "${purple}=== Installing ${_name}${endColor}"
+  echo -e "${cyan}=== Installing ${_name}${endColor}"
+  sudo -i
   $_egel --update
 
-  echo -e "${yellow}--- Checking and adding PPA repositories${endColor}"
+  echo -e "${purple}--- Checking and adding PPA repositories${endColor}"
   sudo add-apt-repository -y ppa:git-core/ppa # Git
   sudo add-apt-repository -y ppa:chris-lea/node.js #NodeJS
   sudo add-apt-repository -y ppa:pi-rho/dev # Tmux
 
-  echo -e "${yellow}--- Checking and install required programs (zsh, git, tmux, nodejs, python common, xdg-utils)${endColor}"
+  echo -e "${purple}--- Checking and install required programs (zsh, git, tmux, nodejs, python common, xdg-utils)${endColor}"
   sudo apt-get update
   sudo apt-get install -y python-software-properties software-properties-common git zsh tmux nodejs xdg-utils
 
@@ -90,8 +91,7 @@ do_install() {
 
   # zsh
   chsh -s /bin/zsh
-  echo -en "${purple}Default shell has beed changed to ZSH${endColor}"
-  echo -e "${__done__}"
+  echo -e "${purple}Default shell has been changed to ZSH${endColor} ${__done__}"
 
 
   echo -e "${purple}--- Restore privacy for Ubuntu${endColor}"
@@ -121,13 +121,13 @@ do_install() {
   git submodule update --init --recursive
   echo -e ${__done__}
 
-  echo -e "${purple}=== Reconfigure  repository files${endColor}"
-  $_egel --reconfigure
+  echo -e "${cyan}=== Reconfigure  repository files${endColor}"
+  ${_egel} --reconfigure
 
 
-  echo -e "${__info__} To finalize installation of ZSH shell, you need to reboot the system.\nWould you like to do it now? (Y/n)${endColor}"
-  read reboot_now
-  if [ $reboot_now -eq "Y" ]
+  echo -e "${__info__}"
+  read -r -p " To finalize installation of ZSH shell, you need to reboot the system.\nWould you like to do it now? (Y/n) " _reboot_now
+  if [ "${_reboot_now}" -eq "Y" ];
     then
       sudo reboot
   fi
