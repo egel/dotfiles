@@ -15,7 +15,7 @@ endColor='\e[0m'
 _name="The Egel dotfiles"
 _repo_name='.dotfiles'
 _repo_dir="~/${_repo_name}/"
-_egel="${_repo_dir}setup/egel"
+
 
 # Messages
 __info__="${blue}Info!${endColor}"
@@ -66,15 +66,14 @@ do_update() {
 
 do_install() {
   echo -e "${cyan}=== Installing ${_name}${endColor}"
-  sudo -i
-  $_egel --update
+  ~/${_repo_name}/setup/egel --update
 
   echo -e "${purple}--- Checking and adding PPA repositories${endColor}"
   sudo add-apt-repository -y ppa:git-core/ppa # Git
   sudo add-apt-repository -y ppa:chris-lea/node.js #NodeJS
   sudo add-apt-repository -y ppa:pi-rho/dev # Tmux
 
-  echo -e "${purple}--- Checking and install required programs (zsh, git, tmux, nodejs, python common, xdg-utils)${endColor}"
+  echo -e "${purple}--- Checking and install required programs (zsh, oh-my-zsh, git, tmux, nodejs, python common, xdg-utils)${endColor}"
   sudo apt-get update
   sudo apt-get install -y python-software-properties software-properties-common git zsh tmux nodejs xdg-utils
 
@@ -93,12 +92,14 @@ do_install() {
   chsh -s /bin/zsh
   echo -e "${purple}Default shell has been changed to ZSH${endColor} ${__done__}"
 
+  # oh-my-zsh
+  wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | sh
 
   echo -e "${purple}--- Restore privacy for Ubuntu${endColor}"
   wget -q -O - https://fixubuntu.com/fixubuntu.sh | bash
   echo -e "${__done__}"
 
-  echo -e "${yellow}--- Installing: NeoBundle${endColor}"
+  echo -e "${purple}--- Installing: NeoBundle${endColor}"
   curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh
 
   echo -e "${purple}--- Installing: Powerline fonts${endColor}"
@@ -122,14 +123,16 @@ do_install() {
   echo -e ${__done__}
 
   echo -e "${cyan}=== Reconfigure  repository files${endColor}"
-  ${_egel} --reconfigure
+  ~/${_repo_name}/setup/egel --reconfigure
 
 
   echo -e "${__info__}"
   read -r -p " To finalize installation of ZSH shell, you need to reboot the system.\nWould you like to do it now? (Y/n) " _reboot_now
-  if [ "${_reboot_now}" -eq "Y" ];
-    then
-      sudo reboot
+  if [[ $_reboot_now =~ ^([Y]) ]]; then
+    echo -e "${__info__} Reboot the system..."
+    sudo reboot
+  else
+    echo -e "${__info__} Rebooting canceled by User."
   fi
 
   echo -e "${green}✔ Congratulations. Configuration of ${_name} complete successfully :)${endColor}"
@@ -137,13 +140,14 @@ do_install() {
 
 
 do_uninstall() {
-  echo -e "${purple}=== Uninstall ${_name}${endColor}"
+  echo -e "${cyan}=== Uninstall ${_name}${endColor}"
   echo -ne "${__warning__}"
   read -r -p " Are you sure you want to uninstall ${_name}? (Y/n) " _uninstall_repo
   case $_uninstall_repo in
     Y)
-      if [ -d "$_repo_dir" ]; then
-        rm $_repo_dir -rf
+      if [[ -d "$_repo_dir" && "$_repo_dir" == ^. ]]
+        then
+          rm $_repo_dir -rf
       fi
       echo -e ${__done__}
       exit 1;
@@ -156,12 +160,12 @@ do_uninstall() {
 
 
 do_reconfigure() {
-  echo -e "${purple}=== Reconfigure ${_name}${endColor}"
+  echo -e "${cyan}=== Reconfigure ${_name}${endColor}"
   ~/${_repo_name}/setup/configure_files.py
 }
 
 do_clean() {
-  echo -e "${purple}=== Clean ${_name}${endColor}"
+  echo -e "${cyan}=== Clean ${_name}${endColor}"
   echo -ne "${__warning__}"
   read -r -p " Are you sure you want to clean ${_name} old symlinks? (Y/n) " _cleaning_symlinks
   case $_cleaning_symlinks in
