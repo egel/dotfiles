@@ -18,9 +18,9 @@ _repo_dir="~/${_repo_name}/"
 _egel="${_repo_dir}setup/egel"
 
 # Messages
-__info__="${blue}Info!${endColor} "
-__warning__="${yellow}Warning!${endColor} "
-__error__="${red}Error!${endColor} "
+__info__="${blue}Info!${endColor}"
+__warning__="${yellow}Warning!${endColor}"
+__error__="${red}Error!${endColor}"
 __done__="${green}✔ Done${endColor}"
 
 
@@ -36,12 +36,12 @@ check_program() {
 do_help() {
   echo -e "The Egel's dotfiles sophisticated configurator.\n" 1>&2;
   echo -e "  Usage: " 1>&2;
-  echo -e "    $0 -c/--clean\t\tClean old installation symlinks for current \n\t\t\t\t\t  user home directory ($HOME)." 1>&2;
+  echo -e "    $0 -c/--clean\t\tClean old installation symlinks for current \n\t\t\t\t\t\t  user home directory ($HOME)." 1>&2;
   echo -e "    $0 -h/--help\t\tShow help." 1>&2;
-  echo -e "    $0 -i/--install\t\tInstall and configure egel dotfiles for\n\t\t\t\t\t  for current user." 1>&2;
-  echo -e "    $0 -r/--reconfigure\tReconfigure ${_name} symlinks for\n\t\t\t\t\t  current user." 1>&2;
+  echo -e "    $0 -i/--install\t\tInstall and configure egel dotfiles for\n\t\t\t\t\t\t  for current user." 1>&2;
+  echo -e "    $0 -r/--reconfigure\tReconfigure ${_name} symlinks for\n\t\t\t\t\t\t  current user." 1>&2;
   echo -e "    $0 -u/--update\t\tUpdate ${_name}." 1>&2;
-  echo -e "    $0 -U/--uninstall\t\tUninstall ${_name} from hard drive." 1>&2;
+  echo -e "    $0 -U/--uninstall\tUninstall ${_name} from hard drive." 1>&2;
   echo -e "\n2014 License MIT --- Further info at https://github.com/egel/dotfiles." 2>&2;
   exit 1;
 }
@@ -108,7 +108,7 @@ do_install() {
   fc-cache -vf
   echo -e ${__done__}
 
-  echo -e "${__info__}To see more details for powerline installation look at https://powerline.readthedocs.org/en/latest/installation/linux.html#font-installation"
+  echo -e "${__info__} To see more details for powerline installation look at https://powerline.readthedocs.org/en/latest/installation/linux.html#font-installation"
 
 
   echo -e "${purple}--- Downloading repository submodules${endColor}"
@@ -119,15 +119,14 @@ do_install() {
   $_egel --reconfigure
 
 
-  echo -e "${red}--- To finalize installation of ZSH shell, you need to reboot the system.\nWould you like to do it now? (Y/n)${endColor}"
+  echo -e "${__info__} To finalize installation of ZSH shell, you need to reboot the system.\nWould you like to do it now? (Y/n)${endColor}"
   read reboot_now
-
   if [ $reboot_now -eq "Y" ]
     then
       sudo reboot
   fi
 
-  echo -e "${green}Configuration complete :)${endColor}"
+  echo -e "${green}✔ Congratulations. Configuration of ${_name} complete successfully :)${endColor}"
 }
 
 
@@ -152,7 +151,7 @@ do_uninstall() {
 
 do_reconfigure() {
   echo -e "${purple}=== Reconfigure ${_name}${endColor}"
-  ${_repo_dir}setup/configure_files.py
+  ~/${_repo_name}/setup/configure_files.py
 }
 
 do_clean() {
@@ -167,7 +166,7 @@ do_clean() {
       exit 1;
       ;;
     *)
-      echo -e "${__info__} Aborting cleaning of ${_name}."
+      echo -e "${__info__} Aborting cleaning of ${_name} symlinks."
       ;;
   esac
 }
