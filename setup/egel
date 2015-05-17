@@ -35,13 +35,16 @@ check_program() {
 
 do_help() {
   echo -e "The Egel's dotfiles sophisticated configurator.\n" 1>&2;
-  echo -e "  Usage: " 1>&2;
-  echo -e "    $0 -c/--clean\t\tClean old installation symlinks for current \n\t\t\t\t\t\t  user home directory ($HOME)." 1>&2;
-  echo -e "    $0 -h/--help\t\tShow help." 1>&2;
-  echo -e "    $0 -i/--install\t\tInstall and configure egel dotfiles for\n\t\t\t\t\t\t  for current user." 1>&2;
-  echo -e "    $0 -r/--reconfigure\tReconfigure ${_name} symlinks for\n\t\t\t\t\t\t  current user." 1>&2;
-  echo -e "    $0 -u/--update\t\tUpdate ${_name}." 1>&2;
-  echo -e "    $0 -U/--uninstall\tUninstall ${_name} from hard drive." 1>&2;
+  echo -e "  OPTIONS" 1>&2;
+  echo -e "    -c, --clean\t\tClean old installation symlinks for current \n\t\t\t  user home directory ($HOME)." 1>&2;
+  echo -e "    -h, --help\t\tShow help." 1>&2;
+  echo -e "    -i, --install\tInstall and configure egel dotfiles for\n\t\t\t  for current user." 1>&2;
+  echo -e "    -r, --reconfigure\tReconfigure ${_name} symlinks for\n\t\t\t  current user." 1>&2;
+  echo -e "    -u, --update\tUpdate ${_name}." 1>&2;
+  echo -e "    -U, --uninstall\tUninstall ${_name} from hard drive." 1>&2;
+  echo -e "\n  EXAMPLES OF USAGE" 1>&2;
+  echo -e "    $0 --help" 1>&2;
+  echo -e "    $0 --install" 1>&2;
   echo -e "\n2014 License MIT --- Further info at https://github.com/egel/dotfiles." 2>&2;
   exit 1;
 }
