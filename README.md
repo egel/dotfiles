@@ -20,10 +20,10 @@
 
 
 [![David](https://img.shields.io/david/strongloop/express.svg?style=flat-square)]()
-[![MIT LICENSE](http://img.shields.io/badge/license-MIT-yellowgreen.svg?style=flat-square)](https://github.com/egel/dot-files/blob/master/LICENSE)
+[![MIT LICENSE](http://img.shields.io/badge/license-MIT-yellowgreen.svg?style=flat-square)](https://github.com/egel/dotfiles/blob/master/LICENSE)
 
 
-> Dot-files for Ubuntu 14.04 LTS
+> The Egel dotfiles for Ubuntu 14.04 LTS
 
 * * *
 [Installation](#installation) | [Update](#update) | [Extra features](#extra-features) | [Egel Cheat Sheet (PDF)](http://bit.ly/1wqcChS)
@@ -38,17 +38,19 @@
 
 This set contains configuration for:
 
+  - **zsh** (oh-my-zsh)
   - **Git** (accounts, aliases)
-  - **Vim** ([modules](.vim/bundle))
+  - **Vim**
   - **tmux** (key-bindings, copy-paste to clippboard)
   - **conky** (themes)
-  - **bash** (256colors, history, aliases)
 
 
 ## Installation
 > Don't be afraid, **instalator won't remove any of your previous configurations**. It will save them all, simply by renaming files into its directories.
 
-    $ git clone --recursive git@github.com:egel/dot-files.git ~/.dotfiles
+> If need help run: `~/.dotfiles/setup/egel --help`
+
+    $ git clone --recursive git@github.com:egel/dotfiles.git ~/.dotfiles
     $ ~/.dotfiles/setup/egel --install
 
 The last thing is to set `Ubuntu Mono derivative Powerline` as default `terminal` and `guake` font and reset X, simply by restart the computer.
@@ -56,13 +58,13 @@ The last thing is to set `Ubuntu Mono derivative Powerline` as default `terminal
 > In case that you won't reset your PC, you can reload config files without exiting from it.
 >
 > **Refresh configs**:
-> - Bash: `source ~/.bashrc`
-> - Vim (into program): `source ~/.vimrc`
-> - tmux (into program): `source ~/.tmux.conf`
+> - zsh: `source ~/.zshrc`
+> - vim (into the program): `source ~/.vimrc`
+> - tmux (into the program): `source ~/.tmux.conf`
 
 
 ## Update
-To update whole **dot-files** repository and its sub-repositories (like example vim plugins) just run:
+To update repository and its submodules
 
     $ ~/.dotfiles/setup/egel --update
 
