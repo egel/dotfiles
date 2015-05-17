@@ -8,7 +8,7 @@ from colors import Colors
 
 # helper variables
 home_dir                    = os.path.expanduser('~')
-__dotfiles_dir__            = home_dir + "/dot-files"
+__dotfiles_dir__            = home_dir + "/.dotfiles"
 
 __vim_dir_name__            = ".vim"
 __vim_dir__                 = home_dir + "/" + __vim_dir_name__
