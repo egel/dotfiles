@@ -1,3 +1,5 @@
+dotfiles=".dotfiles"
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -54,13 +56,13 @@ export PATH="$PATH:$HOME/.rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/
 source $ZSH/oh-my-zsh.sh
 
 # Add public aliases
-source ~/dot-files/.aliases
+source ~/$dotfiles/.aliases
 
 # Add private aliases
 source ~/.bash_aliases
 
 # Configure dircolors
-eval $(dircolors ~/dot-files/dircolors-solarized/dircolors.256dark)
+eval $(dircolors ~/$dotfiles/dircolors-solarized/dircolors.256dark)
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # ZSH key-bindings
