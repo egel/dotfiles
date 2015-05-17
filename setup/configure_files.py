@@ -36,7 +36,7 @@ __conky_theme_name__        = "conky_seamod"
 
 # Helper methods
 def copy_config_file(_what, _file_name, _file_path):
-    print(Colors.HEADER + "=== " + _what + " setup ===" + Colors.ENDC)
+    print(Colors.HEADER + "--- " + _what + " setup" + Colors.ENDC)
     # updating ._file_path
     if os.path.isfile(_file_path):
         print(_file_name + " config file exist")
@@ -57,7 +57,7 @@ def copy_config_file(_what, _file_name, _file_path):
     print(Colors.OKGREEN + "DONE" + Colors.ENDC)
 
 def copy_config_dir(_what, _dir_name, _dir_path):
-    print(Colors.HEADER + "=== " + _what + " setup ===" + Colors.ENDC)
+    print(Colors.HEADER + "--- " + _what + " setup" + Colors.ENDC)
     if os.path.isdir(_dir_path):
         print(_dir_name + " directory exist")
 
