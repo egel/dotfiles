@@ -40,7 +40,6 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " vim-indent-guides
 " vim-instant-markdown
 " vim-javascript
-" vim-misc
 " vim-monokai
 " vim-rails
 " NeoBundle 'git@github.com:morhetz/gruvbox.git'
@@ -390,6 +389,24 @@ autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
 " Force setting for *.jade files. More info: http://stackoverflow.com/a/6118265/1977012
 autocmd BufRead,BufNewFile *.jade setlocal ft=jade
+
+" Create directory on save if not exsist
+" Gracefully borrowed from: http://stackoverflow.com/a/4294176/1977012
+function s:MkNonExDir(file, buf)
+    if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
+        let dir=fnamemodify(a:file, ':h')
+        if !isdirectory(dir)
+            call mkdir(dir, 'p')
+        endif
+    endif
+endfunction
+augroup BWCCreateDir
+    autocmd!
+    autocmd BufWritePre * :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
+augroup END
+
+" Edit a file or jump to it if already open
+command! -nargs=1 -complete=file O tab drop <args>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
