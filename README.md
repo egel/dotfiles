@@ -50,7 +50,12 @@ This set contains configuration for:
 
 > If need help run: `~/.dotfiles/setup/egel --help`
 
+    A) With github account
     $ git clone --recursive git@github.com:egel/dotfiles.git ~/.dotfiles
+    $ ~/.dotfiles/setup/egel --install
+
+    B) Without github account
+    $ git clone --recursive git://github.com/egel/dotfiles ~/.dotfiles
     $ ~/.dotfiles/setup/egel --install
 
 The last thing is to set `Ubuntu Mono derivative Powerline` as default `terminal` and `guake` font and reset X, simply by restart the computer.
