@@ -201,6 +201,9 @@ if has("autocmd") " Autocommands {{{1
   " Show trailing whitepace and spaces before a tab:
   autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
 
+  " ---- Open files with syntax
+  au BufRead,BufNewFile *.coffee setfiletype coffee
+
   " Jump to last known cursor position on BufReadPost {{{
   " Don't do it when the position is invalid or when inside an event handler
   " (happens when dropping a file on gvim).
@@ -276,11 +279,13 @@ if has("autocmd")
   endif
 endif
 
-" Add powerline fonts to vim
+" ------- Add powerline fonts to vim
 let g:airline_powerline_fonts=1
 
+" ------ Open the file in a new tab if it isn't already open
+command! -nargs=1 -complete=file O tab drop <args>
 
-" Autosession for vim-session
+" ------ Autosession for vim-session
 let g:session_autosave = 'yes'
 let g:session_autoload = 'yes'
 
