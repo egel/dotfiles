@@ -46,7 +46,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git git-prompt git-extras colored-man tmux python npm grunt zsh-syntax-highlighting vi-mode)
+plugins=(git git-prompt git-extras colored-man tmux python npm grunt zsh-syntax-highlighting)
 
 # User configuration
 export PATH="$PATH:$HOME/.rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
@@ -64,8 +64,9 @@ eval $(dircolors ~/.dircolors)
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # ZSH key-bindings
-bindkey '\e.' insert-last-word
-
+bindkey '\e.' insert-last-word  # insert last word (Alt+.)
+bindkey "^[[A" history-beginning-search-backward-end
+bindkey "^[[B" history-beginning-search-forward
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
