@@ -32,9 +32,9 @@
 
 **Sample screenshots**
 
-<img src="http://i.imgur.com/hwi7ia0.png" title="Desktop with conky" width="320" />
-<img src="http://i.imgur.com/4l1A7rP.png" title="gVim with gruvbox colorscheme and NERDTree plugin on the right side" width="320" />
-<img src="http://i.imgur.com/Z48dPBU.png" title="Guake with friends - Git + dircolors + vim + 256color test" width="320" />
+<img src="http://i.imgur.com/e3eVAy9.png" title="Desktop with conky" width="320" />
+<img src="http://i.imgur.com/M2RuBYB.png" title="gVim with gruvbox colorscheme and NERDTree plugin on the right side" width="320" />
+<img src="http://i.imgur.com/2XxG5rf.png" title="Guake with friends - Git + dircolors + vim + 256color test" width="320" />
 
 This set contains configuration for:
 
