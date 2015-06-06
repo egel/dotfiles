@@ -69,7 +69,7 @@ NeoBundle 'git@github.com:xolox/vim-session.git'
 NeoBundle 'git@github.com:xolox/vim-misc.git'     " as dependency for vim-session
 NeoBundle 'git@github.com:tpope/vim-surround.git'
 NeoBundle 'git@github.com:flazz/vim-colorschemes.git'
-
+NeoBundle 'git@github.com:jmcantrell/vim-virtualenv.git'
 
 call neobundle#end()
 
@@ -136,7 +136,16 @@ colorscheme gruvbox
 set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12,DejaVu\ Sans\ Mono\ 10
 
 " Airline theme
+let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='understated'
+let g:tmuxline_preset = {
+      \'a'    : '#S',
+      \'c'    : ['#(whoami)', '#(uptime | cud -d " " -f 1,2,3)'],
+      \'win'  : ['#I', '#W'],
+      \'cwin' : ['#I', '#W', '#F'],
+      \'x'    : '#(date)',
+      \'y'    : ['%R', '%a', '%Y'],
+      \'z'    : '#H'}
 
 " Different templates depends on GUI or LUI
 if has('gui_running')
@@ -293,6 +302,9 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_python_python_exec = '/usr/bin/python3'
+let g:syntastic_python_checkers = [ 'flake8', 'pylint', 'pyflakes' ]
+let g:syntastic_html_tidy_exec = 'tidy5'
 
 
 " ----- vim-latex customization -----
