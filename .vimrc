@@ -10,7 +10,7 @@ if !1 | finish | endif
 
 if has('vim_starting')
   if &compatible
-    set nocompatible               " Be iMproved
+    set nocompatible    " Be iMproved
   endif
 
   " Required:
@@ -30,19 +30,15 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 " atp_vim
 " gist-vim
-" javascript-libraries-syntax.vim
-" jellybeans.vim
-" tmuxline.vim
-" vim-colors-solarized
 " vim-git
-" vim-haml
 " vim-hemisu
 " vim-indent-guides
 " vim-instant-markdown
 " vim-javascript
 " vim-monokai
 " vim-rails
-" NeoBundle 'git@github.com:morhetz/gruvbox.git'
+
+" NeoBundle 'git@github.com:morhetz/gruvbox.git'     " done by vim-colorschemes
 NeoBundle 'git@github.com:othree/html5.vim.git'
 NeoBundle 'git@github.com:davidhalter/jedi-vim.git'
 NeoBundle 'git@github.com:scrooloose/nerdcommenter.git'
@@ -137,14 +133,19 @@ set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12,DejaVu\ Sans\ Mono\ 10
 
 " Airline theme
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='understated'
+let g:airline_theme = 'tomorrow'
+
+" Tmuxline
+"let g:tmuxline_preset = 'full'
+"let g:tmuxline_theme = 'jellybeans'
 let g:tmuxline_preset = {
       \'a'    : '#S',
-      \'c'    : ['#(whoami)', '#(uptime | cud -d " " -f 1,2,3)'],
-      \'win'  : ['#I', '#W'],
-      \'cwin' : ['#I', '#W', '#F'],
-      \'x'    : '#(date)',
-      \'y'    : ['%R', '%a', '%Y'],
+      \'b'    : '#W',
+      \'c'    : '#H',
+      \'win'  : '#I #W',
+      \'cwin' : '#I #W',
+      \'x'    : '%a',
+      \'y'    : '#W %R',
       \'z'    : '#H'}
 
 " Different templates depends on GUI or LUI
