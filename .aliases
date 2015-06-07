@@ -8,6 +8,7 @@ alias cp='cp -i'
 alias du='du -c'
 alias grep='egrep -i --color'
 alias l='ls'
+alias la='ls -al'
 alias ls='ls --color=auto --group-directories-first'
 alias ll='ls -lh'
 
