@@ -38,7 +38,8 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " vim-monokai
 " vim-rails
 
-" NeoBundle 'git@github.com:morhetz/gruvbox.git'     " done by vim-colorschemes
+"NeoBundle 'git@github.com:flazz/vim-colorschemes.git'
+NeoBundle 'git@github.com:morhetz/gruvbox.git'     " done by vim-colorschemes
 NeoBundle 'git@github.com:othree/html5.vim.git'
 NeoBundle 'git@github.com:davidhalter/jedi-vim.git'
 NeoBundle 'git@github.com:scrooloose/nerdcommenter.git'
@@ -64,7 +65,6 @@ NeoBundle 'git@github.com:tpope/vim-repeat.git'
 NeoBundle 'git@github.com:xolox/vim-session.git'
 NeoBundle 'git@github.com:xolox/vim-misc.git'     " as dependency for vim-session
 NeoBundle 'git@github.com:tpope/vim-surround.git'
-NeoBundle 'git@github.com:flazz/vim-colorschemes.git'
 NeoBundle 'git@github.com:jmcantrell/vim-virtualenv.git'
 
 call neobundle#end()
@@ -129,7 +129,8 @@ set commentstring=#\ %s
 set background=dark       " Set colors of vim to more convinient for black backgound
 set t_Co=256              " Set 256 colors pallete
 colorscheme gruvbox
-set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12,DejaVu\ Sans\ Mono\ 10
+let g:gruvbox_underline = 0   " according to linespace for example markdown files
+"let g:gruvbox_undercurl = 0
 
 " Airline theme
 let g:airline#extensions#tabline#enabled = 1
@@ -149,14 +150,15 @@ let g:tmuxline_preset = {
       \'z'    : '#H'}
 
 " Different templates depends on GUI or LUI
-if has('gui_running')
-  set linespace=10           " set space between lines (option only for GUI)
-  let g:gruvbox_underline=0      " according to linespace for example markdown files
+if has("gui_running")
+  "set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 18,DejaVu\ Sans\ Mono\ 10
+  set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
+  set linespace=10            " set space between lines (option only for GUI)
 
-  set guioptions-=T                               " turn off GUI toolbar (icons)
+  set guioptions-=T           " turn off GUI toolbar (icons)
   set guioptions+=e
-  set guioptions-=r                               " turn off GUI right scrollbar
-  set guioptions-=L                               " turn off GUI left scrollbar
+  set guioptions-=r           " turn off GUI right scrollbar
+  set guioptions-=L           " turn off GUI left scrollbar
   set guitablabel=%M\ %t
 else
   " indent guidlines for terminal
@@ -251,6 +253,7 @@ endif " has("autocmd") }}}
 " tabs
 let g:nerdtree_tabs_open_on_gui_startup=0
 let g:nerdtree_tabs_open_on_new_tab=0
+let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
 
 " nerdtree window size
 let g:NERDTreeWinSize=40
@@ -435,6 +438,9 @@ command! Wa wa
 command! WA wa
 command! W w
 command! Q q
+
+" w!! to sudo & write a file
+cmap w!! %!sudo tee >/dev/null %
 
 " <F3> key to hide current higlight for searched tems
 map <F3> :noh<CR>
