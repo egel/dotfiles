@@ -164,8 +164,8 @@ do_install() {
   ${_egel} --reconfigure
 
 
-  echo -ne "${__info__}"
-  read -r -p " To finalize installation of ZSH shell, you need to reboot the system.\nWould you like to do it now? (Y/n) " _reboot_now
+  echo -e "${__info__} To finalize installation of ZSH shell, you need to reboot the system."
+  read -r -p "Would you like to do it now? (Y/n) " _reboot_now
   if [[ $_reboot_now =~ ^([Y]) ]]; then
     echo -e "${__info__} Reboot the system..."
     sudo reboot

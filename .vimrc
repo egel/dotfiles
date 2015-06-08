@@ -10,7 +10,7 @@ if !1 | finish | endif
 
 if has('vim_starting')
   if &compatible
-    set nocompatible               " Be iMproved
+    set nocompatible    " Be iMproved
   endif
 
   " Required:
@@ -30,46 +30,42 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 " atp_vim
 " gist-vim
-" javascript-libraries-syntax.vim
-" jellybeans.vim
-" tmuxline.vim
-" vim-colors-solarized
 " vim-git
-" vim-haml
 " vim-hemisu
 " vim-indent-guides
 " vim-instant-markdown
 " vim-javascript
 " vim-monokai
 " vim-rails
-" NeoBundle 'git@github.com:morhetz/gruvbox.git'
-NeoBundle 'git@github.com:othree/html5.vim.git'
-NeoBundle 'git@github.com:davidhalter/jedi-vim.git'
-NeoBundle 'git@github.com:scrooloose/nerdcommenter.git'
-NeoBundle 'git@github.com:scrooloose/nerdtree.git'
-NeoBundle 'git@github.com:ervandew/supertab.git'
-NeoBundle 'git@github.com:scrooloose/syntastic.git'
-NeoBundle 'git@github.com:bling/vim-airline.git'
-NeoBundle 'git@github.com:edkolev/tmuxline.vim.git'
-NeoBundle 'git@github.com:tpope/vim-abolish.git'
-NeoBundle 'git@github.com:kchmck/vim-coffee-script.git'
-NeoBundle 'git@github.com:tpope/vim-fugitive.git'
-NeoBundle 'git@github.com:airblade/vim-gitgutter.git'
-NeoBundle 'git@github.com:tpope/vim-haml.git'
-NeoBundle 'git@github.com:nathanaelkane/vim-indent-guides.git'
-NeoBundle 'git@github.com:digitaltoad/vim-jade.git'
-NeoBundle 'git@github.com:jelera/vim-javascript-syntax.git'
-NeoBundle 'othree/javascript-libraries-syntax.vim'
-NeoBundle 'git@github.com:lervag/vimtex.git'
-NeoBundle 'git@github.com:groenewege/vim-less.git'
-NeoBundle 'git@github.com:plasticboy/vim-markdown.git'
-NeoBundle 'git@github.com:jistr/vim-nerdtree-tabs.git'
-NeoBundle 'git@github.com:tpope/vim-repeat.git'
-NeoBundle 'git@github.com:xolox/vim-session.git'
-NeoBundle 'git@github.com:xolox/vim-misc.git'     " as dependency for vim-session
-NeoBundle 'git@github.com:tpope/vim-surround.git'
-NeoBundle 'git@github.com:flazz/vim-colorschemes.git'
 
+"NeoBundle 'flazz/vim-colorschemes'
+NeoBundle 'morhetz/gruvbox'     " done by vim-colorschemes
+NeoBundle 'othree/html5.vim'
+NeoBundle 'davidhalter/jedi-vim'
+NeoBundle 'scrooloose/nerdcommenter'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'ervandew/supertab'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'bling/vim-airline'
+NeoBundle 'edkolev/tmuxline.vim'
+NeoBundle 'tpope/vim-abolish'
+NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'airblade/vim-gitgutter'
+NeoBundle 'tpope/vim-haml'
+NeoBundle 'nathanaelkane/vim-indent-guides'
+NeoBundle 'digitaltoad/vim-jade'
+NeoBundle 'jelera/vim-javascript-syntax'
+NeoBundle 'othree/javascript-libraries-syntax.vim'
+NeoBundle 'lervag/vimtex'
+NeoBundle 'groenewege/vim-less'
+NeoBundle 'plasticboy/vim-markdown'
+NeoBundle 'jistr/vim-nerdtree-tabs'
+NeoBundle 'tpope/vim-repeat'
+NeoBundle 'xolox/vim-session'
+NeoBundle 'xolox/vim-misc'     " as dependency for vim-session
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'jmcantrell/vim-virtualenv'
 
 call neobundle#end()
 
@@ -133,20 +129,36 @@ set commentstring=#\ %s
 set background=dark       " Set colors of vim to more convinient for black backgound
 set t_Co=256              " Set 256 colors pallete
 colorscheme gruvbox
-set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12,DejaVu\ Sans\ Mono\ 10
+let g:gruvbox_underline = 0   " according to linespace for example markdown files
+"let g:gruvbox_undercurl = 0
 
 " Airline theme
-let g:airline_theme='understated'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme = 'tomorrow'
+
+" Tmuxline
+"let g:tmuxline_preset = 'full'
+"let g:tmuxline_theme = 'jellybeans'
+let g:tmuxline_preset = {
+      \'a'    : '#S',
+      \'b'    : '#W',
+      \'c'    : '#H',
+      \'win'  : '#I #W',
+      \'cwin' : '#I #W',
+      \'x'    : '%a',
+      \'y'    : '#W %R',
+      \'z'    : '#H'}
 
 " Different templates depends on GUI or LUI
-if has('gui_running')
-  set linespace=10           " set space between lines (option only for GUI)
-  let g:gruvbox_underline=0      " according to linespace for example markdown files
+if has("gui_running")
+  "set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 18,DejaVu\ Sans\ Mono\ 10
+  set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
+  set linespace=10            " set space between lines (option only for GUI)
 
-  set guioptions-=T                               " turn off GUI toolbar (icons)
+  set guioptions-=T           " turn off GUI toolbar (icons)
   set guioptions+=e
-  set guioptions-=r                               " turn off GUI right scrollbar
-  set guioptions-=L                               " turn off GUI left scrollbar
+  set guioptions-=r           " turn off GUI right scrollbar
+  set guioptions-=L           " turn off GUI left scrollbar
   set guitablabel=%M\ %t
 else
   " indent guidlines for terminal
@@ -244,6 +256,7 @@ endif " has("autocmd") }}}
 " tabs
 let g:nerdtree_tabs_open_on_gui_startup=0
 let g:nerdtree_tabs_open_on_new_tab=0
+let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
 
 " nerdtree window size
 let g:NERDTreeWinSize=40
@@ -298,6 +311,9 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_python_python_exec = '/usr/bin/python3'
+let g:syntastic_python_checkers = [ 'flake8', 'pylint', 'pyflakes' ]
+let g:syntastic_html_tidy_exec = 'tidy5'
 
 
 " ----- vim-latex customization -----
@@ -427,6 +443,9 @@ command! Wa wa
 command! WA wa
 command! W w
 command! Q q
+
+" w!! to sudo & write a file
+cmap w!! %!sudo tee >/dev/null %
 
 " <F3> key to hide current higlight for searched tems
 map <F3> :noh<CR>

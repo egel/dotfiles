@@ -8,6 +8,7 @@ alias cp='cp -i'
 alias du='du -c'
 alias grep='egrep -i --color'
 alias l='ls'
+alias la='ls -al'
 alias ls='ls --color=auto --group-directories-first'
 alias ll='ls -lh'
 
@@ -18,6 +19,7 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 
 alias tmux='tmux -2'
+alias vim='vim -p'
 
 alias livelog='~/dot-files/scripts/git-loglive.sh'
 alias show-gitsubmodules='git submodule status | cut -d" " -f3-4'
