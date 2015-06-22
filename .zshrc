@@ -46,18 +46,12 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git git-prompt git-extras colored-man tmux python npm grunt zsh-syntax-highlighting virtualenvwrapper)
+plugins=(git git-prompt git-extras colored-man tmux python npm grunt zsh-syntax-highlighting)
 
 # User configuration
 export PATH="$PATH:$HOME/.rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 
 source $ZSH/oh-my-zsh.sh
-
-# Add public aliases
-source ~/.aliases
-
-# Add private aliases
-source ~/.bash_aliases
 
 # Configure dircolors
 eval $(dircolors ~/.dircolors)
@@ -92,3 +86,15 @@ bindkey "^[[B" history-beginning-search-forward
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Add public aliases
+source ~/.aliases
+
+# Add private aliases
+source ~/.bash_aliases
+
+# Virtualenvwrapper
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/Devel
+source /usr/local/bin/virtualenvwrapper.sh
+
