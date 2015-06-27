@@ -61,7 +61,7 @@ color4 E74632
 color5 91AA24
 
 # Loading lua script for drawning rings
-lua_load ~/dot-files/conky-themes/conky_seamod/seamod_rings.lua
+lua_load ~/.dotfiles/conky-themes/conky_seamod/seamod_rings.lua
 lua_draw_hook_post main
 
 ## System information using conky capabilities
