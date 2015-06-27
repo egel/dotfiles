@@ -1,6 +1,6 @@
 # Vim session folder
-.vim/sessions/
-.vim/bundle/
+**/.vim/sessions/
+**/.vim/bundle/
 .vim(*
 
 # VIM binary files for spell
