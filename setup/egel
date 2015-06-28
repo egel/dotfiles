@@ -223,16 +223,17 @@ do_reconfigure() {
   make_symlink ".dircolors" "${_repo_dir}dircolors-solarized/dircolors.256dark" "$HOME/.dircolors"
   make_symlink ".vimrc" "${_common_dir}.vimrc" "$HOME/.vimrc"
   make_symlink ".zshrc" "${_common_dir}.zshrc" "$HOME/.zshrc"
+  make_symlink ".tmux.conf" "${_dotfiles_type_repository_dir}.tmux.conf" "$HOME/.tmux.conf"
 
   case $DOTFILES_TYPE in
     desktop)
       make_symlink ".zshrc.local" "${_dotfiles_type_repository_dir}.zshrc.local" "$HOME/.zshrc.local"
-      make_symlink ".tmux.conf" "${_dotfiles_type_repository_dir}.tmux.conf" "$HOME/.tmux.conf"
-      make_symlink ".conkyrc" "${_repo_dir}conky-themes/conky_seamod/.conkyrc" "$HOME/.conkyrc"
+      make_symlink ".tmux.conf.local" "${_dotfiles_type_repository_dir}.tmux.conf.local" "$HOME/.tmux.conf.local"
+      make_symlink ".conkyrc" "${_repo_dir}conky-themes/conky_seamod/.conkyrc" "$HOME/.conkyrc" # only for desktops
       ;;
     server)
       make_symlink ".zshrc.local" "${_dotfiles_type_repository_dir}.zshrc.local" "$HOME/.zshrc.local"
-      make_symlink ".tmux.conf" "${_dotfiles_type_repository_dir}.tmux.conf" "$HOME/.tmux.conf"
+      make_symlink ".tmux.conf.local" "${_dotfiles_type_repository_dir}.tmux.conf.local" "$HOME/.tmux.conf.local"
       ;;
   esac
 }
@@ -240,7 +241,7 @@ do_reconfigure() {
 do_clean() {
   echo -e "${cyan}=== Clean ${_name}${endColor}"
   echo -ne "${__warning__}"
-  read -r -p " Are you sure you want to clean ${_name} old symlinks? (Y/n) " _cleaning_symlinks
+  read -r -p " Are you sure you want to clean old ${_name} symlinks? (Y/n) " _cleaning_symlinks
   case $_cleaning_symlinks in
     Y)
       echo -e "Removing previous/old symlinks of ${_name}"
@@ -257,11 +258,11 @@ do_clean() {
 do_clean_all() {
   echo -e "${cyan}=== Clean ${_name}${endColor}"
   echo -ne "${__warning__}"
-  read -r -p " Are you sure you want to clean ${_name} ALL symlinks? (Y/n) " _cleaning_symlinks
+  read -r -p " Are you sure you want to clean ALL ${_name} symlinks? (Y/n) " _cleaning_symlinks
   case $_cleaning_symlinks in
     Y)
       echo -e "Removing all symlinks of ${_name}"
-      rm -v $HOME/.vim\(* $HOME/.vim $HOME/.vimrc\(* $HOME/.vimrc $HOME/.gitconfig\(* $HOME/.gitconfig $HOME/.zshrc\(* $HOME/.zshrc $HOME/.conkyrc\(* $HOME/.conkyrc $HOME/.tmux.conf\(* $HOME/.tmux.conf  $HOME/.dircolors\(* $HOME/.dircolors $HOME/.aliases\(* $HOME/.aliases $HOME/.zshrc.local\(* $HOME/.zshrc.local
+      rm -v $HOME/.vim\(* $HOME/.vim $HOME/.vimrc\(* $HOME/.vimrc $HOME/.gitconfig\(* $HOME/.gitconfig $HOME/.zshrc\(* $HOME/.zshrc $HOME/.conkyrc\(* $HOME/.conkyrc $HOME/.tmux.conf\(* $HOME/.tmux.conf  $HOME/.dircolors\(* $HOME/.dircolors $HOME/.aliases\(* $HOME/.aliases $HOME/.zshrc.local\(* $HOME/.zshrc.local $HOME/.tmux.conf.local\(* $HOME/.tmux.conf.local
       echo -e "${__done__}"
       exit 1;
       ;;

@@ -1,0 +1,6 @@
+#############################################################
+##  Personal Configuration of .tmux.conf.local
+#############################################################
+
+# Load generated template by :TmuxlineSnapshot command
+source-file $HOME/.dotfiles/desktop/.TmuxlineSnapshot
