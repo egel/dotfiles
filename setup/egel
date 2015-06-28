@@ -10,11 +10,11 @@ purple='\e[1;35m'
 cyan='\e[0;36m'
 endColor='\e[0m'
 
-
 # global vars
 _name="The Egel dotfiles"
 _repo_name='.dotfiles'
 _repo_dir="$HOME/${_repo_name}/"
+_common_dir="$HOME/${_repo_name}/common/"
 _egel="${_repo_dir}/setup/egel"
 
 # Messages
@@ -24,7 +24,20 @@ __error__="${red}Error!${endColor}"
 __done__="${green}✔ Done${endColor}"
 
 
-_vim_dir_="$HOME/"
+_dotfiles_config_name='.dotfiles.config'
+_dotfiles_config_local="$HOME/${_dotfiles_config_name}"
+_dotfiles_config_repo="${_repo_dir}${_dotfiles_config_name}"
+if [ -f $_dotfiles_config_local ]; then
+  source $_dotfiles_config_local
+
+  # set some vars based on config
+  _dotfiles_type_repository_dir="${_repo_dir}$DOTFILES_TYPE/"
+  #echo ${_dotfiles_type_repository_dir}
+else
+  echo -e ${__error__} "Missing" $_dotfiles_config_local "file."
+  echo 'INFO: To fix this run `cp '${_dotfiles_config_repo}' '$HOME'` and adjust copied config file to your needs.'
+  exit 1
+fi
 
 
 # Methods
@@ -75,11 +88,14 @@ do_help() {
   echo -e "The Egel's dotfiles sophisticated configurator.\n" 1>&2;
   echo -e "  OPTIONS" 1>&2;
   echo -e "    -c, --clean\t\tClean old installation symlinks for current \n\t\t\t  user home directory ($HOME)." 1>&2;
+  echo -e "    -ca, --clean-all\tClean all installation symlinks for current \n\t\t\t  user home directory ($HOME)." 1>&2;
   echo -e "    -h, --help\t\tShow help." 1>&2;
   echo -e "    -i, --install\tInstall and configure egel dotfiles for\n\t\t\t  current user." 1>&2;
   echo -e "    -r, --reconfigure\tReconfigure ${_name} symlinks for\n\t\t\t  current user." 1>&2;
   echo -e "    -u, --update\tUpdate ${_name}." 1>&2;
-  echo -e "    -U, --uninstall\tUninstall ${_name} from hard drive." 1>&2;
+  echo -e "    -U, --uninstall\tUninstall ${_name} from hard drive.i\n" 1>&2;
+  echo -e "  LOCAL CONFIG FILE" 1>&2;
+  echo -e "    ${_dotfiles_config_local}" 1>&2;
   echo -e "\n  EXAMPLES OF USAGE" 1>&2;
   echo -e "    $0 --help" 1>&2;
   echo -e "    $0 --install" 1>&2;
@@ -199,14 +215,25 @@ do_uninstall() {
 
 do_reconfigure() {
   echo -e "${cyan}=== Reconfigure ${_name}${endColor}"
-  make_symlink ".vimrc" "${_repo_dir}.vimrc" "$HOME/.vimrc"
-  make_symlink ".vim" "${_repo_dir}.vim" "$HOME/.vim"
-  make_symlink ".zshrc" "${_repo_dir}.zshrc" "$HOME/.zshrc"
-  make_symlink ".gitconfig" "${_repo_dir}.gitconfig" "$HOME/.gitconfig"
-  make_symlink ".conkyrc" "${_repo_dir}conky-themes/conky_seamod/.conkyrc" "$HOME/.conkyrc"
-  make_symlink ".tmux.conf" "${_repo_dir}.tmux.conf" "$HOME/.tmux.conf"
+  echo -e "${__info__} Based on" ${_dotfiles_config_local}
+  #make_symlink ".aliases" "${_common_dir}.aliases" "$HOME/.aliases"
+  make_symlink ".vim" "${_common_dir}.vim" "$HOME/.vim"
+  make_symlink ".gitconfig" "${_common_dir}.gitconfig" "$HOME/.gitconfig"
   make_symlink ".dircolors" "${_repo_dir}dircolors-solarized/dircolors.256dark" "$HOME/.dircolors"
-  make_symlink ".aliases" "${_repo_dir}.aliases" "$HOME/.aliases"
+  make_symlink ".vimrc" "${_common_dir}.vimrc" "$HOME/.vimrc"
+  make_symlink ".zshrc" "${_common_dir}.zshrc" "$HOME/.zshrc"
+
+  case $DOTFILES_TYPE in
+    desktop)
+      make_symlink ".zshrc.local" "${_dotfiles_type_repository_dir}.zshrc.local" "$HOME/.zshrc.local"
+      make_symlink ".tmux.conf" "${_dotfiles_type_repository_dir}.tmux.conf" "$HOME/.tmux.conf"
+      make_symlink ".conkyrc" "${_repo_dir}conky-themes/conky_seamod/.conkyrc" "$HOME/.conkyrc"
+      ;;
+    server)
+      make_symlink ".zshrc.local" "${_dotfiles_type_repository_dir}.zshrc.local" "$HOME/.zshrc.local"
+      make_symlink ".tmux.conf" "${_dotfiles_type_repository_dir}.tmux.conf" "$HOME/.tmux.conf"
+      ;;
+  esac
 }
 
 do_clean() {
@@ -216,7 +243,7 @@ do_clean() {
   case $_cleaning_symlinks in
     Y)
       echo -e "Removing previous/old symlinks of ${_name}"
-      rm -v $HOME/.vim\(* $HOME/.vimrc\(* $HOME/.gitconfig\(* $HOME/.zshrc\(* $HOME/.conkyrc\(* $HOME/.tmux.conf\(* $HOME/.dircolors\(* $HOME/.aliases\(*
+      rm -v $HOME/.vim\(* $HOME/.vimrc\(* $HOME/.gitconfig\(* $HOME/.zshrc\(* $HOME/.conkyrc\(* $HOME/.tmux.conf\(* $HOME/.dircolors\(* $HOME/.aliases\(* $HOME/.zshrc.local\(*
       echo -e "${__done__}"
       exit 1;
       ;;
@@ -226,6 +253,22 @@ do_clean() {
   esac
 }
 
+do_clean_all() {
+  echo -e "${cyan}=== Clean ${_name}${endColor}"
+  echo -ne "${__warning__}"
+  read -r -p " Are you sure you want to clean ${_name} ALL symlinks? (Y/n) " _cleaning_symlinks
+  case $_cleaning_symlinks in
+    Y)
+      echo -e "Removing all symlinks of ${_name}"
+      rm -v $HOME/.vim\(* $HOME/.vim $HOME/.vimrc\(* $HOME/.vimrc $HOME/.gitconfig\(* $HOME/.gitconfig $HOME/.zshrc\(* $HOME/.zshrc $HOME/.conkyrc\(* $HOME/.conkyrc $HOME/.tmux.conf\(* $HOME/.tmux.conf  $HOME/.dircolors\(* $HOME/.dircolors $HOME/.aliases\(* $HOME/.aliases $HOME/.zshrc.local\(* $HOME/.zshrc.local
+      echo -e "${__done__}"
+      exit 1;
+      ;;
+    *)
+      echo -e "${__info__} Aborting cleaning of ${_name} symlinks."
+      ;;
+  esac
+}
 
 # Main
 case "$1" in
@@ -243,6 +286,9 @@ case "$1" in
     ;;
   --clean|-c)
     do_clean
+    ;;
+  --clean-all|-ca)
+    do_clean_all
     ;;
   *|--help|-h)
     do_help
