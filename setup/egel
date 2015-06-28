@@ -223,7 +223,7 @@ do_reconfigure() {
   make_symlink ".dircolors" "${_repo_dir}dircolors-solarized/dircolors.256dark" "$HOME/.dircolors"
   make_symlink ".vimrc" "${_common_dir}.vimrc" "$HOME/.vimrc"
   make_symlink ".zshrc" "${_common_dir}.zshrc" "$HOME/.zshrc"
-  make_symlink ".tmux.conf" "${_dotfiles_type_repository_dir}.tmux.conf" "$HOME/.tmux.conf"
+  make_symlink ".tmux.conf" "${_common_dir}.tmux.conf" "$HOME/.tmux.conf"
 
   case $DOTFILES_TYPE in
     desktop)
