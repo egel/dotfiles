@@ -91,6 +91,7 @@ do_help() {
   echo -e "    -ca, --clean-all\tClean all installation symlinks for current \n\t\t\t  user home directory ($HOME)." 1>&2;
   echo -e "    -h, --help\t\tShow help." 1>&2;
   echo -e "    -i, --install\tInstall and configure egel dotfiles for\n\t\t\t  current user." 1>&2;
+  echo -e "    -lc, --list-config\tList personal configuration file stored in\n\t\t\t  ${_dotfiles_config_local} for current user." 1>&2;
   echo -e "    -r, --reconfigure\tReconfigure ${_name} symlinks for\n\t\t\t  current user." 1>&2;
   echo -e "    -u, --update\tUpdate ${_name}." 1>&2;
   echo -e "    -U, --uninstall\tUninstall ${_name} from hard drive.i\n" 1>&2;
@@ -270,6 +271,10 @@ do_clean_all() {
   esac
 }
 
+do_list_local_config() {
+  cat ${_dotfiles_config_local}
+}
+
 # Main
 case "$1" in
   --install|-i)
@@ -289,6 +294,9 @@ case "$1" in
     ;;
   --clean-all|-ca)
     do_clean_all
+    ;;
+  --list-config|-lc)
+    do_list_local_config
     ;;
   *|--help|-h)
     do_help
