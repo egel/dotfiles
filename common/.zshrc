@@ -1,12 +1,18 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
+if [[ -f ~/.zshrc.local ]]; then
+  source ~/.zshrc.local
+else
+  echo "Some .dotfiles ZSH settings will not be available. Missing $HOME/.zshrc.local"
+  echo "To fix this run: $HOME/.dotfiles/setup/egel --reconfigure; source $HOME/.zshrc"
+fi
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="robbyrussell"
+#ZSH_THEME="robbyrussell"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
