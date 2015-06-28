@@ -88,10 +88,10 @@ bindkey "^[[B" history-beginning-search-forward
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Add public aliases
-source ~/.aliases
+source $HOME/.dotfiles/common/.aliases
 
 # Add private aliases
-source ~/.bash_aliases
+source $HOME/.bash_aliases
 
 # Virtualenvwrapper
 export WORKON_HOME=$HOME/.virtualenvs
