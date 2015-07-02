@@ -76,7 +76,6 @@ filetype plugin indent on            " detect the type of file that is edited
 " this will conveniently prompt you to install them.
 NeoBundleCheck
 
-
 set encoding=utf-8 fileencoding=utf-8 termencoding=utf-8  " saving and encoding
 
 syntax on                                       " enable syntax highlighting
@@ -159,7 +158,7 @@ if has("gui_running")
   set guioptions+=e
   set guioptions-=r           " turn off GUI right scrollbar
   set guioptions-=L           " turn off GUI left scrollbar
-  set guitablabel=%M\ %t
+  set guitablabel=\[%N\]\ %t\ %M
 else
   " indent guidlines for terminal
   hi IndentGuidesOdd  ctermbg=black
@@ -174,8 +173,10 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
 
 " Hightlight current line and column
 set cursorline                      " highlight the current line
-hi CursorLine   term=bold cterm=bold guibg=Grey40
 "set cursorcolumn                    " highlight the current column
+hi CursorLine     term=bold cterm=bold guibg=Grey40
+hi CursorColumn   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+"nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 
 " Highlight maching braces constantly
 " 'set showmatch' option only show braces one when creating
@@ -413,7 +414,7 @@ autocmd BufRead,BufNewFile *.jade setlocal ft=jade
 
 " Create directory on save if not exsist
 " Gracefully borrowed from: http://stackoverflow.com/a/4294176/1977012
-function s:MkNonExDir(file, buf)
+function! s:MkNonExDir(file, buf)
     if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
         let dir=fnamemodify(a:file, ':h')
         if !isdirectory(dir)
