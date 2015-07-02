@@ -66,6 +66,7 @@ NeoBundle 'xolox/vim-session'
 NeoBundle 'xolox/vim-misc'     " as dependency for vim-session
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'jmcantrell/vim-virtualenv'
+NeoBundle 'smancill/conky-syntax.vim'
 
 call neobundle#end()
 

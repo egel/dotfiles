@@ -34,7 +34,7 @@
 
 **Sample screenshots**
 
-<img src="http://i.imgur.com/e3eVAy9.png" title="Desktop with conky" width="320" />
+<img src="http://i.imgur.com/z2lkMpg.png" title="Desktop with conky" width="320" />
 <img src="http://i.imgur.com/M2RuBYB.png" title="gVim with gruvbox colorscheme and NERDTree plugin on the right side" width="320" />
 <img src="http://i.imgur.com/2XxG5rf.png" title="Guake with friends - Git + dircolors + vim + 256color test" width="320" />
 
