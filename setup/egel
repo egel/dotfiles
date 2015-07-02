@@ -14,7 +14,8 @@ endColor='\e[0m'
 _name="The Egel dotfiles"
 _repo_name='.dotfiles'
 _repo_dir="$HOME/${_repo_name}/"
-_common_dir="$HOME/${_repo_name}/common/"
+_repo_lib_dir="$HOME/${_repo_name}/lib/"
+_common_dir="$HOME/${_repo_name}/settings/common/"
 _egel="${_repo_dir}/setup/egel"
 
 # Messages
@@ -31,7 +32,7 @@ if [ -f $_dotfiles_config_local ]; then
   source $_dotfiles_config_local
 
   # set some vars based on config
-  _dotfiles_type_repository_dir="${_repo_dir}$DOTFILES_TYPE/"
+  _dotfiles_type_repository_dir="${_repo_dir}settings/$DOTFILES_TYPE/"
   #echo ${_dotfiles_type_repository_dir}
 else
   echo -e ${__error__} "Missing" $_dotfiles_config_local "file."
@@ -220,7 +221,7 @@ do_reconfigure() {
   #make_symlink ".aliases" "${_common_dir}.aliases" "$HOME/.aliases"
   make_symlink ".vim" "${_common_dir}.vim" "$HOME/.vim"
   make_symlink ".gitconfig" "${_common_dir}.gitconfig" "$HOME/.gitconfig"
-  make_symlink ".dircolors" "${_repo_dir}dircolors-solarized/dircolors.256dark" "$HOME/.dircolors"
+  make_symlink ".dircolors" "${_repo_lib_dir}dircolors-solarized/dircolors.256dark" "$HOME/.dircolors"
   make_symlink ".vimrc" "${_common_dir}.vimrc" "$HOME/.vimrc"
   make_symlink ".zshrc" "${_common_dir}.zshrc" "$HOME/.zshrc"
   make_symlink ".tmux.conf" "${_common_dir}.tmux.conf" "$HOME/.tmux.conf"
@@ -229,7 +230,7 @@ do_reconfigure() {
     desktop)
       make_symlink ".zshrc.local" "${_dotfiles_type_repository_dir}.zshrc.local" "$HOME/.zshrc.local"
       make_symlink ".tmux.conf.local" "${_dotfiles_type_repository_dir}.tmux.conf.local" "$HOME/.tmux.conf.local"
-      make_symlink ".conkyrc" "${_repo_dir}conky-themes/conky_seamod/.conkyrc" "$HOME/.conkyrc" # only for desktops
+      make_symlink ".conkyrc" "${_repo_lib_dir}conky-themes/conky_seamod/.conkyrc" "$HOME/.conkyrc" # only for desktops
       ;;
     server)
       make_symlink ".zshrc.local" "${_dotfiles_type_repository_dir}.zshrc.local" "$HOME/.zshrc.local"
