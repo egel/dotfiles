@@ -1,0 +1,12 @@
+#!/bin/bash
+if [ -e ~/.siec ]; then
+iwconfig eth1 | iwconfig eth1 | grep ESSID |cut -c 31-43 > .siec
+else
+touch ~/.siec
+iwconfig eth1 | iwconfig eth1 | grep ESSID |cut -c 31-43 > .siec
+fi
+if [ "$(cat .siec)" = """" ]; then
+echo "nie połaczono"
+else 
+cat .siec
+fi

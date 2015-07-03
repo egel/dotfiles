@@ -1,0 +1,106 @@
+#!/usr/bin/conky -d -c
+##	.conkyrc configuration
+alignment top_right
+background yes
+border_margin 5
+border_width 5
+color0 555555			#
+color1 FCAF3E			# zolty
+color2 64574e			# braz
+color3 a82553			# rozowy f71f84
+color4 5e1014			# bordowy
+color5 64574e			# braz
+color6 a7a7a7			# szary
+color7 8888CC			#  (COOL)
+color8 9d9c61			# zolto-szary
+color9 525276			# niebiesko-szary
+cpu_avg_samples 2
+default_color e1e1e1		# szary a7a7a7
+default_outline_color 000000 	# Black
+default_shade_color 000000	# Black
+double_buffer yes
+draw_borders no
+draw_graph_borders no
+draw_outline no
+draw_shades no
+gap_x 5
+gap_y 40
+max_specials 1024
+max_user_text 10000
+maximum_width 180
+minimum_size 850
+net_avg_samples 2
+no_buffers yes
+override_utf8_locale yes
+own_window yes
+own_window_colour 000000	# Black
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+own_window_transparent yes
+own_window_type override 	## normal
+pad_percents 2			# to co nizej, miejsc po przecinku
+short_units yes			# krotka wersja podawania wielkosci dyskow np. 612.21M/3.80G
+stippled_borders 3
+text_buffer_size 8000
+total_run_times 0
+update_interval 1.0
+uppercase no
+use_spacer right
+use_xft yes
+xftalpha 0.75
+xftfont sans:size=7
+
+lua_load /home/didisoft/.conky/lua.lua
+
+# ${diskiograph /dev/sda 15,180 a7a7a7 a7a7a7} # wskaznik pracy dysku
+# ${image /home/didisoft/.conky/didisoft.jpg -p 0,80 -s 26x28} # obrazki w conky
+
+
+TEXT
+${color2}${goto 10}${font DejaVu Sans Mono:size=44}${time %H}${font DejaVu Sans Mono:size=20}${voffset -25}'${time %M}${font DejaVu Sans Mono:size=8}${voffset -12}${time %S}
+${color2}${goto 85}${voffset 10}${font :size=8}${time %A}
+${color2}${goto 85}${voffset 1}${font :size=8}${time %d %B %Y}
+${color}${font RsbillsDng:size=14}O${font}${font DejaVu Sans Mono:size=8}${execpi 3600 DJS=`date +%_d`; cal -m | sed '1d' | sed '/./!d' | sed 's/$/                     /' | fold -w 21 | sed -n '/^.\{21\}/p' | sed 's/^/${alignc} /' | sed /" $DJS "/s/" $DJS "/" "'${color2}'"$DJS"'${color}'" "/}${font}
+
+${voffset -20}${color2}${font led:size=10}SYSTEM ${font}$hr
+${color}${sysname} Kernel: ${alignr}$kernel
+${color}Conky:${alignr}${conky_version}
+${color}Bateria: ${alignr}${battery_percent BAT0}% / ${acpitemp}°C
+${color}Bateria czas pracy: ${alignr}$battery_time
+${color}Gmail: ${alignr}${execi 60 ~/.conky/gmail.sh}
+
+${voffset -10}${color2}${font led:size=10}CPU ${font}$hr
+${color}Core 1:  ${cpu cpu1}% $alignr ${freq_g (1)} GHz / ${exec sensors | grep "Core 0" | cut --bytes=14-21}
+${color}Core 2:  ${cpu cpu2}% $alignr ${freq_g (2)} GHz / ${exec sensors | grep "Core 1" | cut --bytes=14-21}
+
+${voffset -7}${color}${font}NAME ${goto 90}PID${goto 120}CPU% ${alignr}MEM%
+${color}${font :size=6}${goto 9}${top name 1}${goto 85}${top pid 1}${goto 120}${top cpu 1}${goto 156}${top mem 1}
+${color}${font :size=6}${goto 9}${top name 2}${goto 85}${top pid 2}${goto 120}${top cpu 2}${goto 156}${top mem 2}
+${color}${font :size=6}${goto 9}${top name 3}${goto 85}${top pid 3}${goto 120}${top cpu 3}${goto 156}${top mem 3}
+
+${voffset -6}${color2}${font led:size=10}MEMORY / HDD / USB ${font}$hr
+${color}ram: ${mem} / ${memmax} ${alignr} ${memperc}%
+${color}swap: ${swap} / ${swapmax} ${alignr} ${swapperc}%
+${color}root: ${fs_used /} / ${fs_size /} ${alignr} ${fs_used_perc /}%
+${color}home: ${fs_used /home} / ${fs_size /home} ${alignr} ${fs_used_perc /home}%
+${color}${voffset -12}${execpi 5 ~/.conky/usb_nowe.sh}
+
+${voffset -10}${color2}${font led:size=10}WIFI ${font}$hr
+${color}gateway IP: ${alignr}${gw_ip}
+${color}local IP: $alignr${addr eth1}
+${color}public IP: $alignr${execi 60 ~/.conky/ip.sh}
+${voffset 5}${color}${goto 10}${font pizzadude bullets:size=16}S${font}${color}${voffset -12}${goto 40}Down: ${downspeed eth1}kb/s ${color}
+${goto 40}Day: ${totaldown eth1}${voffset -12}${alignr}${downspeedgraph eth1 25,50 64574e 64574e}
+${voffset -13}${goto 40}Month: ${execi 300 vnstat -m | grep "`date +"'%y"`" | tail -1 | awk '{print $3 $4}'}
+
+${color}${goto 10}${font pizzadude bullets:size=16}M${font}$color${voffset -12}${goto 40}Up: ${upspeed eth1}kb/s${color}
+${goto 40}Day: ${totalup eth1}${voffset -12}${alignr}${upspeedgraph eth1 25,50 64574e 64574e}
+${voffset -13}${goto 40}Month: ${execi 300 vnstat -m | grep "`date +"'%y"`" | tail -1 | awk '{print $6 $7}'}
+
+${voffset -10}${color}${font}${alignc}Użytkownicy online w sieci:$alignr${wireless_essid eth1}
+${color}${font}${alignc}${execi 60 ~/.conky/uzytkownicysieci.sh}
+
+${color2}${if_mpd_playing}${font led:size=10}MPD ${font}${mpd_status} $hr
+${color}${alignc}${mpd_artist} - "${mpd_title}"
+${color}${alignc}${mpd_album}
+${color}${alignc}${mpd_bar 3,150}
+${color}${alignc}${mpd_elapsed}/${mpd_length}${endif}
