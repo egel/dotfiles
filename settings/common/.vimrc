@@ -171,9 +171,10 @@ let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
 
-
 " Hightlight current line and column
-set cursorline                      " highlight the current line
+if !&diff
+  set cursorline   " highlight the current line
+endif
 "set cursorcolumn                    " highlight the current column
 hi CursorLine     term=bold cterm=bold guibg=Grey40
 hi CursorColumn   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
