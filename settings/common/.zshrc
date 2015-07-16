@@ -94,7 +94,7 @@ bindkey "^[[B" history-beginning-search-forward
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Add public aliases
-source $HOME/.dotfiles/common/.aliases
+source $HOME/.dotfiles/settings/common/.aliases
 
 # Add private aliases
 source $HOME/.bash_aliases
