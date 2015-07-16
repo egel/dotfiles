@@ -129,9 +129,9 @@ do_install() {
   sudo add-apt-repository -y ppa:chris-lea/node.js #NodeJS
   sudo add-apt-repository -y ppa:pi-rho/dev # Tmux
 
-  echo -e "${purple}--- Checking and install required programs (zsh, oh-my-zsh, git, tmux, nodejs, python common, xdg-utils)${endColor}"
+  echo -e "${purple}--- Checking and install required programs (zsh, oh-my-zsh, git, tmux, nodejs, python common, xdg-utils, editorconfig)${endColor}"
   sudo apt-get update
-  sudo apt-get install -y python-software-properties software-properties-common git zsh tmux nodejs xdg-utils
+  sudo apt-get install -y python-software-properties software-properties-common git zsh tmux nodejs xdg-utils editorconfig
 
   # tmux
   check_program "tmux:" "tmux -V"
@@ -225,6 +225,7 @@ do_reconfigure() {
   make_symlink ".vimrc" "${_common_dir}.vimrc" "$HOME/.vimrc"
   make_symlink ".zshrc" "${_common_dir}.zshrc" "$HOME/.zshrc"
   make_symlink ".tmux.conf" "${_common_dir}.tmux.conf" "$HOME/.tmux.conf"
+  make_symlink ".editorconfig" "${_common_dir}.editorconfig" "$HOME/.editorconfig"
 
   case $DOTFILES_TYPE in
     desktop)
@@ -246,7 +247,7 @@ do_clean() {
   case $_cleaning_symlinks in
     Y)
       echo -e "Removing previous/old symlinks of ${_name}"
-      rm -v $HOME/.vim\(* $HOME/.vimrc\(* $HOME/.gitconfig\(* $HOME/.zshrc\(* $HOME/.conkyrc\(* $HOME/.tmux.conf\(* $HOME/.dircolors\(* $HOME/.aliases\(* $HOME/.zshrc.local\(*
+      rm -v $HOME/.vim\(* $HOME/.vimrc\(* $HOME/.gitconfig\(* $HOME/.zshrc\(* $HOME/.conkyrc\(* $HOME/.tmux.conf\(* $HOME/.dircolors\(* $HOME/.aliases\(* $HOME/.zshrc.local\(* $HOME/.editorconfig\(*
       echo -e "${__done__}"
       exit 1;
       ;;
@@ -263,7 +264,7 @@ do_clean_all() {
   case $_cleaning_symlinks in
     Y)
       echo -e "Removing all symlinks of ${_name}"
-      rm -v $HOME/.vim\(* $HOME/.vim $HOME/.vimrc\(* $HOME/.vimrc $HOME/.gitconfig\(* $HOME/.gitconfig $HOME/.zshrc\(* $HOME/.zshrc $HOME/.conkyrc\(* $HOME/.conkyrc $HOME/.tmux.conf\(* $HOME/.tmux.conf  $HOME/.dircolors\(* $HOME/.dircolors $HOME/.aliases\(* $HOME/.aliases $HOME/.zshrc.local\(* $HOME/.zshrc.local $HOME/.tmux.conf.local\(* $HOME/.tmux.conf.local
+      rm -v $HOME/.vim\(* $HOME/.vim $HOME/.vimrc\(* $HOME/.vimrc $HOME/.gitconfig\(* $HOME/.gitconfig $HOME/.zshrc\(* $HOME/.zshrc $HOME/.conkyrc\(* $HOME/.conkyrc $HOME/.tmux.conf\(* $HOME/.tmux.conf  $HOME/.dircolors\(* $HOME/.dircolors $HOME/.aliases\(* $HOME/.aliases $HOME/.zshrc.local\(* $HOME/.zshrc.local $HOME/.tmux.conf.local\(* $HOME/.tmux.conf.local $HOME/.editorconfig\(* $HOME/.editorconfig
       echo -e "${__done__}"
       exit 1;
       ;;
