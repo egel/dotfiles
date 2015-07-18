@@ -61,7 +61,7 @@ color4 E74632
 color5 91AA24
 
 # Loading lua script for drawning rings
-lua_load ~/.dotfiles/conky-themes/conky_seamod/seamod_rings.lua
+lua_load ~/.dotfiles/lib/conky-themes/conky_seamod/seamod_rings.lua
 lua_draw_hook_post main
 
 ## System information using conky capabilities
@@ -113,5 +113,4 @@ ${offset 15}${upspeedgraph wlan0 40,285 83352A FF5C2B 100 -l}
 ${offset 15}${color1}${font Ubuntu:size=9,weight:bold}Download: ${alignr}${font Ubuntu:size=9,weight:normal}$color2${downspeed wlan0} / ${totaldown}
 ${offset 15}${downspeedgraph wlan0 40,285 6A7735 91AA24 100 -l}
 ${color4}${hr 2}
-
 
