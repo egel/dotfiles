@@ -238,6 +238,9 @@ do_reconfigure() {
       make_symlink ".tmux.conf.local" "${_dotfiles_type_repository_dir}.tmux.conf.local" "$HOME/.tmux.conf.local"
       ;;
   esac
+
+  echo -e "\n${yellow}Chechking neobundle:${endColor}"
+  wget https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh -q -O - | bash
 }
 
 do_clean() {
