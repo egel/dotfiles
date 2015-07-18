@@ -3,4 +3,4 @@
 #############################################################
 
 # Load generated template by :TmuxlineSnapshot command
-source-file $HOME/.dotfiles/server/.TmuxlineSnapshot
+source-file $HOME/.dotfiles/settings/server/.TmuxlineSnapshot
