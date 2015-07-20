@@ -124,6 +124,10 @@ do_install() {
   echo -e "${cyan}=== Installing ${_name}${endColor}"
   ${_egel} --update
 
+  # symlink egel program
+  echo -e "${purple}--- Symlinking egel installer ${endColor}"
+  sudo ln -vs $HOME/.dotfiles/setup/egel /usr/local/bin
+
   echo -e "${purple}--- Checking and adding PPA repositories${endColor}"
   sudo add-apt-repository -y ppa:git-core/ppa # Git
   sudo add-apt-repository -y ppa:chris-lea/node.js #NodeJS
@@ -191,7 +195,9 @@ do_install() {
     echo -e "${__info__} Rebooting canceled by User"
   fi
 
-  echo -e "${green}✔ Congratulations. Configuration of ${_name} complete successfully :)${endColor}"
+  echo -e "${green}✔ Congratulations.${endColor}"
+  echo -e "Configuration of ${_name} complete successfully."
+  echo -e "Now you could run: 'egel --help' to find more about configurator."
 }
 
 
