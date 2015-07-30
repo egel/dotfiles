@@ -69,6 +69,8 @@ NeoBundle 'jmcantrell/vim-virtualenv'
 NeoBundle 'smancill/conky-syntax.vim'
 NeoBundle 'editorconfig/editorconfig-vim'
 NeoBundle 'Glench/Vim-Jinja2-Syntax'
+NeoBundle 'ekalinin/Dockerfile.vim'
+NeoBundle 'ryanss/vim-hackernews'
 
 call neobundle#end()
 
