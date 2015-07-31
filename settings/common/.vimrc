@@ -130,15 +130,11 @@ set commentstring=#\ %s
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  Appearance
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set background=dark       " Set colors of vim to more convinient for black backgound
 set t_Co=256              " Set 256 colors pallete
-colorscheme gruvbox
-let g:gruvbox_underline = 0   " according to linespace for example markdown files
-"let g:gruvbox_undercurl = 0
 
-" Airline theme
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme = 'tomorrow'
+if filereadable(expand("~/.vimrc.local"))
+  source ~/.vimrc.local
+endif
 
 " Tmuxline
 "let g:tmuxline_preset = 'full'
