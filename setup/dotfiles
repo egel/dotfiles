@@ -21,7 +21,7 @@ __error__="${red}Error!!!${endColor}"
 __done__="${green}✔ Done${endColor}"
 
 # Current file variables
-__version__="1.2.0"
+__version__="1.2.1"
 PROJECT_NAME="The Egel dotfiles"
 PROJECT_CONFIG_NAME='.dotfiles.config'
 PROJECT_CONFIG_FILE=$HOME/${PROJECT_CONFIG_NAME}
