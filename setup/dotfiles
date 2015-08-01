@@ -157,19 +157,19 @@ is_program_installed() {
 do_help() {
   print_dotfiles_logo
   echo -e "The Egel's dotfiles sophisticated configurator.\n" 1>&2;
-  echo -e "  OPTIONS" 1>&2;
-  echo -e "    -c, --clean\t\tClean old installation symlinks for current \n\t\t\t  user home directory ($HOME)." 1>&2;
-  echo -e "    -ca, --clean-all\tClean all installation symlinks for current \n\t\t\t  user home directory ($HOME)." 1>&2;
-  echo -e "    -h, --help\t\tShow help." 1>&2;
-  echo -e "    -i, --install\tInstall and configure dotfiles for\n\t\t\t  current user." 1>&2;
-  echo -e "    -lc, --list-config\tList personal configuration file stored in\n\t\t\t  ${PROJECT_CONFIG_FILE} for current user." 1>&2;
-  echo -e "    -r, --reconfigure\tReconfigure ${PROJECT_NAME} symlinks for\n\t\t\t  current user." 1>&2;
-  echo -e "    -u, --update\tUpdate ${PROJECT_NAME}." 1>&2;
+  echo -e "OPTIONS" 1>&2;
+  echo -e "    -c, --clean\t\tClean old installation symlinks for current \n\t\t\t  user home directory ($HOME).\n" 1>&2;
+  echo -e "    -ca, --clean-all\tClean all installation symlinks for current \n\t\t\t  user home directory ($HOME).\n" 1>&2;
+  echo -e "    -h, --help\t\tShow help.\n" 1>&2;
+  echo -e "    -i, --install\tInstall and configure dotfiles for\n\t\t\t  current user.\n" 1>&2;
+  echo -e "    -lc, --list-config\tList personal configuration file stored in\n\t\t\t  ${PROJECT_CONFIG_FILE} for current user.\n" 1>&2;
+  echo -e "    -r, --reconfigure\tReconfigure ${PROJECT_NAME} symlinks for\n\t\t\t  current user.\n" 1>&2;
+  echo -e "    -u, --update\tUpdate ${PROJECT_NAME} repository and it submodules.\n" 1>&2;
   echo -e "    --uninstall\t\tUninstall ${PROJECT_NAME} from hard drive.\n" 1>&2;
   echo -e "    --version \t\tPrint the version of ${PROJECT_NAME}.\n" 1>&2;
-  echo -e "  LOCAL CONFIG FILE" 1>&2;
-  echo -e "    ${PROJECT_CONFIG_FILE}" 1>&2;
-  echo -e "\n  EXAMPLES OF USAGE" 1>&2;
+  echo -e "LOCAL CONFIG FILE" 1>&2;
+  echo -e "    ${PROJECT_CONFIG_FILE}\n" 1>&2;
+  echo -e "EXAMPLES OF USAGE" 1>&2;
   echo -e "    ${FILE_NAME} --help" 1>&2;
   echo -e "    ${FILE_NAME} --install" 1>&2;
   echo -e "\n2014-$(date +"%Y") License MIT --- Further info at https://github.com/egel/dotfiles" 2>&2;
@@ -201,7 +201,7 @@ do_install() {
 
   # symlink dotfiles program
   print_subsection "Symlinking dotfiles configurator"
-  sudo ln -vs $HOME/.dotfiles/setup/dotfiles /usr/local/bin
+  sudo ln -vs $PROJECT_REPOSITORY_DIR/setup/${FILE_NAME} /usr/local/bin
 
   print_subsection "Checking and adding PPA repositories"
   sudo add-apt-repository -y ppa:git-core/ppa # Git
