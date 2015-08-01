@@ -32,11 +32,10 @@
 * * *
 
 
-**Sample screenshots**
+**Sample screenshots for desktop theme**
 
-<img src="http://i.imgur.com/z2lkMpg.png" title="Desktop with conky" width="320" />
-<img src="http://i.imgur.com/M2RuBYB.png" title="gVim with gruvbox colorscheme and NERDTree plugin on the right side" width="320" />
-<img src="http://i.imgur.com/2XxG5rf.png" title="Guake with friends - Git + dircolors + vim + 256color test" width="320" />
+<img src="http://i.imgur.com/Q2Y1Td0.png" title="Desktop with conky seamod theme" width="350" />
+<img src="http://i.imgur.com/Dc9BoKT.png" title="Guake with friends - Git + dircolors + vim + 256color test" width="350" />
 
 This set contains configuration for:
 
@@ -45,7 +44,8 @@ This set contains configuration for:
   - **Vim**
   - **tmux** (key-bindings, copy-paste to clippboard)
   - **conky** (themes)
-  - **Option to add your personal theme ;)**
+  - **Easy option to add your own personal theme configuration ;)**
+  - [read more][dotfiles-wiki]
 
 
 ## Installation
