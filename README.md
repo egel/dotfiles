@@ -28,7 +28,7 @@
 > The Egel dotfiles for Ubuntu 14.04 LTS
 
 * * *
-[Installation](#installation) | [Update](#update) | [Extra features](#extra-features) | [Egel Cheat Sheet (PDF)](http://bit.ly/1wqcChS)
+[Installation](#installation) | [Update](#update) | [Learn more on Wiki][dotfiles-wiki] | [Shortcuts Cheat Sheet (PDF)][shortcuts-cheat-sheet]
 * * *
 
 
@@ -41,24 +41,25 @@
 This set contains configuration for:
 
   - **zsh** (oh-my-zsh)
-  - **Git** (accounts, aliases)
+  - **Git** (account management, aliases)
   - **Vim**
   - **tmux** (key-bindings, copy-paste to clippboard)
   - **conky** (themes)
+  - **Option to add your personal theme ;)**
 
 
 ## Installation
 > Don't be afraid, **instalator won't remove any of your previous configurations**. It will save them all, simply by renaming files into its directories.
 
-> If need help run: `~/.dotfiles/setup/egel --help`
+> If need help run: `~/.dotfiles/setup/dotfiles --help`
 
     A) With github account
     $ git clone --recursive git@github.com:egel/dotfiles.git ~/.dotfiles
-    $ ~/.dotfiles/setup/egel --install
+    $ ~/.dotfiles/setup/dotfiles --install
 
     B) Without github account
     $ git clone --recursive git://github.com/egel/dotfiles ~/.dotfiles
-    $ ~/.dotfiles/setup/egel --install
+    $ ~/.dotfiles/setup/dotfiles --install
 
 The last thing is to set `Ubuntu Mono derivative Powerline` as default `terminal` and `guake` font and reset X, simply by restart the computer.
 
@@ -73,9 +74,12 @@ The last thing is to set `Ubuntu Mono derivative Powerline` as default `terminal
 ## Update
 To update repository and its submodules
 
-    $ ~/.dotfiles/setup/egel --update
+    $ ~/.dotfiles/setup/dotfiles --update
+
+## Learn more
+To find further information about this project, take a look at [wiki pages][dotfiles-wiki] and [shortcuts cheat sheet][shortcuts-cheat-sheet].
 
 
- [powerline-install-webpage]: https://powerline.readthedocs.org/en/latest/installation/linux.html#font-installation
- [.vim/bundle]: https://github.com/egel/dot-files/tree/master/.vim/bundle
- [.gitconfig]: https://github.com/egel/dot-files/blob/master/.gitconfig
+  [dotfiles-wiki]: https://github.com/egel/dotfiles/wiki
+  [shortcuts-cheat-sheet]: http://bit.ly/1wqcChS
+  [powerline-install-webpage]: https://powerline.readthedocs.org/en/latest/installation/linux.html#font-installation
