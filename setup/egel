@@ -300,15 +300,15 @@ do_reconfigure() {
 
   case $DOTFILES_TYPE in
     desktop)
-      make_symlink ".vimrc.local" "${PROJECT_TYPE_SETTINGS_DIR}/.vimrc.local" "$HOME/.vimrc.local"
-      make_symlink ".zshrc.local" "${PROJECT_TYPE_SETTINGS_DIR}/.zshrc.local" "$HOME/.zshrc.local"
-      make_symlink ".tmux.conf.local" "${PROJECT_TYPE_SETTINGS_DIR}/.tmux.conf.local" "$HOME/.tmux.conf.local"
+      make_symlink ".vimrc.local" "${PROJECT_SETTINGS_THEME_DIR}/.vimrc.local" "$HOME/.vimrc.local"
+      make_symlink ".zshrc.local" "${PROJECT_SETTINGS_THEME_DIR}/.zshrc.local" "$HOME/.zshrc.local"
+      make_symlink ".tmux.conf.local" "${PROJECT_SETTINGS_THEME_DIR}/.tmux.conf.local" "$HOME/.tmux.conf.local"
       make_symlink ".conkyrc" "${PROJECT_LIB_DIR}/conky-themes/conky_seamod/.conkyrc" "$HOME/.conkyrc" # only for desktops (servers terminals not need GUI)
       ;;
     server)
-      make_symlink ".vimrc.local" "${PROJECT_TYPE_SETTINGS_DIR}/.vimrc.local" "$HOME/.vimrc.local"
-      make_symlink ".zshrc.local" "${PROJECT_TYPE_SETTINGS_DIR}/.zshrc.local" "$HOME/.zshrc.local"
-      make_symlink ".tmux.conf.local" "${PROJECT_TYPE_SETTINGS_DIR}/.tmux.conf.local" "$HOME/.tmux.conf.local"
+      make_symlink ".vimrc.local" "${PROJECT_SETTINGS_THEME_DIR}/.vimrc.local" "$HOME/.vimrc.local"
+      make_symlink ".zshrc.local" "${PROJECT_SETTINGS_THEME_DIR}/.zshrc.local" "$HOME/.zshrc.local"
+      make_symlink ".tmux.conf.local" "${PROJECT_SETTINGS_THEME_DIR}/.tmux.conf.local" "$HOME/.tmux.conf.local"
       ;;
   esac
 
