@@ -290,25 +290,25 @@ do_reconfigure() {
   print_section "Reconfigure ${PROJECT_NAME}"
   echo -e "${__info__} Based on" ${PROJECT_CONFIG_FILE}
   #make_symlink ".aliases" "${PROJECT_SETTINGS_COMMON_DIR}.aliases" "$HOME/.aliases"
-  make_symlink ".vim" "${PROJECT_SETTINGS_COMMON_DIR}.vim" "$HOME/.vim"
-  make_symlink ".gitconfig" "${PROJECT_SETTINGS_COMMON_DIR}.gitconfig" "$HOME/.gitconfig"
-  make_symlink ".dircolors" "${PROJECT_LIB_DIR}dircolors-solarized/dircolors.256dark" "$HOME/.dircolors"
-  make_symlink ".vimrc" "${PROJECT_SETTINGS_COMMON_DIR}.vimrc" "$HOME/.vimrc"
-  make_symlink ".zshrc" "${PROJECT_SETTINGS_COMMON_DIR}.zshrc" "$HOME/.zshrc"
-  make_symlink ".tmux.conf" "${PROJECT_SETTINGS_COMMON_DIR}.tmux.conf" "$HOME/.tmux.conf"
-  make_symlink ".editorconfig" "${PROJECT_SETTINGS_COMMON_DIR}.editorconfig" "$HOME/.editorconfig"
+  make_symlink ".vim" "${PROJECT_SETTINGS_COMMON_DIR}/.vim" "$HOME/.vim"
+  make_symlink ".gitconfig" "${PROJECT_SETTINGS_COMMON_DIR}/.gitconfig" "$HOME/.gitconfig"
+  make_symlink ".dircolors" "${PROJECT_LIB_DIR}/dircolors-solarized/dircolors.256dark" "$HOME/.dircolors"
+  make_symlink ".vimrc" "${PROJECT_SETTINGS_COMMON_DIR}/.vimrc" "$HOME/.vimrc"
+  make_symlink ".zshrc" "${PROJECT_SETTINGS_COMMON_DIR}/.zshrc" "$HOME/.zshrc"
+  make_symlink ".tmux.conf" "${PROJECT_SETTINGS_COMMON_DIR}/.tmux.conf" "$HOME/.tmux.conf"
+  make_symlink ".editorconfig" "${PROJECT_SETTINGS_COMMON_DIR}/.editorconfig" "$HOME/.editorconfig"
 
   case $DOTFILES_TYPE in
     desktop)
-      make_symlink ".vimrc.local" "${PROJECT_TYPE_SETTINGS_DIR}.vimrc.local" "$HOME/.vimrc.local"
-      make_symlink ".zshrc.local" "${PROJECT_TYPE_SETTINGS_DIR}.zshrc.local" "$HOME/.zshrc.local"
-      make_symlink ".tmux.conf.local" "${PROJECT_TYPE_SETTINGS_DIR}.tmux.conf.local" "$HOME/.tmux.conf.local"
-      make_symlink ".conkyrc" "${PROJECT_LIB_DIR}conky-themes/conky_seamod/.conkyrc" "$HOME/.conkyrc" # only for desktops (servers terminals not need GUI)
+      make_symlink ".vimrc.local" "${PROJECT_TYPE_SETTINGS_DIR}/.vimrc.local" "$HOME/.vimrc.local"
+      make_symlink ".zshrc.local" "${PROJECT_TYPE_SETTINGS_DIR}/.zshrc.local" "$HOME/.zshrc.local"
+      make_symlink ".tmux.conf.local" "${PROJECT_TYPE_SETTINGS_DIR}/.tmux.conf.local" "$HOME/.tmux.conf.local"
+      make_symlink ".conkyrc" "${PROJECT_LIB_DIR}/conky-themes/conky_seamod/.conkyrc" "$HOME/.conkyrc" # only for desktops (servers terminals not need GUI)
       ;;
     server)
-      make_symlink ".vimrc.local" "${PROJECT_TYPE_SETTINGS_DIR}.vimrc.local" "$HOME/.vimrc.local"
-      make_symlink ".zshrc.local" "${PROJECT_TYPE_SETTINGS_DIR}.zshrc.local" "$HOME/.zshrc.local"
-      make_symlink ".tmux.conf.local" "${PROJECT_TYPE_SETTINGS_DIR}.tmux.conf.local" "$HOME/.tmux.conf.local"
+      make_symlink ".vimrc.local" "${PROJECT_TYPE_SETTINGS_DIR}/.vimrc.local" "$HOME/.vimrc.local"
+      make_symlink ".zshrc.local" "${PROJECT_TYPE_SETTINGS_DIR}/.zshrc.local" "$HOME/.zshrc.local"
+      make_symlink ".tmux.conf.local" "${PROJECT_TYPE_SETTINGS_DIR}/.tmux.conf.local" "$HOME/.tmux.conf.local"
       ;;
   esac
 
