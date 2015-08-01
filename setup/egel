@@ -1,54 +1,75 @@
 #!/bin/bash
 
+FILE_NAME=${0##*/}
+CURRENT_OS=$(uname)
+PWD=$(pwd)
+
 # General colors
-black='\e[0;30m'
-red='\e[0;31m'
-green='\e[0;32m' # '\e[1;32m' is too bright for white bg.
-blue='\e[1;34m'
-yellow='\e[0;33m'
-purple='\e[1;35m'
-cyan='\e[0;36m'
-endColor='\e[0m'
+black='\x1B[0;30m'
+red='\x1B[0;31m'
+green='\x1B[0;32m' # '\e[1;32m' is too bright for white bg.
+blue='\x1B[1;34m'
+yellow='\x1B[0;33m'
+purple='\x1B[1;35m'
+cyan='\x1B[0;36m'
+endColor='\x1B[0m'
 
-# global vars
-_name="The Egel dotfiles"
-_repo_name='.dotfiles'
-_repo_dir="$HOME/${_repo_name}/"
-_repo_lib_dir="$HOME/${_repo_name}/lib/"
-_common_dir="$HOME/${_repo_name}/settings/common/"
-_egel="${_repo_dir}/setup/egel"
-
-# Messages
-__info__="${blue}Info!${endColor}"
+# Type of messages
+__info__="${blue}Info${endColor}"
 __warning__="${yellow}Warning!${endColor}"
-__error__="${red}Error!${endColor}"
+__error__="${red}Error!!!${endColor}"
 __done__="${green}✔ Done${endColor}"
 
+# Current file variables
+__version__="1.0.0"
+PROJECT_NAME="The Egel dotfiles"
+PROJECT_CONFIG_NAME='.dotfiles.config'
+PROJECT_CONFIG_FILE=$HOME/${PROJECT_CONFIG_NAME}
+PROJECT_CONFIG_MISSING_VARIABLE_COUNTER=0
 
-_dotfiles_config_name='.dotfiles.config'
-_dotfiles_config_local="$HOME/${_dotfiles_config_name}"
-_dotfiles_config_repo="${_repo_dir}${_dotfiles_config_name}"
-if [ -f $_dotfiles_config_local ]; then
-  source $_dotfiles_config_local
+print_if_missing_variable() {
+  _variable=$1
+  _if_string_exsist=`grep -F "$_variable" $PROJECT_CONFIG_FILE | wc -l`
+  if [[ "$_if_string_exsist" -eq 0 ]]; then
+    echo -e "${__info__} Add ${yellow}${_variable}${endColor} variable to your $PROJECT_CONFIG_FILE file."
+    PROJECT_CONFIG_MISSING_VARIABLE_COUNTER=$((PROJECT_CONFIG_MISSING_VARIABLE_COUNTER + 1))
+  fi
+}
 
-  # set some vars based on config
-  _dotfiles_type_repository_dir="${_repo_dir}settings/$DOTFILES_TYPE/"
-  #echo ${_dotfiles_type_repository_dir}
+# Load config variables for the project
+if [ -f $PROJECT_CONFIG_FILE ]; then
+  source $PROJECT_CONFIG_FILE
+
+  print_if_missing_variable "GIT_PROJECT_FOLDER_NAME"
+  print_if_missing_variable "GIT_PROJECT_FOLDER_DIR"
+  print_if_missing_variable "DOTFILES_THEME"
+
+  if [[ $PROJECT_CONFIG_MISSING_VARIABLE_COUNTER -gt 0 ]]; then
+    exit 1
+  fi
+
+  # set some vars based on validate config
+  PROJECT_REPOSITORY_DIR="${GIT_PROJECT_FOLDER_DIR}/${GIT_PROJECT_FOLDER_NAME}"
+  PROJECT_LIB_DIR="$PROJECT_REPOSITORY_DIR/lib"
+  PROJECT_SETTINGS_COMMON_DIR="$PROJECT_REPOSITORY_DIR/settings/common"
+  PROJECT_SETTINGS_THEME_DIR="$PROJECT_REPOSITORY_DIR/settings/$DOTFILES_THEME"
+  #echo ${PROJECT_TYPE_SETTINGS_THEME_DIR}
 else
-  echo -e ${__error__} "Missing" $_dotfiles_config_local "file."
-  echo 'INFO: To fix this run `cp '${_dotfiles_config_repo}' '$HOME'` and adjust copied config file to your needs.'
+  echo -e ${__error__} "Missing" $PROJECT_CONFIG_FILE "file."
+  echo "INFO: To fix this run: 'cp setup/$PROJECT_CONFIG_NAME $HOME' and adjust copied config file to your needs."
   exit 1
 fi
 
 
 # Methods
 check_program() {
-  __name=$1
-  __command=$2
-  echo -en "${purple} ${__name} ${endColor}" 1>&2;
-  ${__command}
+  _name=$1
+  _command=$2
+  echo -en "${purple}${_name}${endColor}" 1>&2;
+  ${_command}
 }
 
+# Making simlint to file/folder
 make_symlink() {
   __name=$1
   __if=$2 # input file (~/.dotfiles/.vimrc)
@@ -85,55 +106,99 @@ make_symlink() {
   fi
 }
 
+print_dotfiles_logo() {
+  cat ${PROJECT_REPOSITORY_DIR}/setup/.project_logo
+}
+
+print_section() {
+  _section=$1
+  echo -e "${cyan}=== ${_section}${endColor}"
+}
+
+print_subsection() {
+  _subsection=$1
+  echo -e "${purple}--- ${_subsection}${endColor}"
+}
+
+is_config_exsist() {
+  if [ -f $PROJECT_CONFIG_FILE ]; then
+    source $PROJECT_CONFIG_FILE
+
+    if [ -z "$GIT_PROJECT_FOLDER_PATH" ]; then
+      print_missing_variable "GIT_PROJECT_FOLDER_NAME"
+      print_missing_variable "GIT_PROJECT_FOLDER_PATH"
+      exit 1
+    fi;
+
+  else
+    echo -e "${__error__} Missing $PROJECT_CONFIG_FILE file."
+    echo -e "${__info__} To fix this copy setup/${PROJECT_CONFIG_NAME} to ${PROJECT_CONFIG_FILE} and adjust copied sample config file to your needs."
+    exit 1
+  fi
+}
+
+is_program_installed() {
+  _program=$1
+  _install_script=$2
+
+  if hash ${_program} 2>/dev/null; then
+    echo -e "${__done__} Program ${blue}${_program}${endColor} already exsist at `which ${_program}`"
+  else
+    echo -e "Installing ${blue}${_program}${endColor} program... please wait"
+    eval ${_install_script}
+    echo -e ${__done__}
+  fi;
+}
+
 do_help() {
+  print_dotfiles_logo
   echo -e "The Egel's dotfiles sophisticated configurator.\n" 1>&2;
   echo -e "  OPTIONS" 1>&2;
   echo -e "    -c, --clean\t\tClean old installation symlinks for current \n\t\t\t  user home directory ($HOME)." 1>&2;
   echo -e "    -ca, --clean-all\tClean all installation symlinks for current \n\t\t\t  user home directory ($HOME)." 1>&2;
   echo -e "    -h, --help\t\tShow help." 1>&2;
   echo -e "    -i, --install\tInstall and configure egel dotfiles for\n\t\t\t  current user." 1>&2;
-  echo -e "    -lc, --list-config\tList personal configuration file stored in\n\t\t\t  ${_dotfiles_config_local} for current user." 1>&2;
-  echo -e "    -r, --reconfigure\tReconfigure ${_name} symlinks for\n\t\t\t  current user." 1>&2;
-  echo -e "    -u, --update\tUpdate ${_name}." 1>&2;
-  echo -e "    -U, --uninstall\tUninstall ${_name} from hard drive.i\n" 1>&2;
+  echo -e "    -lc, --list-config\tList personal configuration file stored in\n\t\t\t  ${PROJECT_CONFIG_FILE} for current user." 1>&2;
+  echo -e "    -r, --reconfigure\tReconfigure ${PROJECT_NAME} symlinks for\n\t\t\t  current user." 1>&2;
+  echo -e "    -u, --update\tUpdate ${PROJECT_NAME}." 1>&2;
+  echo -e "    -U, --uninstall\tUninstall ${PROJECT_NAME} from hard drive.i\n" 1>&2;
   echo -e "  LOCAL CONFIG FILE" 1>&2;
-  echo -e "    ${_dotfiles_config_local}" 1>&2;
+  echo -e "    ${PROJECT_CONFIG_FILE}" 1>&2;
   echo -e "\n  EXAMPLES OF USAGE" 1>&2;
-  echo -e "    $0 --help" 1>&2;
-  echo -e "    $0 --install" 1>&2;
-  echo -e "\n2014 License MIT --- Further info at https://github.com/egel/dotfiles" 2>&2;
+  echo -e "    ${FILE_NAME} --help" 1>&2;
+  echo -e "    ${FILE_NAME} --install" 1>&2;
+  echo -e "\n2014-$(date +"%Y") License MIT --- Further info at https://github.com/egel/dotfiles" 2>&2;
   exit 1;
 }
 
 do_update() {
-  echo -e "${cyan}=== Updating ${_name}${endColor}"
-  if [[ ! -d "${_repo_dir}" && "${_repo_dir}" == ^. ]]
+  print_section "Updating ${PROJECT_NAME}"
+  if [[ ! -d "${PROJECT_REPOSITORY_DIR}" && "${PROJECT_REPOSITORY_DIR}" == ^. ]]
     then
-      echo -e "${__info__} ${_name} doesn't exisit at ${blue}${_repo_dir}${endColor}. Perhaps you want to install it first?"
+      echo -e "${__info__} ${PROJECT_NAME} doesn't exisit at ${blue}${PROJECT_REPOSITORY_DIR}${endColor}. Perhaps you want to install it first?"
       exit 1;
   else
-    cd ${_repo_dir}
-    git submodule foreach git checkout master
-    git submodule foreach git pull
-    echo -e "${green}✔ Done${endColor}"
+    git --git-dir=${PROJECT_REPOSITORY_DIR} submodule foreach git checkout master
+    git --git-dir=${PROJECT_REPOSITORY_DIR} submodule foreach git pull
+    echo -e "${__done__}"
     exit 1;
   fi
 }
 
 do_install() {
-  echo -e "${cyan}=== Installing ${_name}${endColor}"
-  ${_egel} --update
+  print_section "Installing ${PROJECT_NAME}"
+  ${FILE_NAME} --update
 
   # symlink egel program
-  echo -e "${purple}--- Symlinking egel installer ${endColor}"
+  print_subsection "Symlinking egel installer"
   sudo ln -vs $HOME/.dotfiles/setup/egel /usr/local/bin
 
-  echo -e "${purple}--- Checking and adding PPA repositories${endColor}"
+  print_subsection "Checking and adding PPA repositories"
   sudo add-apt-repository -y ppa:git-core/ppa # Git
   sudo add-apt-repository -y ppa:chris-lea/node.js #NodeJS
   sudo add-apt-repository -y ppa:pi-rho/dev # Tmux
 
-  echo -e "${purple}--- Checking and install required programs (zsh, oh-my-zsh, git, tmux, nodejs, python common, xdg-utils, editorconfig)${endColor}"
+  print_subsection "Checking and install required programs (zsh, oh-my-zsh, git, tmux, nodejs, python common, xdg-utils, editorconfig)"
   sudo apt-get update
   sudo apt-get install -y python-software-properties software-properties-common git zsh tmux nodejs xdg-utils editorconfig
 
@@ -150,19 +215,19 @@ do_install() {
 
   # zsh
   chsh -s /bin/zsh
-  echo -e "${purple}Default shell has been changed to ZSH${endColor} ${__done__}"
+  echo -e "${__done__} Default shell has been changed to ZSH"
 
   # oh-my-zsh
   wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | sh
 
-  echo -e "${purple}--- Restore privacy for Ubuntu${endColor}"
+  print_subsection "Restore privacy for Ubuntu"
   wget -q -O - https://fixubuntu.com/fixubuntu.sh | bash
   echo -e "${__done__}"
 
-  echo -e "${purple}--- Installing: NeoBundle${endColor}"
-  curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh
+  print_subsection "Installings NeoBundle"
+  curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh && echo -e "${__done__}"
 
-  echo -e "${purple}--- Installing: Powerline fonts${endColor}"
+  print_subsection "Installing Powerline fonts"
   git clone git@github.com:Lokaltog/powerline-fonts.git ~/powerline-fonts
   ~/powerline-fonts/install.sh
   rm ~/powerline-fonts/ -rf
@@ -178,70 +243,72 @@ do_install() {
   echo -e "${__info__} To see more details for powerline installation look at https://powerline.readthedocs.org/en/latest/installation/linux.html#font-installation"
 
 
-  echo -e "${purple}--- Downloading repository submodules${endColor}"
+  print_subsection "Downloading repository submodules"
   git submodule update --init --recursive
   echo -e ${__done__}
 
   # reconfigure
-  ${_egel} --reconfigure
+  ${FILE_NAME} --reconfigure
 
 
   echo -e "${__info__} To finalize installation of ZSH shell, you need to reboot the system."
   read -r -p "Would you like to do it now? (Y/n) " _reboot_now
   if [[ $_reboot_now =~ ^([Y]) ]]; then
-    echo -e "${__info__} Reboot the system..."
+    echo -e "${__info__} Rebooting the system..."
     sudo reboot
   else
     echo -e "${__info__} Rebooting canceled by User"
   fi
 
   echo -e "${green}✔ Congratulations.${endColor}"
-  echo -e "Configuration of ${_name} complete successfully."
-  echo -e "Now you could run: 'egel --help' to find more about configurator."
+  echo -e "Configuration of ${PROJECT_NAME} complete successfully."
+  echo -e "Now you could run: '${FILE_NAME} --help' to find more about configurator."
 }
 
 
 do_uninstall() {
-  echo -e "${cyan}=== Uninstall ${_name}${endColor}"
+  print_section "Uninstall ${PROJECT_NAME}"
   echo -ne "${__warning__}"
-  read -r -p " Are you sure you want to uninstall ${_name}? (Y/n) " _uninstall_repo
+  read -r -p " Are you sure you want to uninstall ${PROJECT_NAME}? (Y/n) " _uninstall_repo
   case $_uninstall_repo in
     Y)
-      if [[ -d "$_repo_dir" && "$_repo_dir" == ^. ]]
+      if [[ -d "$PROJECT_REPOSITORY_DIR" && "$PROJECT_REPOSITORY_DIR" == ^. ]]
         then
-          rm $_repo_dir -rf
+          rm $PROJECT_REPOSITORY_DIR -rf
       fi
       echo -e ${__done__}
       exit 1;
       ;;
     *)
-      echo -e "${__info__} Aborting unistalling of ${_name}."
+      echo -e "${__info__} Aborting unistalling of ${PROJECT_NAME}."
       ;;
   esac
 }
 
 
 do_reconfigure() {
-  echo -e "${cyan}=== Reconfigure ${_name}${endColor}"
-  echo -e "${__info__} Based on" ${_dotfiles_config_local}
-  #make_symlink ".aliases" "${_common_dir}.aliases" "$HOME/.aliases"
-  make_symlink ".vim" "${_common_dir}.vim" "$HOME/.vim"
-  make_symlink ".gitconfig" "${_common_dir}.gitconfig" "$HOME/.gitconfig"
-  make_symlink ".dircolors" "${_repo_lib_dir}dircolors-solarized/dircolors.256dark" "$HOME/.dircolors"
-  make_symlink ".vimrc" "${_common_dir}.vimrc" "$HOME/.vimrc"
-  make_symlink ".zshrc" "${_common_dir}.zshrc" "$HOME/.zshrc"
-  make_symlink ".tmux.conf" "${_common_dir}.tmux.conf" "$HOME/.tmux.conf"
-  make_symlink ".editorconfig" "${_common_dir}.editorconfig" "$HOME/.editorconfig"
+  print_section "Reconfigure ${PROJECT_NAME}"
+  echo -e "${__info__} Based on" ${PROJECT_CONFIG_FILE}
+  #make_symlink ".aliases" "${PROJECT_SETTINGS_COMMON_DIR}.aliases" "$HOME/.aliases"
+  make_symlink ".vim" "${PROJECT_SETTINGS_COMMON_DIR}.vim" "$HOME/.vim"
+  make_symlink ".gitconfig" "${PROJECT_SETTINGS_COMMON_DIR}.gitconfig" "$HOME/.gitconfig"
+  make_symlink ".dircolors" "${PROJECT_LIB_DIR}dircolors-solarized/dircolors.256dark" "$HOME/.dircolors"
+  make_symlink ".vimrc" "${PROJECT_SETTINGS_COMMON_DIR}.vimrc" "$HOME/.vimrc"
+  make_symlink ".zshrc" "${PROJECT_SETTINGS_COMMON_DIR}.zshrc" "$HOME/.zshrc"
+  make_symlink ".tmux.conf" "${PROJECT_SETTINGS_COMMON_DIR}.tmux.conf" "$HOME/.tmux.conf"
+  make_symlink ".editorconfig" "${PROJECT_SETTINGS_COMMON_DIR}.editorconfig" "$HOME/.editorconfig"
 
   case $DOTFILES_TYPE in
     desktop)
-      make_symlink ".zshrc.local" "${_dotfiles_type_repository_dir}.zshrc.local" "$HOME/.zshrc.local"
-      make_symlink ".tmux.conf.local" "${_dotfiles_type_repository_dir}.tmux.conf.local" "$HOME/.tmux.conf.local"
-      make_symlink ".conkyrc" "${_repo_lib_dir}conky-themes/conky_seamod/.conkyrc" "$HOME/.conkyrc" # only for desktops
+      make_symlink ".vimrc.local" "${PROJECT_TYPE_SETTINGS_DIR}.vimrc.local" "$HOME/.vimrc.local"
+      make_symlink ".zshrc.local" "${PROJECT_TYPE_SETTINGS_DIR}.zshrc.local" "$HOME/.zshrc.local"
+      make_symlink ".tmux.conf.local" "${PROJECT_TYPE_SETTINGS_DIR}.tmux.conf.local" "$HOME/.tmux.conf.local"
+      make_symlink ".conkyrc" "${PROJECT_LIB_DIR}conky-themes/conky_seamod/.conkyrc" "$HOME/.conkyrc" # only for desktops (servers terminals not need GUI)
       ;;
     server)
-      make_symlink ".zshrc.local" "${_dotfiles_type_repository_dir}.zshrc.local" "$HOME/.zshrc.local"
-      make_symlink ".tmux.conf.local" "${_dotfiles_type_repository_dir}.tmux.conf.local" "$HOME/.tmux.conf.local"
+      make_symlink ".vimrc.local" "${PROJECT_TYPE_SETTINGS_DIR}.vimrc.local" "$HOME/.vimrc.local"
+      make_symlink ".zshrc.local" "${PROJECT_TYPE_SETTINGS_DIR}.zshrc.local" "$HOME/.zshrc.local"
+      make_symlink ".tmux.conf.local" "${PROJECT_TYPE_SETTINGS_DIR}.tmux.conf.local" "$HOME/.tmux.conf.local"
       ;;
   esac
 
@@ -250,41 +317,41 @@ do_reconfigure() {
 }
 
 do_clean() {
-  echo -e "${cyan}=== Clean ${_name}${endColor}"
+  print_section "Clean ${PROJECT_NAME}"
   echo -ne "${__warning__}"
-  read -r -p " Are you sure you want to clean old ${_name} symlinks? (Y/n) " _cleaning_symlinks
+  read -r -p " Are you sure you want to clean old ${PROJECT_NAME} symlinks? (Y/n) " _cleaning_symlinks
   case $_cleaning_symlinks in
     Y)
-      echo -e "Removing previous/old symlinks of ${_name}"
+      echo -e "Removing previous/old symlinks of ${PROJECT_NAME}"
       rm -v $HOME/.vim\(* $HOME/.vimrc\(* $HOME/.gitconfig\(* $HOME/.zshrc\(* $HOME/.conkyrc\(* $HOME/.tmux.conf\(* $HOME/.dircolors\(* $HOME/.aliases\(* $HOME/.zshrc.local\(* $HOME/.editorconfig\(*
       echo -e "${__done__}"
       exit 1;
       ;;
     *)
-      echo -e "${__info__} Aborting cleaning of ${_name} symlinks."
+      echo -e "${__info__} Aborting cleaning of ${PROJECT_NAME} symlinks."
       ;;
   esac
 }
 
 do_clean_all() {
-  echo -e "${cyan}=== Clean ${_name}${endColor}"
+  print_section "Clean ${PROJECT_NAME}"
   echo -ne "${__warning__}"
-  read -r -p " Are you sure you want to clean ALL ${_name} symlinks? (Y/n) " _cleaning_symlinks
+  read -r -p " Are you sure you want to clean ALL ${PROJECT_NAME} symlinks? (Y/n) " _cleaning_symlinks
   case $_cleaning_symlinks in
     Y)
-      echo -e "Removing all symlinks of ${_name}"
+      echo -e "Removing all symlinks of ${PROJECT_NAME}"
       rm -v $HOME/.vim\(* $HOME/.vim $HOME/.vimrc\(* $HOME/.vimrc $HOME/.gitconfig\(* $HOME/.gitconfig $HOME/.zshrc\(* $HOME/.zshrc $HOME/.conkyrc\(* $HOME/.conkyrc $HOME/.tmux.conf\(* $HOME/.tmux.conf  $HOME/.dircolors\(* $HOME/.dircolors $HOME/.aliases\(* $HOME/.aliases $HOME/.zshrc.local\(* $HOME/.zshrc.local $HOME/.tmux.conf.local\(* $HOME/.tmux.conf.local $HOME/.editorconfig\(* $HOME/.editorconfig
       echo -e "${__done__}"
       exit 1;
       ;;
     *)
-      echo -e "${__info__} Aborting cleaning of ${_name} symlinks."
+      echo -e "${__info__} Aborting cleaning of ${PROJECT_NAME} symlinks."
       ;;
   esac
 }
 
 do_list_local_config() {
-  cat ${_dotfiles_config_local}
+  cat ${PROJECT_CONFIG_FILE}
 }
 
 # Main
@@ -316,3 +383,4 @@ case "$1" in
 esac
 
 shift $((OPTIND - 1))
+
