@@ -106,6 +106,10 @@ make_symlink() {
   fi
 }
 
+print_version() {
+  echo -e "v${__version__}"
+}
+
 print_dotfiles_logo() {
   cat ${PROJECT_REPOSITORY_DIR}/setup/.project_logo
 }
@@ -157,11 +161,12 @@ do_help() {
   echo -e "    -c, --clean\t\tClean old installation symlinks for current \n\t\t\t  user home directory ($HOME)." 1>&2;
   echo -e "    -ca, --clean-all\tClean all installation symlinks for current \n\t\t\t  user home directory ($HOME)." 1>&2;
   echo -e "    -h, --help\t\tShow help." 1>&2;
-  echo -e "    -i, --install\tInstall and configure egel dotfiles for\n\t\t\t  current user." 1>&2;
+  echo -e "    -i, --install\tInstall and configure dotfiles for\n\t\t\t  current user." 1>&2;
   echo -e "    -lc, --list-config\tList personal configuration file stored in\n\t\t\t  ${PROJECT_CONFIG_FILE} for current user." 1>&2;
   echo -e "    -r, --reconfigure\tReconfigure ${PROJECT_NAME} symlinks for\n\t\t\t  current user." 1>&2;
   echo -e "    -u, --update\tUpdate ${PROJECT_NAME}." 1>&2;
-  echo -e "    -U, --uninstall\tUninstall ${PROJECT_NAME} from hard drive.i\n" 1>&2;
+  echo -e "    --uninstall\t\tUninstall ${PROJECT_NAME} from hard drive.\n" 1>&2;
+  echo -e "    --version \t\tPrint the version of ${PROJECT_NAME}.\n" 1>&2;
   echo -e "  LOCAL CONFIG FILE" 1>&2;
   echo -e "    ${PROJECT_CONFIG_FILE}" 1>&2;
   echo -e "\n  EXAMPLES OF USAGE" 1>&2;
@@ -178,9 +183,14 @@ do_update() {
       echo -e "${__info__} ${PROJECT_NAME} doesn't exisit at ${blue}${PROJECT_REPOSITORY_DIR}${endColor}. Perhaps you want to install it first?"
       exit 1;
   else
-    git --git-dir=${PROJECT_REPOSITORY_DIR} submodule foreach git checkout master
-    git --git-dir=${PROJECT_REPOSITORY_DIR} submodule foreach git pull
-    echo -e "${__done__}"
+    echo -ne "${purple}Updating ${PROJECT_NAME} repository:${endColor}\t\t\t"
+    git --git-dir=${PROJECT_REPOSITORY_DIR}/.git pull
+
+    echo -ne "${purple}Switching ${PROJECT_NAME} submodules to master:${endColor}\t"
+    git --git-dir=${PROJECT_REPOSITORY_DIR}/.git submodule foreach git checkout master && echo -e "${__done__}"
+
+    echo -ne "${purple}Updating ${PROJECT_NAME} submodules repositeories:${endColor}\t"
+    git --git-dir=${PROJECT_REPOSITORY_DIR}/.git submodule foreach git pull && echo -e "${__done__}"
     exit 1;
   fi
 }
@@ -189,9 +199,9 @@ do_install() {
   print_section "Installing ${PROJECT_NAME}"
   ${FILE_NAME} --update
 
-  # symlink egel program
-  print_subsection "Symlinking egel installer"
-  sudo ln -vs $HOME/.dotfiles/setup/egel /usr/local/bin
+  # symlink dotfiles program
+  print_subsection "Symlinking dotfiles configurator"
+  sudo ln -vs $HOME/.dotfiles/setup/dotfiles /usr/local/bin
 
   print_subsection "Checking and adding PPA repositories"
   sudo add-apt-repository -y ppa:git-core/ppa # Git
@@ -203,19 +213,19 @@ do_install() {
   sudo apt-get install -y python-software-properties software-properties-common git zsh tmux nodejs xdg-utils editorconfig
 
   # tmux
-  check_program "tmux:" "tmux -V"
+  check_program "tmux:\t" "tmux -V"
 
   # git
-  check_program "git:" "git --version"
+  check_program "git:\t" "git --version"
 
   # nodejs + npm
   sudo chown -R `whoami` ~/.npm
-  check_program "node:" "node --version"
-  check_program "npm:" "npm --version"
+  check_program "node:\t" "node --version"
+  check_program "npm:\t" "npm --version"
 
   # zsh
   chsh -s /bin/zsh
-  echo -e "${__done__} Default shell has been changed to ZSH"
+  echo -e "${__done__} Default shell ($SHELL) has been changed to ZSH"
 
   # oh-my-zsh
   wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | sh
@@ -356,29 +366,36 @@ do_list_local_config() {
 
 # Main
 case "$1" in
-  --install|-i)
-    do_install
-    ;;
-  --uninstall|-U)
-    do_uninstall
-    ;;
-  --update|-u)
-    do_update
-    ;;
-  --reconfigure|-r)
-    do_reconfigure
-    ;;
   --clean|-c)
     do_clean
     ;;
   --clean-all|-ca)
     do_clean_all
     ;;
+  --help|-h)
+    do_help
+    ;;
   --list-config|-lc)
     do_list_local_config
     ;;
-  *|--help|-h)
-    do_help
+  --install|-i)
+    do_install
+    ;;
+  --reconfigure|-r)
+    do_reconfigure
+    ;;
+  --uninstall)
+    do_uninstall
+    ;;
+  --update|-u)
+    do_update
+    ;;
+  --version)
+    print_version
+    ;;
+  *)
+    echo -e "Nothing happend \u263A\nRun: '${FILE_NAME} --help' to print help menu for ${PROJECT_NAME} project." 1>&2;
+    exit 1
     ;;
 esac
 
