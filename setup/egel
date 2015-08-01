@@ -298,7 +298,7 @@ do_reconfigure() {
   make_symlink ".tmux.conf" "${PROJECT_SETTINGS_COMMON_DIR}/.tmux.conf" "$HOME/.tmux.conf"
   make_symlink ".editorconfig" "${PROJECT_SETTINGS_COMMON_DIR}/.editorconfig" "$HOME/.editorconfig"
 
-  case $DOTFILES_TYPE in
+  case $DOTFILES_THEME in
     desktop)
       make_symlink ".vimrc.local" "${PROJECT_SETTINGS_THEME_DIR}/.vimrc.local" "$HOME/.vimrc.local"
       make_symlink ".zshrc.local" "${PROJECT_SETTINGS_THEME_DIR}/.zshrc.local" "$HOME/.zshrc.local"
