@@ -1,0 +1,8 @@
+set background=dark           " Set colors of vim to more convinient for black backgound
+colorscheme gruvbox
+let g:gruvbox_underline = 0   " according to linespace for example markdown files
+"let g:gruvbox_undercurl = 0
+
+" Airline theme
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme = 'luna'
