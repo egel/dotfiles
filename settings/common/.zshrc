@@ -68,6 +68,12 @@ bindkey '\e.' insert-last-word  # insert last word (Alt+.)
 bindkey "^[[A" history-beginning-search-backward-end
 bindkey "^[[B" history-beginning-search-forward
 
+
+# for xfce4-terminal
+if [[ "$COLORTERM" == "xfce4-terminal" ]]; then
+  export TERM="xterm-256color"
+fi;
+
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
