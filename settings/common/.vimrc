@@ -137,17 +137,15 @@ if filereadable(expand("~/.vimrc.local"))
 endif
 
 " Tmuxline
-"let g:tmuxline_preset = 'full'
+"let g:tmuxline_preset = 'minimal'
 "let g:tmuxline_theme = 'jellybeans'
 let g:tmuxline_preset = {
       \'a'    : '#S',
       \'b'    : '#W',
-      \'c'    : '#H',
-      \'win'  : '#I #W',
-      \'cwin' : '#I #W',
-      \'x'    : '%a',
-      \'y'    : '#W %R',
-      \'z'    : '#H'}
+      \'c'    : ['#H', "uptime#(uptime| cut -d' ' -f4-|cut -d, -f1)"],
+      \'x'    : '#(date)',
+      \'y'    : '#W',
+      \'z'    : ['#(whoami)', '#H']}
 
 " Different templates depends on GUI or LUI
 if has("gui_running")
