@@ -43,6 +43,7 @@ This set contains configuration for:
   - **Git** (account management, aliases)
   - **Vim**
   - **tmux** (key-bindings, copy-paste to clippboard)
+  - **mutt** (themes, secured passwords)
   - **conky** (themes)
   - **Easy option to add your own personal theme configuration ;)**
   - [read more][dotfiles-wiki]
