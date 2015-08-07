@@ -164,7 +164,7 @@ create_secure_mutt_passwords() {
   fi;
   echo ""
   read -r -p "Type your gmail address (that you are using in gpg; ex: 'john.doe@gmail.com'): " _gmail_address
-  read -r -p "Type your gmail password: " _gmail_password
+  read -s -p "Type your gmail password: " _gmail_password
 
   _passwords_path="$HOME/.mutt/passwords"
   mkdir -vp $HOME/.mutt && echo -e ${__done__}
