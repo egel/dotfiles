@@ -418,7 +418,7 @@ case "$1" in
   --reconfigure|-r)
     do_reconfigure
     ;;
-  --create-mutt-password|-cmp)
+  --make-mutt-password|-mmp)
     create_secure_mutt_passwords
     ;;
   --uninstall)
