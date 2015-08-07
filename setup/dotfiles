@@ -154,6 +154,35 @@ is_program_installed() {
   fi;
 }
 
+create_secure_mutt_passwords() {
+  print_subsection "Creating secure passwords for mutt with GPG"
+  echo -e "${__info__} Below is your list of gpg:"
+  gpg --list-keys
+  echo ""
+  read -r -p "Type your gmail address (that you are using in gpg; ex: 'john.doe@gmail.com'): " _gmail_address
+  read -r -p "Type your gmail password: " _gmail_password
+
+  _passwords_path="$HOME/.mutt/passwords"
+  mkdir -vp $HOME/.mutt && echo -e ${__done__}
+
+  if [ -f "${_passwords_path}" ]; then
+    shred ${_passwords_path}
+    rm ${_passwords_path}
+  fi
+
+  #creating temp password file
+  echo "set imap_pass = ${_gmail_password}" >> ${_passwords_path}
+  echo "set smtp_pass = ${_gmail_password}" >> ${_passwords_path}
+  gpg -r $_gmail_address -e ${_passwords_path} && echo -e "${__done__} Created GPG passwords file"
+
+  if [ -f "${_passwords_path}.gpg" ]; then
+    shred ${_passwords_path}
+    rm ${_passwords_path}
+    echo -e "${__done__} Successfuly complete creating a secure passwords file for mutt"
+  fi
+}
+
+
 do_help() {
   print_dotfiles_logo
   echo -e "The Egel's dotfiles sophisticated configurator.\n" 1>&2;
@@ -163,6 +192,7 @@ do_help() {
   echo -e "    -h, --help\t\tShow help.\n" 1>&2;
   echo -e "    -i, --install\tInstall and configure dotfiles for\n\t\t\t  current user.\n" 1>&2;
   echo -e "    -lc, --list-config\tList personal configuration file stored in\n\t\t\t  ${PROJECT_CONFIG_FILE} for current user.\n" 1>&2;
+  echo -e "    -mmp, --make-mutt-password\tCreating a secure (gpg) password file\n\t\t\tfor mutt configuration.\n" 1>&2;
   echo -e "    -r, --reconfigure\tReconfigure ${PROJECT_NAME} symlinks for\n\t\t\t  current user.\n" 1>&2;
   echo -e "    -u, --update\tUpdate ${PROJECT_NAME} repository and it submodules.\n" 1>&2;
   echo -e "    --uninstall\t\tUninstall ${PROJECT_NAME} from hard drive.\n" 1>&2;
@@ -210,7 +240,7 @@ do_install() {
 
   print_subsection "Checking and install required programs (zsh, oh-my-zsh, git, tmux, nodejs, python common, xdg-utils, editorconfig)"
   sudo apt-get update
-  sudo apt-get install -y python-software-properties software-properties-common git zsh tmux nodejs xdg-utils editorconfig
+  sudo apt-get install -y python-software-properties software-properties-common git zsh tmux nodejs xdg-utils editorconfig shred gpg
 
   # tmux
   check_program "tmux:\t" "tmux -V"
@@ -260,11 +290,13 @@ do_install() {
   # reconfigure
   ${FILE_NAME} --reconfigure
 
+  # creating secure passwords file for mutt
+  create_secure_mutt_passwords
 
   echo -e "${__info__} To finalize installation of ZSH shell, you need to reboot the system."
   read -r -p "Would you like to do it now? (Y/n) " _reboot_now
   if [[ $_reboot_now =~ ^([Y]) ]]; then
-    echo -e "${__info__} Rebooting the system..."
+    echo -e "${__info__} Now rebooting the system..."
     sudo reboot
   else
     echo -e "${__info__} Rebooting canceled by User"
@@ -307,6 +339,8 @@ do_reconfigure() {
   make_symlink ".zshrc" "${PROJECT_SETTINGS_COMMON_DIR}/.zshrc" "$HOME/.zshrc"
   make_symlink ".tmux.conf" "${PROJECT_SETTINGS_COMMON_DIR}/.tmux.conf" "$HOME/.tmux.conf"
   make_symlink ".editorconfig" "${PROJECT_SETTINGS_COMMON_DIR}/.editorconfig" "$HOME/.editorconfig"
+  make_symlink ".muttrc" "${PROJECT_SETTINGS_COMMON_DIR}/.muttrc" "$HOME/.muttrc"
+  make_symlink ".muttrc.local" "${PROJECT_SETTINGS_THEME_DIR}/.muttrc.local" "$HOME/.muttrc.local"
 
   case $DOTFILES_THEME in
     desktop)
@@ -383,6 +417,9 @@ case "$1" in
     ;;
   --reconfigure|-r)
     do_reconfigure
+    ;;
+  --create-mutt-password|-cmp)
+    create_secure_mutt_passwords
     ;;
   --uninstall)
     do_uninstall
