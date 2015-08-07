@@ -142,7 +142,7 @@ endif
 let g:tmuxline_preset = {
       \'a'    : '#S',
       \'b'    : '#W',
-      \'c'    : ['#H', "uptime#(uptime| cut -d' ' -f4-|cut -d, -f1)"],
+      \'c'    : ['#H', "uptime #(uptime| cut -d' ' -f4-|cut -d, -f1)"],
       \'x'    : '#(date)',
       \'y'    : '#W',
       \'z'    : ['#(whoami)', '#H']}
