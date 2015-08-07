@@ -1,0 +1,53 @@
+# Gmail
+set from      = 'maciejsypien@gmail.com'
+set realname  = 'Maciej Sypień'
+set imap_user = 'maciejsypien@gmail.com'
+set smtp_url  = 'smtp://maciejsypien@smtp.gmail.com:587/'
+
+# file with encrypted passwords of 'smtp_pass' and 'imap_pass'
+source "gpg -d $HOME/.mutt/passwords.gpg |"
+
+# Change the following line to a different editor you prefer.
+set editor = "vim"
+
+# REMOTE GMAIL FOLDERS
+set folder      = 'imaps://imap.gmail.com:993'
+set spoolfile   = '+INBOX'
+set postponed   = '+[Google Mail]/Drafts'
+set trash       = '+[Google Mail]/Trash'
+
+
+# LOCAL FOLDERS FOR CACHED HEADERS AND CERTIFICATES
+set header_cache      =~/.mutt/cache/headers
+set message_cachedir  =~/.mutt/cache/bodies
+set certificate_file  =~/.mutt/certificate
+
+# SECURING
+set imap_check_subscribed
+set hostname = gmail.com
+set mail_check = 120
+set timeout = 300
+set imap_keepalive = 300
+set move = no  #Stop asking to move read messages to mbox!
+set include
+set sort = 'threads'
+set sort_aux = 'reverse-last-date-received'
+set auto_tag = yes
+hdr_order Date From To Cc
+auto_view text/html
+
+bind editor <Tab> complete-query
+bind editor ^T complete
+bind editor <space> noop
+
+macro index gi '=INBOX' 'Go to inbox'
+macro index ga '=[Google Mail]/All Mail' 'Go to all mail'
+macro index gs '=[Google Mail]/Sent Mail' 'Go to Sent Mail'
+macro index gd '=[Google Mail]/Drafts' 'Go to draft'
+
+#Don't prompt on exit
+set quit=yes
+
+# Load local specyfic configuration
+source $HOME/.muttrc.local
+
