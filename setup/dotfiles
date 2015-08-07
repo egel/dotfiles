@@ -157,7 +157,11 @@ is_program_installed() {
 create_secure_mutt_passwords() {
   print_subsection "Creating secure passwords for mutt with GPG"
   echo -e "${__info__} Below is your list of gpg:"
-  gpg --list-keys
+  if [ -z "$(gpg --list-keys)" ]; then
+    echo "${__warning__} You have no GPG keys. Generate your pair 'gpg --gen-key' or import, then rerun: '${FILE_NAME} -mmp' to restart of creating secure passwords for mutt"
+  else
+    gpg --list-keys
+  fi;
   echo ""
   read -r -p "Type your gmail address (that you are using in gpg; ex: 'john.doe@gmail.com'): " _gmail_address
   read -r -p "Type your gmail password: " _gmail_password
