@@ -71,6 +71,7 @@ NeoBundle 'editorconfig/editorconfig-vim'
 NeoBundle 'Glench/Vim-Jinja2-Syntax'
 NeoBundle 'ekalinin/Dockerfile.vim'
 NeoBundle 'ryanss/vim-hackernews'
+NeoBundle 'jamessan/vim-gnupg'
 
 call neobundle#end()
 
