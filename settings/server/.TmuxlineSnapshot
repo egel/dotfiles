@@ -1,5 +1,5 @@
 # This tmux statusbar config was created by tmuxline.vim
-# on nie, 28 cze 2015
+# on Tue, 11 Aug 2015
 
 set -g status-bg "colour23"
 set -g message-command-fg "colour231"
@@ -23,7 +23,7 @@ setw -g window-status-activity-attr "none"
 setw -g window-status-activity-fg "colour36"
 setw -g window-status-separator ""
 setw -g window-status-bg "colour23"
-set -g status-left "#[fg=colour231,bg=colour36] #S #[fg=colour36,bg=colour29,nobold,nounderscore,noitalics]#[fg=colour231,bg=colour29] #W #[fg=colour29,bg=colour23,nobold,nounderscore,noitalics]#[fg=colour231,bg=colour23] #H #[fg=colour23,bg=colour23,nobold,nounderscore,noitalics]"
-set -g status-right "#[fg=colour23,bg=colour23,nobold,nounderscore,noitalics]#[fg=colour231,bg=colour23] %a #[fg=colour29,bg=colour23,nobold,nounderscore,noitalics]#[fg=colour231,bg=colour29] #W %R #[fg=colour36,bg=colour29,nobold,nounderscore,noitalics]#[fg=colour231,bg=colour36] #H "
-setw -g window-status-format "#[fg=colour23,bg=colour23,nobold,nounderscore,noitalics]#[default] #I #W #[fg=colour23,bg=colour23,nobold,nounderscore,noitalics]"
-setw -g window-status-current-format "#[fg=colour23,bg=colour29,nobold,nounderscore,noitalics]#[fg=colour231,bg=colour29] #I #W #[fg=colour29,bg=colour23,nobold,nounderscore,noitalics]"
+set -g status-left "#[fg=colour231,bg=colour36] #S #[fg=colour36,bg=colour29,nobold,nounderscore,noitalics]#[fg=colour231,bg=colour29] #W #[fg=colour29,bg=colour23,nobold,nounderscore,noitalics]#[fg=colour231,bg=colour23] #H  uptime #(uptime| cut -d' ' -f4-|cut -d, -f1) #[fg=colour23,bg=colour23,nobold,nounderscore,noitalics]"
+set -g status-right "#[fg=colour23,bg=colour23,nobold,nounderscore,noitalics]#[fg=colour231,bg=colour23] #(date) #[fg=colour29,bg=colour23,nobold,nounderscore,noitalics]#[fg=colour231,bg=colour29] #W #[fg=colour36,bg=colour29,nobold,nounderscore,noitalics]#[fg=colour231,bg=colour36] #(whoami)  #H "
+setw -g window-status-format ""
+setw -g window-status-current-format ""

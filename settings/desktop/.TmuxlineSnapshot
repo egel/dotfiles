@@ -1,5 +1,5 @@
 # This tmux statusbar config was created by tmuxline.vim
-# on sob, 06 cze 2015
+# on Sun, 09 Aug 2015
 
 set -g status-bg "colour237"
 set -g message-command-fg "colour223"
@@ -23,7 +23,7 @@ setw -g window-status-activity-attr "none"
 setw -g window-status-activity-fg "colour142"
 setw -g window-status-separator ""
 setw -g window-status-bg "colour237"
-set -g status-left "#[fg=colour235,bg=colour142,bold] #S #[fg=colour142,bg=colour239,nobold,nounderscore,noitalics]#[fg=colour223,bg=colour239] #W #[fg=colour239,bg=colour237,nobold,nounderscore,noitalics]#[fg=colour223,bg=colour237] #H #[fg=colour237,bg=colour237,nobold,nounderscore,noitalics]"
-set -g status-right "#[fg=colour237,bg=colour237,nobold,nounderscore,noitalics]#[fg=colour223,bg=colour237] %a #[fg=colour239,bg=colour237,nobold,nounderscore,noitalics]#[fg=colour223,bg=colour239] #W %R #[fg=colour142,bg=colour239,nobold,nounderscore,noitalics]#[fg=colour235,bg=colour142] #H "
-setw -g window-status-format "#[fg=colour237,bg=colour237,nobold,nounderscore,noitalics]#[default] #I #W #[fg=colour237,bg=colour237,nobold,nounderscore,noitalics]"
-setw -g window-status-current-format "#[fg=colour237,bg=colour239,nobold,nounderscore,noitalics]#[fg=colour223,bg=colour239] #I #W #[fg=colour239,bg=colour237,nobold,nounderscore,noitalics]"
+set -g status-left "#[fg=colour235,bg=colour142,bold] #S #[fg=colour142,bg=colour239,nobold,nounderscore,noitalics]#[fg=colour223,bg=colour239] #W #[fg=colour239,bg=colour237,nobold,nounderscore,noitalics]#[fg=colour223,bg=colour237] #H  uptime #(uptime| cut -d' ' -f4-|cut -d, -f1) #[fg=colour237,bg=colour237,nobold,nounderscore,noitalics]"
+set -g status-right "#[fg=colour237,bg=colour237,nobold,nounderscore,noitalics]#[fg=colour223,bg=colour237] #(date) #[fg=colour239,bg=colour237,nobold,nounderscore,noitalics]#[fg=colour223,bg=colour239] #W #[fg=colour142,bg=colour239,nobold,nounderscore,noitalics]#[fg=colour235,bg=colour142] #(whoami)  #H "
+setw -g window-status-format ""
+setw -g window-status-current-format ""
