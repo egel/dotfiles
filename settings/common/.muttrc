@@ -1,26 +1,33 @@
 # Gmail
-set from      = 'maciejsypien@gmail.com'
 set realname  = 'Maciej Sypień'
+set from      = 'maciejsypien@gmail.com'
 set imap_user = 'maciejsypien@gmail.com'
 set smtp_url  = 'smtp://maciejsypien@smtp.gmail.com:587/'
 
 # file with encrypted passwords of 'smtp_pass' and 'imap_pass'
 source "gpg -d $HOME/.mutt/passwords.gpg |"
 
-# Change the following line to a different editor you prefer.
-set editor = "vim"
+set editor="vim '+:7'" # vim for editing, and move marker to line 7
 
 # REMOTE GMAIL FOLDERS
 set folder      = 'imaps://imap.gmail.com:993'
 set spoolfile   = '+INBOX'
-set postponed   = '+[Google Mail]/Drafts'
-set trash       = '+[Google Mail]/Trash'
+set postponed   = '+[Gmail]/Drafts'
+
+# Gmail have the notion of labels
+# If a message has several labels, we actually need to move it to the
+# trash to remove all labels (delete from all folders)
+# This one requires mutt with the trash patch
+set trash = "=[Gmail]/Kosz"
 
 
 # LOCAL FOLDERS FOR CACHED HEADERS AND CERTIFICATES
 set header_cache      =~/.mutt/cache/headers
 set message_cachedir  =~/.mutt/cache/bodies
 set certificate_file  =~/.mutt/certificate
+
+set ssl_starttls=yes # activate TLS if available on the server
+set ssl_force_tls=yes # always use SSL when connecting to a server
 
 # SECURING
 set imap_check_subscribed
@@ -33,17 +40,47 @@ set include
 set sort = 'threads'
 set sort_aux = 'reverse-last-date-received'
 set auto_tag = yes
-hdr_order Date From To Cc
+
+# In what order should the header fields be presented?
+hdr_order From: Date: To: Cc: Reply-To: Subject:
+ignore *
+unignore From: Date: To: Cc: Reply-To: Subject:
+
+# Add these header fields to every message
+my_hdr Reply-To:
+
+set tilde # pad bottom blank lines when in page view
+set pager_index_lines=9 # 9 index mail lines on top when in page view
+
 auto_view text/html
+
+set edit_hdrs     # see headers when editing mail
+set include       # quote msg when replying
+set reply_to      # use adress from reply-to header when replying
+set fast_reply    # do not ask for to, sbuject,.. when replying
+set auto_tag      # if something is tagged run commands on all tagged msgs
+set delete_untag  # untag msgs when marking them for deletion
+set mark_old = no # don't differentiate between new and old
+
+# Take me back to the index before deleting when in page view
+folder-hook . 'macro pager d "<exit><delete-message>" "Delete the message"'
 
 bind editor <Tab> complete-query
 bind editor ^T complete
 bind editor <space> noop
 
-macro index gi '=INBOX' 'Go to inbox'
-macro index ga '=[Google Mail]/All Mail' 'Go to all mail'
-macro index gs '=[Google Mail]/Sent Mail' 'Go to Sent Mail'
-macro index gd '=[Google Mail]/Drafts' 'Go to draft'
+# To start working with gmail folders/labels is:
+# Option 1: check imap folders by :mailboxes
+# Option 2: change language of gmail interface to English and set as below
+# the imap folders depends on folder naming
+macro index,pager gi "<change-folder>=INBOX<enter>" 'Go to Inbox'
+macro index,pager gs "<change-folder>=[Gmail]/Sent Mail<enter>" 'Go to Sent Mail'
+macro index,pager gd "<change-folder>=[Gmail]/Drafts<enter>" 'Go to Draft'
+macro index,pager gt "<change-folder>=[Gmail]/Trash<enter>" 'Go to Trash'
+macro index,pager ga "<change-folder>=[Gmail]/All Mail<enter>" 'Go to All Mail'
+macro index,pager gA "<change-folder>archive<enter>" 'Go to Archived'
+
+macro index A ":set confirmappend=no delete=yes\n<save-message>=archive\n<sync-mailbox>:set confirmappend=yes delete=ask-yes\n"
 
 #Don't prompt on exit
 set quit=yes
