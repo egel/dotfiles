@@ -266,6 +266,8 @@ let g:NERDTreeWinSize=40
 " close vim when the only window left open is a NERDTree?
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary")
 
+" ----- Supertab
+let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " ----- GitGutter
 let g:gitgutter_realtime=1
@@ -465,8 +467,8 @@ noremap <C-L> <Esc>:tabnext<CR>
 noremap <C-H> <Esc>:tabprevious<CR>
 
 " move tab to left/right position in top tab-bar
-map <F7>  :execute "tabmove" tabpagenr() - 2<CR>
-map <F8> :execute "tabmove" tabpagenr()<CR>
+map <F7> :execute 'silent! tabmove' . (tabpagenr()-2)<CR>
+map <F8> :execute 'silent! tabmove' . (tabpagenr()+1) <CR>
 
 " map NERDTreeTabsToggle
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
