@@ -18,8 +18,7 @@ set postponed   = '+[Gmail]/Drafts'
 # If a message has several labels, we actually need to move it to the
 # trash to remove all labels (delete from all folders)
 # This one requires mutt with the trash patch
-set trash = "=[Gmail]/Kosz"
-
+set trash = "=[Gmail]/Trash"
 
 # LOCAL FOLDERS FOR CACHED HEADERS AND CERTIFICATES
 set header_cache      =~/.mutt/cache/headers
@@ -30,8 +29,11 @@ set ssl_starttls=yes # activate TLS if available on the server
 set ssl_force_tls=yes # always use SSL when connecting to a server
 
 # SECURING
+set charset=utf-8
+set send_charset=utf-8
+
 set imap_check_subscribed
-set hostname = gmail.com
+set hostname = 'gmail.com'
 set mail_check = 120
 set timeout = 300
 set imap_keepalive = 300
