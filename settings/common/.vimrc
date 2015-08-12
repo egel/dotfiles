@@ -133,6 +133,16 @@ set commentstring=#\ %s
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set t_Co=256              " Set 256 colors pallete
 
+
+" define your colors. Must be included before colorscheme
+if !exists("autocmd_colorscheme_loaded")
+  augroup VimrcColors
+  au!
+    autocmd ColorScheme * highlight TodoRed      ctermbg=darkgreen guibg=#eee ctermfg=Red          guifg=#E01B1B
+    autocmd ColorScheme * highlight TodoOrange   ctermbg=darkgreen guibg=#002b37 ctermfg=LightMagenta guifg=#E0841B
+  augroup END
+endif
+
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
@@ -290,8 +300,8 @@ highlight GitGutterChangeDelete ctermfg=yellow guifg=#F7D708
 " Highlight TODO, FIXME, NOTE, etc.
 if has("autocmd")
   if v:version > 701
-    autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|HACK\)')
-    autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\)')
+    autocmd Syntax * call matchadd('TodoRed',  '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|HACK\):')
+    autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\):')
   endif
 endif
 
@@ -410,7 +420,11 @@ endfunction
 vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
 
 " Force setting for *.md files. More info: https://github.com/tpope/vim-markdown
-autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+autocmd BufNewFile,BufReadPost *.md,*.markdown call SetMarkdownOptions()
+function! SetMarkdownOptions()
+    set filetype=markdown
+    setlocal textwidth=80
+endfunction
 
 " Force setting for *.jade files. More info: http://stackoverflow.com/a/6118265/1977012
 autocmd BufRead,BufNewFile *.jade setlocal ft=jade
