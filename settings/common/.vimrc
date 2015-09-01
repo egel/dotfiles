@@ -160,8 +160,8 @@ let g:tmuxline_preset = {
 
 " Different templates depends on GUI or LUI
 if has("gui_running")
-  "set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 18,DejaVu\ Sans\ Mono\ 10
-  set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
+  "set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
+  set guifont=Hack\ 10
   set linespace=10            " set space between lines (option only for GUI)
 
   set guioptions-=T           " turn off GUI toolbar (icons)
