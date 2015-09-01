@@ -170,12 +170,12 @@ print_dotfiles_logo() {
 
 print_section() {
   _section=$1
-  echo -e "${cyan}=== ${_section}${endColor}"
+  echo -e "\n${cyan}=== ${_section}${endColor}"
 }
 
 print_subsection() {
   _subsection=$1
-  echo -e "${purple}--- ${_subsection}${endColor}"
+  echo -e "\n${purple}--- ${_subsection}${endColor}"
 }
 
 is_config_exsist() {
@@ -309,7 +309,7 @@ do_install() {
 
   print_subsection "Checking and install required programs (zsh, oh-my-zsh, git, tmux, nodejs, python common, xdg-utils, editorconfig)"
   sudo apt-get update
-  sudo apt-get install -y python-software-properties software-properties-common git zsh tmux nodejs xdg-utils editorconfig shred gpg
+  sudo apt-get install -y python-software-properties software-properties-common git zsh tmux nodejs xdg-utils editorconfig
 
   # tmux
   check_program "tmux:\t" "tmux -V"
@@ -337,19 +337,26 @@ do_install() {
   curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh && echo -e "${__done__}"
 
   print_subsection "Installing Powerline fonts"
-  git clone git@github.com:Lokaltog/powerline-fonts.git ~/powerline-fonts
-  ~/powerline-fonts/install.sh
-  rm ~/powerline-fonts/ -rf
-  wget https://github.com/Lokaltog/powerline/raw/develop/font/PowerlineSymbols.otf -P ~/
-  wget https://github.com/Lokaltog/powerline/raw/develop/font/10-powerline-symbols.conf -P ~/
+  git clone https://github.com/powerline/powerline.git /tmp/powerline-fonts
+  /tmp/powerline-fonts/install.sh
+  rm /tmp/powerline-fonts/ -rf
+  wget https://github.com/Lokaltog/powerline/raw/develop/font/PowerlineSymbols.otf -P /tmp
+  wget https://github.com/Lokaltog/powerline/raw/develop/font/10-powerline-symbols.conf -P /tmp
   mkdir -p ~/.local/share/fonts/ ~/.config/fontconfig/conf.d/
-  mv -f ~/PowerlineSymbols.otf ~/.local/share/fonts/
-  mv -f ~/10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
-  rm ~/PowerlineSymbols.otf ~/10-powerline-symbols.conf
-  fc-cache -vf
+  mv -f /tmp/PowerlineSymbols.otf ~/.local/share/fonts/
+  mv -f /tmp/10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
+  rm /tmp/PowerlineSymbols.otf /tmp/10-powerline-symbols.conf
   echo -e ${__done__}
 
   echo -e "${__info__} To see more details for powerline installation look at https://powerline.readthedocs.org/en/latest/installation/linux.html#font-installation"
+
+  print_subsection "Installing Hack font"
+  git clone https://github.com/chrissimpkins/Hack /tmp/hack
+  cp -f /tmp/hack/build/otf/* ~/.local/share/fonts/
+  rm -rf /tmp/hack
+
+  echo -e "${__info__} To see more details for hack font at http://sourcefoundry.org/hack/"
+
 
 
   print_subsection "Downloading repository submodules"
@@ -501,7 +508,7 @@ case "$1" in
     print_version
     ;;
   *)
-    echo -e "Nothing happend \u263A\nRun: '${FILE_NAME} --help' to print help menu for ${PROJECT_NAME} project." 1>&2;
+    echo -e "Nothing happend \xe2\x98\xba\nRun: '${FILE_NAME} --help' to print help menu for ${PROJECT_NAME} project." 1>&2;
     exit 1
     ;;
 esac
