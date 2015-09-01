@@ -56,11 +56,11 @@ This set contains configuration for:
 
     A) With github account
     $ git clone --recursive git@github.com:egel/dotfiles.git ~/.dotfiles
-    $ ~/.dotfiles/setup/dotfiles --install
+    $ ~/.dotfiles/setup/dotfiles install
 
     B) Without github account
     $ git clone --recursive https://github.com/egel/dotfiles.git ~/.dotfiles
-    $ ~/.dotfiles/setup/dotfiles --install
+    $ ~/.dotfiles/setup/dotfiles install
 
 The last thing is to set `Ubuntu Mono derivative Powerline` as default `terminal` and `guake` font and reset X, simply by restart the computer.
 
@@ -75,7 +75,7 @@ The last thing is to set `Ubuntu Mono derivative Powerline` as default `terminal
 ## Update
 To update repository and its submodules
 
-    $ ~/.dotfiles/setup/dotfiles --update
+    $ ~/.dotfiles/setup/dotfiles update
 
 ## Learn more
 To find further information about this project, take a look at [wiki pages][dotfiles-wiki] and [shortcuts cheat sheet][shortcuts-cheat-sheet].
