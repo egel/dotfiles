@@ -245,21 +245,32 @@ do_help() {
   print_dotfiles_logo
   echo -e "The Egel's dotfiles sophisticated configurator.\n" 1>&2;
   echo -e "OPTIONS" 1>&2;
-  echo -e "    -c, --clean\t\tClean old installation symlinks for current \n\t\t\t  user home directory ($HOME).\n" 1>&2;
-  echo -e "    -ca, --clean-all\tClean all installation symlinks for current \n\t\t\t  user home directory ($HOME).\n" 1>&2;
-  echo -e "    -h, --help\t\tShow help.\n" 1>&2;
-  echo -e "    -i, --install\tInstall and configure dotfiles for\n\t\t\t  current user.\n" 1>&2;
-  echo -e "    -lc, --list-config\tList personal configuration file stored in\n\t\t\t  ${PROJECT_CONFIG_FILE} for current user.\n" 1>&2;
-  echo -e "    -mmp, --make-mutt-password\tCreating a secure (gpg) password file\n\t\t\tfor mutt configuration.\n" 1>&2;
-  echo -e "    -r, --reconfigure\tReconfigure ${PROJECT_NAME} symlinks for\n\t\t\t  current user.\n" 1>&2;
-  echo -e "    -u, --update\tUpdate ${PROJECT_NAME} repository and it submodules.\n" 1>&2;
-  echo -e "    --uninstall\t\tUninstall ${PROJECT_NAME} from hard drive.\n" 1>&2;
-  echo -e "    --version \t\tPrint the version of ${PROJECT_NAME}.\n" 1>&2;
+  echo -e "    clean, -c"
+  echo -e "        Clean old installation symlinks for current user home\n\tdirectory ($HOME).\n" 1>&2;
+  echo -e "    clean-all, -ca"
+  echo -e "        Clean all installation symlinks for current user home\n\tdirectory ($HOME).\n" 1>&2;
+  echo -e "    install"
+  echo -e "        Install and configure dotfiles for current user.\n" 1>&2;
+  echo -e "    list-config, -lc"
+  echo -e "        List personal configuration file stored in\n\t${PROJECT_CONFIG_FILE} for current user.\n" 1>&2;
+  echo -e "    make-mutt-password, -mmp"
+  echo -e "        Creating a secure (gpg) password file for mutt configuration.\n" 1>&2;
+  echo -e "    reconfigure, -r"
+  echo -e "        Reconfigure ${PROJECT_NAME} symlinks for current user.\n" 1>&2;
+  echo -e "    update, -u"
+  echo -e "        Update ${PROJECT_NAME} repository and it submodules.\n" 1>&2;
+  echo -e "    uninstall"
+  echo -e "        Uninstall ${PROJECT_NAME} from hard drive.\n" 1>&2;
+  echo -e "    -h, --help"
+  echo -e "        Show help.\n" 1>&2;
+  echo -e "    --version"
+  echo -e "        Print the version of ${PROJECT_NAME}.\n" 1>&2;
   echo -e "LOCAL CONFIG FILE" 1>&2;
   echo -e "    ${PROJECT_CONFIG_FILE}\n" 1>&2;
   echo -e "EXAMPLES OF USAGE" 1>&2;
-  echo -e "    ${FILE_NAME} --help" 1>&2;
-  echo -e "    ${FILE_NAME} --install" 1>&2;
+  echo -e "    Since ${FILE_NAME} is installed globally you can do:" 1>&2;
+  echo -e "        ${FILE_NAME} --help" 1>&2;
+  echo -e "        ${FILE_NAME} install" 1>&2;
   echo -e "\n2014-$(date +"%Y") License MIT --- Further info at https://github.com/egel/dotfiles" 2>&2;
   exit 1;
 }
@@ -272,7 +283,7 @@ do_update() {
       exit 1;
   else
     echo -ne "${purple}Updating ${PROJECT_NAME} repository:${endColor}\t\t\t"
-    git --git-dir=${PROJECT_REPOSITORY_DIR}/.git pull
+    git --git-dir=${PROJECT_REPOSITORY_DIR}/.git --work-tree=${PROJECT_REPOSITORY_DIR} pull
 
     echo -ne "${purple}Switching ${PROJECT_NAME} submodules to master:${endColor}\t"
     git --git-dir=${PROJECT_REPOSITORY_DIR}/.git submodule foreach git checkout master && echo -e "${__done__}"
@@ -425,7 +436,7 @@ do_clean() {
   case $_cleaning_symlinks in
     Y)
       echo -e "Removing previous/old symlinks of ${PROJECT_NAME}"
-      remove_current_symlinks
+      remove_old_symlinks
       echo -e "${__done__}"
       exit 1;
       ;;
@@ -459,31 +470,31 @@ do_list_local_config() {
 
 # Main
 case "$1" in
-  --clean|-c)
+  clean|-c)
     do_clean
     ;;
-  --clean-all|-ca)
+  clean-all|-ca)
     do_clean_all
     ;;
   --help|-h)
     do_help
     ;;
-  --list-config|-lc)
+  list-config|-lc)
     do_list_local_config
     ;;
-  --install|-i)
+  install|-i)
     do_install
     ;;
-  --reconfigure|-r)
+  reconfigure|-r)
     do_reconfigure
     ;;
-  --make-mutt-password|-mmp)
+  make-mutt-password|-mmp)
     create_secure_mutt_passwords
     ;;
-  --uninstall)
+  uninstall)
     do_uninstall
     ;;
-  --update|-u)
+  update|-u)
     do_update
     ;;
   --version)
