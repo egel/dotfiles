@@ -2,7 +2,7 @@ alias aktualizuj='sudo apt-get clean && sudo apt-get autoclean && sudo apt-get a
 alias zamknij-teraz='sudo shutdown -h now'
 alias zamknij='sudo su && shutdown -m'
 
-alias rm='rm -v'
+alias rm='rm -vi'
 alias mv='mv -i'
 alias cp='cp -i'
 alias du='du -c'
