@@ -297,7 +297,7 @@ do_update() {
 
 do_install() {
   print_section "Installing ${PROJECT_NAME}"
-  ${PROJECT_CONFIGURATOR_FILE} --update
+  ${PROJECT_CONFIGURATOR_FILE} update
 
   # symlink dotfiles program
   print_subsection "Symlinking dotfiles configurator"
@@ -364,14 +364,14 @@ do_install() {
   echo -e ${__done__}
 
   # reconfigure
-  ${PROJECT_CONFIGURATOR_FILE} --reconfigure
+  ${PROJECT_CONFIGURATOR_FILE} reconfigure
 
   # creating secure passwords file for mutt
   create_secure_mutt_passwords
 
-  echo -e "${__info__} To finalize installation of ZSH shell, you need to reboot the system."
-  read -r -p "Would you like to do it now? (Y/n) " _reboot_now
-  if [[ $_reboot_now =~ ^([Y]) ]]; then
+  echo -e "\n${__info__} To finalize installation of ZSH shell, you need to reboot the system."
+  read -r -p "Would you like to do it now? (y/N) " _reboot_now
+  if [[ $_reboot_now =~ ^([yY]) ]]; then
     echo -e "${__info__} Now rebooting the system..."
     sudo reboot
   else
@@ -387,9 +387,9 @@ do_install() {
 do_uninstall() {
   print_section "Uninstall ${PROJECT_NAME}"
   echo -ne "${__warning__}"
-  read -r -p " Are you sure you want to uninstall ${PROJECT_NAME}? (Y/n) " _uninstall_repo
+  read -r -p " Are you sure you want to uninstall ${PROJECT_NAME}? (y/N) " _uninstall_repo
   case $_uninstall_repo in
-    Y)
+    y|Y)
       if [[ -d "$PROJECT_REPOSITORY_DIR" && "$PROJECT_REPOSITORY_DIR" == ^. ]]
         then
           rm $PROJECT_REPOSITORY_DIR -rf
@@ -439,9 +439,9 @@ do_reconfigure() {
 do_clean() {
   print_section "Clean ${PROJECT_NAME}"
   echo -ne "${__warning__}"
-  read -r -p " Are you sure you want to clean old ${PROJECT_NAME} symlinks? (Y/n) " _cleaning_symlinks
+  read -r -p " Are you sure you want to clean old ${PROJECT_NAME} symlinks? (y/N) " _cleaning_symlinks
   case $_cleaning_symlinks in
-    Y)
+    y|Y)
       echo -e "Removing previous/old symlinks of ${PROJECT_NAME}"
       remove_old_symlinks
       echo -e "${__done__}"
@@ -456,9 +456,9 @@ do_clean() {
 do_clean_all() {
   print_section "Clean ${PROJECT_NAME}"
   echo -ne "${__warning__}"
-  read -r -p " Are you sure you want to clean ALL ${PROJECT_NAME} symlinks? (Y/n) " _cleaning_symlinks
+  read -r -p " Are you sure you want to clean ALL ${PROJECT_NAME} symlinks? (y/N) " _cleaning_symlinks
   case $_cleaning_symlinks in
-    Y)
+    y|Y)
       echo -e "Removing all symlinks of ${PROJECT_NAME}"
       remove_old_symlinks
       remove_current_symlinks
