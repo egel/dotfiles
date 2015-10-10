@@ -91,6 +91,7 @@ if [ -f $PROJECT_CONFIG_FILE ]; then
   PROJECT_LIB_DIR="$PROJECT_REPOSITORY_DIR/lib"
   PROJECT_SETTINGS_COMMON_DIR="$PROJECT_REPOSITORY_DIR/settings/common"
   PROJECT_SETTINGS_THEME_DIR="$PROJECT_REPOSITORY_DIR/settings/themes/$DOTFILES_THEME"
+  PROJECT_CONFIGURATOR_FILE="$PROJECT_REPOSITORY_DIR/bin/$FILE_NAME"
   #echo ${PROJECT_TYPE_SETTINGS_THEME_DIR}
 else
   echo -e ${__error__} "Missing" $PROJECT_CONFIG_FILE "file."
@@ -296,11 +297,11 @@ do_update() {
 
 do_install() {
   print_section "Installing ${PROJECT_NAME}"
-  ${FILE_NAME} --update
+  ${PROJECT_CONFIGURATOR_FILE} --update
 
   # symlink dotfiles program
   print_subsection "Symlinking dotfiles configurator"
-  sudo ln -vsf $PROJECT_REPOSITORY_DIR/bin/${FILE_NAME} /usr/local/bin
+  sudo ln -vsf $PROJECT_CONFIGURATOR_FILE /usr/local/bin
 
   print_subsection "Checking and adding PPA repositories"
   sudo add-apt-repository -y ppa:git-core/ppa # Git
@@ -363,7 +364,7 @@ do_install() {
   echo -e ${__done__}
 
   # reconfigure
-  ${FILE_NAME} --reconfigure
+  ${PROJECT_CONFIGURATOR_FILE} --reconfigure
 
   # creating secure passwords file for mutt
   create_secure_mutt_passwords
