@@ -135,7 +135,7 @@ make_symlink() {
 
   # it is not a file
   if [ ! -f $__of ]; then
-    echo -e " > it is not a file or file doesn't exsist"
+    echo -e " > it is not a file or file doesn't exist"
   else
     mv "$__of" "$__of($(date))"
     echo -en " > file exist, so safely renaming it as $__of($(date))"
@@ -144,7 +144,7 @@ make_symlink() {
 
   # it is not a directory
   if [ ! -d $__of ]; then
-    echo -e " > it is not a directory or directory doesn't exsist"
+    echo -e " > it is not a directory or directory doesn't exist"
   else
     mv "$__of" "$__of($(date))"
     echo -en " > directory exist, so safely renaming it as $__of($(date))"
@@ -201,9 +201,9 @@ is_program_installed() {
   _install_script=$2
 
   if hash ${_program} 2>/dev/null; then
-    echo -e "${__done__} Program ${blue}${_program}${endColor} already exsist at `which ${_program}`"
+    echo -e "${__done__} Program ${blue}${_program}${endColor} already exist at `which ${_program}`"
   else
-    echo -e "Installing ${blue}${_program}${endColor} program... please wait"
+    echo -e "Installing ${blue}${_program}${endColor} program... Please wait."
     eval ${_install_script}
     echo -e ${__done__}
   fi;
@@ -237,7 +237,7 @@ create_secure_mutt_passwords() {
   if [ -f "${_passwords_path}.gpg" ]; then
     shred ${_passwords_path}
     rm -rf ${_passwords_path}
-    echo -e "${__done__} Successfuly complete creating a secure passwords file for mutt"
+    echo -e "${__done__} Successfully complete creating a secure passwords file for mutt"
   fi
 }
 
@@ -280,7 +280,7 @@ do_update() {
   print_section "Updating ${PROJECT_NAME}"
   if [[ ! -d "${PROJECT_REPOSITORY_DIR}" && "${PROJECT_REPOSITORY_DIR}" == ^. ]]
     then
-      echo -e "${__info__} ${PROJECT_NAME} doesn't exisit at ${blue}${PROJECT_REPOSITORY_DIR}${endColor}. Perhaps you want to install it first?"
+      echo -e "${__info__} ${PROJECT_NAME} doesn't exist at ${blue}${PROJECT_REPOSITORY_DIR}${endColor}. Perhaps you want to install it first?"
       exit 1;
   else
     echo -ne "${purple}Updating ${PROJECT_NAME} repository:${endColor}\t\t\t"
@@ -289,7 +289,7 @@ do_update() {
     echo -ne "${purple}Switching ${PROJECT_NAME} submodules to master:${endColor}\t"
     git --git-dir=${PROJECT_REPOSITORY_DIR}/.git submodule foreach git checkout master && echo -e "${__done__}"
 
-    echo -ne "${purple}Updating ${PROJECT_NAME} submodules repositeories:${endColor}\t"
+    echo -ne "${purple}Updating ${PROJECT_NAME} submodules repositories:${endColor}\t"
     git --git-dir=${PROJECT_REPOSITORY_DIR}/.git submodule foreach git pull && echo -e "${__done__}"
     exit 1;
   fi
@@ -297,6 +297,11 @@ do_update() {
 
 do_install() {
   print_section "Installing ${PROJECT_NAME}"
+  echo "Ask for few questions to adjust installer for your preferences."
+  echo -ne "\n${__info__}"
+  read -r -p " Do you want to configure mutt with secured gpg password? ${PROJECT_NAME}? (y/N) " _configure_secure_mutt_gpg
+
+  # update dotfiles repository
   ${PROJECT_CONFIGURATOR_FILE} update
 
   # symlink dotfiles program
@@ -308,7 +313,7 @@ do_install() {
   sudo add-apt-repository -y ppa:chris-lea/node.js #NodeJS
   sudo add-apt-repository -y ppa:pi-rho/dev # Tmux
 
-  print_subsection "Checking and install required programs (zsh, oh-my-zsh, git, tmux, nodejs, python common, xdg-utils, editorconfig)"
+  print_subsection "Checking and install required programs"
   sudo apt-get update
   sudo apt-get install -y python-software-properties software-properties-common git zsh tmux nodejs xdg-utils editorconfig fontconfig
 
@@ -324,10 +329,12 @@ do_install() {
   check_program "npm:\t" "npm --version"
 
   # zsh
+  print_subsection "Changing shell to ZSH"
   chsh -s /bin/zsh
   echo -e "${__done__} Default shell ($SHELL) has been changed to ZSH"
 
   # oh-my-zsh
+  print_subsection "Installing oh-my-zsh"
   wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | sh
 
   print_subsection "Restore privacy for Ubuntu"
@@ -357,8 +364,6 @@ do_install() {
 
   echo -e "${__info__} To see more details for hack font at http://sourcefoundry.org/hack/"
 
-
-
   print_subsection "Downloading repository submodules"
   git submodule update --init --recursive
   echo -e ${__done__}
@@ -367,7 +372,13 @@ do_install() {
   ${PROJECT_CONFIGURATOR_FILE} reconfigure
 
   # creating secure passwords file for mutt
-  create_secure_mutt_passwords
+  case $_configure_secure_mutt_gpg in
+    y|Y)
+      create_secure_mutt_passwords
+      ;;
+    *)
+      ;;
+  esac
 
   echo -e "\n${__info__} To finalize installation of ZSH shell, you need to reboot the system."
   read -r -p "Would you like to do it now? (y/N) " _reboot_now
@@ -390,9 +401,8 @@ do_uninstall() {
   read -r -p " Are you sure you want to uninstall ${PROJECT_NAME}? (y/N) " _uninstall_repo
   case $_uninstall_repo in
     y|Y)
-      if [[ -d "$PROJECT_REPOSITORY_DIR" && "$PROJECT_REPOSITORY_DIR" == ^. ]]
-        then
-          rm $PROJECT_REPOSITORY_DIR -rf
+      if [[ -d "$PROJECT_REPOSITORY_DIR" && "$PROJECT_REPOSITORY_DIR" == ^. ]]; then
+        rm $PROJECT_REPOSITORY_DIR -rf
       fi
       echo -e ${__done__}
       exit 1;
@@ -432,7 +442,7 @@ do_reconfigure() {
       ;;
   esac
 
-  echo -e "\n${yellow}Chechking neobundle:${endColor}"
+  echo -e "\n${yellow}Checking NeoBundle:${endColor}"
   wget https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh -q -O - | bash
 }
 
@@ -508,7 +518,7 @@ case "$1" in
     print_version
     ;;
   *)
-    echo -e "Nothing happend \xe2\x98\xba\nRun: '${FILE_NAME} --help' to print help menu for ${PROJECT_NAME} project." 1>&2;
+    echo -e "Nothing happened \xe2\x98\xba\nRun: '${FILE_NAME} --help' to print help menu for ${PROJECT_NAME} project." 1>&2;
     exit 1
     ;;
 esac
