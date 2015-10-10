@@ -345,14 +345,13 @@ do_install() {
   mkdir -p ~/.local/share/fonts/ ~/.config/fontconfig/conf.d/
   mv -f /tmp/PowerlineSymbols.otf ~/.local/share/fonts/
   mv -f /tmp/10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
-  rm /tmp/PowerlineSymbols.otf /tmp/10-powerline-symbols.conf
   echo -e ${__done__}
 
   echo -e "${__info__} To see more details for powerline installation look at https://powerline.readthedocs.org/en/latest/installation/linux.html#font-installation"
 
   print_subsection "Installing Hack font"
   git clone https://github.com/chrissimpkins/Hack /tmp/hack
-  cp -f /tmp/hack/build/otf/* ~/.local/share/fonts/
+  mv -f /tmp/hack/build/otf/* ~/.local/share/fonts/
   rm -rf /tmp/hack
 
   echo -e "${__info__} To see more details for hack font at http://sourcefoundry.org/hack/"
