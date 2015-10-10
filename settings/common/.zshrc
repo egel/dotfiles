@@ -1,12 +1,12 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
-DOTFILES_ZSH_LOCAL_FILE = $HOME/.zshrc.local
-if [[ -f $DOTFILES_ZSH_LOCAL_FILE ]]; then
-  source $DOTFILES_ZSH_LOCAL_FILE
+DOTFILES_ZSH_LOCAL_FILE=$HOME/.zshrc.local
+if [ -f "$DOTFILES_ZSH_LOCAL_FILE" ]; then
+  source "$DOTFILES_ZSH_LOCAL_FILE"
 else
   echo "Some .dotfiles ZSH settings will not be available. Missing $HOME/.zshrc.local"
-  echo "To fix this run: $HOME/.dotfiles/setup/egel --reconfigure; source $HOME/.zshrc"
+  echo "To fix this run: '$HOME/.dotfiles/bin/dotfiles -r; source $HOME/.zshrc'"
 fi
 
 # Set name of the theme to load.
@@ -101,18 +101,18 @@ fi;
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Add public aliases
-DOTFILES_COMMON_ALIASES = $HOME/.dotfiles/settings/common/.aliases
+DOTFILES_COMMON_ALIASES=$HOME/.dotfiles/settings/common/.aliases
 [ -s "$DOTFILES_COMMON_ALIASES" ] && source $DOTFILES_COMMON_ALIASES
 
 # Add private aliases
-DOTFILES_PRIVATE_ALIASES = $HOME/.aliases.private
+DOTFILES_PRIVATE_ALIASES=$HOME/.aliases.private
 [ -s "$DOTFILES_PRIVATE_ALIASES" ] && source $DOTFILES_PRIVATE_ALIASES
 
 
 # Virtualenvwrapper
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Devel
-DOTFILES_VIRTUALENVWRAPPER_FILE = /usr/local/bin/virtualenvwrapper.sh
+DOTFILES_VIRTUALENVWRAPPER_FILE=/usr/local/bin/virtualenvwrapper.sh
 [ -s "$DOTFILES_VIRTUALENVWRAPPER_FILE" ] && source $DOTFILES_VIRTUALENVWRAPPER_FILE
 
 # Node version manager config
