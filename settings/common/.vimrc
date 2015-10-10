@@ -72,6 +72,7 @@ NeoBundle 'Glench/Vim-Jinja2-Syntax'
 NeoBundle 'ekalinin/Dockerfile.vim'
 NeoBundle 'ryanss/vim-hackernews'
 NeoBundle 'jamessan/vim-gnupg'
+NeoBundle 'edthedev/pelican.vim'
 
 call neobundle#end()
 
@@ -266,9 +267,13 @@ endif " has("autocmd") }}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ----- NerdTree
 " tabs
-let g:nerdtree_tabs_open_on_gui_startup=0
-let g:nerdtree_tabs_open_on_new_tab=0
+let g:nerdtree_tabs_open_on_gui_startup=1
+let g:nerdtree_tabs_open_on_new_tab=1
 let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
+
+let g:NERDTreeDirArrows = 1
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
 
 " nerdtree window size
 let g:NERDTreeWinSize=40
@@ -391,7 +396,6 @@ function! EvinceNearestLabel()
 endfunction
 
 autocmd BufRead,BufNewFile *.tex setlocal formatoptions+=w textwidth=120
-
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
