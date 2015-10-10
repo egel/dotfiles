@@ -100,15 +100,15 @@ fi;
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Add public aliases
-source $HOME/.dotfiles/settings/common/.aliases
+[ -s "$HOME/.dotfiles/settings/common/.aliases" ] && source $HOME/.dotfiles/settings/common/.aliases
 
 # Add private aliases
-source $HOME/.bash_aliases
+[ -s "$HOME/.aliases.private" ] && source $HOME/.aliases.private
 
 # Virtualenvwrapper
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Devel
-source /usr/local/bin/virtualenvwrapper.sh
+[ -s "/usr/local/bin/virtualenvwrapper.sh" ] && source /usr/local/bin/virtualenvwrapper.sh
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
