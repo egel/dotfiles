@@ -364,6 +364,10 @@ do_install() {
 
   echo -e "${__info__} To see more details for hack font at http://sourcefoundry.org/hack/"
 
+  print_subsection "Updating system fonts"
+  fc-cache -fv
+
+
   print_subsection "Downloading repository submodules"
   git submodule update --init --recursive
   echo -e ${__done__}
