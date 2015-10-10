@@ -1,8 +1,9 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
-if [[ -f ~/.zshrc.local ]]; then
-  source ~/.zshrc.local
+DOTFILES_ZSH_LOCAL_FILE = $HOME/.zshrc.local
+if [[ -f $DOTFILES_ZSH_LOCAL_FILE ]]; then
+  source $DOTFILES_ZSH_LOCAL_FILE
 else
   echo "Some .dotfiles ZSH settings will not be available. Missing $HOME/.zshrc.local"
   echo "To fix this run: $HOME/.dotfiles/setup/egel --reconfigure; source $HOME/.zshrc"
@@ -100,15 +101,20 @@ fi;
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Add public aliases
-[ -s "$HOME/.dotfiles/settings/common/.aliases" ] && source $HOME/.dotfiles/settings/common/.aliases
+DOTFILES_COMMON_ALIASES = $HOME/.dotfiles/settings/common/.aliases
+[ -s "$DOTFILES_COMMON_ALIASES" ] && source $DOTFILES_COMMON_ALIASES
 
 # Add private aliases
-[ -s "$HOME/.aliases.private" ] && source $HOME/.aliases.private
+DOTFILES_PRIVATE_ALIASES = $HOME/.aliases.private
+[ -s "$DOTFILES_PRIVATE_ALIASES" ] && source $DOTFILES_PRIVATE_ALIASES
+
 
 # Virtualenvwrapper
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Devel
-[ -s "/usr/local/bin/virtualenvwrapper.sh" ] && source /usr/local/bin/virtualenvwrapper.sh
+DOTFILES_VIRTUALENVWRAPPER_FILE = /usr/local/bin/virtualenvwrapper.sh
+[ -s "$DOTFILES_VIRTUALENVWRAPPER_FILE" ] && source $DOTFILES_VIRTUALENVWRAPPER_FILE
 
+# Node version manager config
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
