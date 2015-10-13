@@ -23,6 +23,7 @@
 
 [![David](https://img.shields.io/david/strongloop/express.svg?style=flat-square)]()
 [![MIT LICENSE](http://img.shields.io/badge/license-MIT-yellowgreen.svg?style=flat-square)](https://github.com/egel/dotfiles/blob/master/LICENSE)
+[![Stories in Ready](https://badge.waffle.io/egel/dotfiles.svg?label=ready&title=Ready)](http://waffle.io/egel/dotfiles)
 
 
 > The Egel dotfiles for Ubuntu 14.04 LTS
