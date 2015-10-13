@@ -44,6 +44,8 @@ NeoBundle 'othree/html5.vim'
 NeoBundle 'davidhalter/jedi-vim'
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'Xuyuanp/nerdtree-git-plugin'
+NeoBundle 'jistr/vim-nerdtree-tabs'
 NeoBundle 'ervandew/supertab'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'bling/vim-airline'
@@ -60,7 +62,6 @@ NeoBundle 'othree/javascript-libraries-syntax.vim'
 NeoBundle 'lervag/vimtex'
 NeoBundle 'groenewege/vim-less'
 NeoBundle 'plasticboy/vim-markdown'
-NeoBundle 'jistr/vim-nerdtree-tabs'
 NeoBundle 'tpope/vim-repeat'
 NeoBundle 'xolox/vim-session'
 NeoBundle 'xolox/vim-misc'     " as dependency for vim-session
@@ -278,8 +279,25 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 " nerdtree window size
 let g:NERDTreeWinSize=40
 
+" How can I open a NERDTree automatically when vim starts up if no files were specified?
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
 " close vim when the only window left open is a NERDTree?
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary")
+
+" ----- nerdtree-git-plugin (require NerdTree)
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
 
 " ----- Supertab
 let g:SuperTabDefaultCompletionType = "<c-n>"
@@ -305,8 +323,9 @@ highlight GitGutterChangeDelete ctermfg=yellow guifg=#F7D708
 " Highlight TODO, FIXME, NOTE, etc.
 if has("autocmd")
   if v:version > 701
-    autocmd Syntax * call matchadd('TodoRed',  '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|HACK\):')
-    autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\):')
+    autocmd syntax * call matchadd('ErrorMsg', '\W\zs\(FIXME\|XXX\|BUG\)')
+    autocmd syntax * call matchadd('IncSearch', '\W\zs\(TODO\|CHANGED\|HACK\)')
+    autocmd syntax * call matchadd('PmenuSel', '\W\zs\(NOTE\|INFO\|IDEA\)')
   endif
 endif
 
