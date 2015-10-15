@@ -33,7 +33,7 @@
 * * *
 
 
-**Sample screenshots for desktop theme**
+**Sample screenshots for desktop theme**. See [gallery][wiki-gallery] for more.
 
 <img src="http://i.imgur.com/Q2Y1Td0.png" title="Desktop with conky seamod theme" width="350" />
 <img src="http://i.imgur.com/Dc9BoKT.png" title="Guake with friends - Git + dircolors + vim + 256color test" width="350" />
@@ -46,7 +46,8 @@ This set contains configuration for:
   - **tmux** (key-bindings, copy-paste to system clipboard)
   - **mutt** (themes, secured passwords)
   - **conky** (themes)
-  - **Easy add your own personal theme configuration ;) !**
+  - **editorconfig**
+  - **Easy add your own personal configuration (theme)**
   - [read more][dotfiles-wiki]
 
 
@@ -68,12 +69,12 @@ This set contains configuration for:
 When you pass through the installation, you should have `dotfiles` program
 globally installed, then run:
 
-    dotfiles clean-all
-    dotfiles reconfigur
+    $ dotfiles clean-all
+    $ dotfiles reconfigur
 
 The last thing you should do is to set [`Hack font`][hack-font-webpage] as
 default `terminal` and `guake` font. This is essential to correctly display
-powerline fonts already included into the hack font.
+powerline fonts already included into the hack font (Read [FAQ][wiki-faq] for more).
 
 Reopen the terminal and enjoy :)
 
@@ -89,6 +90,8 @@ pages][dotfiles-wiki] and [shortcuts cheat sheet][shortcuts-cheat-sheet].
 
 
   [dotfiles-wiki]: https://github.com/egel/dotfiles/wiki
+  [wiki-gallery]: https://github.com/egel/dotfiles/wiki/Gallery
+  [wiki-faq]: https://github.com/egel/dotfiles/wiki/FAQ-(Frequently-Asked-Questions)
   [shortcuts-cheat-sheet]: http://bit.ly/1wqcChS
   [powerline-install-webpage]: https://powerline.readthedocs.org/en/latest/installation/linux.html#font-installation
   [hack-font-webpage]: http://sourcefoundry.org/hack/
