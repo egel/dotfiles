@@ -276,6 +276,9 @@ let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 
+" Show hidden files (default, switch by 'Shift + I')
+let NERDTreeShowHidden=1
+
 " nerdtree window size
 let g:NERDTreeWinSize=40
 
@@ -338,6 +341,15 @@ command! -nargs=1 -complete=file O tab drop <args>
 " ------ Autosession for vim-session
 let g:session_autosave = 'yes'
 let g:session_autoload = 'yes'
+
+" Save session on quitting Vim
+autocmd VimLeave * NERDTreeTabsClose
+"autocmd VimLeave * mksession! [filename]
+
+" Restore session on starting Vim
+"autocmd VimEnter * call MySessionRestoreFunction()
+"autocmd VimEnter * NERDTree
+
 
 
 " ----- Syntastic plugin settings -----
@@ -509,3 +521,6 @@ map <F8> :execute 'silent! tabmove' . (tabpagenr()+1) <CR>
 
 " map NERDTreeTabsToggle
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
+
+" Find current file in nerdtree
+map <leader>r :NERDTreeFind<CR>
