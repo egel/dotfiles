@@ -192,7 +192,7 @@ print_version() {
 }
 
 print_dotfiles_logo() {
-  cat ${PROJECT_REPOSITORY_DIR}/setup/.project_logo
+  cat ${PROJECT_REPOSITORY_DIR}/bin/.project_logo
 }
 
 print_section() {
