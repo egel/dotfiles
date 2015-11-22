@@ -147,7 +147,7 @@ check_program() {
   _name=$1
   _command=$2
   echo -en "${purple}${_name}${endColor}" 1>&2;
-  ${_command}
+  eval ${_command}
 }
 
 # Making simlint to file/folder
@@ -347,7 +347,10 @@ do_install() {
 
   print_subsection "Checking and install required programs"
   sudo apt-get update
-  sudo apt-get install -y python-software-properties software-properties-common git zsh tmux nodejs xdg-utils editorconfig fontconfig
+  sudo apt-get install -y python-software-properties software-properties-common curl wget vim git zsh tmux nodejs xdg-utils editorconfig fontconfig build-essential libssl-dev
+
+  # vim
+  check_program "vim:\t" "vim --version | head -n1"
 
   # tmux
   check_program "tmux:\t" "tmux -V"
@@ -406,6 +409,10 @@ do_install() {
 
   # reconfigure
   ${PROJECT_CONFIGURATOR_FILE} reconfigure
+
+  # installing vim plugins (need to be after reconfiguration proces of dotfiles configurator)
+  print_subsection "Installing NeoBundle vim plugins"
+  vim +NeoBundleInstall +q  && echo -e "${__done__}"
 
   # creating secure passwords file for mutt
   case $_configure_secure_mutt_gpg in
