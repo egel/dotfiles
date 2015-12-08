@@ -341,10 +341,13 @@ command! -nargs=1 -complete=file O tab drop <args>
 " ------ Autosession for vim-session
 let g:session_autosave = 'yes'
 let g:session_autoload = 'yes'
+let g:session_lock_enabled = 1      " Enable all session locking :-)
+let g:session_default_to_last = 1   " Open your last used session instead of the default session
+let g:session_directory = "~/.vim/sessions"  " default path for UNIX
 
 " Save session on quitting Vim
 autocmd VimLeave * NERDTreeTabsClose
-"autocmd VimLeave * mksession! [filename]
+autocmd VimLeave * call SaveSession
 
 " Restore session on starting Vim
 "autocmd VimEnter * call MySessionRestoreFunction()
