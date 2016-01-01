@@ -1,7 +1,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
 "                               Vimrc Settings
-"                        Using Pathogen plugin manager
+"                        Using NeoBundle plugin manager
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -38,95 +38,112 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " vim-monokai
 " vim-rails
 
-"NeoBundle 'flazz/vim-colorschemes'
-NeoBundle 'morhetz/gruvbox'     " done by vim-colorschemes
+" colorschemes + appereance
+"NeoBundle 'flazz/vim-colorschemes'   " many colorschemes but not being updated
+NeoBundle 'morhetz/gruvbox'           " done by vim-colorschemes
+
+NeoBundle 'bling/vim-airline'
+NeoBundle 'edkolev/tmuxline.vim'
+
+" syntax
+NeoBundle 'davidhalter/jedi-vim'                      " python syntax + integration
+NeoBundle 'lervag/vimtex'                             " tex/latex syntax
 NeoBundle 'othree/html5.vim'
-NeoBundle 'davidhalter/jedi-vim'
+NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'tpope/vim-haml'
+NeoBundle 'groenewege/vim-less'
+NeoBundle 'plasticboy/vim-markdown'
+NeoBundle 'digitaltoad/vim-jade'
+NeoBundle 'othree/javascript-libraries-syntax.vim'
+NeoBundle 'elzr/vim-json'                             " JSON syntax
+NeoBundle 'kylef/apiblueprint.vim'                    " blueprint/apiari syntax
+NeoBundle 'othree/yajs.vim'                           " JavaScrip syntax (also ES6/ES2015)
+NeoBundle 'othree/javascript-libraries-syntax.vim'
+"NeoBundle 'jelera/vim-javascript-syntax'
+NeoBundle 'smancill/conky-syntax.vim'                 " conky file syntax
+NeoBundle 'Glench/Vim-Jinja2-Syntax'                  " Jinja2 syntax
+NeoBundle 'ekalinin/Dockerfile.vim'                   " dockerfile syntax
+
+" plugins
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'Xuyuanp/nerdtree-git-plugin'
 NeoBundle 'jistr/vim-nerdtree-tabs'
 NeoBundle 'ervandew/supertab'
 NeoBundle 'scrooloose/syntastic'
-NeoBundle 'bling/vim-airline'
-NeoBundle 'edkolev/tmuxline.vim'
-NeoBundle 'tpope/vim-abolish'
-NeoBundle 'kchmck/vim-coffee-script'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'airblade/vim-gitgutter'
-NeoBundle 'tpope/vim-haml'
-NeoBundle 'nathanaelkane/vim-indent-guides'
-NeoBundle 'digitaltoad/vim-jade'
-NeoBundle 'jelera/vim-javascript-syntax'
-NeoBundle 'othree/javascript-libraries-syntax.vim'
-NeoBundle 'lervag/vimtex'
-NeoBundle 'groenewege/vim-less'
-NeoBundle 'plasticboy/vim-markdown'
+NeoBundle 'airblade/vim-gitgutter'                    " left side git status icons (~,+,-)
 NeoBundle 'tpope/vim-repeat'
+NeoBundle 'tpope/vim-surround'                        " improve insert surround text
+NeoBundle 'editorconfig/editorconfig-vim'             " editorconfig plugin
 NeoBundle 'xolox/vim-session'
 NeoBundle 'xolox/vim-misc'     " as dependency for vim-session
-NeoBundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-abolish'     " fix while words while typing
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'jmcantrell/vim-virtualenv'
-NeoBundle 'smancill/conky-syntax.vim'
-NeoBundle 'editorconfig/editorconfig-vim'
-NeoBundle 'Glench/Vim-Jinja2-Syntax'
-NeoBundle 'ekalinin/Dockerfile.vim'
-NeoBundle 'ryanss/vim-hackernews'
 NeoBundle 'jamessan/vim-gnupg'
+
+" other
 NeoBundle 'edthedev/pelican.vim'
+NeoBundle 'ryanss/vim-hackernews'                     " hackernews
 
 call neobundle#end()
-
-" Required:
-filetype plugin indent on            " detect the type of file that is edited
 
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
 NeoBundleCheck
 
-set encoding=utf-8 fileencoding=utf-8 termencoding=utf-8  " saving and encoding
+" Attempt to determine the type of a file based on its name and possibly its
+" contents. Use this to allow intelligent auto-indenting for each filetype,
+" and for plugins that are filetype specific.
+filetype plugin indent on
 
-syntax on                                       " enable syntax highlighting
-"set secure                                      " disable unsafe commands in local .vimrc files
-set clipboard=unnamed,unnamedplus               " use the system clipboard for yank/put/delete
+" enable syntax highlighting
+syntax on
+
+" saving and encoding
+set encoding=utf-8 fileencoding=utf-8 termencoding=utf-8
+
+
+set clipboard=unnamed,unnamedplus               " Use the system clipboard for yank/put/delete
 set fileformats=unix,dos                        " Prefer unix fileformat
-set backspace=indent,eol,start                  " allow backspacing over everything in insert mode
-set nobackup nowritebackup noswapfile autoread  " no backup or swap
-set nofoldenable                                " disable code folding
-set noerrorbells                                " no error bells
-set novisualbell                                " no annoying visual bell
-set confirm                                     " raise a dialogue asking if you wish to save changed files
+set backspace=indent,eol,start                  " Allow backspacing over everything in insert mode
+set nobackup nowritebackup noswapfile autoread  " No backup or swap
+set nofoldenable                                " Disable code folding
+set noerrorbells                                " No error bells
+set novisualbell                                " No annoying visual bell
+set confirm                                     " Raise a dialogue asking if you wish to save changed files
 set number                                      " Display line numbers on the left
-set history=1000                                " remember more commands and search history
-set undolevels=1000                             " use many muchos levels of undo
-set ruler                                       " show row and column in footer
-set scrolloff=5                                 " minimum lines above/below cursor
+set history=1000                                " Remember more commands and search history
+set undolevels=1000                             " Use many muchos levels of undo
+set ruler                                       " Show row and column in footer
+set scrolloff=5                                 " Minimum lines above/below cursor
 set mouse=a                                     " Enable use of the mouse for all modes
-set laststatus=2                                " always show status bar
-set ttimeoutlen=600                             " decrease timeout for faster insert with 'O'
+set laststatus=2                                " Always show status bar
+set ttimeoutlen=600                             " Decrease timeout for faster insert with 'O'
 set showcmd                                     " Show partial commands in the last line of the screen
-set title                                       " change the terminal's title
+set title                                       " Change the terminal's title
 set list listchars=tab:»·,trail:·,eol:¬,nbsp:_,extends:»,precedes:« " show extra space characters
-set autoindent                                  " set auto indent
-set tabstop=2 shiftwidth=2 softtabstop=2        " set indent to 2 spaces
-set expandtab                                   " use spaces, not tab characters
+set autoindent                                  " Set auto indent
+set tabstop=2 shiftwidth=2 softtabstop=2        " Set indent to 2 spaces
+set expandtab                                   " Use spaces, not tab characters
 
-set wildmenu                                    " enable bash style tab completion
-set wildignore=*.o,*.obj,*~                     " stuff to ignore when tab completing
+set wildmenu                                    " Enable bash style tab completion
+set wildignore=*.o,*.obj,*~                     " Stuff to ignore when tab completing
 set wildignore+=*sass-cache*
 set wildignore+=*DS_Store*
 set wildignore+=log/**
 set wildignore+=tmp/**
 
 set ignorecase                                  " Use case insensitive search, except when using capital letters
-set smartcase                                   " pay attention to case when caps are used
+set smartcase                                   " Pay attention to case when caps are used
 set smarttab
 set hlsearch                                    " Highlight searches
-set showmatch                                   " show bracket matches
-set incsearch                                   " show search results as I type
+set showmatch                                   " Show bracket matches
+set incsearch                                   " Show search results as I type
 
-set sessionoptions+=unix,slash " for unix/windows compatibility
-set nostartofline " do not go to start of line automatically when moving
+set sessionoptions+=unix,slash                  " For unix/windows compatibility
+set nostartofline                               " Do not go to start of line automatically when moving
 
 set commentstring=#\ %s
 
@@ -432,6 +449,52 @@ endfunction
 autocmd BufRead,BufNewFile *.tex setlocal formatoptions+=w textwidth=120
 
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                Key Mapping
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Open new tab by press \t
+nmap <C-t> <Esc>:tabnew<CR>
+
+" Map W, Q and WQ, WA as usual typo
+command! WQ wq
+command! Wq wq
+command! Wa wa
+command! WA wa
+command! W w
+command! Q q
+
+" w!! to sudo & write a file
+cmap w!! %!sudo tee >/dev/null %
+
+" <F3> key to hide current highlight for searched tems
+map <F3> :noh<CR>
+
+" toggle spell check with <F4>
+map <F4> :setlocal spell! spelllang=en_us<CR>
+imap <F4> <ESC>:setlocal spell! spelllang=en_us<CR>
+
+":map <F5> :w<CR>                  " <F5> key save the file
+":map <F6> :wq<CR>                 " <F6> key save and exit the file
+
+" go to next/previous tab
+" Example: Ctrl + H
+noremap <C-l> <Esc>:tabnext<CR>
+noremap <C-h> <Esc>:tabprevious<CR>
+noremap <C-n> <Esc>:tabnew<CR>
+
+" move tab to left/right position in top tab-bar
+map <F7> :execute 'silent! tabmove' . (tabpagenr()-2)<CR>
+map <F8> :execute 'silent! tabmove' . (tabpagenr()+1) <CR>
+
+" map NERDTreeTabsToggle
+map <Leader>n <plug>NERDTreeTabsToggle<CR>
+
+" Find current file in NERDTree
+map <leader>r :NERDTreeFind<CR>
+
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  Features
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -486,44 +549,3 @@ augroup END
 command! -nargs=1 -complete=file O tab drop <args>
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                Key Mapping
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Open new tab by press \t
-nmap <C-t> <Esc>:tabnew<CR>
-
-" Map W, Q and WQ, WA as usuall typo
-command! WQ wq
-command! Wq wq
-command! Wa wa
-command! WA wa
-command! W w
-command! Q q
-
-" w!! to sudo & write a file
-cmap w!! %!sudo tee >/dev/null %
-
-" <F3> key to hide current higlight for searched tems
-map <F3> :noh<CR>
-
-" toggle spell check with <F4>
-map <F4> :setlocal spell! spelllang=en_us<CR>
-imap <F4> <ESC>:setlocal spell! spelllang=en_us<CR>
-
-":map <F5> :w<CR>                  " <F5> key save the file
-":map <F6> :wq<CR>                 " <F6> key save and exit the file
-
-" go to next/previous tab
-" Example: Ctrl + H
-noremap <C-L> <Esc>:tabnext<CR>
-noremap <C-H> <Esc>:tabprevious<CR>
-
-" move tab to left/right position in top tab-bar
-map <F7> :execute 'silent! tabmove' . (tabpagenr()-2)<CR>
-map <F8> :execute 'silent! tabmove' . (tabpagenr()+1) <CR>
-
-" map NERDTreeTabsToggle
-map <Leader>n <plug>NERDTreeTabsToggle<CR>
-
-" Find current file in nerdtree
-map <leader>r :NERDTreeFind<CR>
