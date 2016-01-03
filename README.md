@@ -41,6 +41,8 @@ This set contains configuration for:
 
 > If need help run: `~/.dotfiles/bin/dotfiles --help`
 
+> If you want to agree to all defaults add `-y` flag at the end of install.
+
     A) With github account
     $ git clone --recursive git@github.com:egel/dotfiles.git ~/.dotfiles
     $ ~/.dotfiles/bin/dotfiles install
