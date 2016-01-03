@@ -385,8 +385,8 @@ do_install() {
 
   # zsh
   print_subsection "Changing shell to ZSH"
-  chsh -s /bin/zsh
-  echo -e "${__done__} Default shell ($SHELL) has been changed to ZSH"
+  sudo chsh -s /bin/zsh
+  echo -e "${__done__}"
 
   # oh-my-zsh
   print_subsection "Installing oh-my-zsh"
