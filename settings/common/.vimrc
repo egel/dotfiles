@@ -107,8 +107,8 @@ call neobundle#end()
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
 NeoBundleCheck
-" }}}
 
+" }}}
 " Basic vim settings ------------------------------------------------------ {{{
 " Attempt to determine the type of a file based on its name and possibly its
 " contents. Use this to allow intelligent auto-indenting for each filetype,
@@ -161,8 +161,8 @@ set sessionoptions+=unix,slash                  " For unix/windows compatibility
 set nostartofline                               " Do not go to start of line automatically when moving
 
 set commentstring=#\ %s
-" }}}
 
+" }}}
 " Backups ----------------------------------------------------------------- {{{
 " No backup, swap
 set nobackup nowritebackup noswapfile autoread  " No backup or swap
@@ -182,7 +182,6 @@ if !isdirectory(expand(&directory))
     call mkdir(expand(&directory), "p")
 endif
 " }}}
-
 " Appearance ------------------------------------------------------------- {{{
 set t_Co=256 " Set 256 colors pallete
 
@@ -270,8 +269,8 @@ else
   autocmd BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
 " }}}
-" }}}
 
+" }}}
 " Folding -------------------------------------------------------------- {{{
 augroup ft_vim
     au!
@@ -282,8 +281,8 @@ augroup ft_js
     au!
     au FileType javascript setlocal foldmethod=marker foldmarker={,}
 augroup END
-" }}}
 
+" }}}
 " Autocommands ----------------------------------------------------------- {{{
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
@@ -295,15 +294,16 @@ if has("autocmd")
   autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
   autocmd InsertLeave * match ExtraWhitespace /\s\+$/
   autocmd BufWinLeave * call clearmatches()
-  " }}}
 
-  " Show trailing whitepace and spaces before a tab:
+  " }}}
+  " Show trailing whitepace and spaces before a tab {{{
   autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
 
+  " }}}
   " ---- Open files with syntax {{{
   au BufRead,BufNewFile *.coffee setfiletype coffee
-  " }}}
 
+  " }}}
   " Jump to last known cursor position on BufReadPost {{{
   " Don't do it when the position is invalid or when inside an event handler
   " (happens when dropping a file on gvim).
@@ -339,7 +339,6 @@ if has("autocmd")
   " }}}
 endif
 " }}}
-
 " Plugin Helpers ---------------------------------------------------------- {{{
 " ----- NerdTree {{{
 " Tabs
@@ -530,9 +529,9 @@ endfunction
 
 autocmd BufRead,BufNewFile *.tex setlocal formatoptions+=w textwidth=120
 " }}}
+"
 " }}}
-
-" Key Mapping (key binding) ---------------------------------------------- {{{
+"  Key Mapping (key binding) ---------------------------------------------- {{{
 " Open new tab by press \t
 nmap <C-t> <Esc>:tabnew<CR>
 
