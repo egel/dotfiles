@@ -1,9 +1,8 @@
-  ___          _      _     _    __ _ _
- | __|__ _ ___| |  __| |___| |_ / _(_) |___ ___
- | _|/ _` / -_) | / _` / _ \  _|  _| | / -_|_-<
- |___\__, \___|_| \__,_\___/\__|_| |_|_\___/__/
-     |___/
-
+```
+ ____  __    ____  _         ___   ___  _____  ____  _   _     ____  __
+| |_  / /`_ | |_  | |       | | \ / / \  | |  | |_  | | | |   | |_  ( (`
+|_|__ \_\_/ |_|__ |_|__     |_|_/ \_\_/  |_|  |_|   |_| |_|__ |_|__ _)_)
+```
 
 [![David](https://img.shields.io/david/strongloop/express.svg?style=square)]()
 [![MIT LICENSE](http://img.shields.io/badge/license-MIT-yellowgreen.svg?style=square)](https://github.com/egel/dotfiles/blob/master/LICENSE)
