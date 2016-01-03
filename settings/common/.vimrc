@@ -2,11 +2,13 @@
 "
 "                               Vimrc Settings
 "                        Using NeoBundle plugin manager
+"                                Use foldings!
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Note: Skip initialization for vim-tiny or vim-small.
+" Note: Skip initialization for vim-tiny or vim-small. {{{
 if !1 | finish | endif
+" }}}
 
 if has('vim_starting')
   if &compatible
@@ -20,13 +22,13 @@ endif
 " Required:
 call neobundle#begin(expand('~/.vim/bundle/'))
 
-" Let NeoBundle manage NeoBundle
+" NeoBundle management ---------------------------------------------------- {{{
 " Required:
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 " My Bundles here:
 " Refer to |:NeoBundle-examples|.
-" Note: You don't set neobundle setting in .gvimrc!
+" NOTE: You don't set neobundle setting in .gvimrc!
 
 " atp_vim
 " gist-vim
@@ -35,18 +37,27 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " vim-indent-guides
 " vim-instant-markdown
 " vim-javascript
-" vim-monokai
 " vim-rails
 
-" colorschemes + appereance
+" Colorschemes and Appereance {{{
 "NeoBundle 'flazz/vim-colorschemes'   " many colorschemes but not being updated
 NeoBundle 'morhetz/gruvbox'           " done by vim-colorschemes
-NeoBundle 'tomasr/molokai'
+NeoBundle 'sickill/vim-monokai'
 
 NeoBundle 'bling/vim-airline'
 NeoBundle 'edkolev/tmuxline.vim'
+NeoBundle 'Shougo/vimproc.vim', {
+\ 'build' : {
+\     'windows' : 'tools\\update-dll-mingw',
+\     'cygwin' : 'make -f make_cygwin.mak',
+\     'mac' : 'make',
+\     'linux' : 'make',
+\     'unix' : 'gmake',
+\    },
+\ }
 
-" syntax
+" }}}
+" Syntax bundles {{{
 NeoBundle 'davidhalter/jedi-vim'                      " python syntax + integration
 NeoBundle 'lervag/vimtex'                             " tex/latex syntax
 NeoBundle 'othree/html5.vim'
@@ -60,12 +71,12 @@ NeoBundle 'elzr/vim-json'                             " JSON syntax
 NeoBundle 'kylef/apiblueprint.vim'                    " blueprint/apiari syntax
 NeoBundle 'othree/yajs.vim'                           " JavaScrip syntax (also ES6/ES2015)
 NeoBundle 'othree/javascript-libraries-syntax.vim'
-"NeoBundle 'jelera/vim-javascript-syntax'
 NeoBundle 'smancill/conky-syntax.vim'                 " conky file syntax
 NeoBundle 'Glench/Vim-Jinja2-Syntax'                  " Jinja2 syntax
 NeoBundle 'ekalinin/Dockerfile.vim'                   " dockerfile syntax
 
-" plugins
+" }}}
+" Plug-in bundles {{{
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'Xuyuanp/nerdtree-git-plugin'
@@ -83,17 +94,22 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'jmcantrell/vim-virtualenv'
 NeoBundle 'jamessan/vim-gnupg'
+NeoBundle 'nelstrom/vim-markdown-folding'             " improve folding in markdown
 
-" other
+" }}}
+" Other bundles {{{
 NeoBundle 'edthedev/pelican.vim'
 NeoBundle 'ryanss/vim-hackernews'                     " hackernews
+" }}}
 
 call neobundle#end()
 
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
 NeoBundleCheck
+" }}}
 
+" Basic vim settings ------------------------------------------------------ {{{
 " Attempt to determine the type of a file based on its name and possibly its
 " contents. Use this to allow intelligent auto-indenting for each filetype,
 " and for plugins that are filetype specific.
@@ -105,11 +121,9 @@ syntax on
 " saving and encoding
 set encoding=utf-8 fileencoding=utf-8 termencoding=utf-8
 
-
 set clipboard=unnamed,unnamedplus               " Use the system clipboard for yank/put/delete
 set fileformats=unix,dos                        " Prefer unix fileformat
 set backspace=indent,eol,start                  " Allow backspacing over everything in insert mode
-set nobackup nowritebackup noswapfile autoread  " No backup or swap
 set nofoldenable                                " Disable code folding
 set noerrorbells                                " No error bells
 set novisualbell                                " No annoying visual bell
@@ -124,7 +138,7 @@ set laststatus=2                                " Always show status bar
 set ttimeoutlen=600                             " Decrease timeout for faster insert with 'O'
 set showcmd                                     " Show partial commands in the last line of the screen
 set title                                       " Change the terminal's title
-set list listchars=tab:»·,trail:·,eol:¬,nbsp:_,extends:»,precedes:« " show extra space characters
+set list listchars=tab:»·,trail:·,eol:¬,nbsp:_,extends:❯,precedes:❮ " show extra space characters
 set autoindent                                  " Set auto indent
 set tabstop=2 shiftwidth=2 softtabstop=2        " Set indent to 2 spaces
 set expandtab                                   " Use spaces, not tab characters
@@ -147,14 +161,33 @@ set sessionoptions+=unix,slash                  " For unix/windows compatibility
 set nostartofline                               " Do not go to start of line automatically when moving
 
 set commentstring=#\ %s
+" }}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                  Appearance
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set t_Co=256              " Set 256 colors pallete
+" Backups ----------------------------------------------------------------- {{{
+" No backup, swap
+set nobackup nowritebackup noswapfile autoread  " No backup or swap
 
+set undodir=~/.vim/tmp/undo//     " undo files
+set backupdir=~/.vim/tmp/backup// " backups
+set directory=~/.vim/tmp/swap//   " swap files
 
-" define your colors. Must be included before colorscheme
+" Make those folders automatically if they don't already exist.
+if !isdirectory(expand(&undodir))
+    call mkdir(expand(&undodir), "p")
+endif
+if !isdirectory(expand(&backupdir))
+    call mkdir(expand(&backupdir), "p")
+endif
+if !isdirectory(expand(&directory))
+    call mkdir(expand(&directory), "p")
+endif
+" }}}
+
+" Appearance ------------------------------------------------------------- {{{
+set t_Co=256 " Set 256 colors pallete
+
+" ---- Define your colors {{{
+" Must be included before colorscheme !!!
 if !exists("autocmd_colorscheme_loaded")
   augroup VimrcColors
   au!
@@ -163,11 +196,14 @@ if !exists("autocmd_colorscheme_loaded")
   augroup END
 endif
 
+" }}}
+" ---- Read local vim file {{{
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
 
-" Tmuxline
+"}}}
+" ---- Tmuxline {{{
 "let g:tmuxline_preset = 'minimal'
 "let g:tmuxline_theme = 'jellybeans'
 let g:tmuxline_preset = {
@@ -178,7 +214,8 @@ let g:tmuxline_preset = {
       \'y'    : '#W',
       \'z'    : ['#(whoami)', '#H']}
 
-" Different templates depends on GUI or LUI
+" }}}
+" ---- Different templates depends on GUI or LUI {{{
 if has("gui_running")
   "set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
   set guifont=Hack\ 10
@@ -195,12 +232,14 @@ else
   hi IndentGuidesEven ctermbg=darkgrey
 endif
 
-" Indent guidelines from vim-indent-guides plugin
+" }}}
+" ---- Indent guidelines from vim-indent-guides plugin {{{
 let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
 
-" Hightlight current line and column
+" }}}
+" ---- Hightlight current line and column {{{
 if !&diff
   set cursorline   " highlight the current line
 endif
@@ -209,12 +248,14 @@ hi CursorLine     term=bold cterm=bold guibg=Grey40
 hi CursorColumn   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 "nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 
-" Highlight maching braces constantly
+" }}}
+" ---- Highlight maching braces constantly {{{
 " 'set showmatch' option only show braces one when creating
 syn match Braces display '[{}()\[\]]'
 hi Braces guifg=red ctermfg=red
 
-" Highlight the 80th column
+" }}}
+" ---- Highlight the 80th column {{{
 " In Vim >= 7.3, also highlight columns 120+
 if exists('+colorcolumn')
   " (I picked 120-320 because you have to provide an upper bound and 500 seems to be enough.)
@@ -228,24 +269,40 @@ else
   " fallback for Vim < v7.3
   autocmd BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
+" }}}
+" }}}
 
+" Folding -------------------------------------------------------------- {{{
+augroup ft_vim
+    au!
+    au FileType vim setlocal foldmethod=marker foldmarker={{{,}}}
+augroup END
 
+augroup ft_js
+    au!
+    au FileType javascript setlocal foldmethod=marker foldmarker={,}
+augroup END
+" }}}
+
+" Autocommands ----------------------------------------------------------- {{{
 " Only do this part when compiled with support for autocommands.
-if has("autocmd") " Autocommands {{{1
+if has("autocmd")
 
-  " Highlight trailing spaces in annoying red
+  " Highlight trailing spaces in annoying red {{{
   highlight ExtraWhitespace ctermbg=red guibg=red
   match ExtraWhitespace /\s\+$/
   autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
   autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
   autocmd InsertLeave * match ExtraWhitespace /\s\+$/
   autocmd BufWinLeave * call clearmatches()
+  " }}}
 
   " Show trailing whitepace and spaces before a tab:
   autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
 
-  " ---- Open files with syntax
+  " ---- Open files with syntax {{{
   au BufRead,BufNewFile *.coffee setfiletype coffee
+  " }}}
 
   " Jump to last known cursor position on BufReadPost {{{
   " Don't do it when the position is invalid or when inside an event handler
@@ -265,27 +322,27 @@ if has("autocmd") " Autocommands {{{1
     endif
   endfun
   au BufReadPost * call AutojumpLastPosition()
-  " }}}
 
-  " Automatically load .vimrc source when saved
+  " }}}
+  " Automatically load .vimrc source when saved {{{
   "au BufWritePost $MYVIMRC,~/dot-files/.vimrc,$MYVIMRC.local source $MYVIMRC
   "au BufWritePost $MYGVIMRC,~/dot-files/.gvimrc source $MYGVIMRC
 
-  " autocommands for fugitive {{{2
+  " }}}
+  " Autocommands for fugitive {{{
   " Source: http://vimcasts.org/episodes/fugitive-vim-browsing-the-git-object-database/
   au User fugitive
     \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)' |
     \   nnoremap <buffer> .. :edit %:h<CR> |
     \ endif
   au BufReadPost fugitive://* set bufhidden=delete
+  " }}}
+endif
+" }}}
 
-endif " has("autocmd") }}}
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                              Plugin Helpers
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" ----- NerdTree
-" tabs
+" Plugin Helpers ---------------------------------------------------------- {{{
+" ----- NerdTree {{{
+" Tabs
 let g:nerdtree_tabs_open_on_gui_startup=1
 let g:nerdtree_tabs_open_on_new_tab=1
 let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
@@ -327,8 +384,6 @@ call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
 call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
 call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
 
-
-
 " ----- nerdtree-git-plugin (require NerdTree)
 let g:NERDTreeIndicatorMapCustom = {
     \ "Modified"  : "✹",
@@ -342,10 +397,12 @@ let g:NERDTreeIndicatorMapCustom = {
     \ "Unknown"   : "?"
     \ }
 
-" ----- Supertab
+" }}}
+" ----- Supertab {{{
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
-" ----- GitGutter
+" }}}
+" ----- GitGutter {{{
 let g:gitgutter_realtime=1
 
 " this difference can be tracked by this issue: https://github.com/airblade/vim-gitgutter/issues/113
@@ -363,7 +420,8 @@ highlight GitGutterChange ctermfg=yellow guifg=#F7D708
 highlight GitGutterDelete ctermfg=red guifg=#CE0000
 highlight GitGutterChangeDelete ctermfg=yellow guifg=#F7D708
 
-" Highlight TODO, FIXME, NOTE, etc.
+" }}}
+" ----- Highlight TODO, FIXME, NOTE, etc. {{{
 if has("autocmd")
   if v:version > 701
     autocmd syntax * call matchadd('ErrorMsg', '\W\zs\(FIXME\|XXX\|BUG\)')
@@ -372,13 +430,16 @@ if has("autocmd")
   endif
 endif
 
-" ------- Add powerline fonts to vim
+" }}}
+" ----- Add airline powerline fonts to vim {{{
 let g:airline_powerline_fonts=1
 
-" ------ Open the file in a new tab if it isn't already open
+" }}}
+" ----- Open the file in a new tab if it isn't already open {{{
 command! -nargs=1 -complete=file O tab drop <args>
 
-" ------ Autosession for vim-session
+" }}}
+" ----- Autosession for vim-session {{{
 let g:session_autosave = 'yes'
 let g:session_autoload = 'yes'
 let g:session_lock_enabled = 1      " Enable all session locking :-)
@@ -392,10 +453,8 @@ autocmd VimLeave * call SaveSession
 " Restore session on starting Vim
 "autocmd VimEnter * call MySessionRestoreFunction()
 "autocmd VimEnter * NERDTree
-
-
-
-" ----- Syntastic plugin settings -----
+" }}}
+" ----- Syntastic plugin settings {{{
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -408,8 +467,8 @@ let g:syntastic_python_python_exec = '/usr/bin/python3'
 let g:syntastic_python_checkers = [ 'flake8', 'pylint', 'pyflakes' ]
 let g:syntastic_html_tidy_exec = 'tidy5'
 
-
-" ----- vim-latex customization -----
+" }}}
+" ----- vim-latex customization {{{
 " IMPORTANT: win32 users will need to have 'shellslash' set so that latex
 " can be called correctly.
 set shellslash
@@ -444,8 +503,7 @@ endfunction
 " then tell the pdf viewer to jump to the same page.
 nnoremap <buffer> <LocalLeader>e :call EvinceNearestLabel()<CR>
 
-" Load PDF to the page containing label
-function! LoadEvinceByLabel(l)
+function! LoadEvinceByLabel(l) " Load PDF to the page containing label {{{
   for f in split(glob("*.aux"))
     let label = system('grep "^.newlabel{' . a:l . '" ' . f)
     let page = matchstr(label, '.\{}{\zs.*\ze}}')
@@ -455,9 +513,9 @@ function! LoadEvinceByLabel(l)
     endif
   endfor
 endfunction
+" }}}
 
-" Load PDF to the page containing the nearest previous label to the cursor
-function! EvinceNearestLabel()
+function! EvinceNearestLabel() " Load PDF to the page containing the nearest previous label to the cursor {{{
   let line = search("\\label{", "bnW")
   if line > 0
     let m = matchstr(getline(line), '\\label{\zs[^}]*\ze}')
@@ -468,14 +526,13 @@ function! EvinceNearestLabel()
     endif
   endif
 endfunction
+"}}}
 
 autocmd BufRead,BufNewFile *.tex setlocal formatoptions+=w textwidth=120
+" }}}
+" }}}
 
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                Key Mapping
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Key Mapping (key binding) ---------------------------------------------- {{{
 " Open new tab by press \t
 nmap <C-t> <Esc>:tabnew<CR>
 
@@ -487,41 +544,51 @@ command! WA wa
 command! W w
 command! Q q
 
-" w!! to sudo & write a file
+" w!! to sudo & write a file {{{
 cmap w!! %!sudo tee >/dev/null %
+" }}}
 
-" <F3> key to hide current highlight for searched tems
+" <F3> key to hide current highlight for searched tems {{{
 map <F3> :noh<CR>
+" }}}
 
-" toggle spell check with <F4>
+" Toggle spell check with <F4> {{{
 map <F4> :setlocal spell! spelllang=en_us<CR>
 imap <F4> <ESC>:setlocal spell! spelllang=en_us<CR>
+" }}}
 
+" Saving file <F5>, <F6> {{{
 ":map <F5> :w<CR>                  " <F5> key save the file
 ":map <F6> :wq<CR>                 " <F6> key save and exit the file
+" }}}
 
-" go to next/previous tab
+" go to next/previous tab {{{
 " Example: Ctrl + H
 noremap <C-l> <Esc>:tabnext<CR>
 noremap <C-h> <Esc>:tabprevious<CR>
 noremap <C-n> <Esc>:tabnew<CR>
+" }}}
 
-" move tab to left/right position in top tab-bar
+" Move tab to left/right position in top tab-bar {{{
 map <F7> :execute 'silent! tabmove' . (tabpagenr()-2)<CR>
 map <F8> :execute 'silent! tabmove' . (tabpagenr()+1) <CR>
+" }}}
 
-" map NERDTreeTabsToggle
+" map NERDTreeTabsToggle {{{
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
+" }}}
 
 " Find current file in NERDTree
 map <leader>r :NERDTreeFind<CR>
 
+" Space to toggle folds {{{
+nnoremap <space> za
+vnoremap <space> za
+" }}}
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                  Features
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Remove trailing spaces on save file
+" Features ---------------------------------------------------------------- {{{
+" Remove trailing spaces on save file {{{
 fun! <SID>StripTrailingWhitespaces()
     let l = line(".")
     let c = col(".")
@@ -549,11 +616,14 @@ function! SetMarkdownOptions()
     set filetype=markdown
     setlocal textwidth=80
 endfunction
+" }}}
 
-" Force setting for *.jade files. More info: http://stackoverflow.com/a/6118265/1977012
+" Force setting for *.jade files {{{
+" More info: http://stackoverflow.com/a/6118265/1977012
 autocmd BufRead,BufNewFile *.jade setlocal ft=jade
+" }}}
 
-" Create directory on save if not exsist
+" Create directory on save if not exsist {{{
 " Gracefully borrowed from: http://stackoverflow.com/a/4294176/1977012
 function! s:MkNonExDir(file, buf)
     if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
@@ -567,8 +637,9 @@ augroup BWCCreateDir
     autocmd!
     autocmd BufWritePre * :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
 augroup END
+" }}}
 
-" Edit a file or jump to it if already open
+" Edit a file or jump to it if already open {{{
 command! -nargs=1 -complete=file O tab drop <args>
-
+" }}}
 
