@@ -2,6 +2,7 @@
 wiki/
 
 # Vim session folder
+**/.vim/tmp/
 **/.vim/sessions/
 **/.vim/bundle/
 .vim(*
