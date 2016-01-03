@@ -317,8 +317,12 @@ do_install() {
   print_section "Installing ${PROJECT_NAME}"
   echo -e "Ask for few questions to adjust configuration for your preferences:"
 
-  echo -ne "${__info__}"
-  read -r -p " Do you want to configure mutt with secured gpg password? (y/N) " _configure_secure_mutt_gpg
+  if [ ! $PROJECT_INSTALL_DEFAULTS ]; then
+    echo -ne "${__info__}"
+    read -r -p " Do you want to configure mutt with secured gpg password? (y/N) " _configure_secure_mutt_gpg
+  else
+    _configure_secure_mutt_gpg="n"
+  fi
 
   # ask only if config exsist and user run install again
   if [ -f $PROJECT_CONFIG_FILE ]; then
