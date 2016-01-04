@@ -8,4 +8,4 @@ before_script:
   - git clone --recursive https://github.com/egel/dotfiles.git ~/.dotfiles
 
 script:
-  - ~/.dotfiles/bin/dotfiles install
+  - ~/.dotfiles/bin/dotfiles install -y
