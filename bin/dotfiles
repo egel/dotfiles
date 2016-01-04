@@ -432,8 +432,8 @@ do_install() {
 
   # installing vim plugins (need to be after reconfiguration proces of dotfiles configurator)
   print_subsection "Installing NeoBundle vim plugins"
-  #vim +NeoBundleInstall +q  && echo -e "${__done__}"
-  vim -c 'silent ! NeoBundleInstall' +q  && echo -e "${__done__}"
+  vim +NeoBundleInstall +qall  && echo -e "${__done__}"
+  #vim -c "silent !NeoBundleInstall" +qall   && echo -e "${__done__}"
 
   # creating secure passwords file for mutt
   case $_configure_secure_mutt_gpg in
