@@ -104,16 +104,17 @@ NeoBundle 'ryanss/vim-hackernews'                     " hackernews
 
 call neobundle#end()
 
+" Attempt to determine the type of a file based on its name and possibly its
+" contents. Use this to allow intelligent auto-indenting for each filetype,
+" and for plugins that are filetype specific.
+filetype plugin indent on
+
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
 NeoBundleCheck
 
 " }}}
 " Basic vim settings ------------------------------------------------------ {{{
-" Attempt to determine the type of a file based on its name and possibly its
-" contents. Use this to allow intelligent auto-indenting for each filetype,
-" and for plugins that are filetype specific.
-filetype plugin indent on
 
 " enable syntax highlighting
 syntax on
