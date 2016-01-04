@@ -446,7 +446,13 @@ do_install() {
   esac
 
   echo -e "\n${__info__} To finalize installation of ZSH shell, you need to reboot the system."
+  if [ ! $PROJECT_INSTALL_DEFAULTS ]; then # default: install -y
+    echo -ne "${__info__}"
   read -r -p "Would you like to do it now? (y/N) " _reboot_now
+  else
+    _reboot_now="n"
+  fi
+
   if [[ $_reboot_now =~ ^([yY]) ]]; then
     echo -e "${__info__} Now rebooting the system..."
     sudo reboot
