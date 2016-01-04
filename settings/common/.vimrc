@@ -168,20 +168,21 @@ set commentstring=#\ %s
 " No backup, swap
 set nobackup nowritebackup noswapfile autoread  " No backup or swap
 
-set undodir=~/.vim/tmp/undo/     " undo files
-set backupdir=~/.vim/tmp/backup/ " backups
-set directory=~/.vim/tmp/swap/   " swap files
+"set undodir=~/.vim/tmp/undo/     " undo files
+"set backupdir=~/.vim/tmp/backup/ " backups
+"set directory=~/.vim/tmp/swap/   " swap files
 
-" Make those folders automatically if they don't already exist.
-if !isdirectory(expand(&undodir))
-    call mkdir(expand(&undodir), "p")
-endif
-if !isdirectory(expand(&backupdir))
-    call mkdir(expand(&backupdir), "p")
-endif
-if !isdirectory(expand(&directory))
-    call mkdir(expand(&directory), "p")
-endif
+"" Make those folders automatically if they don't already exist.
+"if !isdirectory(expand(&undodir))
+    "call mkdir(expand(&undodir), "p")
+"endif
+"if !isdirectory(expand(&backupdir))
+    "call mkdir(expand(&backupdir), "p")
+"endif
+"if !isdirectory(expand(&directory))
+    "call mkdir(expand(&directory), "p")
+"endif
+
 " }}}
 " Appearance ------------------------------------------------------------- {{{
 set t_Co=256 " Set 256 colors pallete
@@ -198,6 +199,7 @@ endif
 
 " }}}
 " ---- Read local vim file {{{
+" This is a part of themeing in egel/dotfiles
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
@@ -490,7 +492,7 @@ let g:Tex_DefaultTargetFormat = 'pdf'
 let g:Tex_MultipleCompileFormats='pdf, aux'
 
 " Open pdf to the current location in a LaTeX file
-" Read more: http://vim.wikia.com/wiki/Open_pdf_to_the_current_location_in_a_LaTeX_file
+" Read more: http:/vim.wikia.com/wiki/Open_pdf_to_the_current_location_in_a_LaTeX_file
 " Function: OpenPDF
 function! OpenPDF(file,page)
   exec 'silent ! evince --page-label=' . a:page . ' ' . a:file . ' > /dev/null 2>&1 &'
