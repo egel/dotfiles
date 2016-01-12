@@ -71,10 +71,6 @@ print_version() {
   echo -e "v${__version__}"
 }
 
-print_dotfiles_logo() {
-  cat ${PROJECT_REPOSITORY_DIR}/bin/.project_logo
-}
-
 print_section() {
   _section=$1
   echo -e "\n${cyan}=== ${_section}${endColor}"
@@ -98,7 +94,6 @@ do_copy_default_config_file() {
   print_subsection "Copy default config file"
   cp -fv ${DIR}/${PROJECT_CONFIG_NAME} ${PROJECT_CONFIG_FILE} && echo -e "${__done__}"
 }
-
 
 do_set_config_vars() {
   # set some vars based on validate config
@@ -149,6 +144,10 @@ if [ "$2" == "-y" ]; then # if second arg is -y then
   echo "Install all with defaults"
   PROJECT_INSTALL_DEFAULTS=1
 fi
+
+print_dotfiles_logo() {
+  cat ${PROJECT_REPOSITORY_DIR}/bin/.project_logo
+}
 
 # Remove all old symlinks for dotfiles
 remove_old_symlinks() {
