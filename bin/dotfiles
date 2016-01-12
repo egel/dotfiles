@@ -67,6 +67,24 @@ OLD_SYMLINKS=(
   "$HOME/.editorconfig\(*"
 )
 
+print_version() {
+  echo -e "v${__version__}"
+}
+
+print_dotfiles_logo() {
+  cat ${PROJECT_REPOSITORY_DIR}/bin/.project_logo
+}
+
+print_section() {
+  _section=$1
+  echo -e "\n${cyan}=== ${_section}${endColor}"
+}
+
+print_subsection() {
+  _subsection=$1
+  echo -e "\n${purple}--- ${_subsection}${endColor}"
+}
+
 print_if_missing_variable() {
   _variable=$1
   _if_string_exsist=`grep -F "$_variable" $PROJECT_CONFIG_FILE | wc -l`
@@ -132,7 +150,6 @@ if [ "$2" == "-y" ]; then # if second arg is -y then
   PROJECT_INSTALL_DEFAULTS=1
 fi
 
-
 # Remove all old symlinks for dotfiles
 remove_old_symlinks() {
   for item in "${OLD_SYMLINKS[@]}"
@@ -193,24 +210,6 @@ make_symlink() {
   else
     echo -e " > it is symlink, so it should ok"
   fi
-}
-
-print_version() {
-  echo -e "v${__version__}"
-}
-
-print_dotfiles_logo() {
-  cat ${PROJECT_REPOSITORY_DIR}/bin/.project_logo
-}
-
-print_section() {
-  _section=$1
-  echo -e "\n${cyan}=== ${_section}${endColor}"
-}
-
-print_subsection() {
-  _subsection=$1
-  echo -e "\n${purple}--- ${_subsection}${endColor}"
 }
 
 is_program_installed() {
