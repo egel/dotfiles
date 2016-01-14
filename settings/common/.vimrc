@@ -192,7 +192,7 @@ set t_Co=256 " Set 256 colors pallete
 if !exists("autocmd_colorscheme_loaded")
   augroup VimrcColors
   au!
-    autocmd ColorScheme * highlight TodoRed      ctermbg=darkgreen guibg=#eee ctermfg=Red          guifg=#E01B1B
+    autocmd ColorScheme * highlight TodoRed      ctermbg=darkgreen guibg=#eee ctermfg=Red             guifg=#E01B1B
     autocmd ColorScheme * highlight TodoOrange   ctermbg=darkgreen guibg=#002b37 ctermfg=LightMagenta guifg=#E0841B
   augroup END
 endif
@@ -219,8 +219,14 @@ let g:tmuxline_preset = {
 " }}}
 " ---- Different templates depends on GUI or LUI {{{
 if has("gui_running")
-  "set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
-  set guifont=Hack\ 10
+  " Hack font support Powerline characters
+  if has("gui_gtk2")
+    set guifont=Hack\ 13
+  elseif has("gui_macvim")
+    set guifont=Hack:h13
+  elseif has("gui_win32")
+    set guifont=Consolas:h11:cANSI
+  endif
   set linespace=10            " set space between lines (option only for GUI)
 
   set guioptions-=T           " turn off GUI toolbar (icons)
@@ -232,6 +238,22 @@ else
   " indent guidlines for terminal
   hi IndentGuidesOdd  ctermbg=black
   hi IndentGuidesEven ctermbg=darkgrey
+endif
+
+" }}}
+" ---- Set default screen size (lines, columns) {{{
+if has("gui_running")
+  " GUI is running or is about to start.
+  " Maximize gvim window.
+  set lines=999 columns=999
+else
+  " This is console Vim.
+  if exists("+lines")
+    set lines=50
+  endif
+  if exists("+columns")
+    set columns=100
+  endif
 endif
 
 " }}}
