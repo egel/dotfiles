@@ -386,7 +386,6 @@ do_install() {
       ;;
   esac
 
-  exit 1; # FIXME
   # vim
   check_program "vim:\t" "vim --version | head -n1"
 
