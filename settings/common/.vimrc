@@ -297,11 +297,13 @@ endif
 
 " }}}
 " Folding -------------------------------------------------------------- {{{
+" Set folding for vim files
 augroup ft_vim
     au!
     au FileType vim setlocal foldmethod=marker foldmarker={{{,}}}
 augroup END
 
+" Set folding for JavaScript files
 augroup ft_js
     au!
     au FileType javascript setlocal foldmethod=marker foldmarker={,}
@@ -309,10 +311,10 @@ augroup END
 
 " }}}
 " Autocommands ----------------------------------------------------------- {{{
+
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
-
-  " Highlight trailing spaces in annoying red {{{
+  " ---- Highlight trailing spaces in annoying red {{{
   highlight ExtraWhitespace ctermbg=red guibg=red
   match ExtraWhitespace /\s\+$/
   autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
@@ -321,15 +323,15 @@ if has("autocmd")
   autocmd BufWinLeave * call clearmatches()
 
   " }}}
-  " Show trailing whitepace and spaces before a tab {{{
+  " ---- Show trailing white spaces and spaces before a tab {{{
   autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
 
   " }}}
-  " ---- Open files with syntax {{{
+  " ---- Open files with proper syntax {{{
   au BufRead,BufNewFile *.coffee setfiletype coffee
 
   " }}}
-  " Jump to last known cursor position on BufReadPost {{{
+  " ---- Jump to last known cursor position on BufReadPost {{{
   " Don't do it when the position is invalid or when inside an event handler
   " (happens when dropping a file on gvim).
   " NOTE: read viminfo/marks, but removed: causes issues with jumplist sync
@@ -349,28 +351,31 @@ if has("autocmd")
   au BufReadPost * call AutojumpLastPosition()
 
   " }}}
-  " Automatically load .vimrc source when saved {{{
+  " ---- (OFF) Automatically load .vimrc source when saved {{{
   "au BufWritePost $MYVIMRC,~/dot-files/.vimrc,$MYVIMRC.local source $MYVIMRC
   "au BufWritePost $MYGVIMRC,~/dot-files/.gvimrc source $MYGVIMRC
 
   " }}}
-  " Autocommands for fugitive {{{
+  " ---- Auto commands for fugitive {{{
   " Source: http://vimcasts.org/episodes/fugitive-vim-browsing-the-git-object-database/
   au User fugitive
     \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)' |
     \   nnoremap <buffer> .. :edit %:h<CR> |
     \ endif
   au BufReadPost fugitive://* set bufhidden=delete
+
   " }}}
-endif
+endif " end of has("autocmd")
+
 " }}}
 " Plugin Helpers ---------------------------------------------------------- {{{
-" ----- NerdTree {{{
+" ---- NerdTree {{{
 " Tabs
 let g:nerdtree_tabs_open_on_gui_startup=1
 let g:nerdtree_tabs_open_on_new_tab=1
 let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
 
+" Use custom arrows
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
@@ -378,23 +383,22 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 " Show hidden files (default, switch by 'Shift + I')
 let NERDTreeShowHidden=1
 
-" nerdtree window size
-let g:NERDTreeWinSize=40
+" default NERDTree window size
+let g:NERDTreeWinSize=42
 
-" How can I open a NERDTree automatically when vim starts up if no files were specified?
+" Open a NERDTree automatically when vim starts up if no files were specified?
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
-" close vim when the only window left open is a NERDTree?
+" Close vim when the only window left open is a NERDTree?
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary")
 
-" NERDTress File highlighting
+" NERDTree Files highlighting
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
- exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
- exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+  exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+  exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
 endfunction
 
-call NERDTreeHighlightFile('jade', 'green', 'none', 'green', '#151515')
 call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
 call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
 call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
@@ -402,13 +406,14 @@ call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
 call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
 call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
 call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('jade', 'green', 'none', 'green', '#151515')
 call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
 call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
 call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
 call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
 call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
 
-" ----- nerdtree-git-plugin (require NerdTree)
+" ---- nerdtree-git-plugin (require NerdTree)
 let g:NERDTreeIndicatorMapCustom = {
     \ "Modified"  : "✹",
     \ "Staged"    : "✚",
@@ -422,11 +427,11 @@ let g:NERDTreeIndicatorMapCustom = {
     \ }
 
 " }}}
-" ----- Supertab {{{
+" ---- Supertab {{{
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " }}}
-" ----- GitGutter {{{
+" ---- GitGutter {{{
 let g:gitgutter_realtime=1
 
 " this difference can be tracked by this issue: https://github.com/airblade/vim-gitgutter/issues/113
@@ -445,7 +450,7 @@ highlight GitGutterDelete ctermfg=red guifg=#CE0000
 highlight GitGutterChangeDelete ctermfg=yellow guifg=#F7D708
 
 " }}}
-" ----- Highlight TODO, FIXME, NOTE, etc. {{{
+" ---- Highlight TODO, FIXME, NOTE, etc. {{{
 if has("autocmd")
   if v:version > 701
     autocmd syntax * call matchadd('ErrorMsg', '\W\zs\(FIXME\|XXX\|BUG\)')
@@ -455,15 +460,15 @@ if has("autocmd")
 endif
 
 " }}}
-" ----- Add airline powerline fonts to vim {{{
+" ---- Add airline powerline fonts to vim {{{
 let g:airline_powerline_fonts=1
 
 " }}}
-" ----- Open the file in a new tab if it isn't already open {{{
+" ---- Open the file in a new tab if it isn't already open {{{
 command! -nargs=1 -complete=file O tab drop <args>
 
 " }}}
-" ----- Autosession for vim-session {{{
+" ---- Auto session for vim-session {{{
 let g:session_autosave = 'yes'
 let g:session_autoload = 'yes'
 let g:session_lock_enabled = 1      " Enable all session locking :-)
@@ -474,11 +479,12 @@ let g:session_directory = "~/.vim/sessions"  " default path for UNIX
 autocmd VimLeave * NERDTreeTabsClose
 autocmd VimLeave * call SaveSession
 
-" Restore session on starting Vim
+" (OFF) Restore session on starting Vim
 "autocmd VimEnter * call MySessionRestoreFunction()
 "autocmd VimEnter * NERDTree
+
 " }}}
-" ----- Syntastic plugin settings {{{
+" ---- Syntastic plugin settings {{{
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -492,7 +498,7 @@ let g:syntastic_python_checkers = [ 'flake8', 'pylint', 'pyflakes' ]
 let g:syntastic_html_tidy_exec = 'tidy5'
 
 " }}}
-" ----- vim-latex customization {{{
+" ---- Customization vim-latex plugin {{{
 " IMPORTANT: win32 users will need to have 'shellslash' set so that latex
 " can be called correctly.
 set shellslash
@@ -513,13 +519,6 @@ let g:tex_flavor='latex'
 let g:Tex_DefaultTargetFormat = 'pdf'
 let g:Tex_MultipleCompileFormats='pdf, aux'
 
-" Open pdf to the current location in a LaTeX file
-" Read more: http:/vim.wikia.com/wiki/Open_pdf_to_the_current_location_in_a_LaTeX_file
-" Function: OpenPDF
-function! OpenPDF(file,page)
-  exec 'silent ! evince --page-label=' . a:page . ' ' . a:file . ' > /dev/null 2>&1 &'
-endfunction
-
 " Now \e will load the pdf viewer to the page containing the nearest label to
 " the current cursor position (assuming the default backslash for the LocalLeader key).
 " This works well on multi-file projects since the aux file is searched to
@@ -527,6 +526,11 @@ endfunction
 " then tell the pdf viewer to jump to the same page.
 nnoremap <buffer> <LocalLeader>e :call EvinceNearestLabel()<CR>
 
+function! OpenPDF(file,page) " Open pdf to the current location in a LaTeX file {{{
+" Read more: http:/vim.wikia.com/wiki/Open_pdf_to_the_current_location_in_a_LaTeX_file
+  exec 'silent ! evince --page-label=' . a:page . ' ' . a:file . ' > /dev/null 2>&1 &'
+endfunction
+" }}}
 function! LoadEvinceByLabel(l) " Load PDF to the page containing label {{{
   for f in split(glob("*.aux"))
     let label = system('grep "^.newlabel{' . a:l . '" ' . f)
@@ -537,8 +541,8 @@ function! LoadEvinceByLabel(l) " Load PDF to the page containing label {{{
     endif
   endfor
 endfunction
-" }}}
 
+" }}}
 function! EvinceNearestLabel() " Load PDF to the page containing the nearest previous label to the cursor {{{
   let line = search("\\label{", "bnW")
   if line > 0
@@ -554,12 +558,9 @@ endfunction
 
 autocmd BufRead,BufNewFile *.tex setlocal formatoptions+=w textwidth=120
 " }}}
-"
-" }}}
-"  Key Mapping (key binding) ---------------------------------------------- {{{
-" Open new tab by press \t
-nmap <C-t> <Esc>:tabnew<CR>
 
+" }}}
+" Key Mapping (key binding) ---------------------------------------------- {{{
 " Map W, Q and WQ, WA as usual typo
 command! WQ wq
 command! Wq wq
@@ -568,46 +569,54 @@ command! WA wa
 command! W w
 command! Q q
 
-" w!! to sudo & write a file {{{
+" ---- w!! - which will sudo & save a file {{{
 cmap w!! %!sudo tee >/dev/null %
-" }}}
 
-" <F3> key to hide current highlight for searched tems {{{
+" }}}
+" ---- <F3> key to hide current highlight for searched terms {{{
 map <F3> :noh<CR>
-" }}}
 
-" Toggle spell check with <F4> {{{
+" }}}
+" ---- Toggle spell check with <F4> (default: en_us) {{{
 map <F4> :setlocal spell! spelllang=en_us<CR>
 imap <F4> <ESC>:setlocal spell! spelllang=en_us<CR>
-" }}}
 
-" Saving file <F5>, <F6> {{{
+" }}}
+" ---- (OFF) Saving file <F5>, <F6> {{{
 ":map <F5> :w<CR>                  " <F5> key save the file
 ":map <F6> :wq<CR>                 " <F6> key save and exit the file
-" }}}
 
-" go to next/previous tab {{{
+" }}}
+" ---- Jumping to next/previous section with `C-j`, `C-k`  {{{
+" FIXME
+:noremap <C-j> <Esc>}<CR>                " Move to next section
+:noremap <C-k> <Esc>{<CR>                " Move to previous section
+
+" }}}
+" ---- go to n ext/previous tab {{{
 " Example: Ctrl + H
 noremap <C-l> <Esc>:tabnext<CR>
 noremap <C-h> <Esc>:tabprevious<CR>
 noremap <C-n> <Esc>:tabnew<CR>
-" }}}
 
-" Move tab to left/right position in top tab-bar {{{
+" }}}
+" ---- Move tab to le ft/right position in top tab-bar {{{
 map <F7> :execute 'silent! tabmove' . (tabpagenr()-2)<CR>
 map <F8> :execute 'silent! tabmove' . (tabpagenr()+1) <CR>
-" }}}
 
-" map NERDTreeTabsToggle {{{
+" }}}
+" ---- \n for open and hide NERDTree with multiple tabs {{{
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
-" }}}
 
-" Find current file in NERDTree
+" }}}
+" ---- Find current file in NERDTree {{{
 map <leader>r :NERDTreeFind<CR>
 
-" Space to toggle folds {{{
+" }}}
+" ---- Space to toggle folds {{{
 nnoremap <space> za
 vnoremap <space> za
+
 " }}}
 
 
@@ -640,13 +649,13 @@ function! SetMarkdownOptions()
     set filetype=markdown
     setlocal textwidth=80
 endfunction
-" }}}
 
+" }}}
 " Force setting for *.jade files {{{
 " More info: http://stackoverflow.com/a/6118265/1977012
 autocmd BufRead,BufNewFile *.jade setlocal ft=jade
-" }}}
 
+" }}}
 " Create directory on save if not exsist {{{
 " Gracefully borrowed from: http://stackoverflow.com/a/4294176/1977012
 function! s:MkNonExDir(file, buf)
