@@ -53,7 +53,8 @@ fi
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git git-prompt git-extras colored-man tmux python nvm npm grunt gulp zsh-syntax-highlighting)
+# NOTE do not load nvm for eslint (more info https://github.com/roadhump/SublimeLinter-eslint#plugin-installation)
+plugins=(git git-prompt git-extras colored-man tmux python npm grunt gulp zsh-syntax-highlighting)
 
 # User configuration
 export PATH="$PATH:$HOME/.rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
@@ -61,14 +62,37 @@ export PATH="$PATH:$HOME/.rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/
 source $ZSH/oh-my-zsh.sh
 
 # Configure dircolors
-eval $(dircolors ~/.dircolors)
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+case $(uname -s) in
+  Darwin)
+    if whence dircolors >/dev/null; then
+      eval "$(dircolors -b)"
+      zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+    else
+      export CLICOLOR=1
+      zstyle ':completion:*:default' list-colors ''
+    fi
+    ;;
+  Linux)
+    if [ -d "~/.dircolors" ]; then
+      eval $(dircolors ~/.dircolors)
+      zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+    fi
+    ;;
+esac
 
 # ZSH key-bindings
-bindkey '\e.' insert-last-word  # insert last word (Alt+.)
+# specyfic for OS
+case $(uname -s) in
+  Darwin)
+    bindkey '^[.' insert-last-word
+    ;;
+  Linux)
+    bindkey '\e.' insert-last-word  # insert last word (Alt+.)
+    ;;
+esac
+# universal
 bindkey "^[[A" history-beginning-search-backward-end
 bindkey "^[[B" history-beginning-search-forward
-
 
 # for xfce4-terminal
 if [[ "$COLORTERM" == "xfce4-terminal" ]]; then
@@ -101,13 +125,12 @@ fi;
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Add public aliases
-DOTFILES_COMMON_ALIASES=$HOME/.dotfiles/settings/common/.aliases
+DOTFILES_COMMON_ALIASES=$HOME/.aliases
 [ -s "$DOTFILES_COMMON_ALIASES" ] && source $DOTFILES_COMMON_ALIASES
 
 # Add private aliases
 DOTFILES_PRIVATE_ALIASES=$HOME/.aliases.private
 [ -s "$DOTFILES_PRIVATE_ALIASES" ] && source $DOTFILES_PRIVATE_ALIASES
-
 
 # Virtualenvwrapper
 export WORKON_HOME=$HOME/.virtualenvs
@@ -119,3 +142,4 @@ DOTFILES_VIRTUALENVWRAPPER_FILE=/usr/local/bin/virtualenvwrapper.sh
 #export NPM_CONFIG_PREFIX="/usr/local"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
