@@ -1,17 +1,12 @@
 #!/bin/bash
 
-alias aktualizuj='sudo apt-get clean && sudo apt-get autoclean && sudo apt-get autoremove && sudo apt-get update && sudo apt-get dist-upgrade'
-alias zamknij-teraz='sudo shutdown -h now'
-alias zamknij='sudo su && shutdown -m'
-
 alias rm='rm -vi'
 alias mv='mv -i'
 alias cp='cp -i'
-alias du='du -c'
+alias du='du -ch'
 alias grep='egrep -i --color'
 alias l='ls'
 alias la='ls -al'
-alias ls='ls --color=auto --group-directories-first'
 alias ll='ls -lh'
 
 alias cd..='cd ..'
@@ -23,11 +18,28 @@ alias .....='cd ../../../..'
 alias tmux='tmux -2'
 alias vim='vim -p'
 
-alias livelog='~/dot-files/scripts/git-loglive.sh'
-alias show-gitsubmodules='git submodule status | cut -d" " -f3-4'
+case $(uname -s) in
+  Linux)
+    alias ls='ls --color=auto --group-directories-first'
 
-alias show-desktop-icons='gsettings set org.gnome.desktop.background show-desktop-icons true'
-alias hide-desktop-icons='gsettings set org.gnome.desktop.background show-desktop-icons false'
+    alias aktualizuj='sudo apt-get clean && sudo apt-get autoclean && sudo apt-get autoremove && sudo apt-get update && sudo apt-get dist-upgrade'
+    alias zamknij-teraz='sudo shutdown -h now'
+    alias zamknij='sudo su && shutdown -m'
 
-alias show-source-list='grep ^ /etc/apt/sources.list /etc/apt/sources.list.d/*'
-alias fix_public_html='sudo adduser $USER www-data && sudo chown -R www-data:www-data /home/$USER/public_html && sudo find /home/$USER/public_html -type d -exec chmod 775 {} \; && sudo find /home/$USER/public_html -type f -exec chmod 664 {} \;'
+    alias show-desktop-icons='gsettings set org.gnome.desktop.background show-desktop-icons true'
+    alias hide-desktop-icons='gsettings set org.gnome.desktop.background show-desktop-icons false'
+
+    alias show-source-list='grep ^ /etc/apt/sources.list /etc/apt/sources.list.d/*'
+    alias fix_public_html='sudo adduser $USER www-data && sudo chown -R www-data:www-data /home/$USER/public_html && sudo find /home/$USER/public_html -type d -exec chmod 775 {} \; && sudo find /home/$USER/public_html -type f -exec chmod 664 {} \;'
+    ;;
+esac
+
+# For shell variants
+CUR_SHELL=echo $SHELL
+case $(CUR_SHELL) in
+  /bin/bash)
+    alias livelog='~/.dotfiles/scripts/git-loglive.sh'
+    alias show-gitsubmodules='git submodule status | cut -d" " -f3-4'
+    ;;
+esac
+
