@@ -593,14 +593,17 @@ imap <F4> <ESC>:setlocal spell! spelllang=en_us<CR>
 :noremap <C-k> <Esc>{<CR>                " Move to previous section
 
 " }}}
-" ---- go to n ext/previous tab {{{
+" ---- Go to next/previous tab {{{
 " Example: Ctrl + H
 noremap <C-l> <Esc>:tabnext<CR>
 noremap <C-h> <Esc>:tabprevious<CR>
 noremap <C-n> <Esc>:tabnew<CR>
 
 " }}}
-" ---- Move tab to le ft/right position in top tab-bar {{{
+" ---- Map sort method {{{
+vnoremap <Leader>s :sort<CR>
+" }}}
+" ---- Move tab to left/right position in top tab-bar {{{
 map <F7> :execute 'silent! tabmove' . (tabpagenr()-2)<CR>
 map <F8> :execute 'silent! tabmove' . (tabpagenr()+1) <CR>
 
@@ -618,7 +621,7 @@ nnoremap <space> za
 vnoremap <space> za
 
 " }}}
-
+" }}} #ENDof key mapping
 
 " Features ---------------------------------------------------------------- {{{
 " Remove trailing spaces on save file {{{
