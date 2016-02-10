@@ -7,6 +7,9 @@ wiki/
 **/.vim/bundle/
 .vim(*
 
+# Mac specyfic files
+**/*.DS_Store
+
 # VIM binary files for spell
 *.add.spl
 *.swp
