@@ -59,6 +59,16 @@ plugins=(git git-prompt git-extras colored-man tmux python npm grunt gulp zsh-sy
 # User configuration
 export PATH="$PATH:$HOME/.rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 
+case $(uname -s) in
+  Darwin)
+    # export mysql (and its sub-programs)
+    if [ -d "/usr/local/mysql" ]; then
+      export PATH=/usr/local/mysql/bin:$PATH
+    fi
+    ;;
+esac
+
+
 source $ZSH/oh-my-zsh.sh
 
 # Configure dircolors
@@ -142,4 +152,5 @@ DOTFILES_VIRTUALENVWRAPPER_FILE=/usr/local/bin/virtualenvwrapper.sh
 #export NPM_CONFIG_PREFIX="/usr/local"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+[[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
 
