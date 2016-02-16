@@ -557,6 +557,9 @@ endfunction
 "}}}
 
 autocmd BufRead,BufNewFile *.tex setlocal formatoptions+=w textwidth=120
+ " }}}
+" vim-json {{{
+let g:vim_json_syntax_conceal = 0
 " }}}
 
 " }}}
