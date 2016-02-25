@@ -113,7 +113,7 @@ if [ -f $PROJECT_CONFIG_FILE ]; then
   print_if_missing_variable "GIT_PROJECT_FOLDER_DIR"
   print_if_missing_variable "DOTFILES_THEME"
 
-  if [[ $PROJECT_CONFIG_MISSING_VARIABLE_COUNTER -gt 0 ]]; then
+  if [[ "$PROJECT_CONFIG_MISSING_VARIABLE_COUNTER" -gt 0 ]]; then
     exit 1
   fi
 
@@ -316,7 +316,7 @@ do_update() {
 do_install() {
   print_section "Installing ${PROJECT_NAME}"
 
-  if [ $PROJECT_INSTALL_DEFAULTS -ne 1 ]; then # default: install -y
+  if [ "$PROJECT_INSTALL_DEFAULTS" -ne 1 ]; then # default: install -y
     echo -e "Ask for few questions which will automatize your setup to adjust your configuration preferences."
     echo -ne "${__info__}"
     read -r -p " Do you want to configure mutt with secured gpg password? (y/N) " _configure_secure_mutt_gpg
@@ -327,7 +327,7 @@ do_install() {
   # ask only if config exsist and user run install again
   if [ -f $PROJECT_CONFIG_FILE ]; then
     echo -ne "${__info__} You already have dotfiles config file at $PROJECT_CONFIG_FILE\n"
-    if [ $PROJECT_INSTALL_DEFAULTS -ne 1 ]; then # default: install -y
+    if [ "$PROJECT_INSTALL_DEFAULTS" -ne 1 ]; then # default: install -y
       read -r -p "Do you want to copy default configuration file to override the old one? (y/N) " _copy_default_configuration
     else
       _copy_default_configuration="n"
@@ -455,7 +455,7 @@ do_install() {
   echo -e "Now you could run: '${FILE_NAME} --help' to find more about configurator."
 
   echo -e "\n${__info__} To finalize installation of ZSH shell, you need to reboot the system."
-  if [ $PROJECT_INSTALL_DEFAULTS -ne 1 ]; then # default: install -y
+  if [ "$PROJECT_INSTALL_DEFAULTS" -ne 1 ]; then # default: install -y
     echo -ne "${__info__}"
     read -r -p "Would you like to do it now? (y/N) " _reboot_now
   else
