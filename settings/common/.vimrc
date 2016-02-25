@@ -95,6 +95,7 @@ NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'jmcantrell/vim-virtualenv'
 NeoBundle 'jamessan/vim-gnupg'
 NeoBundle 'nelstrom/vim-markdown-folding'             " improve folding in markdown
+NeoBundle 'ashisha/image.vim'   " preview images
 
 " }}}
 " Other bundles {{{
@@ -309,6 +310,9 @@ augroup ft_js
     au FileType javascript setlocal foldmethod=marker foldmarker={,}
 augroup END
 
+" folding for coffeescript files
+setl fdm=expr fde=getline(v:lnum)=~'->$'&&indent(v:lnum)<indent(v:lnum+1)?'a1':'s1'
+
 " }}}
 " Autocommands ----------------------------------------------------------- {{{
 
@@ -384,7 +388,7 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 let NERDTreeShowHidden=1
 
 " default NERDTree window size
-let g:NERDTreeWinSize=42
+let g:NERDTreeWinSize=30
 
 " Open a NERDTree automatically when vim starts up if no files were specified?
 autocmd StdinReadPre * let s:std_in=1
@@ -409,6 +413,7 @@ call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
 call NERDTreeHighlightFile('jade', 'green', 'none', 'green', '#151515')
 call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
 call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('sass', 'cyan', 'none', 'cyan', '#151515')
 call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
 call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
 call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
@@ -426,6 +431,9 @@ let g:NERDTreeIndicatorMapCustom = {
     \ "Unknown"   : "?"
     \ }
 
+" }}}
+" nerdcommenter {{{
+let NERDSpaceDelims=1
 " }}}
 " ---- Supertab {{{
 let g:SuperTabDefaultCompletionType = "<c-n>"
@@ -462,6 +470,7 @@ endif
 " }}}
 " ---- Add airline powerline fonts to vim {{{
 let g:airline_powerline_fonts=1
+let g:airline#extensions#tabline#enabled = 0
 
 " }}}
 " ---- Open the file in a new tab if it isn't already open {{{
@@ -576,6 +585,10 @@ command! Q q
 cmap w!! %!sudo tee >/dev/null %
 
 " }}}
+" ---- map leader key to comma {{{
+let mapleader=","
+
+" }}}
 " ---- <F3> key to hide current highlight for searched terms {{{
 map <F3> :noh<CR>
 
@@ -586,20 +599,36 @@ imap <F4> <ESC>:setlocal spell! spelllang=en_us<CR>
 
 " }}}
 " ---- (OFF) Saving file <F5>, <F6> {{{
-":map <F5> :w<CR>                  " <F5> key save the file
-":map <F6> :wq<CR>                 " <F6> key save and exit the file
+"map <F5> :w<CR>                  " <F5> key save the file
+"map <F6> :wq<CR>                 " <F6> key save and exit the file
 
 " }}}
-" ---- Jumping to next/previous section with `C-j`, `C-k`  {{{
-" FIXME
-:noremap <C-j> <Esc>}<CR>                " Move to next section
-:noremap <C-k> <Esc>{<CR>                " Move to previous section
+" ---- bind Ctrl+<movement> keys to move around the windows, instead of using
+"  Ctrl+w + <movement> {{{
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-h> <C-w>h
+map <C-l> <C-w>l
+
+" }}}
+" ---- Easier moving of code blocks  {{{
+"vnoremap < <gv                " Move to next section
+"vnoremap > >gv                " Move to previous section
+
+" }}}
+" ---- Jumping to move lines up/down  {{{
+"nnoremap <A-j> :m .+1<CR>==
+"nnoremap <A-k> :m .-2<CR>==
+"inoremap <A-j> <Esc>:m .+1<CR>==gi
+"inoremap <A-k> <Esc>:m .-2<CR>==gi
+"vnoremap <A-j> :m '>+1<CR>gv=gv
+"vnoremap <A-k> :m '<-2<CR>gv=gv
 
 " }}}
 " ---- Go to next/previous tab {{{
 " Example: Ctrl + H
-noremap <C-l> <Esc>:tabnext<CR>
-noremap <C-h> <Esc>:tabprevious<CR>
+noremap <leader>m <Esc>:tabnext<CR>
+noremap <leader>n <Esc>:tabprevious<CR>
 noremap <C-n> <Esc>:tabnew<CR>
 
 " }}}
@@ -611,8 +640,8 @@ map <F7> :execute 'silent! tabmove' . (tabpagenr()-2)<CR>
 map <F8> :execute 'silent! tabmove' . (tabpagenr()+1) <CR>
 
 " }}}
-" ---- \n for open and hide NERDTree with multiple tabs {{{
-map <Leader>n <plug>NERDTreeTabsToggle<CR>
+" ---- Open and hide NERDTree with multiple tabs {{{
+map <Leader>p <plug>NERDTreeTabsToggle<CR>
 
 " }}}
 " ---- Find current file in NERDTree {{{
@@ -625,7 +654,6 @@ vnoremap <space> za
 
 " }}}
 " }}} #ENDof key mapping
-
 " Features ---------------------------------------------------------------- {{{
 " Remove trailing spaces on save file {{{
 fun! <SID>StripTrailingWhitespaces()
