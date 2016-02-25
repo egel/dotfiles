@@ -143,6 +143,9 @@ DOTFILES_PRIVATE_ALIASES=$HOME/.aliases.private
 [ -s "$DOTFILES_PRIVATE_ALIASES" ] && source $DOTFILES_PRIVATE_ALIASES
 
 # Virtualenvwrapper
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Devel
 DOTFILES_VIRTUALENVWRAPPER_FILE=/usr/local/bin/virtualenvwrapper.sh
