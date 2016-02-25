@@ -9,7 +9,7 @@
 [![Stories in Ready](https://badge.waffle.io/egel/dotfiles.svg?label=ready&title=Ready)](http://waffle.io/egel/dotfiles)
 
 
-> The Egel dotfiles for Ubuntu 14.04 LTS designed to be awesome !!!
+> The Egel dotfiles for Linux Ubuntu 14.04 LTS and Mac OSX
 
 * * *
 [Installation](#installation) | [Update](#update) | [Learn more on Wiki][dotfiles-wiki] | [Shortcuts Cheat Sheet (PDF)][shortcuts-cheat-sheet]
@@ -28,7 +28,7 @@ This set contains configuration for:
   - **Vim**
   - **tmux** (key-bindings, copy-paste to system clipboard)
   - **mutt** (themes, secured passwords)
-  - **conky** (themes)
+  - **conky** (themes for linux)
   - **editorconfig**
   - **Easy add your own personal configuration (theme)**
   - [read more][dotfiles-wiki]
