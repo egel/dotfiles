@@ -44,7 +44,8 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'morhetz/gruvbox'           " done by vim-colorschemes
 NeoBundle 'sickill/vim-monokai'
 
-NeoBundle 'bling/vim-airline'
+NeoBundle 'vim-airline/vim-airline'
+NeoBundle 'vim-airline/vim-airline-themes'
 NeoBundle 'edkolev/tmuxline.vim'
 NeoBundle 'Shougo/vimproc.vim', {
 \ 'build' : {
@@ -96,6 +97,8 @@ NeoBundle 'jmcantrell/vim-virtualenv'
 NeoBundle 'jamessan/vim-gnupg'
 NeoBundle 'nelstrom/vim-markdown-folding'             " improve folding in markdown
 NeoBundle 'ashisha/image.vim'   " preview images
+NeoBundle 'mattn/webapi-vim'
+NeoBundle 'heavenshell/vim-slack'
 
 " }}}
 " Other bundles {{{
@@ -678,7 +681,7 @@ endfunction
 vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
 
 " Force setting for *.md files. More info: https://github.com/tpope/vim-markdown
-autocmd BufNewFile,BufReadPost *.md,*.markdown call SetMarkdownOptions()
+autocmd BufNewFile,BufReadPost *.md,*.markdown,*.ngdoc call SetMarkdownOptions()
 function! SetMarkdownOptions()
     set filetype=markdown
     setlocal textwidth=80
