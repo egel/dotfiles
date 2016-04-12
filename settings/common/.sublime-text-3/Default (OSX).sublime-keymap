@@ -1,0 +1,24 @@
+[
+  // move lines
+  { "keys": ["alt+up"], "command": "swap_line_up" },
+  { "keys": ["alt+down"], "command": "swap_line_down" },
+
+  // duplicate lines
+  { "keys": ["ctrl+shift+up"], "command": "duplicate_line" },
+  { "keys": ["ctrl+shift+down"], "command": "duplicate_line" },
+
+  // Multiple cursor
+  { "keys": ["super+alt+up"], "command": "select_lines", "args": {"forward": false} },
+  { "keys": ["super+alt+down"], "command": "select_lines", "args": {"forward": true} },
+
+  // swamp letter case
+  { "keys": ["ctrl+shift+x"], "command": "swap_case" },
+
+  { "keys": ["ctrl+f5"], "command": "refresh_folder_list"},
+
+  // Quick rename of current file (require SideBar Enhancements plug-in)
+  { "keys": ["f2"], "command": "side_bar_move" },
+
+  // Toggle side bar
+  { "keys": ["f9"], "command": "toggle_side_bar" }
+]
