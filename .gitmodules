@@ -1,3 +1,6 @@
 [submodule "lib/dircolors-solarized"]
 	path = lib/dircolors-solarized
 	url = https://github.com/seebi/dircolors-solarized.git
+[submodule "lib/honukai-iterm-zsh"]
+	path = lib/honukai-iterm-zsh
+	url = https://github.com/oskarkrawczyk/honukai-iterm-zsh.git
