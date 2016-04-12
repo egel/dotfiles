@@ -60,3 +60,9 @@
 
 
   lg = log --graph --all --abbrev-commit --date=relative --format=format:'%C(bold red)%h%C(reset) %C(bold magenta)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold blue) %an%C(reset)%C(auto)%d%C(reset)'
+
+[filter "lfs"]
+  clean = git-lfs clean %f
+  smudge = git-lfs smudge %f
+  required = true
+
