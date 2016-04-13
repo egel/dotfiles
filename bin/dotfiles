@@ -415,6 +415,9 @@ do_install() {
   print_subsection "Symlink honukai to oh-my-zsh themes"
   make_symlink "honukai.zsh-theme" "${PROJECT_LIB_DIR}/honukai-iterm-zsh/honukai.zsh-theme" "$HOME/.oh-my-zsh/themes/honukai.zsh-theme"
 
+  # call program reconfigure option
+  ${PROJECT_CONFIGURATOR_FILE} reconfigure
+
   print_subsection "Installing NeoBundle - Vim plugin manager"
   curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh && echo -e "${__done__}"
 
@@ -432,9 +435,6 @@ do_install() {
   # installing vim plugins (need to be after reconfiguration proces of dotfiles configurator)
   print_subsection "Installing NeoBundle vim plugins"
   eval $HOME/.vim/bundle/neobundle.vim/bin/neoinstall
-
-  # call program reconfigure option
-  ${PROJECT_CONFIGURATOR_FILE} reconfigure
 
   # creating secure passwords file for mutt
   case $_configure_secure_mutt_gpg in
