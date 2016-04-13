@@ -361,7 +361,7 @@ do_install() {
 
   case $CURRENT_OS in
     Darwin)
-      print_subsection "Install brew"
+      print_subsection "Installing brew - Mac OSX package manager"
       ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
       print_subsection "Installing required programs"
@@ -373,7 +373,7 @@ do_install() {
       ;;
 
     Linux)
-      print_subsection "Installing pre required software for further steps"
+      print_subsection "Installing required software for further steps"
       sudo apt-get install -y software-properties-common
 
       print_subsection "Checking and adding PPA repositories"
@@ -396,17 +396,25 @@ do_install() {
   check_program "git:\t" "git --version"
 
   # zsh
-  print_subsection "Changing shell to ZSH"
+  print_subsection "Changing default shell to ZSH"
   sudo chsh -s $(which zsh) && echo -e "${__done__}"
+
+  print_subsection "Restore privacy for Ubuntu"
+  wget -q -O - https://fixubuntu.com/fixubuntu.sh | bash && echo -e "${__done__}"
+
+  print_subsection "Downloading ${PROJECT_NAME} repository submodules"
+  git submodule update --init --recursive
+  echo -e ${__done__}
 
   # oh-my-zsh
   print_subsection "Installing oh-my-zsh"
   wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | sh
 
-  print_subsection "Restore privacy for Ubuntu"
-  wget -q -O - https://fixubuntu.com/fixubuntu.sh | bash && echo -e "${__done__}"
+  # link honukai to oh-my-zsh themes
+  print_subsection "Symlink honukai to oh-my-zsh themes"
+  make_symlink "honukai.zsh-theme" "${PROJECT_LIB_DIR}/honukai-iterm-zsh/honukai.zsh-theme" "$HOME/.oh-my-zsh/themes/honukai.zsh-theme"
 
-  print_subsection "Installings NeoBundle"
+  print_subsection "Installing NeoBundle - Vim plugin manager"
   curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh && echo -e "${__done__}"
 
   print_subsection "Installing Hack font"
@@ -420,16 +428,12 @@ do_install() {
   esac
   echo -e "${__info__} To see more details for hack font at http://sourcefoundry.org/hack/"
 
-  print_subsection "Downloading ${PROJECT_NAME} repository submodules"
-  git submodule update --init --recursive
-  echo -e ${__done__}
-
-  # reconfigure
-  ${PROJECT_CONFIGURATOR_FILE} reconfigure
-
   # installing vim plugins (need to be after reconfiguration proces of dotfiles configurator)
   print_subsection "Installing NeoBundle vim plugins"
   eval $HOME/.vim/bundle/neobundle.vim/bin/neoinstall
+
+  # call program reconfigure option
+  ${PROJECT_CONFIGURATOR_FILE} reconfigure
 
   # creating secure passwords file for mutt
   case $_configure_secure_mutt_gpg in
@@ -442,15 +446,16 @@ do_install() {
 
   case $CURRENT_OS in
     Darwin)
-      # FIXME odszukaj czy dobrze wywływać doktora przed updatem
       print_subsection "Updating brew manager"
-      echo "Be patient, it may take a while ;)"
+      echo -e "${__info__} Be patient, it may take a while ;)"
+      echo -e "${__info__} brew doctor ..."
       brew doctor
+      echo -e "${__info__} brew update ..."
       brew update
       ;;
   esac
 
-  echo -e "${green}Congratulations!${endColor}"
+  echo -e "\n${green}Congratulations!${endColor}"
   echo -e "Configuration of ${PROJECT_NAME} complete successfully."
   echo -e "Now you could run: '${FILE_NAME} --help' to find more about configurator."
 
