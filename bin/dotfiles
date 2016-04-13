@@ -382,7 +382,8 @@ do_install() {
 
       print_subsection "Updating and installing required programs"
       sudo apt-get update
-      sudo apt-get install -y python-software-properties software-properties-common curl wget vim git zsh tmux xdg-utils editorconfig fontconfig build-essential libssl-dev
+      sudo apt-get install -y python-software-properties software-properties-common curl wget vim git zsh tmux xdg-utils fontconfig build-essential libssl-dev
+      sudo apt-get install -y editorconfig
       ;;
   esac
 
