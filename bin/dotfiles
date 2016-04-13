@@ -293,7 +293,7 @@ do_help() {
 
 do_update() {
   print_section "Updating ${PROJECT_NAME}"
-  if ! [[ -d "${PROJECT_REPOSITORY_DIR}" && "${PROJECT_REPOSITORY_DIR}" == ^. ]]
+  if ! [[ -d "${PROJECT_REPOSITORY_DIR}" ]]
     then
       echo -e "${__info__} ${PROJECT_NAME} doesn't exist at ${blue}${PROJECT_REPOSITORY_DIR}${endColor}. Perhaps you want to install it first?"
       exit 1;
