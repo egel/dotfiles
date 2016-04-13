@@ -43,6 +43,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 "NeoBundle 'flazz/vim-colorschemes'   " many colorschemes but not being updated
 NeoBundle 'morhetz/gruvbox'           " done by vim-colorschemes
 NeoBundle 'sickill/vim-monokai'
+NeoBundle 'altercation/vim-colors-solarized'
 
 NeoBundle 'vim-airline/vim-airline'
 NeoBundle 'vim-airline/vim-airline-themes'
@@ -75,6 +76,9 @@ NeoBundle 'othree/javascript-libraries-syntax.vim'
 NeoBundle 'smancill/conky-syntax.vim'                 " conky file syntax
 NeoBundle 'Glench/Vim-Jinja2-Syntax'                  " Jinja2 syntax
 NeoBundle 'ekalinin/Dockerfile.vim'                   " dockerfile syntax
+NeoBundle 'statianzo/vim-jade'                        " jade, unmaintained (vim-pug is not ready yet)
+NeoBundle 'digitaltoad/vim-pug'                       " pug (formerly Jade)
+NeoBundle 'evanmiller/nginx-vim-syntax'
 
 " }}}
 " Plug-in bundles {{{
@@ -99,6 +103,7 @@ NeoBundle 'nelstrom/vim-markdown-folding'             " improve folding in markd
 NeoBundle 'ashisha/image.vim'   " preview images
 NeoBundle 'mattn/webapi-vim'
 NeoBundle 'heavenshell/vim-slack'
+NeoBundle 'ap/vim-css-color'
 
 " }}}
 " Other bundles {{{
@@ -231,7 +236,7 @@ if has("gui_running")
   elseif has("gui_win32")
     set guifont=Consolas:h11:cANSI
   endif
-  set linespace=10            " set space between lines (option only for GUI)
+  set linespace=12            " set space between lines (option only for GUI)
 
   set guioptions-=T           " turn off GUI toolbar (icons)
   set guioptions+=e
@@ -262,12 +267,13 @@ endif
 
 " }}}
 " ---- Indent guidelines from vim-indent-guides plugin {{{
+" taken from https://github.com/scrooloose/nerdtree
 let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
 
 " }}}
-" ---- Hightlight current line and column {{{
+" ---- Highlight current line and column {{{
 if !&diff
   set cursorline   " highlight the current line
 endif
@@ -380,7 +386,7 @@ endif " end of has("autocmd")
 " Tabs
 let g:nerdtree_tabs_open_on_gui_startup=1
 let g:nerdtree_tabs_open_on_new_tab=1
-let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
+let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$', '\.DS_Store']
 
 " Use custom arrows
 let g:NERDTreeDirArrows = 1
@@ -395,7 +401,8 @@ let g:NERDTreeWinSize=30
 
 " Open a NERDTree automatically when vim starts up if no files were specified?
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" autocmd VimEnter * if argc() | wincmd p | end
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | wincmd p | endif
 
 " Close vim when the only window left open is a NERDTree?
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary")
@@ -403,23 +410,44 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 " NERDTree Files highlighting
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
   exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
-  exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+  exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^.*\.'. a:extension .'$#'
 endfunction
 
-call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
-call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('jade', 'green', 'none', 'green', '#151515')
-call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
-call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
-call NERDTreeHighlightFile('sass', 'cyan', 'none', 'cyan', '#151515')
-call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
-call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
-call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
+" define local variable
+" 8-bit colos  https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
+let _NERDTreeHighlightBgColor = '#282828'
+call NERDTreeHighlightFile('markdown', 'cyan', 'none', 'cyan', _NERDTreeHighlightBgColor)
+call NERDTreeHighlightFile('md', 'cyan', 'none', 'cyan', _NERDTreeHighlightBgColor)
+
+call NERDTreeHighlightFile('vimrc', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
+call NERDTreeHighlightFile('zshrc', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
+call NERDTreeHighlightFile('muttrc', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
+call NERDTreeHighlightFile('editorconfig', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
+call NERDTreeHighlightFile('gitignore', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
+call NERDTreeHighlightFile('gitconfig', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
+call NERDTreeHighlightFile('gitmodules', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
+call NERDTreeHighlightFile('gitconfig.local', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
+
+call NERDTreeHighlightFile('ini', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
+call NERDTreeHighlightFile('config', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
+call NERDTreeHighlightFile('conf', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
+
+call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', _NERDTreeHighlightBgColor)
+call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', _NERDTreeHighlightBgColor)
+
+call NERDTreeHighlightFile('html', 'green', 'none', 'green', _NERDTreeHighlightBgColor)
+call NERDTreeHighlightFile('pug', 'green', 'none', 'green', _NERDTreeHighlightBgColor)
+call NERDTreeHighlightFile('jade', 'green', 'none', 'green', _NERDTreeHighlightBgColor)
+
+call NERDTreeHighlightFile('styl', 'magenta', 'none', 'magenta', _NERDTreeHighlightBgColor)
+call NERDTreeHighlightFile('css', 'magenta', 'none', 'magenta', _NERDTreeHighlightBgColor)
+call NERDTreeHighlightFile('sass', 'magenta', 'none', 'magenta', _NERDTreeHighlightBgColor)
+call NERDTreeHighlightFile('scss', 'magenta', 'none', 'magenta', _NERDTreeHighlightBgColor)
+
+call NERDTreeHighlightFile('coffee', 'red', 'none', 'red', _NERDTreeHighlightBgColor)
+call NERDTreeHighlightFile('js', 'red', 'none', 'red', _NERDTreeHighlightBgColor)
+
+call NERDTreeHighlightFile('sql', 'blue', 'none', 'blue', _NERDTreeHighlightBgColor)
 
 " ---- nerdtree-git-plugin (require NerdTree)
 let g:NERDTreeIndicatorMapCustom = {
@@ -435,7 +463,7 @@ let g:NERDTreeIndicatorMapCustom = {
     \ }
 
 " }}}
-" nerdcommenter {{{
+" ---- Nerdcommenter {{{
 let NERDSpaceDelims=1
 " }}}
 " ---- Supertab {{{
@@ -481,15 +509,15 @@ command! -nargs=1 -complete=file O tab drop <args>
 
 " }}}
 " ---- Auto session for vim-session {{{
-let g:session_autosave = 'yes'
-let g:session_autoload = 'yes'
+let g:session_autosave = 'no'
+let g:session_autoload = 'no'
 let g:session_lock_enabled = 1      " Enable all session locking :-)
 let g:session_default_to_last = 1   " Open your last used session instead of the default session
 let g:session_directory = "~/.vim/sessions"  " default path for UNIX
 
 " Save session on quitting Vim
-autocmd VimLeave * NERDTreeTabsClose
-autocmd VimLeave * call SaveSession
+" autocmd VimLeave * NERDTreeTabsClose
+" autocmd VimLeave * call SaveSession
 
 " (OFF) Restore session on starting Vim
 "autocmd VimEnter * call MySessionRestoreFunction()
@@ -497,6 +525,9 @@ autocmd VimLeave * call SaveSession
 
 " }}}
 " ---- Syntastic plugin settings {{{
+let g:syntastic_mode_map = { 'mode': 'active',
+                            \ 'active_filetypes': ['python', 'html', 'javascript'], }
+
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -508,6 +539,7 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_python_python_exec = '/usr/bin/python3'
 let g:syntastic_python_checkers = [ 'flake8', 'pylint', 'pyflakes' ]
 let g:syntastic_html_tidy_exec = 'tidy5'
+let g:syntastic_javascript_checkers = ['eslint']
 
 " }}}
 " ---- Customization vim-latex plugin {{{
@@ -570,7 +602,7 @@ endfunction
 
 autocmd BufRead,BufNewFile *.tex setlocal formatoptions+=w textwidth=120
  " }}}
-" vim-json {{{
+" ---- vim-json {{{
 let g:vim_json_syntax_conceal = 0
 " }}}
 
@@ -606,8 +638,7 @@ imap <F4> <ESC>:setlocal spell! spelllang=en_us<CR>
 "map <F6> :wq<CR>                 " <F6> key save and exit the file
 
 " }}}
-" ---- bind Ctrl+<movement> keys to move around the windows, instead of using
-"  Ctrl+w + <movement> {{{
+" ---- bind Alt+<movement> keys to move around the windows instead of using Ctrl+w + <movement> {{{
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-h> <C-w>h
