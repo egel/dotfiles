@@ -1,6 +1,7 @@
 language: bash
 
 sudo: required
+dist: trusty
 
 before_script:
   - export DISPLAY=:99.0
