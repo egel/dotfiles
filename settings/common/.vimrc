@@ -79,19 +79,19 @@ NeoBundle 'Xuyuanp/nerdtree-git-plugin'
 NeoBundle 'jistr/vim-nerdtree-tabs'
 NeoBundle 'ervandew/supertab'
 NeoBundle 'scrooloose/syntastic'
-NeoBundle 'airblade/vim-gitgutter'                    " left side git status icons (~,+,-)
+NeoBundle 'airblade/vim-gitgutter'          " left side git status icons (~,+,-)
 NeoBundle 'tpope/vim-repeat'
-NeoBundle 'tpope/vim-surround'                        " improve insert surround text
-NeoBundle 'editorconfig/editorconfig-vim'             " editorconfig plugin
+NeoBundle 'tpope/vim-surround'              " improve insert surround text
+NeoBundle 'editorconfig/editorconfig-vim'   " editorconfig plugin
 NeoBundle 'xolox/vim-session'
-NeoBundle 'xolox/vim-misc'     " as dependency for vim-session
-NeoBundle 'tpope/vim-abolish'     " fix while words while typing
+NeoBundle 'xolox/vim-misc'      " as dependency for vim-session
+NeoBundle 'tpope/vim-abolish'   " fix while words while typing
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'jmcantrell/vim-virtualenv'
 NeoBundle 'jamessan/vim-gnupg'
-NeoBundle 'nelstrom/vim-markdown-folding'             " improve folding in markdown
-NeoBundle 'ashisha/image.vim'   " preview images
+NeoBundle 'nelstrom/vim-markdown-folding'   " improve folding in markdown
+NeoBundle 'ashisha/image.vim'               " preview images
 NeoBundle 'mattn/webapi-vim'
 NeoBundle 'heavenshell/vim-slack'
 NeoBundle 'ap/vim-css-color'
