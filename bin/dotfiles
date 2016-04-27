@@ -431,6 +431,21 @@ do_install() {
   esac
   echo -e "${__info__} To see more details for Hack font at http://sourcefoundry.org/hack/"
 
+  print_subsection "Installing patched Hack font with Nerd Fonts"
+  case $CURRENT_OS in
+    Linux)
+      mkdir -p $HOME/.local/share/fonts
+      cd $HOME/.local/share/fonts
+      ;;
+    Darwin)
+      cd $HOME/Library/Fonts
+      ;;
+  esac
+  curl -flo "Knack Regular Nerd Font Complete.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/Regular/complete/Knack%20Regular%20Nerd%20Font%20Complete.ttf
+  curl -fLo "Knack Regular Nerd Font Complete Mono.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/Regular/complete/Knack%20Regular%20Nerd%20Font%20Complete%20Mono.ttf
+  cd $PWD # back to current directory
+  echo -e "${__info__} To see more details for Nerd fonts at https://github.com/ryanoasis/nerd-fonts"
+
   # installing vim plugins (need to be after reconfiguration proces of dotfiles configurator)
   print_subsection "Installing NeoBundle vim plugins"
   eval $HOME/.vim/bundle/neobundle.vim/bin/neoinstall
