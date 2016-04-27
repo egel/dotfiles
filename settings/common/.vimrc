@@ -128,8 +128,12 @@ NeoBundleCheck
 " enable syntax highlighting
 syntax on
 
-" saving and encoding
-set encoding=utf-8 fileencoding=utf-8 termencoding=utf-8
+set modifiable
+if has("multi_byte")
+  set encoding=utf-8      " The encoding displayed.
+  set fileencoding=utf-8  " The encoding written to file.
+  set termencoding=utf-8
+endif
 
 set clipboard=unnamed,unnamedplus               " Use the system clipboard for yank/put/delete
 set fileformats=unix,dos                        " Prefer unix fileformat
