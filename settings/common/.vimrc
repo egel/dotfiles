@@ -138,9 +138,8 @@ set nofoldenable                                " Disable code folding
 set noerrorbells                                " No error bells
 set novisualbell                                " No annoying visual bell
 set confirm                                     " Raise a dialogue asking if you wish to save changed files
-set number                                      " Display line numbers on the left
-set history=1000                                " Remember more commands and search history
-set undolevels=1000                             " Use many muchos levels of undo
+set history=1500                                " Remember more commands and search history
+set undolevels=1500                             " Use many muchos levels of undo
 set ruler                                       " Show row and column in footer
 set scrolloff=5                                 " Minimum lines above/below cursor
 set mouse=a                                     " Enable use of the mouse for all modes
@@ -153,8 +152,15 @@ set autoindent                                  " Set auto indent
 set tabstop=2 shiftwidth=2 softtabstop=2        " Set indent to 2 spaces
 set expandtab                                   " Use spaces, not tab characters
 
-set wildmenu                                    " Enable bash style tab completion
-set wildignore=*.o,*.obj,*~                     " Stuff to ignore when tab completing
+" Display line numbers on every window split except NERDTree
+if(exists('t:NERDTreeBufName') && bufname('%') == t:NERDTreeBufName)
+  set nonumber
+else
+  set number
+endif
+
+set wildmenu                   " Enable bash style tab completion
+set wildignore=*.o,*.obj,*~    " Stuff to ignore when tab completing
 set wildignore+=*sass-cache*
 set wildignore+=*DS_Store*
 set wildignore+=log/**
@@ -250,11 +256,11 @@ else
 endif
 
 " }}}
-" ---- Set default screen size (lines, columns) {{{
+" ---- Set default GUI screen size (lines, columns) {{{
 if has("gui_running")
-  " GUI is running or is about to start.
   " Maximize gvim window.
-  set lines=999 columns=999
+  set lines=999
+  set columns=999
 else
   " This is console Vim.
   if exists("+lines")
