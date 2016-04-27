@@ -30,15 +30,6 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " Refer to |:NeoBundle-examples|.
 " NOTE: You don't set neobundle setting in .gvimrc!
 
-" atp_vim
-" gist-vim
-" vim-git
-" vim-hemisu
-" vim-indent-guides
-" vim-instant-markdown
-" vim-javascript
-" vim-rails
-
 " Colorschemes and Appereance {{{
 "NeoBundle 'flazz/vim-colorschemes'   " many colorschemes but not being updated
 NeoBundle 'morhetz/gruvbox'           " done by vim-colorschemes
