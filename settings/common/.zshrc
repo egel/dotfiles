@@ -1,30 +1,18 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
-DOTFILES_ZSH_LOCAL_FILE=$HOME/.zshrc.local
-if [ -f "$DOTFILES_ZSH_LOCAL_FILE" ]; then
-  source "$DOTFILES_ZSH_LOCAL_FILE"
-else
-  echo "Some .dotfiles ZSH settings will not be available. Missing $HOME/.zshrc.local"
-  echo "To fix this run: '$HOME/.dotfiles/bin/dotfiles -r; source $HOME/.zshrc'"
-fi
+# Case-sensitive completion.
+CASE_SENSITIVE="false"
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+# How often to auto-update (in days).
+export UPDATE_ZSH_DAYS=14
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 HIST_STAMPS="yyyy-mm-dd"
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-# NOTE do not load nvm for eslint (more info https://github.com/roadhump/SublimeLinter-eslint#plugin-installation)
+# Add wisely, as too many plugins slow down shell startup !!!
+# NOTE: Do not load nvm for eslint (more info https://github.com/roadhump/SublimeLinter-eslint#plugin-installation)
 plugins=(git git-flow colored-man-pages colorize tmux python npm gulp zsh-syntax-highlighting)
 
 # User configuration
@@ -45,7 +33,6 @@ if [[ -f $ZSH/oh-my-zsh.sh ]]; then
 else
   echo "Missing $ZSH/oh-my-zsh.sh file."
 fi
-
 
 # Configure dircolors
 case $(uname -s) in
@@ -85,30 +72,8 @@ if [[ "$COLORTERM" == "xfce4-terminal" ]]; then
   export TERM="xterm-256color"
 fi;
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+export EDITOR='vim'
 
 # Add public aliases
 DOTFILES_COMMON_ALIASES=$HOME/.aliases
@@ -132,4 +97,16 @@ DOTFILES_VIRTUALENVWRAPPER_FILE=/usr/local/bin/virtualenvwrapper.sh
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 [[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
+
+# Load private passwords
+[ -s "$HOME/.envpass.private" ] && . "$HOME/.envpass.private"
+
+# Load personal .zshrc.local settings
+DOTFILES_ZSH_LOCAL_FILE=$HOME/.zshrc.local
+if [ -f "$DOTFILES_ZSH_LOCAL_FILE" ]; then
+  source "$DOTFILES_ZSH_LOCAL_FILE"
+else
+  echo "Missing $HOME/.zshrc.local. It might some .dotfiles ZSH settings will not be available."
+  echo "To fix this run: '$HOME/.dotfiles/bin/dotfiles -r; source $HOME/.zshrc'"
+fi
 
