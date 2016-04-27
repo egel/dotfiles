@@ -351,8 +351,7 @@ do_install() {
   fi
 
   # update dotfiles repository
-  # FIXME uncomment
-  #${PROJECT_CONFIGURATOR_FILE} update
+  ${PROJECT_CONFIGURATOR_FILE} update
 
   # symlink dotfiles program (same for Darwin and Linux)
   print_subsection "Symlinking dotfiles configurator program"
@@ -403,7 +402,7 @@ do_install() {
   print_subsection "Restore privacy for Ubuntu"
   wget -q -O - https://fixubuntu.com/fixubuntu.sh | bash && echo -e "${__done__}"
 
-  print_subsection "Downloading ${PROJECT_NAME} repository submodules"
+  print_subsection "Downloading submodules of ${PROJECT_NAME} repository"
   git submodule update --init --recursive
   echo -e ${__done__}
 
@@ -430,7 +429,7 @@ do_install() {
       brew cask install caskroom/fonts/font-hack
       ;;
   esac
-  echo -e "${__info__} To see more details for hack font at http://sourcefoundry.org/hack/"
+  echo -e "${__info__} To see more details for Hack font at http://sourcefoundry.org/hack/"
 
   # installing vim plugins (need to be after reconfiguration proces of dotfiles configurator)
   print_subsection "Installing NeoBundle vim plugins"
