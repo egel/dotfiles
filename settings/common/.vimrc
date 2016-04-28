@@ -624,11 +624,10 @@ let g:vim_json_syntax_conceal = 0
 " ---- vim-indent-guides {{{
 " taken from https://github.com/scrooloose/nerdtree
 let g:indent_guides_auto_colors = 1 " take automatic color for indent guides
+let g:indent_guides_exclude_filetypes = ['nerdtree']
 
-" auto enable indent guides on vim enter except NERDTree
-if(exists('t:NERDTreeBufName') && bufname('%') == t:NERDTreeBufName)
-  autocmd VimEnter * :IndentGuidesEnable
-endif
+" auto-enable indent guides
+autocmd WinEnter * :IndentGuidesEnable
 
 " }}}
 
