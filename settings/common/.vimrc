@@ -175,23 +175,8 @@ set commentstring=#\ %s
 
 " }}}
 " Backups ----------------------------------------------------------------- {{{
-" No backup, swap
-set nobackup nowritebackup noswapfile autoread  " No backup or swap
-
-"set undodir=~/.vim/tmp/undo/     " undo files
-"set backupdir=~/.vim/tmp/backup/ " backups
-"set directory=~/.vim/tmp/swap/   " swap files
-
-"" Make those folders automatically if they don't already exist.
-"if !isdirectory(expand(&undodir))
-    "call mkdir(expand(&undodir), "p")
-"endif
-"if !isdirectory(expand(&backupdir))
-    "call mkdir(expand(&backupdir), "p")
-"endif
-"if !isdirectory(expand(&directory))
-    "call mkdir(expand(&directory), "p")
-"endif
+" No backup, no swap, PERIOD !!!
+set nobackup nowritebackup noswapfile autoread
 
 " }}}
 " Appearance ------------------------------------------------------------- {{{
