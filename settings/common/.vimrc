@@ -93,7 +93,7 @@ NeoBundle 'jamessan/vim-gnupg'
 NeoBundle 'nelstrom/vim-markdown-folding'   " improve folding in markdown
 NeoBundle 'ashisha/image.vim'               " preview images
 NeoBundle 'ap/vim-css-color'        " Color CSS codes
-NeoBundle 'heavenshell/vim-slack'
+NeoBundle 'junegunn/goyo.vim'       " Distraction-free writing in Vim.
 NeoBundle 'embear/vim-localvimrc'   " Vim per project local config
 
 " }}}
