@@ -290,14 +290,14 @@ endif
 " Folding -------------------------------------------------------------- {{{
 " Set folding for vim files
 augroup ft_vim
-    au!
-    au FileType vim setlocal foldmethod=marker foldmarker={{{,}}}
+  au!
+  au FileType vim setlocal foldmethod=marker foldmarker={{{,}}}
 augroup END
 
 " Set folding for JavaScript files
 augroup ft_js
-    au!
-    au FileType javascript setlocal foldmethod=marker foldmarker={,}
+  au!
+  au FileType javascript setlocal foldmethod=marker foldmarker={,}
 augroup END
 
 " folding for coffeescript files
@@ -674,10 +674,10 @@ vnoremap <space> za
 " Features ---------------------------------------------------------------- {{{
 " Remove trailing spaces on save file {{{
 fun! <SID>StripTrailingWhitespaces()
-    let l = line(".")
-    let c = col(".")
-    %s/\s\+$//e
-    call cursor(l, c)
+  let l = line(".")
+  let c = col(".")
+  %s/\s\+$//e
+  call cursor(l, c)
 endfun
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
@@ -697,8 +697,8 @@ vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
 " Force setting for *.md files. More info: https://github.com/tpope/vim-markdown
 autocmd BufNewFile,BufReadPost *.md,*.markdown,*.ngdoc call SetMarkdownOptions()
 function! SetMarkdownOptions()
-    set filetype=markdown
-    setlocal textwidth=80
+  set filetype=markdown
+  setlocal textwidth=80
 endfunction
 
 " }}}
@@ -710,19 +710,19 @@ autocmd BufRead,BufNewFile *.jade setlocal ft=jade
 " Create directory on save if not exsist {{{
 " Gracefully borrowed from: http://stackoverflow.com/a/4294176/1977012
 function! s:MkNonExDir(file, buf)
-    if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
-        let dir=fnamemodify(a:file, ':h')
-        if !isdirectory(dir)
-            call mkdir(dir, 'p')
-        endif
+  if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
+    let dir=fnamemodify(a:file, ':h')
+    if !isdirectory(dir)
+      call mkdir(dir, 'p')
     endif
+  endif
 endfunction
 augroup BWCCreateDir
-    autocmd!
-    autocmd BufWritePre * :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
+  autocmd!
+  autocmd BufWritePre * :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
 augroup END
-" }}}
 
+" }}}
 " Edit a file or jump to it if already open {{{
 command! -nargs=1 -complete=file O tab drop <args>
 " }}}
