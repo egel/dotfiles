@@ -218,15 +218,15 @@ else
 endif
 
 " }}}
-" ---- Different templates depends on GUI or LUI {{{
+" ---- Setup GUI interface {{{
 if has("gui_running")
-  set guioptions-=r           " turn off GUI right scrollbar
-  set guioptions-=L           " turn off GUI left scrollbar
-  set guitablabel=\[%N\]\ %t\ %M
-else
-  " indent guidlines for terminal
-  hi IndentGuidesOdd  ctermbg=black
-  hi IndentGuidesEven ctermbg=darkgrey
+  set linespace=12    " set space between lines (option only for GUI)
+  set guioptions-=T   " turn off GUI toolbar (icons)
+  set guioptions+=c   " use console dialogs
+  set guioptions+=e   " use GUI tabs if possible
+  set guioptions-=r   " turn off GUI right scrollbar
+  set guioptions-=L   " turn off GUI left scrollbar
+  set guitablabel=\[%N\]\ %t\ %M   " set labels for GUI tab's
 endif
 
 " }}}
