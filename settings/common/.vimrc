@@ -57,8 +57,8 @@ NeoBundle 'othree/html5.vim'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'tpope/vim-haml'
 NeoBundle 'groenewege/vim-less'
+NeoBundle 'godlygeek/tabular'         " require by vim-markdown
 NeoBundle 'plasticboy/vim-markdown'
-NeoBundle 'digitaltoad/vim-jade'
 NeoBundle 'othree/javascript-libraries-syntax.vim'
 NeoBundle 'elzr/vim-json'                             " JSON syntax
 NeoBundle 'kylef/apiblueprint.vim'                    " blueprint/apiari syntax
@@ -99,7 +99,7 @@ NeoBundle 'embear/vim-localvimrc'   " Vim per project local config
 " }}}
 " Other bundles {{{
 NeoBundle 'edthedev/pelican.vim'
-NeoBundle 'ryanss/vim-hackernews'                     " hackernews
+NeoBundle 'ryanss/vim-hackernews' " hackernews
 " }}}
 
 call neobundle#end()
