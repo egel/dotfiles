@@ -195,13 +195,6 @@ if !exists("autocmd_colorscheme_loaded")
 endif
 
 " }}}
-" ---- Read local vim file {{{
-" This is a part of themeing in egel/dotfiles
-if filereadable(expand("~/.vimrc.local"))
-  source ~/.vimrc.local
-endif
-
-"}}}
 " ---- Tmuxline {{{
 "let g:tmuxline_preset = 'minimal'
 "let g:tmuxline_theme = 'jellybeans'
@@ -732,5 +725,15 @@ augroup END
 
 " Edit a file or jump to it if already open {{{
 command! -nargs=1 -complete=file O tab drop <args>
+" }}}
+
+"}}}
+
+" Load local (personal) vim settings {{{
+" This is a part of themeing in egel/dotfiles
+if filereadable(expand("~/.vimrc.local"))
+  source ~/.vimrc.local
+endif
+
 " }}}
 
