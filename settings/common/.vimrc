@@ -247,19 +247,14 @@ endif
 
 " }}}
 " ---- Highlight current line and column {{{
-if !&diff
-  set cursorline   " highlight the current line
-endif
-"set cursorcolumn                    " highlight the current column
+" set cursorcolumn and cursorline highlight color
 hi CursorLine     term=bold cterm=bold guibg=Grey40
 hi CursorColumn   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
-"nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 
-" }}}
-" ---- Highlight maching braces constantly {{{
-" 'set showmatch' option only show braces one when creating
-syn match Braces display '[{}()\[\]]'
-hi Braces guifg=red ctermfg=red
+" highlight the current line if not diff (only for gruvbox preference)
+if !&diff
+  set cursorline
+endif
 
 " }}}
 " ---- Highlight the 80th column {{{
