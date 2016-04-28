@@ -391,8 +391,10 @@ endfun
 " }}}
 " ---- NerdTree {{{
 " Tabs
+let g:nerdtree_tabs_synchronize_view=1
 let g:nerdtree_tabs_open_on_gui_startup=1
 let g:nerdtree_tabs_open_on_new_tab=1
+let g:nerdtree_tabs_autoclose=1
 let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$', '\.DS_Store']
 
 " Use custom arrows
@@ -410,9 +412,6 @@ let g:NERDTreeWinSize=30
 autocmd StdinReadPre * let s:std_in=1
 " autocmd VimEnter * if argc() | wincmd p | end
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | wincmd p | endif
-
-" Close vim when the only window left open is a NERDTree?
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary")
 
 " NERDTree Files highlighting
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
