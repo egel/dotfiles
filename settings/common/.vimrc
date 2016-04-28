@@ -521,7 +521,11 @@ let g:syntastic_javascript_checkers = ['eslint']
 " ---- Customization vim-latex plugin {{{
 " IMPORTANT: win32 users will need to have 'shellslash' set so that latex
 " can be called correctly.
-set shellslash
+if has("gui_running")
+  if has("gui_win32")
+    set shellslash
+  endif
+endif
 
 " IMPORTANT: grep will sometimes skip displaying the file name if you
 " search in a singe file. This will confuse Latex-Suite. Set your grep
