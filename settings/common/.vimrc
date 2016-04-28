@@ -428,6 +428,7 @@ if &bg == 'dark'
   call NERDTreeHighlightFile('md', 'cyan', 'none', 'cyan', _NERDTreeHighlightBgColor)
 
   call NERDTreeHighlightFile('vimrc', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
+  call NERDTreeHighlightFile('gvimrc', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
   call NERDTreeHighlightFile('zshrc', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
   call NERDTreeHighlightFile('muttrc', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
   call NERDTreeHighlightFile('editorconfig', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
