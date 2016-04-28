@@ -247,13 +247,6 @@ else
 endif
 
 " }}}
-" ---- Indent guidelines from vim-indent-guides plugin {{{
-" taken from https://github.com/scrooloose/nerdtree
-let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
-
-" }}}
 " ---- Highlight current line and column {{{
 if !&diff
   set cursorline   " highlight the current line
@@ -587,6 +580,16 @@ autocmd BufRead,BufNewFile *.tex setlocal formatoptions+=w textwidth=120
  " }}}
 " ---- vim-json {{{
 let g:vim_json_syntax_conceal = 0
+" }}}
+" ---- vim-indent-guides {{{
+" taken from https://github.com/scrooloose/nerdtree
+let g:indent_guides_auto_colors = 1 " take automatic color for indent guides
+
+" auto enable indent guides on vim enter except NERDTree
+if(exists('t:NERDTreeBufName') && bufname('%') == t:NERDTreeBufName)
+  autocmd VimEnter * :IndentGuidesEnable
+endif
+
 " }}}
 
 " }}}
