@@ -332,9 +332,9 @@ if has("autocmd")
   au BufReadPost * call AutojumpLastPosition()
 
   " }}}
-  " ---- Automatically load .vimrc source when saved {{{
-  au BufWritePost $MYVIMRC,~/dot-files/.vimrc,$MYVIMRC.local source $MYVIMRC
-  au BufWritePost $MYGVIMRC,~/dot-files/.gvimrc source $MYGVIMRC
+  " ---- Automatically reload .vimrc source when saved {{{
+  au BufWritePost $MYVIMRC, $MYVIMRC.'.local', $HOME.'/.dotfiles/common/.vimrc' source $MYVIMRC
+  au BufWritePost $MYGVIMRC, $MYGVIMRC.'.local', $HOME.'/.dotfiles/common/.gvimrc' source $MYGVIMRC
 
   " }}}
   " ---- Auto commands for fugitive {{{
