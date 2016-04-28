@@ -501,8 +501,10 @@ let g:session_directory = "~/.vim/sessions"  " default path for UNIX
 
 " }}}
 " ---- Syntastic plugin settings {{{
-let g:syntastic_mode_map = { 'mode': 'active',
-                            \ 'active_filetypes': ['python', 'html', 'javascript'], }
+let g:syntastic_mode_map = {
+  \ 'mode': 'active',
+  \ 'active_filetypes': ['python', 'javascript', 'jade'],
+  \ 'passive_filetypes': [] }
 
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -512,10 +514,11 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-let g:syntastic_python_python_exec = '/usr/bin/python3'
+
+" if add other then linter will check one for another checker
+let g:syntastic_javascript_checkers = ['eslint'] " 'standard', 'jslint'
 let g:syntastic_python_checkers = [ 'flake8', 'pylint', 'pyflakes' ]
-let g:syntastic_html_tidy_exec = 'tidy5'
-let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_jade_checkers = ['jade_lint']
 
 " }}}
 " ---- Customization vim-latex plugin {{{
