@@ -92,9 +92,9 @@ NeoBundle 'jmcantrell/vim-virtualenv'
 NeoBundle 'jamessan/vim-gnupg'
 NeoBundle 'nelstrom/vim-markdown-folding'   " improve folding in markdown
 NeoBundle 'ashisha/image.vim'               " preview images
-NeoBundle 'mattn/webapi-vim'
+NeoBundle 'ap/vim-css-color'        " Color CSS codes
 NeoBundle 'heavenshell/vim-slack'
-NeoBundle 'ap/vim-css-color'
+NeoBundle 'embear/vim-localvimrc'   " Vim per project local config
 
 " }}}
 " Other bundles {{{
@@ -359,6 +359,34 @@ let g:vim_markdown_fenced_languages = [
  \ 'ini=dosinia']
 let g:vim_markdown_math = 1
 let g:vim_markdown_new_list_item_indent = 4
+
+" }}}
+" ---- Localvimrc {{{
+let g:localvimrc_reverse = 0
+let g:localvimrc_name = ['.lvimrc', '.vimrc_local' ]
+let g:localvimrc_ask = 0 " do not ast to load local vimrc
+let g:localvimrc_event = [ "BufEnter", "WinEnter", "TabEnter" ]
+let g:localvimrc_debug = 0
+
+" Helper method for .lvimrc files to finish
+fun! MyLocalVimrcAlreadySourced(...)
+  " let sfile = expand(a:sfile)
+  let sfile = g:localvimrc_script
+  let guard_key = expand(sfile).'_'.getftime(sfile)
+  if exists('b:local_vimrc_sourced')
+    if type(b:local_vimrc_sourced) != type({})
+      echomsg "warning: b:local_vimrc_sourced is not a dict!"
+      let b:local_vimrc_sourced = {}
+    endif
+    if has_key(b:local_vimrc_sourced, guard_key)
+      return 1
+    endif
+  else
+    let b:local_vimrc_sourced = {}
+  endif
+  let b:local_vimrc_sourced[guard_key] = 1
+  return 0
+endfun
 
 " }}}
 " ---- NerdTree {{{
