@@ -196,31 +196,30 @@ endif
 
 " }}}
 " ---- Tmuxline {{{
-"let g:tmuxline_preset = 'minimal'
-"let g:tmuxline_theme = 'jellybeans'
 let g:tmuxline_preset = {
-      \'a'    : '#S',
-      \'b'    : '#W',
-      \'c'    : ['#H', "uptime #(uptime| cut -d' ' -f4-|cut -d, -f1)"],
-      \'x'    : '#(date)',
-      \'y'    : '#W',
-      \'z'    : ['#(whoami)', '#H']}
+  \'a' : '#S',
+  \'b' : '#W',
+  \'c' : ['#H', "uptime #(uptime| cut -d' ' -f4-|cut -d, -f1)"],
+  \'x' : '#(date)',
+  \'y' : '#W',
+  \'z' : ['#(whoami)', '#H']}
+
+" }}}
+" ---- Set font {{{
+" Hack font support Powerline characters
+if has("gui_gtk2")
+  set guifont=Hack\ 13
+elseif has("gui_macvim")
+  set guifont=Hack:h13
+elseif has("gui_win32")
+  set guifont=Consolas:h11:cANSI
+else
+  set guifont=Hack:h13:cDEFAULT
+endif
 
 " }}}
 " ---- Different templates depends on GUI or LUI {{{
 if has("gui_running")
-  " Hack font support Powerline characters
-  if has("gui_gtk2")
-    set guifont=Hack\ 13
-  elseif has("gui_macvim")
-    set guifont=Hack:h13
-  elseif has("gui_win32")
-    set guifont=Consolas:h11:cANSI
-  endif
-  set linespace=12            " set space between lines (option only for GUI)
-
-  set guioptions-=T           " turn off GUI toolbar (icons)
-  set guioptions+=e
   set guioptions-=r           " turn off GUI right scrollbar
   set guioptions-=L           " turn off GUI left scrollbar
   set guitablabel=\[%N\]\ %t\ %M
