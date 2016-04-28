@@ -355,7 +355,18 @@ if has("autocmd")
 endif " end of has("autocmd")
 
 " }}}
-" Plugin Helpers ---------------------------------------------------------- {{{
+" Plugins ----------------------------------------------------------------- {{{
+" ---- vim-markdown {{{
+let g:vim_markdown_toc_autofit = 1
+let g:vim_markdown_fenced_languages = [
+ \ 'viml=vim',
+ \ 'bash=sh',
+ \ 'shell=sh',
+ \ 'ini=dosinia']
+let g:vim_markdown_math = 1
+let g:vim_markdown_new_list_item_indent = 4
+
+" }}}
 " ---- NerdTree {{{
 " Tabs
 let g:nerdtree_tabs_open_on_gui_startup=1
