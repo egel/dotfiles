@@ -756,13 +756,9 @@ function! SetMarkdownOptions()
 endfunction
 
 " }}}
-" Force setting for *.json files {{{
-autocmd BufRead,BufNewFile .eslintrc setlocal ft=json
-
-" }}}
 " Force setting for *.jade files {{{
 " More info: http://stackoverflow.com/a/6118265/1977012
-autocmd BufRead,BufNewFile *.jade setlocal ft=jade
+autocmd BufRead,BufNewFile .eslintrc, *.jade setlocal ft=jade
 
 " }}}
 " Create directory on save if not exsist {{{
