@@ -277,7 +277,7 @@ do_help() {
   echo -e "    make-mutt-password, -mmp"
   echo -e "        Creating a secure (gpg) password file for mutt configuration.\n" 1>&2;
   echo -e "    reconfigure, -r"
-  echo -e "        Reconfigure ${PROJECT_NAME} symlinks for current user.\n" 1>&2;
+  echo -e "        Reconfigure ${PROJECT_NAME} symlinks for current user\n\tand fix permissions for fragile files and directories.\n" 1>&2;
   echo -e "    update, -u"
   echo -e "        Update ${PROJECT_NAME} repository and it submodules.\n" 1>&2;
   echo -e "    uninstall"
@@ -481,6 +481,23 @@ do_install() {
   fi
 }
 
+do_fix_permissions() {
+  # According to http://superuser.com/q/215504/250469
+  print_section "Fix permissions for fragile files and directories"
+  print_subsection "Fix $HOME directory"
+  chmod -v go-w $HOME && echo -e ${__done__}
+
+  SSH_DIR="$HOME/.ssh"
+  print_subsection "Fix SSH directory (default: ${SSH_DIR})"
+  chmod -v 700 ${SSH_DIR} && echo -e ${__done__}
+  chown -v $USER ${SSH_DIR} && echo -e ${__done__}
+  chmod -v 640 ${SSH_DIR}/authorized_keys
+  chmod -v 644 ${SSH_DIR}/*.pub
+  chmod -v 600 ${SSH_DIR}/id_rsa
+
+  chmod -v 644 ${HOME}/.aliases.private && echo -e ${__done__}
+  chmod -v 640 ${HOME}/.envpass.private && echo -e ${__done__}
+}
 
 do_uninstall() {
   print_section "Uninstall ${PROJECT_NAME}"
@@ -532,6 +549,9 @@ do_reconfigure() {
 
   echo -e "\n${yellow}Checking NeoBundle:${endColor}"
   wget https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh -q -O - | bash
+
+  # fixing the permissions
+  do_fix_permissions
 }
 
 do_clean() {
