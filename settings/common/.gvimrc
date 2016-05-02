@@ -2,7 +2,7 @@
 set vb
 
 " }}}
-" ---- Local config {{{
+" ---- Load personal config {{{
 if filereadable($HOME . '/.gvimrc.local')
   source $HOME.'/.gvimrc.local'
 endif

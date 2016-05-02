@@ -218,15 +218,26 @@ else
 endif
 
 " }}}
+" ---- Setup LUI interface {{{
+set noautochdir " fix tabnames according: http://stackoverflow.com/a/9852927
+function! MyTabLabel(n)
+  let buflist = tabpagebuflist(a:n)
+  let winnr = tabpagewinnr(a:n)
+  return buflist[winnr - 1] . ') ' . bufname(buflist[winnr - 1])
+endfunction
+set tabline=%!MyTabLine()
+
+" }}}
 " ---- Setup GUI interface {{{
 if has("gui_running")
   set linespace=12    " set space between lines (option only for GUI)
   set guioptions-=T   " turn off GUI toolbar (icons)
   set guioptions+=c   " use console dialogs
-  set guioptions+=e   " use GUI tabs if possible
+  set guioptions-=e   " use GUI tabs if possible
   set guioptions-=r   " turn off GUI right scrollbar
   set guioptions-=L   " turn off GUI left scrollbar
-  set guitablabel=\[%N\]\ %t\ %M   " set labels for GUI tab's
+  set guitablabel=%{MyTabLine()}  " set labels for GUI tab's
+  set guitabtooltip=%!bufname($)
 endif
 
 " }}}
@@ -333,8 +344,8 @@ if has("autocmd")
 
   " }}}
   " ---- Automatically reload .vimrc source when saved {{{
-  au BufWritePost $MYVIMRC, $MYVIMRC.'.local', $HOME.'/.dotfiles/common/.vimrc' source $MYVIMRC
-  au BufWritePost $MYGVIMRC, $MYGVIMRC.'.local', $HOME.'/.dotfiles/common/.gvimrc' source $MYGVIMRC
+  au BufWritePost .vimrc source $MYVIMRC
+  au BufWritePost .gvimrc source $MYGVIMRC
 
   " }}}
   " ---- Auto commands for fugitive {{{
@@ -476,7 +487,7 @@ let g:NERDTreeIndicatorMapCustom = {
 let NERDSpaceDelims=1
 " }}}
 " ---- Supertab {{{
-let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabDefaultCompletionType = "<C-n>"
 
 " }}}
 " ---- GitGutter {{{
@@ -677,12 +688,12 @@ map <C-l> <C-w>l
 
 " }}}
 " ---- Jumping to move lines up/down  {{{
-nnoremap <C-S-j> :m .+1<CR>==
-nnoremap <C-S-k> :m .-2<CR>==
-inoremap <C-S-j> <Esc>:m .+1<CR>==gi
-inoremap <C-S-k> <Esc>:m .-2<CR>==gi
-vnoremap <C-S-j> :m '>+1<CR>gv=gv
-vnoremap <C-S-k> :m '<-2<CR>gv=gv
+nnoremap <S-C-j> :m .+1<CR>==
+nnoremap <S-C-k> :m .-2<CR>==
+inoremap <S-C-j> <Esc>:m .+1<CR>==gi
+inoremap <S-C-k> <Esc>:m .-2<CR>==gi
+vnoremap <S-C-j> :m '>+1<CR>gv=gv
+vnoremap <S-C-k> :m '<-2<CR>gv=gv
 
 " }}}
 " ---- Go to next/previous tab {{{
