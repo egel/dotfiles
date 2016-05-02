@@ -460,16 +460,16 @@ endif
 
 " ---- nerdtree-git-plugin (require NerdTree)
 let g:NERDTreeIndicatorMapCustom = {
-    \ "Modified"  : "✹",
-    \ "Staged"    : "✚",
-    \ "Untracked" : "✭",
-    \ "Renamed"   : "➜",
-    \ "Unmerged"  : "═",
-    \ "Deleted"   : "✖",
-    \ "Dirty"     : "✗",
-    \ "Clean"     : "✔︎",
-    \ "Unknown"   : "?"
-    \ }
+  \ "Modified"  : "✹",
+  \ "Staged"    : "✚",
+  \ "Untracked" : "✭",
+  \ "Renamed"   : "➜",
+  \ "Unmerged"  : "═",
+  \ "Deleted"   : "✖",
+  \ "Dirty"     : "✗",
+  \ "Clean"     : "✔︎",
+  \ "Unknown"   : "?"
+  \ }
 
 " }}}
 " ---- Nerdcommenter {{{
@@ -492,10 +492,10 @@ endif
 
 " Proper display GitGutter for darker themes
 highlight clear SignColumn
-highlight GitGutterAdd ctermfg=green guifg=#9CCF31
-highlight GitGutterChange ctermfg=yellow guifg=#F7D708
-highlight GitGutterDelete ctermfg=red guifg=#CE0000
-highlight GitGutterChangeDelete ctermfg=yellow guifg=#F7D708
+highlight GitGutterAdd            ctermfg=green   guifg=#9CCF31
+highlight GitGutterChange         ctermfg=yellow  guifg=#F7D708
+highlight GitGutterDelete         ctermfg=red     guifg=#CE0000
+highlight GitGutterChangeDelete   ctermfg=yellow  guifg=#F7D708
 
 " }}}
 " ---- Highlight TODO, FIXME, NOTE, etc. in any file {{{
@@ -590,6 +590,7 @@ function! OpenPDF(file,page) " Open pdf to the current location in a LaTeX file 
 " Read more: http:/vim.wikia.com/wiki/Open_pdf_to_the_current_location_in_a_LaTeX_file
   exec 'silent ! evince --page-label=' . a:page . ' ' . a:file . ' > /dev/null 2>&1 &'
 endfunction
+
 " }}}
 function! LoadEvinceByLabel(l) " Load PDF to the page containing label {{{
   for f in split(glob("*.aux"))
