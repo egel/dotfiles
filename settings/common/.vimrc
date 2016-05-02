@@ -498,12 +498,12 @@ highlight GitGutterDelete ctermfg=red guifg=#CE0000
 highlight GitGutterChangeDelete ctermfg=yellow guifg=#F7D708
 
 " }}}
-" ---- Highlight TODO, FIXME, NOTE, etc. {{{
+" ---- Highlight TODO, FIXME, NOTE, etc. in any file {{{
 if has("autocmd")
   if v:version > 701
-    autocmd syntax * call matchadd('ErrorMsg', '\W\zs\(FIXME\|XXX\|BUG\)')
-    autocmd syntax * call matchadd('IncSearch', '\W\zs\(TODO\|CHANGED\|HACK\)')
-    autocmd syntax * call matchadd('PmenuSel', '\W\zs\(NOTE\|INFO\|IDEA\)')
+    autocmd syntax * call matchadd('ErrorMsg', '\v[@]?((FIXME)|(XXX)|(BUG))([ :]+)?')
+    autocmd syntax * call matchadd('IncSearch', '\v[@]?((TODO)|(CHANGED)|(HACK))([ :]+)?')
+    autocmd syntax * call matchadd('PmenuSel', '\v[@]?((NOTE)|(INFO)|(IDEA))([ :]+)?')
   endif
 endif
 
