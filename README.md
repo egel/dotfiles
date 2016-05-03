@@ -8,8 +8,7 @@
 [![MIT LICENSE](http://img.shields.io/badge/license-MIT-yellowgreen.svg?style=square)](https://github.com/egel/dotfiles/blob/master/LICENSE)
 [![Stories in Ready](https://badge.waffle.io/egel/dotfiles.svg?label=ready&title=Ready)](http://waffle.io/egel/dotfiles)
 
-
-> Dotfiles for Max OSX and Debian-based Linux distributions.
+> Dotfiles configurator for Max OSX and Debian-based Linux distributions.
 
 * * *
 [Installation](#installation) | [Update](#update) | [Learn more on Wiki][dotfiles-wiki] | [Shortcuts Cheat Sheet (PDF)][shortcuts-cheat-sheet]
