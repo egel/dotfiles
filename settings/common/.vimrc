@@ -28,7 +28,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 " My Bundles here:
 " Refer to |:NeoBundle-examples|.
-" NOTE: You don't set neobundle setting in .gvimrc!
+" NOTE : You don't set neobundle setting in .gvimrc!
 
 " Colorschemes and Appereance {{{
 "NeoBundle 'flazz/vim-colorschemes'   " many colorschemes but not being updated
@@ -40,14 +40,14 @@ NeoBundle 'vim-airline/vim-airline'
 NeoBundle 'vim-airline/vim-airline-themes'
 NeoBundle 'edkolev/tmuxline.vim'
 NeoBundle 'Shougo/vimproc.vim', {
-\ 'build' : {
-\     'windows' : 'tools\\update-dll-mingw',
-\     'cygwin' : 'make -f make_cygwin.mak',
-\     'mac' : 'make',
-\     'linux' : 'make',
-\     'unix' : 'gmake',
-\    },
-\ }
+  \ 'build' : {
+  \     'windows' : 'tools\\update-dll-mingw',
+  \     'cygwin' : 'make -f make_cygwin.mak',
+  \     'mac' : 'make',
+  \     'linux' : 'make',
+  \     'unix' : 'gmake',
+  \    },
+  \ }
 
 " }}}
 " Syntax bundles {{{
@@ -100,6 +100,7 @@ NeoBundle 'embear/vim-localvimrc'   " Vim per project local config
 " Other bundles {{{
 NeoBundle 'edthedev/pelican.vim'
 NeoBundle 'ryanss/vim-hackernews' " hackernews
+
 " }}}
 
 call neobundle#end()
@@ -171,7 +172,7 @@ set incsearch                                   " Show search results as I type
 set sessionoptions+=unix,slash                  " For unix/windows compatibility
 set nostartofline                               " Do not go to start of line automatically when moving
 
-set commentstring=#\ %s
+set commentstring=#\ %s                         " add space before adding comment
 
 " }}}
 " Backups ----------------------------------------------------------------- {{{
@@ -189,8 +190,8 @@ set t_Co=256
 if !exists("autocmd_colorscheme_loaded")
   augroup VimrcColors
   au!
-    autocmd ColorScheme * highlight TodoRed     ctermbg=darkgreen guibg=#eee     ctermfg=Red           guifg=#E01B1B
-    autocmd ColorScheme * highlight TodoOrange  ctermbg=darkgreen guibg=#002b37  ctermfg=LightMagenta  guifg=#E0841B
+    autocmd ColorScheme * highlight TodoRed     ctermbg=darkgreen guibg=#eeeeee   ctermfg=Red           guifg=#E01B1B
+    autocmd ColorScheme * highlight TodoOrange  ctermbg=darkgreen guibg=#002b37   ctermfg=LightMagenta  guifg=#E0841B
   augroup END
 endif
 
@@ -220,7 +221,7 @@ endif
 " }}}
 " ---- Setup LUI interface {{{
 set noautochdir " fix tabnames according: http://stackoverflow.com/a/9852927
-function! MyTabLabel(n)
+function! MyTabLabel()
   let buflist = tabpagebuflist(a:n)
   let winnr = tabpagewinnr(a:n)
   return buflist[winnr - 1] . ') ' . bufname(buflist[winnr - 1])
@@ -430,45 +431,6 @@ function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
   exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^.*\.'. a:extension .'$#'
 endfunction
 
-" define local variable
-" 8-bit colos  https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
-if &bg == 'dark'
-  let _NERDTreeHighlightBgColor = '#282828'
-  call NERDTreeHighlightFile('markdown', 'cyan', 'none', 'cyan', _NERDTreeHighlightBgColor)
-  call NERDTreeHighlightFile('md', 'cyan', 'none', 'cyan', _NERDTreeHighlightBgColor)
-
-  call NERDTreeHighlightFile('vimrc', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
-  call NERDTreeHighlightFile('gvimrc', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
-  call NERDTreeHighlightFile('zshrc', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
-  call NERDTreeHighlightFile('muttrc', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
-  call NERDTreeHighlightFile('editorconfig', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
-  call NERDTreeHighlightFile('gitignore', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
-  call NERDTreeHighlightFile('gitconfig', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
-  call NERDTreeHighlightFile('gitmodules', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
-  call NERDTreeHighlightFile('gitconfig.local', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
-
-  call NERDTreeHighlightFile('ini', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
-  call NERDTreeHighlightFile('config', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
-  call NERDTreeHighlightFile('conf', 'gray', 'none', 'gray', _NERDTreeHighlightBgColor)
-
-  call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', _NERDTreeHighlightBgColor)
-  call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', _NERDTreeHighlightBgColor)
-
-  call NERDTreeHighlightFile('html', 'green', 'none', 'green', _NERDTreeHighlightBgColor)
-  call NERDTreeHighlightFile('pug', 'green', 'none', 'green', _NERDTreeHighlightBgColor)
-  call NERDTreeHighlightFile('jade', 'green', 'none', 'green', _NERDTreeHighlightBgColor)
-
-  call NERDTreeHighlightFile('styl', 'magenta', 'none', 'magenta', _NERDTreeHighlightBgColor)
-  call NERDTreeHighlightFile('css', 'magenta', 'none', 'magenta', _NERDTreeHighlightBgColor)
-  call NERDTreeHighlightFile('sass', 'magenta', 'none', 'magenta', _NERDTreeHighlightBgColor)
-  call NERDTreeHighlightFile('scss', 'magenta', 'none', 'magenta', _NERDTreeHighlightBgColor)
-
-  call NERDTreeHighlightFile('coffee', 'red', 'none', 'red', _NERDTreeHighlightBgColor)
-  call NERDTreeHighlightFile('js', 'red', 'none', 'red', _NERDTreeHighlightBgColor)
-
-  call NERDTreeHighlightFile('sql', 'blue', 'none', 'blue', _NERDTreeHighlightBgColor)
-endif
-
 " ---- nerdtree-git-plugin (require NerdTree)
 let g:NERDTreeIndicatorMapCustom = {
   \ "Modified"  : "✹",
@@ -501,20 +463,13 @@ else
   set updatetime=1300
 endif
 
-" Proper display GitGutter for darker themes
-highlight clear SignColumn
-highlight GitGutterAdd            ctermfg=green   guifg=#9CCF31
-highlight GitGutterChange         ctermfg=yellow  guifg=#F7D708
-highlight GitGutterDelete         ctermfg=red     guifg=#CE0000
-highlight GitGutterChangeDelete   ctermfg=yellow  guifg=#F7D708
-
 " }}}
 " ---- Highlight TODO, FIXME, NOTE, etc. in any file {{{
 if has("autocmd")
   if v:version > 701
-    autocmd syntax * call matchadd('ErrorMsg', '\v[@]?((FIXME)|(XXX)|(BUG))([ :]+)?')
-    autocmd syntax * call matchadd('IncSearch', '\v[@]?((TODO)|(CHANGED)|(HACK))([ :]+)?')
-    autocmd syntax * call matchadd('PmenuSel', '\v[@]?((NOTE)|(INFO)|(IDEA))([ :]+)?')
+    autocmd syntax * call matchadd('ErrorMsg', '\v[@]?((FIXME)|(XXX)|(BUG))([ ]+)?(:)?')
+    autocmd syntax * call matchadd('IncSearch', '\v[@]?((TODO)|(CHANGED)|(HACK))([ ]+)?(:)?')
+    autocmd syntax * call matchadd('PmenuSel', '\v[@]?((NOTE)|(INFO)|(IDEA))([ ]+)?(:)?')
   endif
 endif
 
@@ -635,7 +590,6 @@ let g:vim_json_syntax_conceal = 0
 " }}}
 " ---- vim-indent-guides {{{
 " taken from https://github.com/scrooloose/nerdtree
-let g:indent_guides_auto_colors = 1 " take automatic color for indent guides
 let g:indent_guides_exclude_filetypes = ['nerdtree']
 
 " auto-enable indent guides

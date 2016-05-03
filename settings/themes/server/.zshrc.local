@@ -13,3 +13,8 @@ ZSH_THEME="gentoo"
 # SSH
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
+# Docker for Mac OSX
+if [[ $(uname -s) == "Darwin" ]]; then
+  eval "$(docker-machine env default)"
+fi
+
