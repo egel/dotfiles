@@ -461,7 +461,7 @@ do_install() {
       ;;
   esac
 
-  echo -e "\n${green}Congratulations!${endColor}"
+  echo -e "\n\n${green}Congratulations!${endColor}"
   echo -e "Configuration of ${PROJECT_NAME} complete successfully."
   echo -e "Now you could run: '${FILE_NAME} --help' to find more about configurator."
 
