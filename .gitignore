@@ -14,6 +14,9 @@ wiki/
 *.add.spl
 *.swp
 
+# MUTT
+settings/common/.mutt/cache/
+settings/common/.mutt/passwords.gpg
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
