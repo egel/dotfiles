@@ -31,6 +31,9 @@ PROJECT_INSTALL_DEFAULTS=
 DATE_UTC=$(date +%Y-%m-%dT%TZ)
 AUTHOR="Maciej Sypień"
 
+# Config variables (Plugins)
+DESTINATION_MUTT_DIR="$HOME/.mutt"
+
 # Current (active) symlinks binding dotfile
 CURRENT_SYMLINKS=(
   "$HOME/.aliases"
@@ -39,8 +42,7 @@ CURRENT_SYMLINKS=(
   "$HOME/.editorconfig"
   "$HOME/.gitconfig"
   "$HOME/.gvimrc"
-  "$HOME/.muttrc"
-  "$HOME/.muttrc.local"
+  "${DESTINATION_MUTT_DIR}"
   "$HOME/.tmux.conf"
   "$HOME/.tmux.conf.local"
   "$HOME/.vim"
@@ -59,8 +61,7 @@ OLD_SYMLINKS=(
   "$HOME/.editorconfig\(*"
   "$HOME/.gitconfig\(*"
   "$HOME/.gvimrc\(*"
-  "$HOME/.muttrc.local\(*"
-  "$HOME/.muttrc\(*"
+  "${DESTINATION_MUTT_DIR}\(*"
   "$HOME/.tmux.conf.local\(*"
   "$HOME/.tmux.conf\(*"
   "$HOME/.vim\(*"
@@ -143,7 +144,7 @@ else
   esac
 fi
 
-# do befor install (yes to all while install)
+# do before install (yes to all while install)
 if [ "$2" == "-y" ]; then # if second arg is -y then
   echo "Install all with defaults"
   PROJECT_INSTALL_DEFAULTS=1
@@ -229,34 +230,33 @@ is_program_installed() {
 }
 
 create_secure_mutt_passwords() {
-  print_subsection "Creating secure passwords for mutt with GPG"
+  # password file name is related with muttrc settings
+  _mutt_passwords_path="$HOME/.mutt/passwords.gpg"
+
+  print_section "Creating secure passwords for mutt with GPG"
   echo -e "${__info__} Below is your list of gpg:"
   if [ -z "$(gpg --list-keys)" ]; then
-    echo "${__warning__} You have no GPG keys. Generate your pair 'gpg --gen-key' or import, then rerun: '${FILE_NAME} -mmp' to restart of creating secure passwords for mutt"
+    echo "${__warning__} You have no GPG keys. Generate your pair 'gpg --gen-key'"
+    echo "or import, then re-run: '${FILE_NAME} -mmp' to restart creating secure password for mutt"
   else
     gpg --list-keys
+    echo -e "${__info__} If you want to create new one pair of keys type: 'gpg --gen-key'"
   fi;
-  echo ""
-  read -r -p "Type your gmail address (that you are using in gpg; ex: 'john.doe@gmail.com'): " _gmail_address
-  read -s -p "Type your gmail password: " _gmail_password
+  read -r -p "Type your e-mail address (that you are using in gpg; ex: 'john.doe@gmail.com'): " _email_address
+  read -s -p "Type your e-mail password: " _email_password
 
-  _passwords_path="$HOME/.mutt/passwords"
-  mkdir -vp $HOME/.mutt && echo -e ${__done__}
-
-  if [ -f "${_passwords_path}" ]; then
-    shred ${_passwords_path}
-    rm -rf ${_passwords_path}
+  if ! [[ -d "${DESTINATION_MUTT_DIR}" ]]; then
+    print_subsection "Symlinking missing mutt directory"
+    make_symlink ".mutt" "$PROJECT_SETTINGS_COMMON_DIR/.mutt" "$DESTINATION_MUTT_DIR"
   fi
 
-  #creating temp password file
-  echo "set imap_pass = ${_gmail_password}" >> ${_passwords_path}
-  echo "set smtp_pass = ${_gmail_password}" >> ${_passwords_path}
-  gpg -r $_gmail_address -e ${_passwords_path} && echo -e "${__done__} Created GPG passwords file"
+  # This method will not store passwords on hard drive in plain text, ever!
+  _secret="set imap_pass=${_email_password}"
+  _secret="${_secret}\nset smtp_pass=${_email_password}"
+  echo -e "${_secret}" | gpg -r ${_email_address} -e -a > ${_mutt_passwords_path}
 
-  if [ -f "${_passwords_path}.gpg" ]; then
-    shred ${_passwords_path}
-    rm -rf ${_passwords_path}
-    echo -e "${__done__} Successfully complete creating a secure passwords file for mutt"
+  if [ -f "${_mutt_passwords_path}" ]; then
+    echo -e "/n${__done__} Successfully complete creating a secure passwords file for <${_gmail_address}>"
   fi
 }
 
@@ -375,6 +375,8 @@ do_install() {
       brew install zsh
       brew install tmux
       brew install vim
+      brew install gpg2
+      brew install reattach-to-user-namespace # for copy from tmux to mac namespace
       ;;
 
     Linux)
@@ -526,24 +528,22 @@ do_reconfigure() {
   make_symlink ".editorconfig" "${PROJECT_SETTINGS_COMMON_DIR}/.editorconfig" "$HOME/.editorconfig"
   make_symlink ".gitconfig" "${PROJECT_SETTINGS_COMMON_DIR}/.gitconfig" "$HOME/.gitconfig"
   make_symlink ".gvimrc" "${PROJECT_SETTINGS_COMMON_DIR}/.gvimrc" "$HOME/.gvimrc"
-  make_symlink ".muttrc" "${PROJECT_SETTINGS_COMMON_DIR}/.muttrc" "$HOME/.muttrc"
-  make_symlink ".muttrc.local" "${PROJECT_SETTINGS_THEME_DIR}/.muttrc.local" "$HOME/.muttrc.local"
+  make_symlink ".mutt" "${PROJECT_SETTINGS_COMMON_DIR}/.mutt" "$HOME/.mutt"
   make_symlink ".tmux.conf" "${PROJECT_SETTINGS_COMMON_DIR}/.tmux.conf" "$HOME/.tmux.conf"
   make_symlink ".vim" "${PROJECT_SETTINGS_COMMON_DIR}/.vim" "$HOME/.vim"
   make_symlink ".vimrc" "${PROJECT_SETTINGS_COMMON_DIR}/.vimrc" "$HOME/.vimrc"
   make_symlink ".zshrc" "${PROJECT_SETTINGS_COMMON_DIR}/.zshrc" "$HOME/.zshrc"
 
+  make_symlink ".tmux.conf.local" "${PROJECT_SETTINGS_THEME_DIR}/.tmux.conf.local" "$HOME/.tmux.conf.local"
+  make_symlink ".vimrc.local" "${PROJECT_SETTINGS_THEME_DIR}/.vimrc.local" "$HOME/.vimrc.local"
+  make_symlink ".zshrc.local" "${PROJECT_SETTINGS_THEME_DIR}/.zshrc.local" "$HOME/.zshrc.local"
+
+  # Copy specyfic folders
   case $DOTFILES_THEME in
     desktop)
       make_symlink ".conkyrc" "${PROJECT_LIB_DIR}/conky-themes/conky_seamod/.conkyrc" "$HOME/.conkyrc" # only for desktops (servers terminals not need GUI)
-      make_symlink ".tmux.conf.local" "${PROJECT_SETTINGS_THEME_DIR}/.tmux.conf.local" "$HOME/.tmux.conf.local"
-      make_symlink ".vimrc.local" "${PROJECT_SETTINGS_THEME_DIR}/.vimrc.local" "$HOME/.vimrc.local"
-      make_symlink ".zshrc.local" "${PROJECT_SETTINGS_THEME_DIR}/.zshrc.local" "$HOME/.zshrc.local"
       ;;
     server)
-      make_symlink ".tmux.conf.local" "${PROJECT_SETTINGS_THEME_DIR}/.tmux.conf.local" "$HOME/.tmux.conf.local"
-      make_symlink ".vimrc.local" "${PROJECT_SETTINGS_THEME_DIR}/.vimrc.local" "$HOME/.vimrc.local"
-      make_symlink ".zshrc.local" "${PROJECT_SETTINGS_THEME_DIR}/.zshrc.local" "$HOME/.zshrc.local"
       ;;
   esac
 
