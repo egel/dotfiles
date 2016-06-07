@@ -5,28 +5,44 @@ set imap_user = 'maciejsypien@gmail.com'
 set smtp_url  = 'smtp://maciejsypien@smtp.gmail.com:587/'
 
 # file with encrypted passwords of 'smtp_pass' and 'imap_pass'
-source "gpg -d $HOME/.mutt/passwords.gpg |"
+source "gpg2 -dq $HOME/.mutt/passwords.gpg |"
 
-set editor="vim '+:7'" # vim for editing, and move marker to line 7
+# vim for editing, and move marker to line 7
+set editor="vim +13 -c 'set nobackup' -c 'set noswapfile' -c 'set nowritebackup' -c 'set tw=72 ft=mail noautoindent'"
 
 # REMOTE GMAIL FOLDERS
-set folder      = 'imaps://imap.gmail.com:993'
-set spoolfile   = '+INBOX'
-set postponed   = '+[Gmail]/Drafts'
+set folder    = 'imaps://imap.gmail.com:993'
+set spoolfile = '+INBOX'
+set postponed = '+[Gmail]/Drafts'
 
 # Gmail have the notion of labels
 # If a message has several labels, we actually need to move it to the
 # trash to remove all labels (delete from all folders)
 # This one requires mutt with the trash patch
-set trash = "=[Gmail]/Trash"
+# set trash = '[Gmail]/Trash'
 
 # LOCAL FOLDERS FOR CACHED HEADERS AND CERTIFICATES
-set header_cache      =~/.mutt/cache/headers
-set message_cachedir  =~/.mutt/cache/bodies
-set certificate_file  =~/.mutt/certificate
+set header_cache=~/.mutt/cache/headers"
+set message_cachedir=~/.mutt/cache/bodies"
+#
+# On some configurations this option is not recognised. It should
+# default to "" anyway. If this is a valid option, uncomment this.
+# unset ssl_ca_certificates_file
+# Don't trust the system.
+unset ssl_usesystemcerts
+set certificate_file="~/.mutt/gmailcerts"
+# set ssl_ca_certificates_file="~/.mutt/google.crt"
 
-set ssl_starttls=yes # activate TLS if available on the server
-set ssl_force_tls=yes # always use SSL when connecting to a server
+# SSL hardening
+set ssl_force_tls=yes
+set ssl_starttls=yes
+set ssl_use_sslv2=no
+set ssl_use_sslv3=no
+set ssl_use_tlsv1=no
+set ssl_use_tlsv1_1=no
+set ssl_use_tlsv1_2=yes
+set ssl_verify_dates=yes
+set ssl_verify_host=yes
 
 # SECURING
 set charset=utf-8
@@ -88,5 +104,5 @@ macro index A ":set confirmappend=no delete=yes\n<save-message>=archive\n<sync-m
 set quit=yes
 
 # Load local specyfic configuration
-source $HOME/.muttrc.local
+# source $HOME/.mutt/muttrc.local
 
