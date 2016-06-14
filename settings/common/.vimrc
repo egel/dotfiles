@@ -307,6 +307,10 @@ setl fdm=expr fde=getline(v:lnum)=~'->$'&&indent(v:lnum)<indent(v:lnum+1)?'a1':'
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
+  " ---- Buffers -> auto cd %:p:h {{{
+  " Disable change buffers due to vim-fugitive errors
+  " autocmd BufEnter * if expand('%:p') ~! '://' | cd %:p:h | endif
+  " }}}
   " ---- Highlight trailing spaces in annoying red {{{
   highlight ExtraWhitespace ctermbg=red guibg=red
   match ExtraWhitespace /\s\+$/
