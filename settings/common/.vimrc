@@ -478,11 +478,6 @@ if has("autocmd")
 endif
 
 " }}}
-" ---- Add airline powerline fonts to vim {{{
-let g:airline_powerline_fonts=1
-let g:airline#extensions#tabline#enabled = 0
-
-" }}}
 " ---- Open the file in a new tab if it isn't already open {{{
 command! -nargs=1 -complete=file O tab drop <args>
 
@@ -598,6 +593,24 @@ let g:indent_guides_exclude_filetypes = ['nerdtree']
 
 " auto-enable indent guides
 autocmd WinEnter * :IndentGuidesEnable
+
+" }}}
+" ---- Add airline powerline fonts to vim {{{
+let g:airline_powerline_fonts=1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#tabline#show_splits = 0
+let g:airline#extensions#tabline#show_tabs = 1
+let g:airline#extensions#tabline#show_tab_nr = 0
+let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline#extensions#tabline#close_symbol = '×'
+let g:airline#extensions#tabline#show_close_button = 0"
+" let g:airline#extensions#tabline#enabled = 0
+" let g:airline#extensions#tabline#show_splits = 0
+" let g:airline#extensions#tabline#tabs_label = 't'
+
+" Just show the filename (no path) in the tab
+let g:airline#extensions#tabline#fnamemod = ':t'
 
 " }}}
 
