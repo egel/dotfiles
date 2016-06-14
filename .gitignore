@@ -17,6 +17,7 @@ wiki/
 # MUTT
 settings/common/.mutt/cache/
 settings/common/.mutt/passwords.gpg
+settings/common/.mutt/gmailcerts
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
