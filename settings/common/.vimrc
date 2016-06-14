@@ -62,7 +62,7 @@ NeoBundle 'plasticboy/vim-markdown'
 NeoBundle 'othree/javascript-libraries-syntax.vim'
 NeoBundle 'elzr/vim-json'                             " JSON syntax
 NeoBundle 'kylef/apiblueprint.vim'                    " blueprint/apiari syntax
-NeoBundle 'othree/yajs.vim'                           " JavaScrip syntax (also ES6/ES2015)
+NeoBundle 'othree/yajs.vim'                           " JavaScript syntax (also ES6/ES2015)
 NeoBundle 'othree/javascript-libraries-syntax.vim'
 NeoBundle 'smancill/conky-syntax.vim'                 " conky file syntax
 NeoBundle 'Glench/Vim-Jinja2-Syntax'                  " Jinja2 syntax
@@ -70,6 +70,7 @@ NeoBundle 'ekalinin/Dockerfile.vim'                   " dockerfile syntax
 NeoBundle 'statianzo/vim-jade'                        " jade, unmaintained (vim-pug is not ready yet)
 NeoBundle 'digitaltoad/vim-pug'                       " pug (formerly Jade)
 NeoBundle 'evanmiller/nginx-vim-syntax'
+NeoBundle 'keith/tmux.vim'
 
 " }}}
 " Plug-in bundles {{{
@@ -155,8 +156,14 @@ else
   set number
 endif
 
-set wildmenu                   " Enable bash style tab completion
-set wildignore=*.o,*.obj,*~    " Stuff to ignore when tab completing
+" Default wrap all files except NERDTree
+if (!(exists('t:NERDTreeBufName') && bufname('%') == t:NERDTreeBufName))
+  set wrap linebreak nolist
+  set showbreak=↳\ \ \          " display this sign at the begin of wraped line
+endif
+
+set wildmenu                    " Enable bash style tab completion
+set wildignore=*.o,*.obj,*~     " Stuff to ignore when tab completing
 set wildignore+=*sass-cache*
 set wildignore+=*DS_Store*
 set wildignore+=log/**
@@ -594,7 +601,7 @@ endfunction
 "}}}
 
 autocmd BufRead,BufNewFile *.tex setlocal formatoptions+=w textwidth=120
- " }}}
+" }}}
 " ---- vim-json {{{
 let g:vim_json_syntax_conceal = 0
 
