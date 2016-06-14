@@ -110,3 +110,5 @@ else
   echo "To fix this run: '$HOME/.dotfiles/bin/dotfiles -r; source $HOME/.zshrc'"
 fi
 
+source $ZSH/oh-my-zsh.sh
+
