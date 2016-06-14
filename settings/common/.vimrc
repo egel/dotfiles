@@ -321,7 +321,7 @@ if has("autocmd")
 
   " }}}
   " ---- Open files with proper syntax {{{
-  au BufRead,BufNewFile *.coffee setfiletype coffee
+  autocmd BufRead,BufNewFile *.coffee setfiletype coffee
 
   " }}}
   " ---- Jump to last known cursor position on BufReadPost {{{
@@ -365,10 +365,10 @@ endif " end of has("autocmd")
 " ---- vim-markdown {{{
 let g:vim_markdown_toc_autofit = 1
 let g:vim_markdown_fenced_languages = [
- \ 'viml=vim',
- \ 'bash=sh',
- \ 'shell=sh',
- \ 'ini=dosinia']
+  \ 'viml=vim',
+  \ 'bash=sh',
+  \ 'shell=sh',
+  \ 'ini=dosinia']
 let g:vim_markdown_math = 1
 let g:vim_markdown_new_list_item_indent = 4
 
