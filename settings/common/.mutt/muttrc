@@ -106,3 +106,4 @@ set quit=yes
 # Load local specyfic configuration
 # source $HOME/.mutt/muttrc.local
 
+# vim: set ft=muttrc tw=0 nowrap:
