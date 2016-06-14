@@ -708,16 +708,12 @@ endfunction
 vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
 
 " Force setting for *.md files. More info: https://github.com/tpope/vim-markdown
-autocmd BufNewFile,BufReadPost *.md,*.markdown,*.ngdoc call SetMarkdownOptions()
 function! SetMarkdownOptions()
   set filetype=markdown
-  setlocal textwidth=80
+  setlocal spell
+  " setlocal textwidth=80
 endfunction
-
-" }}}
-" Force setting for *.jade files {{{
-" More info: http://stackoverflow.com/a/6118265/1977012
-autocmd BufRead,BufNewFile .eslintrc, *.jade setlocal ft=jade
+autocmd BufNewFile,BufReadPost *.md,*.markdown,*.ngdoc call SetMarkdownOptions()
 
 " }}}
 " Create directory on save if not exsist {{{
