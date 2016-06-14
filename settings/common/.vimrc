@@ -646,13 +646,12 @@ map <C-l> <C-w>l
 
 " }}}
 " ---- Jumping to move lines up/down  {{{
-" No need if there is `Vd` and `p`
-" nnoremap <S-C-j> :m .+1<CR>==
-" nnoremap <S-C-k> :m .-2<CR>==
-" inoremap <S-C-j> <Esc>:m .+1<CR>==gi
-" inoremap <S-C-k> <Esc>:m .-2<CR>==gi
-" vnoremap <S-C-j> :m '>+1<CR>gv=gv
-" vnoremap <S-C-k> :m '<-2<CR>gv=gv
+nnoremap <A-J> :m .+1<CR>==
+nnoremap <A-K> :m .-2<CR>==
+inoremap <A-J> <Esc>:m .+1<CR>==gi
+inoremap <A-K> <Esc>:m .-2<CR>==gi
+vnoremap <A-J> :m '>+1<CR>gv=gv
+vnoremap <A-K> :m '<-2<CR>gv=gv
 
 " }}}
 " ---- Go to next/previous tab {{{
