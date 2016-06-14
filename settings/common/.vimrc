@@ -358,6 +358,10 @@ if has("autocmd")
   au BufReadPost fugitive://* set bufhidden=delete
 
   " }}}
+  " ---- Git
+  autocmd FileType gitcommit setlocal spell
+
+  " }}}
 endif " end of has("autocmd")
 
 " }}}
