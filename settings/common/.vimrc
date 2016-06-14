@@ -637,8 +637,8 @@ map <F3> :noh<CR>
 
 " }}}
 " ---- Toggle spell check with <F4> (default: en_us) {{{
-map <F4> :setlocal spell! spelllang=en_us<CR>
-imap <F4> <ESC>:setlocal spell! spelllang=en_us<CR>
+map <F4> :setlocal spell spelllang=en_us<CR>
+imap <F4> <ESC>:setlocal spell spelllang=en_us<CR>
 
 " }}}
 " ---- (OFF) Saving file <F5>, <F6> {{{
