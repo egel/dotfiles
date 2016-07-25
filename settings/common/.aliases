@@ -5,9 +5,15 @@ alias mv='mv -i'
 alias cp='cp -i'
 alias du='du -ch'
 alias grep='egrep -i --color'
-alias l='ls'
-alias la='ls -al'
-alias ll='ls -lh'
+alias l='ls -CF'
+alias la='ls -al'     # show all in list view
+alias ll='ls -alhF'   # show verbose info and hidden file
+alias ls='ls --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
+alias lr='ls -R'      # recursive ls
+alias lx='ll -BX'     # sort by extension
+alias lz='ll -rS'     # sort by size
+alias lt='ll -rt'     # sort by date
+alias grepr='grep -rI --color --exclude-dir=\.bzr --exclude-dir=\.git --exclude-dir=\.hg --exclude-dir=\.svn --exclude-dir=build --exclude-dir=dist --exclude=tags'
 
 alias cd..='cd ..'
 alias ..='cd ..'
@@ -18,19 +24,20 @@ alias .....='cd ../../../..'
 alias tmux='tmux -2'
 alias vim='vim -p'
 
+# Aliases depends on system
 case $(uname -s) in
   Linux)
     alias ls='ls --color=auto --group-directories-first'
 
-    alias aktualizuj='sudo apt-get clean && sudo apt-get autoclean && sudo apt-get autoremove && sudo apt-get update && sudo apt-get dist-upgrade'
-    alias zamknij-teraz='sudo shutdown -h now'
-    alias zamknij='sudo su && shutdown -m'
+    alias update-pc='sudo apt-get clean && sudo apt-get autoclean && sudo apt-get autoremove && sudo apt-get update && sudo apt-get dist-upgrade'
+    alias shutdown-pc-now='sudo shutdown -h now'
+    alias shutdown-pc='sudo su && shutdown -m'
 
     alias show-desktop-icons='gsettings set org.gnome.desktop.background show-desktop-icons true'
     alias hide-desktop-icons='gsettings set org.gnome.desktop.background show-desktop-icons false'
 
     alias show-source-list='grep ^ /etc/apt/sources.list /etc/apt/sources.list.d/*'
-    alias fix_public_html='sudo adduser $USER www-data && sudo chown -R www-data:www-data /home/$USER/public_html && sudo find /home/$USER/public_html -type d -exec chmod 775 {} \; && sudo find /home/$USER/public_html -type f -exec chmod 664 {} \;'
+    alias fix-public-html='sudo adduser $USER www-data && sudo chown -R www-data:www-data /home/$USER/public_html && sudo find /home/$USER/public_html -type d -exec chmod 775 {} \; && sudo find /home/$USER/public_html -type f -exec chmod 664 {} \;'
     ;;
 esac
 
