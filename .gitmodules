@@ -4,3 +4,6 @@
 [submodule "lib/honukai-iterm-zsh"]
 	path = lib/honukai-iterm-zsh
 	url = https://github.com/oskarkrawczyk/honukai-iterm-zsh.git
+[submodule "lib/tmux-grovbox"]
+	path = lib/tmux-grovbox
+	url = https://github.com/egel/tmux-grovbox
