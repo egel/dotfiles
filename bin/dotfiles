@@ -90,7 +90,7 @@ print_subsection() {
 
 print_if_missing_variable() {
   _variable=$1
-  _if_string_exsist=`grep -F "$_variable" $PROJECT_CONFIG_FILE | wc -l`
+  _if_string_exsist=$(grep -F "$_variable" $PROJECT_CONFIG_FILE | wc -l)
   if [[ "$_if_string_exsist" -eq 0 ]]; then
     echo -e "${__info__} Add ${yellow}${_variable}${endColor} variable to your $PROJECT_CONFIG_FILE file."
     PROJECT_CONFIG_MISSING_VARIABLE_COUNTER=$((PROJECT_CONFIG_MISSING_VARIABLE_COUNTER + 1))
@@ -380,6 +380,7 @@ do_install() {
       brew install python
       brew install python3
       brew install gpg2
+      brew install shellcheck
 
       brew install vim --with-lua --with-python3
       brew install macvim --with-lua --with-python3 --with-cscope --with-override-system-vim
@@ -401,6 +402,7 @@ do_install() {
       sudo apt-get update
       sudo apt-get install -y python-software-properties software-properties-common curl wget xdg-utils fontconfig build-essential libssl-dev
       sudo apt-get install -y editorconfig git zsh tmux
+      sudo apt-get install -y shellcheck # for checking syntax in vim for *.sh files
 
       print_subsection "Install and compile Vim from source files"
       # Install vim
@@ -430,8 +432,8 @@ do_install() {
                   --enable-gui=auto \
                   --enable-fail-if-missing \
                   --with-lua-prefix=/usr/include/lua5.1 \
-                  --enable-cscope
-                  --with-compiledby="Maciej Sypień" \
+                  --enable-cscope \
+                  --with-compiledby="Maciej Sypień"
       make VIMRUNTIMEDIR=/usr/share/vim/vim74
       sudo make install
       ;;
@@ -570,9 +572,7 @@ do_reconfigure() {
   make_symlink ".dircolors" "${PROJECT_LIB_DIR}/dircolors-solarized/dircolors.256dark" "$HOME/.dircolors"
   make_symlink ".editorconfig" "${PROJECT_SETTINGS_COMMON_DIR}/.editorconfig" "$HOME/.editorconfig"
   make_symlink ".gitconfig" "${PROJECT_SETTINGS_COMMON_DIR}/.gitconfig" "$HOME/.gitconfig"
-  make_symlink ".gvimrc" "${PROJECT_SETTINGS_COMMON_DIR}/.gvimrc" "$HOME/.gvimrce
-      echo -e "${__info__} brew doctor ..."
-      brew doctor
+  make_symlink ".gvimrc" "${PROJECT_SETTINGS_COMMON_DIR}/.gvimrc" "$HOME/.gvimrce"
   make_symlink ".mutt" "${PROJECT_SETTINGS_COMMON_DIR}/.mutt" "$HOME/.mutt"
   make_symlink ".tmux.conf" "${PROJECT_SETTINGS_COMMON_DIR}/.tmux.conf" "$HOME/.tmux.conf"
   make_symlink ".tmux-macosx" "${PROJECT_SETTINGS_COMMON_DIR}/.tmux-macosx" "$HOME/.tmux-macosx"
