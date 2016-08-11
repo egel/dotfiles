@@ -90,7 +90,7 @@ print_subsection() {
 
 print_if_missing_variable() {
   _variable=$1
-  _if_string_exsist=`grep -F "$_variable" $PROJECT_CONFIG_FILE | wc -l`
+  _if_string_exsist=$(grep -F "$_variable" $PROJECT_CONFIG_FILE | wc -l)
   if [[ "$_if_string_exsist" -eq 0 ]]; then
     echo -e "${__info__} Add ${yellow}${_variable}${endColor} variable to your $PROJECT_CONFIG_FILE file."
     PROJECT_CONFIG_MISSING_VARIABLE_COUNTER=$((PROJECT_CONFIG_MISSING_VARIABLE_COUNTER + 1))
@@ -376,9 +376,18 @@ do_install() {
       brew install curl
       brew install zsh
       brew install tmux
-      brew install vim
+      brew install lua
+      brew install python
+      brew install python3
       brew install gpg2
+      brew install shellcheck
+
+      brew install vim --with-lua --with-python3
+      brew install macvim --with-lua --with-python3 --with-cscope --with-override-system-vim
       brew install reattach-to-user-namespace # for copy from tmux to mac namespace
+
+      brew linkapps vim
+      brew linkapps macvim
       ;;
 
     Linux)
@@ -391,8 +400,42 @@ do_install() {
 
       print_subsection "Updating and installing required programs"
       sudo apt-get update
-      sudo apt-get install -y python-software-properties software-properties-common curl wget vim git zsh tmux xdg-utils fontconfig build-essential libssl-dev
-      sudo apt-get install -y editorconfig
+      sudo apt-get install -y python-software-properties software-properties-common curl wget xdg-utils fontconfig build-essential libssl-dev
+      sudo apt-get install -y editorconfig git zsh tmux
+      sudo apt-get install -y shellcheck # for checking syntax in vim for *.sh files
+
+      print_subsection "Install and compile Vim from source files"
+      # Install vim
+      # According to https://gist.github.com/akolosov/cedaac86b333a4ced95f
+      # with some improvements ;)
+      sudo apt-get remove --purge vim vim-runtime vim-gnome vim-tiny vim-common vim-gui-common
+      sudo apt-get install liblua5.1-dev luajit libluajit-5.1 python-dev python3-dev ruby-dev libperl-dev mercurial libncurses5-dev libgnome2-dev libgnomeui-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev
+
+      sudo mkdir /usr/include/lua5.1/include
+      sudo ln -s /usr/include/luajit-2.0 /usr/include/lua5.1/include
+
+      cd /tmp
+      git clone https://github.com/vim/vim.git
+      cd vim/src
+      make distclean
+      ./configure --with-features=huge \
+                  --enable-rubyinterp \
+                  --enable-largefile \
+                  --disable-netbeans \
+                  --enable-pythoninterp \
+                  --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu \
+                  --enable-python3interp \
+                  --with-python3-config-dir=/usr/lib/python3.4/config-3.4m-x86_64-linux-gnu \
+                  --enable-perlinterp \
+                  --enable-luainterp \
+                  --with-luajit \
+                  --enable-gui=auto \
+                  --enable-fail-if-missing \
+                  --with-lua-prefix=/usr/include/lua5.1 \
+                  --enable-cscope \
+                  --with-compiledby="Maciej Sypień"
+      make VIMRUNTIMEDIR=/usr/share/vim/vim74
+      sudo make install
       ;;
   esac
 
@@ -458,10 +501,10 @@ do_install() {
     Darwin)
       print_subsection "Updating brew manager"
       echo -e "${__info__} Be patient, it may take a while ;)"
-      echo -e "${__info__} brew doctor ..."
-      brew doctor
       echo -e "${__info__} brew update ..."
       brew update
+      echo -e "${__info__} brew doctor ..."
+      brew doctor
       ;;
   esac
 
@@ -529,7 +572,7 @@ do_reconfigure() {
   make_symlink ".dircolors" "${PROJECT_LIB_DIR}/dircolors-solarized/dircolors.256dark" "$HOME/.dircolors"
   make_symlink ".editorconfig" "${PROJECT_SETTINGS_COMMON_DIR}/.editorconfig" "$HOME/.editorconfig"
   make_symlink ".gitconfig" "${PROJECT_SETTINGS_COMMON_DIR}/.gitconfig" "$HOME/.gitconfig"
-  make_symlink ".gvimrc" "${PROJECT_SETTINGS_COMMON_DIR}/.gvimrc" "$HOME/.gvimrc"
+  make_symlink ".gvimrc" "${PROJECT_SETTINGS_COMMON_DIR}/.gvimrc" "$HOME/.gvimrce"
   make_symlink ".mutt" "${PROJECT_SETTINGS_COMMON_DIR}/.mutt" "$HOME/.mutt"
   make_symlink ".tmux.conf" "${PROJECT_SETTINGS_COMMON_DIR}/.tmux.conf" "$HOME/.tmux.conf"
   make_symlink ".tmux-macosx" "${PROJECT_SETTINGS_COMMON_DIR}/.tmux-macosx" "$HOME/.tmux-macosx"
