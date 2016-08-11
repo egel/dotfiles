@@ -60,4 +60,8 @@ highlight GitGutterAdd            ctermfg=green   guifg=#9CCF31
 highlight GitGutterChange         ctermfg=yellow  guifg=#F7D708
 highlight GitGutterChangeDelete   ctermfg=yellow  guifg=#F7D708
 highlight GitGutterDelete         ctermfg=red     guifg=#CE0000
-
+let g:gitgutter_sign_added = '+'
+let g:gitgutter_sign_modified = '~'
+let g:gitgutter_sign_removed = '-'
+let g:gitgutter_sign_removed_first_line = '^^'
+let g:gitgutter_sign_modified_removed = '~-'
