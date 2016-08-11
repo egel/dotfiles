@@ -17,9 +17,9 @@ tmux send-keys "cd $FOLDER && git lg" 'C-m'
 #tmux send-keys "q"
 
 tmux selectp -t 2
-tmux send-keys "cd $FOLDER/../ && la" 'C-m'
+tmux send-keys "cd $FOLDER/../../ && la" 'C-m'
 
 tmux selectp -t 3
-tmux send-keys "cd $FOLDER/../ && vim README.md" 'C-m'
+tmux send-keys "cd $FOLDER/../../ && vim README.md" 'C-m'
 
 tmux -2 attach-session -t $SESSION
