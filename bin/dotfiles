@@ -5,8 +5,8 @@ CURRENT_OS=$(uname -s)
 PWD=$(pwd)
 
 # General colors
-black='\x1B[0;30m'
-red='\x1B[0;31m'
+# black='\x1B[0;30m'
+# red='\x1B[0;31m'
 green='\x1B[0;32m' # '\e[1;32m' is too bright for white bg.
 blue='\x1B[1;34m'
 yellow='\x1B[0;33m'
@@ -17,7 +17,7 @@ endColor='\x1B[0m'
 # Type of messages
 __info__="${blue}Info${endColor}"
 __warning__="${yellow}Warning!${endColor}"
-__error__="${red}Error!!!${endColor}"
+#__error__="${red}Error!!!${endColor}"
 __done__="${green}✔ Done${endColor}"
 
 # Current file variables
@@ -90,7 +90,7 @@ print_subsection() {
 
 print_if_missing_variable() {
   _variable=$1
-  _if_string_exsist=$(grep -F "$_variable" $PROJECT_CONFIG_FILE | wc -l)
+  _if_string_exsist=$(grep -c -F "$_variable" "$PROJECT_CONFIG_FILE")
   if [[ "$_if_string_exsist" -eq 0 ]]; then
     echo -e "${__info__} Add ${yellow}${_variable}${endColor} variable to your $PROJECT_CONFIG_FILE file."
     PROJECT_CONFIG_MISSING_VARIABLE_COUNTER=$((PROJECT_CONFIG_MISSING_VARIABLE_COUNTER + 1))
@@ -99,7 +99,7 @@ print_if_missing_variable() {
 
 do_copy_default_config_file() {
   print_subsection "Copy default config file"
-  cp -fv ${DIR}/${PROJECT_CONFIG_NAME} ${PROJECT_CONFIG_FILE} && echo -e "${__done__}"
+  cp -fv "${DIR}/${PROJECT_CONFIG_NAME}" "${PROJECT_CONFIG_FILE}" && echo -e "${__done__}"
 }
 
 do_set_config_vars() {
@@ -112,8 +112,9 @@ do_set_config_vars() {
 }
 
 # Load config variables for the project
-if [ -f $PROJECT_CONFIG_FILE ]; then
-  source $PROJECT_CONFIG_FILE
+if [ -f "$PROJECT_CONFIG_FILE" ]; then
+  # shellcheck source=/dev/null
+  . "$PROJECT_CONFIG_FILE"
 
   print_if_missing_variable "GIT_PROJECT_FOLDER_NAME"
   print_if_missing_variable "GIT_PROJECT_FOLDER_DIR"
@@ -153,14 +154,14 @@ if [ "$2" == "-y" ]; then # if second arg is -y then
 fi
 
 print_dotfiles_logo() {
-  cat ${PROJECT_REPOSITORY_DIR}/bin/.project_logo
+  cat "${PROJECT_REPOSITORY_DIR}/bin/.project_logo"
 }
 
 # Remove all old symlinks for dotfiles
 remove_old_symlinks() {
   for item in "${OLD_SYMLINKS[@]}"
   do
-    rm -rfv $item
+    rm -rfv "$item"
   done
 }
 
@@ -168,7 +169,7 @@ remove_old_symlinks() {
 remove_current_symlinks() {
   for item in "${CURRENT_SYMLINKS[@]}"
   do
-    rm -rfv $item
+    rm -rfv "$item"
   done
 }
 
@@ -178,7 +179,7 @@ check_program() {
   _name=$1
   _command=$2
   echo -en "${purple}${_name}${endColor}" 1>&2;
-  eval ${_command}
+  eval "${_command}"
 }
 
 # Making simlint to file/folder
@@ -191,7 +192,7 @@ make_symlink() {
   echo -e "${purple}$__name${endColor}"
 
   # it is not a file
-  if ! [ -f $__of ]; then
+  if ! [ -f "$__of" ]; then
     echo -e " > it is not a file or file doesn't exist"
   else
     mv "$__of" "$__of($(date))"
@@ -200,7 +201,7 @@ make_symlink() {
   fi
 
   # it is not a directory
-  if ! [ -d $__of ]; then
+  if ! [ -d "$__of" ]; then
     echo -e " > it is not a directory or directory doesn't exist"
   else
     mv "$__of" "$__of($(date))"
@@ -209,9 +210,9 @@ make_symlink() {
   fi
 
   # it is a symbolic link
-  if ! [ -L $__of ]; then
+  if ! [ -L "$__of" ]; then
     echo -en " > it is not a symlink then create it"
-    ln -s $__if $__of
+    ln -s "$__if" "$__of"
     echo -e " ${__done__}"
   else
     echo -e " > it is symlink, so it should ok"
@@ -222,12 +223,12 @@ is_program_installed() {
   _program=$1
   _install_script=$2
 
-  if hash ${_program} 2>/dev/null; then
-    echo -e "${__done__} Program ${blue}${_program}${endColor} already exist at `which ${_program}`"
+  if hash "${_program}" 2>/dev/null; then
+    echo -e "${__done__} Program ${blue}${_program}${endColor} already exist at $(which "${_program}")"
   else
     echo -e "Installing ${blue}${_program}${endColor} program... Please wait."
-    eval ${_install_script}
-    echo -e ${__done__}
+    eval "${_install_script}"
+    echo -e "${__done__}"
   fi;
 }
 
@@ -245,7 +246,7 @@ create_secure_mutt_passwords() {
     echo -e "${__info__} If you want to create new one pair of keys type: 'gpg --gen-key'"
   fi;
   read -r -p "Type your e-mail address (that you are using in gpg; ex: 'john.doe@gmail.com'): " _email_address
-  read -s -p "Type your e-mail password: " _email_password
+  read -s -p -r "Type your e-mail password: " _email_password
 
   if ! [[ -d "${DESTINATION_MUTT_DIR}" ]]; then
     print_subsection "Symlinking missing mutt directory"
@@ -255,10 +256,10 @@ create_secure_mutt_passwords() {
   # This method will not store passwords on hard drive in plain text, ever!
   _secret="set imap_pass=${_email_password}"
   _secret="${_secret}\nset smtp_pass=${_email_password}"
-  echo -e "${_secret}" | gpg -r ${_email_address} -e -a > ${_mutt_passwords_path}
+  echo -e "${_secret}" | gpg -r "${_email_address}" -e -a > "${_mutt_passwords_path}"
 
   if [ -f "${_mutt_passwords_path}" ]; then
-    echo -e "/n${__done__} Successfully complete creating a secure passwords file for <${_gmail_address}>"
+    echo -e "/n${__done__} Successfully complete creating a secure passwords file for <${_email_address}>"
   fi
 }
 
@@ -307,16 +308,16 @@ do_update() {
       exit 1;
   else
     echo -ne "${purple}Switching ${PROJECT_NAME} to master branch (force)${endColor}\t"
-    git --git-dir=${PROJECT_REPOSITORY_DIR}/.git --work-tree=${PROJECT_REPOSITORY_DIR} checkout -f master && echo -e "${__done__}"
+    git --git-dir="${PROJECT_REPOSITORY_DIR}/.git" --work-tree="${PROJECT_REPOSITORY_DIR} checkout -f master" && echo -e "${__done__}"
 
     echo -ne "${purple}Updating ${PROJECT_NAME} repository:${endColor}\t\t\t"
-    git --git-dir=${PROJECT_REPOSITORY_DIR}/.git --work-tree=${PROJECT_REPOSITORY_DIR} pull
+    git --git-dir="${PROJECT_REPOSITORY_DIR}/.git" --work-tree="${PROJECT_REPOSITORY_DIR} pull"
 
     echo -ne "${purple}Updating ${PROJECT_NAME} submodules repositories:${endColor}\t"
-    git --git-dir=${PROJECT_REPOSITORY_DIR}/.git submodule foreach git pull && echo -e "${__done__}"
+    git --git-dir="${PROJECT_REPOSITORY_DIR}/.git submodule foreach git pull" && echo -e "${__done__}"
 
     echo -ne "${purple}Switching ${PROJECT_NAME} submodules to master:${endColor}\t"
-    git --git-dir=${PROJECT_REPOSITORY_DIR}/.git submodule foreach git checkout -f master && echo -e "${__done__}"
+    git --git-dir="${PROJECT_REPOSITORY_DIR}/.git submodule foreach git checkout -f master" && echo -e "${__done__}"
     exit 1;
   fi
 }
@@ -333,7 +334,7 @@ do_install() {
   fi
 
   # ask only if config exsist and user run install again
-  if [ -f $PROJECT_CONFIG_FILE ]; then
+  if [ -f "$PROJECT_CONFIG_FILE" ]; then
     echo -ne "${__info__} You already have dotfiles config file at $PROJECT_CONFIG_FILE\n"
     if [[ "$PROJECT_INSTALL_DEFAULTS" -ne 1 ]]; then # default: install -y
       read -r -p "Do you want to copy default configuration file to override the old one? (y/N) " _copy_default_configuration
@@ -345,7 +346,8 @@ do_install() {
     case $_copy_default_configuration in
       y|Y)
         do_copy_default_config_file
-        . $PROJECT_CONFIG_FILE    # include/import config variables from file
+        # shellcheck source=/dev/null
+        . "$PROJECT_CONFIG_FILE"    # include/import config variables from file
         do_set_config_vars        # recreate project vars on proper config paths
         ;;
       *)
@@ -354,7 +356,8 @@ do_install() {
   else
     # force create default config file
     do_copy_default_config_file
-    . $PROJECT_CONFIG_FILE    # include/import config variables from file
+    # shellcheck source=/dev/null
+    . "$PROJECT_CONFIG_FILE"    # include/import config variables from file
     do_set_config_vars        # recreate project vars on proper config paths
   fi
 
@@ -364,7 +367,7 @@ do_install() {
   # symlink dotfiles program (same for Darwin and Linux)
   print_subsection "Symlinking dotfiles configurator program"
   mkdir -p /usr/local/bin
-  sudo ln -vsf $PROJECT_CONFIGURATOR_FILE /usr/local/bin
+  sudo ln -vsf "$PROJECT_CONFIGURATOR_FILE" /usr/local/bin
 
   case $CURRENT_OS in
     Darwin)
@@ -414,9 +417,9 @@ do_install() {
       sudo mkdir /usr/include/lua5.1/include
       sudo ln -s /usr/include/luajit-2.0 /usr/include/lua5.1/include
 
-      cd /tmp
+      cd /tmp || exit
       git clone https://github.com/vim/vim.git
-      cd vim/src
+      cd vim/src || exit
       make distclean
       ./configure --with-features=huge \
                   --enable-rubyinterp \
@@ -450,14 +453,14 @@ do_install() {
 
   # zsh
   print_subsection "Changing default shell to ZSH"
-  sudo chsh -s $(which zsh) && echo -e "${__done__}"
+  sudo chsh -s "$(which zsh)" && echo -e "${__done__}"
 
   print_subsection "Restore privacy for Ubuntu"
   wget -q -O - https://fixubuntu.com/fixubuntu.sh | bash && echo -e "${__done__}"
 
   print_subsection "Downloading submodules of ${PROJECT_NAME} repository"
   git submodule update --init --recursive
-  echo -e ${__done__}
+  echo -e "${__done__}"
 
   # oh-my-zsh
   print_subsection "Installing oh-my-zsh"
@@ -486,7 +489,7 @@ do_install() {
 
   # installing vim plugins (need to be after reconfiguration process of dotfiles configurator)
   print_subsection "Installing NeoBundle vim plugins"
-  eval $HOME/.vim/bundle/neobundle.vim/bin/neoinstall
+  eval "$HOME/.vim/bundle/neobundle.vim/bin/neoinstall"
 
   # creating secure passwords file for mutt
   case $_configure_secure_mutt_gpg in
@@ -532,18 +535,18 @@ do_fix_permissions() {
   # According to http://superuser.com/q/215504/250469
   print_section "Fix permissions for fragile files and directories"
   print_subsection "Fix $HOME directory"
-  chmod -v go-w $HOME && echo -e ${__done__}
+  chmod -v go-w "$HOME" && echo -e "${__done__}"
 
   SSH_DIR="$HOME/.ssh"
   print_subsection "Fix SSH directory (default: ${SSH_DIR})"
-  chmod -v 700 ${SSH_DIR} && echo -e ${__done__}
-  chown -v $USER ${SSH_DIR} && echo -e ${__done__}
-  chmod -v 640 ${SSH_DIR}/authorized_keys
-  chmod -v 644 ${SSH_DIR}/*.pub
-  chmod -v 600 ${SSH_DIR}/id_rsa
+  chmod -v 700 "${SSH_DIR}" && echo -e "${__done__}"
+  chown -v "$USER" "${SSH_DIR}" && echo -e "${__done__}"
+  chmod -v 640 "${SSH_DIR}/authorized_keys"
+  chmod -v 644 "${SSH_DIR}/*.pub"
+  chmod -v 600 "${SSH_DIR}/id_rsa"
 
-  chmod -v 644 ${HOME}/.aliases.private && echo -e ${__done__}
-  chmod -v 640 ${HOME}/.envpass.private && echo -e ${__done__}
+  chmod -v 644 "${HOME}/.aliases.private" && echo -e "${__done__}"
+  chmod -v 640 "${HOME}/.envpass.private" && echo -e "${__done__}"
 }
 
 do_uninstall() {
@@ -553,9 +556,9 @@ do_uninstall() {
   case $_uninstall_repo in
     y|Y)
       if [[ -d "$PROJECT_REPOSITORY_DIR" && "$PROJECT_REPOSITORY_DIR" == ^. ]]; then
-        rm $PROJECT_REPOSITORY_DIR -rf
+        rm "$PROJECT_REPOSITORY_DIR" -rf
       fi
-      echo -e ${__done__}
+      echo -e "${__done__}"
       exit 1;
       ;;
     *)
@@ -567,7 +570,7 @@ do_uninstall() {
 
 do_reconfigure() {
   print_section "Reconfigure ${PROJECT_NAME}"
-  echo -e "${__info__} Based on" ${PROJECT_CONFIG_FILE}
+  echo -e "${__info__} Based on" "${PROJECT_CONFIG_FILE}"
   #make_symlink ".aliases" "${PROJECT_SETTINGS_COMMON_DIR}.aliases" "$HOME/.aliases"
   make_symlink ".dircolors" "${PROJECT_LIB_DIR}/dircolors-solarized/dircolors.256dark" "$HOME/.dircolors"
   make_symlink ".editorconfig" "${PROJECT_SETTINGS_COMMON_DIR}/.editorconfig" "$HOME/.editorconfig"
@@ -637,7 +640,7 @@ do_clean_all() {
 }
 
 do_list_local_config() {
-  cat ${PROJECT_CONFIG_FILE}
+  cat "${PROJECT_CONFIG_FILE}"
 }
 
 do_backup() {
@@ -655,15 +658,15 @@ do_backup() {
     BACKUP_DIR=${_backup_dir}
   fi
 
-  mkdir -p ${BACKUP_DIR}
+  mkdir -p "${BACKUP_DIR}"
   for item in "${BACKUP_FILES[@]}"
   do
-    if [ -L ${item} ]; then # symlinks
-      cp -L $item $BACKUP_DIR
-    elif [ -d ${item} ]; then # directory
-      cp -R -f $item $BACKUP_DIR
-    elif [ -f ${item} ]; then # file
-      cp -f $item $BACKUP_DIR
+    if [ -L "${item}" ]; then # symlinks
+      cp -L "$item" "$BACKUP_DIR"
+    elif [ -d "${item}" ]; then # directory
+      cp -R -f "$item" "$BACKUP_DIR"
+    elif [ -f "${item}" ]; then # file
+      cp -f "$item" "$BACKUP_DIR"
     fi
     echo -e "Backup of $item completed ${__done__}"
   done
