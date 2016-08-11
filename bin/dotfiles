@@ -21,7 +21,7 @@ __error__="${red}Error!!!${endColor}"
 __done__="${green}✔ Done${endColor}"
 
 # Current file variables
-__version__="2.1.1"
+__version__="2.2.0"
 PROJECT_NAME="The Egel dotfiles"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"  #current path to file
 PROJECT_CONFIG_NAME='.dotfiles.config'
