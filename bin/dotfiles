@@ -308,16 +308,16 @@ do_update() {
       exit 1;
   else
     echo -ne "${purple}Switching ${PROJECT_NAME} to master branch (force)${endColor}\t"
-    git --git-dir="${PROJECT_REPOSITORY_DIR}/.git" --work-tree="${PROJECT_REPOSITORY_DIR} checkout -f master" && echo -e "${__done__}"
+    git --git-dir="${PROJECT_REPOSITORY_DIR}/.git" --work-tree="${PROJECT_REPOSITORY_DIR}" checkout -f master && echo -e "${__done__}"
 
     echo -ne "${purple}Updating ${PROJECT_NAME} repository:${endColor}\t\t\t"
-    git --git-dir="${PROJECT_REPOSITORY_DIR}/.git" --work-tree="${PROJECT_REPOSITORY_DIR} pull"
+    git --git-dir="${PROJECT_REPOSITORY_DIR}/.git" --work-tree="${PROJECT_REPOSITORY_DIR}" pull
 
     echo -ne "${purple}Updating ${PROJECT_NAME} submodules repositories:${endColor}\t"
-    git --git-dir="${PROJECT_REPOSITORY_DIR}/.git submodule foreach git pull" && echo -e "${__done__}"
+    git --git-dir="${PROJECT_REPOSITORY_DIR}/.git" submodule foreach git pull && echo -e "${__done__}"
 
     echo -ne "${purple}Switching ${PROJECT_NAME} submodules to master:${endColor}\t"
-    git --git-dir="${PROJECT_REPOSITORY_DIR}/.git submodule foreach git checkout -f master" && echo -e "${__done__}"
+    git --git-dir="${PROJECT_REPOSITORY_DIR}/.git" submodule foreach git checkout -f master && echo -e "${__done__}"
     exit 1;
   fi
 }
