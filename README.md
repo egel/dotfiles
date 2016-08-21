@@ -15,8 +15,8 @@
 * * *
 **Sample screenshots for desktop theme**. See [gallery][wiki-gallery] for more.
 
-<img src="http://i.imgur.com/Q2Y1Td0.png" title="Desktop with conky seamod theme" width="350" />
-<img src="http://i.imgur.com/Dc9BoKT.png" title="Guake with friends - Git + dircolors + vim + 256color test" width="350" />
+<img src="http://i.imgur.com/WBaOs30.png" title="Tmux with friends - Git + dircolors + vim + 256color test" width="430" />
+<img src="http://i.imgur.com/fBkmExR.png" title="GUI Vim (MacVim)" width="430" />
 
 ## Why you should try it?
 Personalization of your tools has never been so easy, pleasant and quick to set.
