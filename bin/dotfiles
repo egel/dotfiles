@@ -588,6 +588,10 @@ do_reconfigure() {
   make_symlink ".vimrc.local" "${PROJECT_SETTINGS_THEME_DIR}/.vimrc.local" "$HOME/.vimrc.local"
   make_symlink ".zshrc.local" "${PROJECT_SETTINGS_THEME_DIR}/.zshrc.local" "$HOME/.zshrc.local"
 
+  # $PATH variable not properly set in gvim/MacVim => http://stackoverflow.com/a/24542893/1977012
+  make_symlink ".zprofile" "${PROJECT_SETTINGS_COMMON_DIR}/.zshrc" "$HOME/.zprofile"
+
+
   # Copy specyfic folders
   case $DOTFILES_THEME in
     desktop)

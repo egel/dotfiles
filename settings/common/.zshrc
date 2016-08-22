@@ -98,6 +98,14 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 [[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
 
+# add current node (+ node programs installed globally) to PATH
+# NOTE: nvm have to be configured to works
+CURRENT_NODE_VERSION=$(node --version)
+if [[ $PATH != *"nvm"* ]]; then
+  $PATH=$PATH':'$HOME'/.nvm/versions/node/'$CURRENT_NODE_VERSION'/bin'
+fi
+
+
 # Load private passwords
 [ -s "$HOME/.envpass.private" ] && . "$HOME/.envpass.private"
 

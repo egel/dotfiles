@@ -40,14 +40,7 @@ set nocompatible
   let s:settings.airline_theme='tomorrow'
   let s:settings.history_levels=1000
   let s:settings.enable_cursorcolumn=1
-  let s:settings.node_version=Chomp(system('node --version'))
 
-" }}}
-" Add current nvm bin to PATH {{{
-" This is for gvim (for Syntastic checkers)
-if $PATH !~ '\.nvm'
-  let $PATH=$HOME.'/.nvm/versions/node/'.s:settings.node_version.'/bin:' . $PATH
-endif
 " }}}
 " Load vim theme custom settings {{{
   if filereadable(expand('~/.vimrc.theme-desktop'))
