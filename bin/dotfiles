@@ -34,7 +34,7 @@ AUTHOR="Maciej Sypień"
 # Config variables (Plugins)
 DESTINATION_MUTT_DIR="$HOME/.mutt"
 
-# Current (active) symlinks binding dotfile
+# Current symlinks binding dotfile
 CURRENT_SYMLINKS=(
   "$HOME/.aliases"
   "$HOME/.conkyrc"
@@ -44,6 +44,7 @@ CURRENT_SYMLINKS=(
   "$HOME/.gvimrc"
   "${DESTINATION_MUTT_DIR}"
   "$HOME/.tmux.conf"
+  "$HOME/.tmux.conf.local"
   "$HOME/.tmux-macosx"
   "$HOME/.tmux-linux"
   "$HOME/.vim"
@@ -51,27 +52,7 @@ CURRENT_SYMLINKS=(
   "$HOME/.vimrc.local"
   "$HOME/.zshrc"
   "$HOME/.zshrc.local"
-  "$HOME/.zshrc.local"
-)
-
-# Old (inactive) symlinks which were bind file/paths to dotfiles
-OLD_SYMLINKS=(
-  "$HOME/.aliases\(*"
-  "$HOME/.conkyrc\(*"
-  "$HOME/.dircolors\(*"
-  "$HOME/.editorconfig\(*"
-  "$HOME/.gitconfig\(*"
-  "$HOME/.gvimrc\(*"
-  "${DESTINATION_MUTT_DIR}\(*"
-  "$HOME/.tmux.conf\(*"
-  "$HOME/.tmux-macosx\(*"
-  "$HOME/.tmux-linux\(*"
-  "$HOME/.vim\(*"
-  "$HOME/.vimrc.local\(*"
-  "$HOME/.vimrc\(*"
-  "$HOME/.zshrc.local\(*"
-  "$HOME/.zshrc.local\(*"
-  "$HOME/.zshrc\(*"
+  "$HOME/.zprofile"
 )
 
 print_version() {
@@ -159,9 +140,10 @@ print_dotfiles_logo() {
 
 # Remove all old symlinks for dotfiles
 remove_old_symlinks() {
-  for item in "${OLD_SYMLINKS[@]}"
+  for item in "${CURRENT_SYMLINKS[@]}"
   do
-    rm -rfv "$item"
+    # Removing the convention of SAVED backup for those files "<file_name>(DATE)"
+    rm -frv ${item}\(*
   done
 }
 
@@ -169,7 +151,7 @@ remove_old_symlinks() {
 remove_current_symlinks() {
   for item in "${CURRENT_SYMLINKS[@]}"
   do
-    rm -rfv "$item"
+    rm -frv ${item}
   done
 }
 
@@ -436,7 +418,7 @@ do_install() {
                   --enable-fail-if-missing \
                   --with-lua-prefix=/usr/include/lua5.1 \
                   --enable-cscope \
-                  --with-compiledby="Maciej Sypień"
+                  --with-compiledby="${AUTHOR}"
       make VIMRUNTIMEDIR=/usr/share/vim/vim74
       sudo make install
       ;;
@@ -575,17 +557,16 @@ do_reconfigure() {
   make_symlink ".dircolors" "${PROJECT_LIB_DIR}/dircolors-solarized/dircolors.256dark" "$HOME/.dircolors"
   make_symlink ".editorconfig" "${PROJECT_SETTINGS_COMMON_DIR}/.editorconfig" "$HOME/.editorconfig"
   make_symlink ".gitconfig" "${PROJECT_SETTINGS_COMMON_DIR}/.gitconfig" "$HOME/.gitconfig"
-  make_symlink ".gvimrc" "${PROJECT_SETTINGS_COMMON_DIR}/.gvimrc" "$HOME/.gvimrce"
+  make_symlink ".gvimrc" "${PROJECT_SETTINGS_COMMON_DIR}/.gvimrc" "$HOME/.gvimrc"
   make_symlink ".mutt" "${PROJECT_SETTINGS_COMMON_DIR}/.mutt" "$HOME/.mutt"
   make_symlink ".tmux.conf" "${PROJECT_SETTINGS_COMMON_DIR}/.tmux.conf" "$HOME/.tmux.conf"
+  make_symlink ".tmux.conf.local" "${PROJECT_SETTINGS_THEME_DIR}/.tmux.conf.local" "$HOME/.tmux.conf.local"
   make_symlink ".tmux-macosx" "${PROJECT_SETTINGS_COMMON_DIR}/.tmux-macosx" "$HOME/.tmux-macosx"
   make_symlink ".tmux.conf" "${PROJECT_SETTINGS_COMMON_DIR}/.tmux-linux" "$HOME/.tmux-linux"
   make_symlink ".vim" "${PROJECT_SETTINGS_COMMON_DIR}/.vim" "$HOME/.vim"
   make_symlink ".vimrc" "${PROJECT_SETTINGS_COMMON_DIR}/.vimrc" "$HOME/.vimrc"
-  make_symlink ".zshrc" "${PROJECT_SETTINGS_COMMON_DIR}/.zshrc" "$HOME/.zshrc"
-
-  make_symlink ".tmux.conf.local" "${PROJECT_SETTINGS_THEME_DIR}/.tmux.conf.local" "$HOME/.tmux.conf.local"
   make_symlink ".vimrc.local" "${PROJECT_SETTINGS_THEME_DIR}/.vimrc.local" "$HOME/.vimrc.local"
+  make_symlink ".zshrc" "${PROJECT_SETTINGS_COMMON_DIR}/.zshrc" "$HOME/.zshrc"
   make_symlink ".zshrc.local" "${PROJECT_SETTINGS_THEME_DIR}/.zshrc.local" "$HOME/.zshrc.local"
 
   # $PATH variable not properly set in gvim/MacVim => http://stackoverflow.com/a/24542893/1977012
