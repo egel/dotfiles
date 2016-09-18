@@ -1,0 +1,28 @@
+global !p
+from snippet_helpers import *
+endglobal
+
+#
+#	Pelican blog articles
+#
+snippet pac "Pelican article creator"
+Title:		${1:Type article title}
+Slug:			`!p snip.rv = slugMe(t[1])`
+Date:			${3:`date +%Y-%m-%d`}
+<!-- Modified:	${4:`date +%Y-%m-%d`} -->
+Status:		${5:Draft}
+Category: ${6:Diary}
+Tags:			${7:apache2, vim}
+Authors:	${8:Maciej Sypień}
+<!-- Summary: Sample summary -->
+
+<div class="intro-article-image-sm" markdown="1">
+  ![${10:Linux logo}]({filename}/images/${9:linux_logo_pinguin.jpg})
+</div>
+
+$0
+
+[github]: https://github.com
+
+endsnippet
+
