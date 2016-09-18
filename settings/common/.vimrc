@@ -324,6 +324,19 @@ endif
       let g:jedi#popup_on_dot=0
     "}}}
     NeoBundle 'Glench/Vim-Jinja2-Syntax' " Jinja2 syntax
+
+  " }}}
+  " GO lang {{{
+    NeoBundleLazy 'fatih/vim-go', {
+      \ 'autoload' : {
+      \   'filetypes' : 'go',
+      \ }}
+      let g:go_highlight_functions = 1
+      let g:go_highlight_methods = 1
+      let g:go_highlight_fields = 1
+      let g:go_highlight_types = 1
+      let g:go_highlight_operators = 1
+      let g:go_highlight_build_constraints = 1
   " }}}
   NeoBundleLazy 'statianzo/vim-jade', {'autoload':{'filetypes':['jade']}} " jade, unmaintained (vim-pug is not ready yet)
   NeoBundleLazy 'digitaltoad/vim-pug', {'autoload':{'filetypes':['pug']}} " pug (formerly Jade)
