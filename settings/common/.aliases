@@ -21,8 +21,9 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 
-alias tmux='tmux -2'
 alias vim='vim -p'
+alias tmux='tmux -2'
+alias cmus='cmus 2> /dev/null'
 
 # Aliases depends on system
 case $(uname -s) in

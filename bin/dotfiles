@@ -394,33 +394,34 @@ do_install() {
       # According to https://gist.github.com/akolosov/cedaac86b333a4ced95f
       # with some improvements ;)
       sudo apt-get remove --purge vim vim-runtime vim-gnome vim-tiny vim-common vim-gui-common
-      sudo apt-get install liblua5.1-dev luajit libluajit-5.1 python-dev python3-dev ruby-dev libperl-dev mercurial libncurses5-dev libgnome2-dev libgnomeui-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev
+      sudo apt-get install liblua5.2-dev luajit libluajit-5.2 python-dev python3-dev ruby-dev libperl-dev mercurial libncurses5-dev libgnome2-dev libgnomeui-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev
 
-      sudo mkdir /usr/include/lua5.1/include
-      sudo ln -s /usr/include/luajit-2.0 /usr/include/lua5.1/include
 
       cd /tmp || exit
       git clone https://github.com/vim/vim.git
-      cd vim/src || exit
-      make distclean
       ./configure --with-features=huge \
-                  --enable-rubyinterp \
+                  --enable-gui=auto \
+                  --enable-cscope \
                   --enable-largefile \
-                  --disable-netbeans \
                   --enable-pythoninterp \
                   --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu \
                   --enable-python3interp \
                   --with-python3-config-dir=/usr/lib/python3.4/config-3.4m-x86_64-linux-gnu \
                   --enable-perlinterp \
+                  --enable-rubyinterp \
                   --enable-luainterp \
                   --with-luajit \
-                  --enable-gui=auto \
                   --enable-fail-if-missing \
-                  --with-lua-prefix=/usr/include/lua5.1 \
-                  --enable-cscope \
+                  --prefix=/usr \
                   --with-compiledby="${AUTHOR}"
-      make VIMRUNTIMEDIR=/usr/share/vim/vim74
+      make VIMRUNTIMEDIR=/usr/share/vim/vim80
       sudo make install
+
+      print_subsection "Set VIM as default editor"
+      sudo update-alternatives --install /usr/bin/editor editor /usr/bin/vim 1
+      sudo update-alternatives --set editor /usr/bin/vim
+      sudo update-alternatives --install /usr/bin/vi vi /usr/bin/vim 1
+      sudo update-alternatives --set vi /usr/bin/vim
       ;;
   esac
 
@@ -553,7 +554,7 @@ do_uninstall() {
 do_reconfigure() {
   print_section "Reconfigure ${PROJECT_NAME}"
   echo -e "${__info__} Based on" "${PROJECT_CONFIG_FILE}"
-  #make_symlink ".aliases" "${PROJECT_SETTINGS_COMMON_DIR}.aliases" "$HOME/.aliases"
+  make_symlink ".aliases" "${PROJECT_SETTINGS_COMMON_DIR}.aliases" "$HOME/.aliases"
   make_symlink ".dircolors" "${PROJECT_LIB_DIR}/dircolors-solarized/dircolors.256dark" "$HOME/.dircolors"
   make_symlink ".editorconfig" "${PROJECT_SETTINGS_COMMON_DIR}/.editorconfig" "$HOME/.editorconfig"
   make_symlink ".gitconfig" "${PROJECT_SETTINGS_COMMON_DIR}/.gitconfig" "$HOME/.gitconfig"
@@ -565,7 +566,8 @@ do_reconfigure() {
   make_symlink ".tmux.conf" "${PROJECT_SETTINGS_COMMON_DIR}/.tmux-linux" "$HOME/.tmux-linux"
   make_symlink ".vim" "${PROJECT_SETTINGS_COMMON_DIR}/.vim" "$HOME/.vim"
   make_symlink ".vimrc" "${PROJECT_SETTINGS_COMMON_DIR}/.vimrc" "$HOME/.vimrc"
-  make_symlink ".vimrc.local" "${PROJECT_SETTINGS_THEME_DIR}/.vimrc.local" "$HOME/.vimrc.local"
+  make_symlink ".vimrc.theme" "${PROJECT_SETTINGS_THEME_DIR}/.vimrc.theme" "$HOME/.vimrc.theme"
+  make_symlink ".bashrc" "${PROJECT_SETTINGS_COMMON_DIR}/.bashrc" "$HOME/.bashrc"
   make_symlink ".zshrc" "${PROJECT_SETTINGS_COMMON_DIR}/.zshrc" "$HOME/.zshrc"
   make_symlink ".zshrc.local" "${PROJECT_SETTINGS_THEME_DIR}/.zshrc.local" "$HOME/.zshrc.local"
 

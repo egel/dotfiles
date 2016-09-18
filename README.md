@@ -18,6 +18,9 @@
 <img src="http://i.imgur.com/WBaOs30.png" title="Tmux with friends - Git + dircolors + vim + 256color test" width="430" />
 <img src="http://i.imgur.com/fBkmExR.png" title="GUI Vim (MacVim)" width="430" />
 
+> Used gruvbox terminal pallete, [see more][wiki-terminal-pallete].
+
+
 ## Why you should try it?
 Personalization of your tools has never been so easy, pleasant and quick to set.
 This tool allow you to manage your dotfiles configuration in more intuitive and
@@ -106,6 +109,7 @@ pages][dotfiles-wiki] and [shortcuts cheat sheet][shortcuts-cheat-sheet].
   [dotfiles-wiki]: https://github.com/egel/dotfiles/wiki
   [wiki-gallery]: https://github.com/egel/dotfiles/wiki/Gallery
   [wiki-faq]: https://github.com/egel/dotfiles/wiki/FAQ-(Frequently-Asked-Questions)
+  [wiki-terminal-pallete]: https://github.com/egel/dotfiles/wiki/FAQ-(Frequently-Asked-Questions)#terminal-color-pallete-gruvbox
   [shortcuts-cheat-sheet]: http://bit.ly/1wqcChS
   [powerline-install-webpage]: https://powerline.readthedocs.org/en/latest/installation/linux.html#font-installation
   [hack-font-webpage]: http://sourcefoundry.org/hack/
