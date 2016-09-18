@@ -108,10 +108,12 @@ endif
     set fileformats=unix,dos                        " Prefer unix fileformat
     set backspace=indent,eol,start                  " Allow backspacing over everything in insert mode
 
-    set foldenable                                  "enable folds by default
-    set foldmethod=syntax                           "fold via syntax of files
-    set foldlevelstart=99                           "open all folds by default
-    let g:xml_syntax_folding=1                      "enable xml folding
+
+    set nofoldenable
+    " set foldenable                                  "enable folds by default
+    " set foldmethod=syntax                           "fold via syntax of files
+    " set foldlevelstart=99                           "open all folds by default
+    " let g:xml_syntax_folding=1                      "enable xml folding
 
     set noerrorbells                                " No error bells
     set novisualbell                                " No annoying visual bell
