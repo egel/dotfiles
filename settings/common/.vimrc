@@ -349,8 +349,8 @@ endif
   NeoBundleLazy 'groenewege/vim-less', {'autoload':{'filetypes':['less']}} " {{{
     autocmd FileType less set iskeyword+=-
   " }}}
-  NeoBundleLazy 'othree/yajs.vim', {'autoload':{'filetypes':['javascript','coffee','ls','typescript']}} " JavaScript syntax (also ES6/ES2015)
-  NeoBundleLazy 'othree/javascript-libraries-syntax.vim', {'autoload':{'filetypes':['javascript','coffee','ls','typescript']}}
+  NeoBundleLazy 'othree/yajs.vim', {'autoload':{'filetypes':['javascript','coffee','ls' ]}} " JavaScript syntax (also ES6/ES2015)
+  NeoBundleLazy 'othree/javascript-libraries-syntax.vim', {'autoload':{'filetypes':['javascript','coffee','ls']}}
   NeoBundleLazy 'elzr/vim-json', {'autoload':{'filetypes':['javascript','json']}} " {{{
     let g:vim_json_syntax_conceal = 0 " turn off onfly
     augroup json_autocmd
@@ -358,7 +358,16 @@ endif
       autocmd FileType json set foldmethod=syntax
     augroup END
 
-  " }}}
+  "}}}
+
+  NeoBundleLazy 'leafgarland/typescript-vim', {'autoload':{'filetypes':['typescript']}} " {{{
+    let g:typescript_indent_disable = 1
+    " let g:typescript_compiler_binary = 'tsc'
+    " let g:typescript_compiler_options = ''
+    " autocmd FileType typescript :set makeprg=tsc
+    " autocmd QuickFixCmdPost [^l]* nested cwindow
+    " autocmd QuickFixCmdPost    l* nested lwindow
+  "}}}
 
   " NeoBundle 'godlygeek/tabular' " require by vim-markdown
   NeoBundleLazy 'plasticboy/vim-markdown', {'depends':['godlygeek/tabular'], 'autoload':{'filetypes':['md', 'markdown', 'ngdoc']}} " {{{
