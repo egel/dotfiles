@@ -32,7 +32,7 @@ set nocompatible
   let s:settings={}
   let s:settings.default_indent=2
   let s:settings.max_column=120
-  let s:settings.autocomplete_method='neocomplcache'
+  let s:settings.autocomplete_method='neocomplete'
   let s:settings.enable_cursorcolumn=0
   let s:settings.background='dark'
   let s:settings.background_color='#282828'
@@ -236,12 +236,9 @@ endif
       \     'unix' : 'gmake',
       \   },
       \ }
-    NeoBundle 'Shougo/neocomplcache'
-    call neobundle#config('neocomplcache', {
-      \ 'lazy' : 1,
-      \ 'autoload' : {
-      \   'insert' : 1,
-      \ }})
+    NeoBundle 'Shougo/neocomplete.vim' " {{{
+      let g:neocomplete#enable_at_startup = 1
+    "}}}
     NeoBundle 'vim-airline/vim-airline' " {{{
       let g:airline#extensions#tabline#buffer_min_count = 2
       let g:airline#extensions#tabline#close_symbol = '×'
