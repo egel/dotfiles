@@ -291,6 +291,33 @@ endif
     NeoBundle 'tpope/vim-unimpaired'  " useful keybindings for eg. fugitive plugin
     NeoBundle 'editorconfig/editorconfig-vim'   " editorconfig plugin
 
+    NeoBundle 'SirVer/ultisnips' " {{{
+      " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+      let g:UltiSnipsExpandTrigger="<tab>" " default <tab>
+      let g:UltiSnipsJumpForwardTrigger="<tab>" " default: <c-b>
+      let g:UltiSnipsJumpBackwardTrigger="<S-tab>" " default: <c-z>
+
+      " Prevent UltiSnips from removing our carefully-crafted mappings
+      let g:UltiSnipsMappingsToIgnore = ['autocomplete']
+
+      " If you want :UltiSnipsEdit to split your window.
+      let g:UltiSnipsEditSplit="vertical"
+
+    " }}}
+    NeoBundle 'honza/vim-snippets'
+
+    NeoBundle 'Konfekt/FastFold' " {{{
+      let g:tex_fold_enabled=1
+      let g:vimsyn_folding='af'
+      let g:xml_syntax_folding = 1
+      let g:php_folding = 1
+      let g:perl_fold = 1
+    " }}}
+
+  " }}}
+  " Scala {{{
+    NeoBundleLazy 'derekwyatt/vim-scala', {'autoload':{'filetypes':['scala']}} "{{{ python syntax + integration
+
   " }}}
   " Python plugins {{{
     NeoBundleLazy 'davidhalter/jedi-vim', {'autoload':{'filetypes':['python']}} "{{{ python syntax + integration
