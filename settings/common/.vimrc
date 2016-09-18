@@ -115,9 +115,11 @@ endif
     " set foldlevelstart=99                           "open all folds by default
     " let g:xml_syntax_folding=1                      "enable xml folding
 
-    set noerrorbells                                " No error bells
-    set novisualbell                                " No annoying visual bell
-    set t_vb=
+    " No error bells, annoying visual bell
+    set noerrorbells visualbell t_vb=
+    if has('autocmd')
+      autocmd GUIEnter * set visualbell t_vb=
+    endif
     set shell=/bin/bash
 
     set confirm                                     " Raise a dialogue asking if you wish to save changed files
