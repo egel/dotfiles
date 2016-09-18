@@ -344,6 +344,7 @@ endif
   NeoBundleLazy 'tpope/vim-haml', {'autoload':{'filetype':['sass', 'scss']}} " {{{ sass, scss and haml syntax
     autocmd FileType scss,sass set iskeyword+=-
   " }}}
+  NeoBundleLazy 'gcorne/vim-sass-lint', {'autoload': {'filetype':['sass', 'scss']}}
   NeoBundleLazy 'othree/html5.vim', {'autoload':{'filetypes':['html']}}
   NeoBundleLazy 'groenewege/vim-less', {'autoload':{'filetypes':['less']}} " {{{
     autocmd FileType less set iskeyword+=-
