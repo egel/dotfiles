@@ -740,6 +740,10 @@ endif
     vnoremap <A-K> :m '<-2<CR>gv=gv
 
   " }}}
+  " ---- disable ex mode {{
+    map Q <Nop>
+
+  " }}}
   " ---- vim moving with hjkl in wrapped lines
     nmap j gj
     nmap k gk
