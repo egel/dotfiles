@@ -516,11 +516,15 @@ endif
     let g:syntastic_check_on_wq = 0
 
     " if add other then linter will check one for another checker
+    let g:syntastic_typescript_checkers = ['tslint'] " other 'tsc'
     let g:syntastic_javascript_eslint_exec = '/Users/maciej/.nvm/versions/node/v5.7.1/bin/eslint'
     let g:syntastic_javascript_checkers = ['eslint'] " 'standard', 'jslint'
+    let g:syntastic_go_checkers = ['go', 'govet', 'golint']
     let g:syntastic_python_checkers = ['flake8', 'pylint', 'pyflakes']
     let g:syntastic_jade_checkers = ['jade_lint']
     let g:syntastic_json_checkers = ['jsonlint']
+    let g:syntastic_sass_checkers=["sass_lint"]
+    let g:syntastic_scss_checkers=["sass_lint"]
 
     let g:syntastic_check_on_open = 1
     let g:syntastic_error_symbol = '✗'
