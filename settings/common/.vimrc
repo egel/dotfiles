@@ -543,7 +543,6 @@ endif
 
   " }}}
   NeoBundle 'jmcantrell/vim-virtualenv'
-  NeoBundle 'jamessan/vim-gnupg'
   " NeoBundle 'ashisha/image.vim'               " preview images
   NeoBundleLazy 'ap/vim-css-color', {'autoload': { 'filetypes': ['sass', 'scss', 'css'] }} " Color CSS codes
   NeoBundle 'junegunn/goyo.vim'       " Distraction-free writing in Vim.
