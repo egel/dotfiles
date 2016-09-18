@@ -270,9 +270,9 @@ endif
         " \ }
 
     " " }}}
-    NeoBundle 'tpope/vim-repeat'
-    NeoBundle 'tpope/vim-surround' " improve insert surround text
-    NeoBundle 'tpope/vim-fugitive' "{{{
+    NeoBundle 'tpope/vim-repeat', '', 'same'
+    NeoBundle 'tpope/vim-surround', '', 'same'
+    NeoBundle 'tpope/vim-fugitive', '', 'same' "{{{
       nnoremap <silent> <leader>gs :Gstatus<CR>
       nnoremap <silent> <leader>gd :Gdiff<CR>
       nnoremap <silent> <leader>gc :Gcommit<CR>
