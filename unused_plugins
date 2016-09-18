@@ -1,0 +1,49 @@
+" vim: ft=vim fdm=marker ts=2 sts=2 sw=2
+
+
+  NeoBundle 'jamessan/vim-gnupg'
+
+
+  NeoBundleLazy 'kchmck/vim-coffee-script', {'autoload':{'filetypes':['coffee']}} "{{{
+    autocmd BufRead,BufNewFile *.coffee setfiletype coffee
+  "}}}
+
+  try
+    so
+  catch
+    echo "You do not have local vim theme file. Check dotfiles README for further info."
+  endtry
+
+  NeoBundle 'vim-latex/vim-latex ' " {{{
+    " IMPORTANT: win32 users will need to have 'shellslash' set so that latex
+    " can be called correctly.
+    if has("gui_running")
+      if has("gui_win32")
+        set shellslash
+      endif
+    endif
+
+    " IMPORTANT: grep will sometimes skip displaying the file name if you
+    " search in a singe file. This will confuse Latex-Suite. Set your grep
+    " program to alway generate a file-name.
+    set grepprg=grep\ -nH\ $*
+
+    " TIP: if you write your \label's as \label{fig:something}, then if you
+    " type in \ref{fig: and press <C-n> you will automatically cycle through
+    " all the figure labels. Very useful!
+    autocmd FileType tex set iskeyword+=:
+
+    let g:tex_flavor='latex' " Set latex flavor for code highlighting
+    let g:Tex_DefaultTargetFormat = 'pdf'
+    let g:Tex_MultipleCompileFormats = 'pdf, aux'
+
+    " Now \e will load the pdf viewer to the page containing the nearest label to
+    " the current cursor position (assuming the default backslash for the LocalLeader key).
+    " This works well on multi-file projects since the aux file is searched to
+    " find the pdf name. So you can jump around in Vim using its wonderful tools,
+    " then tell the pdf viewer to jump to the same page.
+    nnoremap <buffer> <LocalLeader>e :call EvinceNearestLabel()<CR>
+
+    autocmd BufRead,BufNewFile *.tex setlocal formatoptions+=w textwidth=120
+
+  " }}}
