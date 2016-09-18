@@ -15,14 +15,11 @@ HIST_STAMPS="yyyy-mm-dd"
 # NOTE: Do not load nvm for eslint (more info https://github.com/roadhump/SublimeLinter-eslint#plugin-installation)
 plugins=(git git-flow colored-man-pages colorize tmux python npm gulp zsh-syntax-highlighting)
 
-# User configuration
-export PATH="$PATH:$HOME/.rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
-
 case $(uname -s) in
   Darwin)
     # export mysql (and its sub-programs)
-    if [ -d "/usr/local/mysql" ]; then
-      export PATH=/usr/local/mysql/bin:$PATH
+    if [[ -d "/usr/local/mysql" && $PATH != *'mysql'* ]]; then
+      export PATH=$PATH:/usr/local/mysql/bin
     fi
     ;;
 esac
@@ -104,6 +101,19 @@ CURRENT_NODE_VERSION=$(node --version)
 if [[ $PATH != *"nvm"* ]]; then
   $PATH=$PATH':'$HOME'/.nvm/versions/node/'$CURRENT_NODE_VERSION'/bin'
 fi
+
+
+# RVM - Ruby version manager
+# export PATH="$PATH:$HOME/.rvm/bin"
+
+
+# Golang
+export GOPATH=$HOME/golang
+export GOROOT=$HOME/golang/go-1.7
+export PATH=$PATH:$GOPATH/bin # additional go libraries
+export PATH=$PATH:$GOROOT/bin # path of go source
+# if [[ $PATH != *"go"* ]]; then
+# fi
 
 
 # Load private passwords
