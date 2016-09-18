@@ -370,7 +370,14 @@ endif
   "}}}
 
   " NeoBundle 'godlygeek/tabular' " require by vim-markdown
-  NeoBundleLazy 'plasticboy/vim-markdown', {'depends':['godlygeek/tabular'], 'autoload':{'filetypes':['md', 'markdown', 'ngdoc']}} " {{{
+  NeoBundleLazy 'plasticboy/vim-markdown', {
+    \ 'depends':
+    \   ['godlygeek/tabular'],
+    \ 'autoload': {
+    \   'filetypes':
+    \     ['md', 'markdown', 'ngdoc']
+    \ }} " {{{
+    let g:vim_markdown_folding_disabled = 0
     let g:vim_markdown_toc_autofit = 1
     let g:vim_markdown_conceal = 0
     let g:vim_markdown_fenced_languages = [
@@ -382,6 +389,8 @@ endif
     let g:vim_markdown_new_list_item_indent = 4
 
   " }}}
+  NeoBundleLazy 'godlygeek/tabular'
+
 
   NeoBundle 'kylef/apiblueprint.vim'          " blueprint/apiari syntax
   NeoBundle 'smancill/conky-syntax.vim'       " conky file syntax
