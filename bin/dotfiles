@@ -5,20 +5,21 @@ CURRENT_OS=$(uname -s)
 PWD=$(pwd)
 
 # General colors
-# black='\x1B[0;30m'
-# red='\x1B[0;31m'
-green='\x1B[0;32m' # '\e[1;32m' is too bright for white bg.
-blue='\x1B[1;34m'
-yellow='\x1B[0;33m'
-purple='\x1B[1;35m'
-cyan='\x1B[0;36m'
-endColor='\x1B[0m'
+black='\033[0;30m'
+red='\033[0;31m'
+green='\033[0;32m' # '\e[1;32m' is too bright for white bg.
+blue='\033[1;34m'
+yellow='\033[0;33m'
+purple='\033[1;35m'
+cyan='\033[0;36m'
+endColor='\033[0m'
 
 # Type of messages
-__info__="${blue}Info${endColor}"
+__info__="${blue}Info    ${endColor}"
 __warning__="${yellow}Warning!${endColor}"
-#__error__="${red}Error!!!${endColor}"
-__done__="${green}✔ Done${endColor}"
+__done__="${green}✔ Done  ${endColor}"
+__error__="${red}FAIL    ${endColor}"
+__aborted__="${yellow}Action aborted${endColor}"
 
 # Current file variables
 __version__="2.2.2"
@@ -30,6 +31,51 @@ PROJECT_CONFIG_MISSING_VARIABLE_COUNTER=0
 PROJECT_INSTALL_DEFAULTS=
 DATE_UTC=$(date +%Y-%m-%dT%TZ)
 AUTHOR="Maciej Sypień"
+GIT_CURRENT_BRANCH=$(git branch | grep \* | cut -d ' ' -f2)
+
+IS_WIN=false
+IS_MAC=false
+IS_LINUX=false
+IS_ARCH=false
+IS_BASED_ON_UBUNTU_1604=false
+
+if [ "$(uname -s)" == "Darwin" ]; then
+	IS_MAC=true
+    printf "DARWIN! %s" "$(uname -s)"
+elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+	if [[ "$(uname -r)" =~ "ARCH" ]]; then
+		IS_ARCH=true
+	elif [[ "$(uname -a)" =~ "Ubuntu" && "$(uname -a)" =~ "16.04" ]]; then
+		IS_BASED_ON_UBUNTU_1604=true
+	elif [[ "$(uname -a)" =~ "Ubuntu" ]]; then
+    # Load dotfiles config vars if the file is available
+    # This action is required if we want to suppress message when enter
+    if [ -f "${PROJECT_CONFIG_FILE}" ]; then
+      # shellcheck source=/dev/null
+      . "${PROJECT_CONFIG_FILE}"
+    fi
+      if [[ "${DOTFILES_IGNORE_UBUNTU_VERSION}" != "true" ]]; then
+        printf "%b This program didn't recognize your version of Ubuntu\n" "${__warning__}"
+        printf "Version (uname -a): %s\n" "$(uname -a)"
+        printf "\n%b Do you want continue as Ubuntu 16.04?" "${__info__}"
+        read -r -p " (y/N) " _continue_as_ubuntu_1604
+        case $_continue_as_ubuntu_1604 in
+          y|Y)
+            IS_BASED_ON_UBUNTU_1604=true
+            ;;
+          *)
+            exit 1
+            ;;
+        esac
+      fi
+	else
+    printf "%b This program doesn't support this version of Linux (%s)" "${__warning__}" "$(uname -a)"
+		exit 1;
+	fi
+elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
+  printf "%b This program doesn't support Windows OS" "${__warning__}"
+	exit 1;
+fi
 
 # Config variables (Plugins)
 DESTINATION_MUTT_DIR="$HOME/.mutt"
@@ -53,7 +99,6 @@ CURRENT_SYMLINKS=(
   "$HOME/.vim"
   "$HOME/.vimrc"
   "$HOME/.vimrc.local"
-  "$HOME/.vimrc.theme"
   "$HOME/.zprofile"
   "$HOME/.zshrc"
   "$HOME/.zshrc.local"
@@ -61,31 +106,43 @@ CURRENT_SYMLINKS=(
 )
 
 print_version() {
-  echo -e "v${__version__}"
+  printf "v%s\n" "${__version__}"
 }
 
 print_section() {
   _section=$1
-  echo -e "\n${cyan}=== ${_section}${endColor}"
+  printf "\n\n%b#==============================================================================\n" "${cyan}"
+  printf "%s\n" "${_section}"
+  printf "===============================================================================%b\n" "${endColor}"
 }
 
 print_subsection() {
   _subsection=$1
-  echo -e "\n${purple}--- ${_subsection}${endColor}"
+  printf "\n%b#-------------------------------------------------------------------------------\n" "${purple}"
+  printf "%s %b\n" "${_subsection}" "${endColor}"
 }
 
 print_if_missing_variable() {
   _variable=$1
   _if_string_exsist=$(grep -c -F "$_variable" "$PROJECT_CONFIG_FILE")
   if [[ "$_if_string_exsist" -eq 0 ]]; then
-    echo -e "${__info__} Add ${yellow}${_variable}${endColor} variable to your $PROJECT_CONFIG_FILE file."
+    printf "%b Add %b variable to your %s file." "${__info__}" "${yellow}${_variable}${endColor}" "${PROJECT_CONFIG_FILE}"
     PROJECT_CONFIG_MISSING_VARIABLE_COUNTER=$((PROJECT_CONFIG_MISSING_VARIABLE_COUNTER + 1))
+  fi
+}
+
+print_last_command_status() {
+  if [ $? -eq 0 ]; then
+    printf " %b\n" "${__done__}"
+  else
+    printf " %b\n" "${__error__}"
   fi
 }
 
 do_copy_default_config_file() {
   print_subsection "Copy default config file"
-  cp -fv "${DIR}/${PROJECT_CONFIG_NAME}" "${PROJECT_CONFIG_FILE}" && echo -e "${__done__}"
+  cp -fv "${DIR}/${PROJECT_CONFIG_NAME}" "${PROJECT_CONFIG_FILE}"
+  print_last_command_status
 }
 
 do_set_config_vars() {
@@ -118,9 +175,9 @@ else
       # The installation process contains creating default config
       ;;
     *)
-      echo -e "${__warning__} Missing $PROJECT_CONFIG_FILE file."
-      echo -ne "${__info__}"
-      read -r -p " Do you want to copy default configuration file to fix it? (y/N) " _copy_default_configuration
+      printf "%b Missing %s file.\n" "${__warning__}" "$PROJECT_CONFIG_FILE"
+      printf "\n%b Do you want to copy default configuration file to fix it?" "${__info__}"
+      read -r -p " (y/N) " _copy_default_configuration
       case $_copy_default_configuration in
         y|Y)
           do_copy_default_config_file
@@ -135,7 +192,7 @@ fi
 
 # do before install (yes to all while install)
 if [ "$2" == "-y" ]; then # if second arg is -y then
-  echo "Install all with defaults"
+  printf "%b %s\n" "${__warning__}" "Install all with default values!"
   PROJECT_INSTALL_DEFAULTS=1
 fi
 
@@ -165,7 +222,7 @@ remove_current_symlinks() {
 check_program() {
   _name=$1
   _command=$2
-  echo -en "${purple}${_name}${endColor}" 1>&2;
+  printf "%b" "${purple}${_name}${endColor}"
   eval "${_command}"
 }
 
@@ -175,34 +232,33 @@ make_symlink() {
   __if=$2 # input file (~/.dotfiles/.vimrc)
   __of=$3 # output file (~/.vimrc)
 
-
-  echo -e "${purple}$__name${endColor}"
+  printf "%b" "${purple}$__name${endColor}\n"
 
   # it is not a file
   if ! [ -f "$__of" ]; then
-    echo -e " > it is not a file or file doesn't exist"
+    printf " > it is not a file or file does not exist\n"
   else
-    mv "$__of" "$__of($(date))"
-    echo -en " > file exist, so safely renaming it as $__of($(date))"
-    echo -e " ${__done__}"
+    mv "$__of" "$__of($DATE_UTC)"
+    printf " > file exist, so safely renaming it as %s\n" "$__of($DATE_UTC)"
+    print_last_command_status
   fi
 
   # it is not a directory
   if ! [ -d "$__of" ]; then
-    echo -e " > it is not a directory or directory doesn't exist"
+    printf " > it is not a directory or directory does not exist\n"
   else
-    mv "$__of" "$__of($(date))"
-    echo -en " > directory exist, so safely renaming it as $__of($(date))"
-    echo -e " ${__done__}"
+    mv "$__of" "$__of($DATE_UTC)"
+    printf " > directory exist, so safely renaming it as %s\n" "$__of($DATE_UTC)"
+    print_last_command_status
   fi
 
   # it is a symbolic link
   if ! [ -L "$__of" ]; then
-    echo -en " > it is not a symlink then create it"
+    printf " > it is not a symlink, then create it\n"
     ln -s "$__if" "$__of"
-    echo -e " ${__done__}"
+    print_last_command_status
   else
-    echo -e " > it is symlink, so it should ok"
+    printf " > it is a symlink, so it should be %s\n" "${green}OK${endColor}"
   fi
 }
 
@@ -211,11 +267,11 @@ is_program_installed() {
   _install_script=$2
 
   if hash "${_program}" 2>/dev/null; then
-    echo -e "${__done__} Program ${blue}${_program}${endColor} already exist at $(which "${_program}")"
+    printf "%b Program %b already exist at %s\n" "${__done__}" "${blue}${_program}${endColor}" "$(which ${_program})"
   else
-    echo -e "Installing ${blue}${_program}${endColor} program... Please wait."
+    printf "Installing %b program. Please wait.\n" "${blue}${_program}${endColor}"
     eval "${_install_script}"
-    echo -e "${__done__}"
+    print_last_command_status
   fi;
 }
 
@@ -224,13 +280,13 @@ create_secure_mutt_passwords() {
   _mutt_passwords_path="$HOME/.mutt/passwords.gpg"
 
   print_section "Creating secure passwords for mutt with GPG"
-  echo -e "${__info__} Below is your list of gpg:"
+  printf "%b Below is your list of gpg:" "${__info__}"
   if [ -z "$(gpg --list-keys)" ]; then
-    echo "${__warning__} You have no GPG keys. Generate your pair 'gpg --gen-key'"
-    echo "or import, then re-run: '${FILE_NAME} -mmp' to restart creating secure password for mutt"
+    printf "%b You have no GPG keys. Generate your pair 'gpg --gen-key'" "${__warning__}"
+    printf "or import, then re-run: '%s' to restart creating secure password for mutt" "${FILE_NAME} -mmp"
   else
     gpg --list-keys
-    echo -e "${__info__} If you want to create new one pair of keys type: 'gpg --gen-key'"
+    printf "%b If you want to create new one pair of keys type: 'gpg --gen-key'" "${__info__}"
   fi;
   read -r -p "Type your e-mail address (that you are using in gpg; ex: 'john.doe@gmail.com'): " _email_address
   read -s -p -r "Type your e-mail password: " _email_password
@@ -238,6 +294,7 @@ create_secure_mutt_passwords() {
   if ! [[ -d "${DESTINATION_MUTT_DIR}" ]]; then
     print_subsection "Symlinking missing mutt directory"
     make_symlink ".mutt" "$PROJECT_SETTINGS_COMMON_DIR/.mutt" "$DESTINATION_MUTT_DIR"
+    print_last_command_status
   fi
 
   # This method will not store passwords on hard drive in plain text, ever!
@@ -246,66 +303,78 @@ create_secure_mutt_passwords() {
   echo -e "${_secret}" | gpg -r "${_email_address}" -e -a > "${_mutt_passwords_path}"
 
   if [ -f "${_mutt_passwords_path}" ]; then
-    echo -e "/n${__done__} Successfully complete creating a secure passwords file for <${_email_address}>"
+    printf "\n%s Successfully complete creating a secure passwords file for <%s>" "${__done__}" "${_email_address}"
   fi
 }
 
 do_help() {
   print_dotfiles_logo
-  echo -e "The Egel's dotfiles sophisticated configurator.\n" 1>&2;
-  echo -e "OPTIONS" 1>&2;
-  echo -e "    backup"
-  echo -e "        Create backup from files given into BACKUP_FILES variable\n\tlocated into ${PROJECT_CONFIG_FILE} file.\n" 1>&2;
-  echo -e "    clean, -c"
-  echo -e "        Clean old installation symlinks for current user home\n\tdirectory ($HOME).\n" 1>&2;
-  echo -e "    clean-all, -ca"
-  echo -e "        Clean all installation symlinks for current user home\n\tdirectory ($HOME).\n" 1>&2;
-  echo -e "    install"
-  echo -e "        Install and configure dotfiles for current user.\n" 1>&2;
-  echo -e "    list-config, -lc"
-  echo -e "        List personal configuration file stored in\n\t${PROJECT_CONFIG_FILE} for current user.\n" 1>&2;
-  echo -e "    make-mutt-password, -mmp"
-  echo -e "        Creating a secure (gpg) password file for mutt configuration.\n" 1>&2;
-  echo -e "    reconfigure, -r"
-  echo -e "        Reconfigure ${PROJECT_NAME} symlinks for current user\n\tand fix permissions for fragile files and directories.\n" 1>&2;
-  echo -e "    update, -u"
-  echo -e "        Update ${PROJECT_NAME} repository and it submodules.\n" 1>&2;
-  echo -e "    uninstall"
-  echo -e "        Uninstall ${PROJECT_NAME} from hard drive.\n" 1>&2;
-  echo -e "    -h, --help"
-  echo -e "        Show help.\n" 1>&2;
-  echo -e "    --version"
-  echo -e "        Print the version of ${PROJECT_NAME}.\n" 1>&2;
-  echo -e "LOCAL CONFIG FILE" 1>&2;
-  echo -e "    ${PROJECT_CONFIG_FILE}\n" 1>&2;
-  echo -e "EXAMPLES OF USAGE" 1>&2;
-  echo -e "    Since ${FILE_NAME} is installed globally you can do:" 1>&2;
-  echo -e "        ${FILE_NAME} --help" 1>&2;
-  echo -e "        ${FILE_NAME} install" 1>&2;
-  echo -e "\n2014-$(date +%Y) ${AUTHOR} - License MIT." 1>&2;
-  echo -e "Further info at https://github.com/egel/dotfiles" 1>&2;
+  printf "%s sophisticated configurator for BASH/ZSH.\n" "${PROJECT_NAME}"
+  printf "OPTIONS\n"
+  printf "    backup\n"
+  printf "        Create backup from files given into BACKUP_FILES variable\n"
+  printf "        located into %s file.\n\n" "${PROJECT_CONFIG_FILE}"
+  printf "    clean, -c\n"
+  printf "        Clean old installation symlinks for current user home\n"
+  printf "        directory (%s).\n\n" "$HOME"
+  printf "    clean-all, -ca\n"
+  printf "        Clean all installation symlinks for current user home\n"
+  printf "        directory (%s)\n\n" "$HOME"
+  printf "    install\n"
+  printf "        Install and configure %s for current user.\n\n" "${PROJECT_CONFIG_FILE}"
+  printf "    list-config, -lc\n"
+  printf "        List personal configuration file stored in %s for current user.\n\n" "${PROJECT_CONFIG_FILE}"
+  printf "    make-mutt-password, -mmp\n"
+  printf "        Creating a secure (gpg) password file for mutt configuration.\n\n"
+  printf "    reconfigure, -r"
+  printf "        Reconfigure %s symlinks for current user\n" "${PROJECT_NAME}"
+  printf "        and fix permissions for fragile files and directories.\n\n"
+  printf "    update, -u\n"
+  printf "        Update %s repository and it submodules.\n\n" "${PROJECT_NAME}"
+  printf "    uninstall\n"
+  printf "        Uninstall %s from hard drive.\n\n" "${PROJECT_NAME}"
+  printf "    -h, --help\n"
+  printf "        Show help.\n\n"
+  printf "    --version\n"
+  printf "        Print the version of %s.\n\n" "${PROJECT_NAME}"
+  printf "LOCAL CONFIG FILE\n"
+  printf "    %s\n\n" "${PROJECT_CONFIG_FILE}"
+  printf "EXAMPLES OF USAGE\n"
+  printf "    Since %s is installed globally you can do:\n" "${FILE_NAME}"
+  printf "        %s --help\n" "${FILE_NAME}"
+  printf "        %s install\n" "${FILE_NAME}"
+  printf "\n2014-%s %s - License MIT.\n" "$(date +%Y)" "${AUTHOR}"
+  printf "Further info at https://github.com/egel/dotfiles\n"
   exit 1;
 }
 
 do_update() {
   print_section "Updating ${PROJECT_NAME}"
-  if ! [[ -d "${PROJECT_REPOSITORY_DIR}" ]]
-    then
-      echo -e "${__info__} ${PROJECT_NAME} doesn't exist at ${blue}${PROJECT_REPOSITORY_DIR}${endColor}. Perhaps you want to install it first?"
+  if ! [[ -d "${PROJECT_REPOSITORY_DIR}" ]]; then
+      printf "%b %s doesn't exist at %b. Perhaps you want to install it first?\n" "${__info__}" "${PROJECT_NAME}" "${blue}${PROJECT_REPOSITORY_DIR}${endColor}"
       exit 1;
   else
-    echo -ne "${purple}Switching ${PROJECT_NAME} to master branch (force)${endColor}\t"
-    git --git-dir="${PROJECT_REPOSITORY_DIR}/.git" --work-tree="${PROJECT_REPOSITORY_DIR}" checkout -f master && echo -e "${__done__}"
+    if [[ "$GIT_CURRENT_BRANCH" != "master" ]]; then
+      printf "%b %s repository is in %b git branch.\n" "${__warning__}" "${PROJECT_NAME}" "${red}${GIT_CURRENT_BRANCH}${endColor}"
+      printf "%b Do you want to switch from %b to %b and continue?" "${__info__}" "${red}${GIT_CURRENT_BRANCH}${endColor}" "${green}master${endColor}"
+      read -r -p " (y/N) " _switch_to_master_branch_by_force
+        case $_switch_to_master_branch_by_force in
+        y|Y)
+          printf "%bSwitching %s to master branch (by force)" "${purple}" "${PROJECT_NAME}" "${endColor}"
+          git --git-dir="${PROJECT_REPOSITORY_DIR}/.git" --work-tree="${PROJECT_REPOSITORY_DIR}" checkout -f master
+          ;;
+        *)
+          printf "%b\n" "${__aborted__}"
+          exit 1;
+          ;;
+      esac
+    fi
 
-    echo -ne "${purple}Updating ${PROJECT_NAME} repository:${endColor}\t\t\t"
-    git --git-dir="${PROJECT_REPOSITORY_DIR}/.git" --work-tree="${PROJECT_REPOSITORY_DIR}" pull
+    printf "%bUpdating %s repository:%b" "${purple}" "${PROJECT_NAME}" "${endColor}"
+    git --git-dir="${PROJECT_REPOSITORY_DIR}/.git" --work-tree="${PROJECT_REPOSITORY_DIR}" fetch
 
-    echo -ne "${purple}Updating ${PROJECT_NAME} submodules repositories:${endColor}\t"
-    git --git-dir="${PROJECT_REPOSITORY_DIR}/.git" submodule foreach git pull && echo -e "${__done__}"
-
-    echo -ne "${purple}Switching ${PROJECT_NAME} submodules to master:${endColor}\t"
-    git --git-dir="${PROJECT_REPOSITORY_DIR}/.git" submodule foreach git checkout -f master && echo -e "${__done__}"
-    exit 1;
+    printf "%bUpdating %s submodules repositories%b" "${purple}" "${PROJECT_NAME}" "${endColor}"
+    git --git-dir="${PROJECT_REPOSITORY_DIR}/.git" submodule update --init --recursive
   fi
 }
 
@@ -313,18 +382,19 @@ do_install() {
   print_section "Installing ${PROJECT_NAME}"
 
   if [[ "$PROJECT_INSTALL_DEFAULTS" -ne 1 ]]; then # default: install -y
-    echo -e "Ask for few questions which will automatize your setup to adjust your configuration preferences."
-    echo -ne "${__info__}"
-    read -r -p " Do you want to configure mutt with secured gpg password? (y/N) " _configure_secure_mutt_gpg
+    printf "Answer for few questions to adjust your configuration preferences.\n"
+    printf "\n%b Do you want to configure mutt with secured gpg password?" "${__info__}"
+    read -r -p " (y/N) " _configure_secure_mutt_gpg
   else
     _configure_secure_mutt_gpg="n"
   fi
 
-  # ask only if config exsist and user run install again
+  # ask only if config exist and user run install again
   if [ -f "$PROJECT_CONFIG_FILE" ]; then
-    echo -ne "${__info__} You already have dotfiles config file at $PROJECT_CONFIG_FILE\n"
+    printf "\n%b You already have %s config file at %b\n" "${__warning__}" "${FILE_NAME}" "${blue}${PROJECT_CONFIG_FILE}${endColor}"
     if [[ "$PROJECT_INSTALL_DEFAULTS" -ne 1 ]]; then # default: install -y
-      read -r -p "Do you want to copy default configuration file to override the old one? (y/N) " _copy_default_configuration
+      printf "%b Do you want to copy default configuration file to override current one?" "${__info__}"
+      read -r -p " (y/N) " _copy_default_configuration
     else
       _copy_default_configuration="n"
     fi
@@ -348,111 +418,176 @@ do_install() {
     do_set_config_vars        # recreate project vars on proper config paths
   fi
 
+  if [[ "$PROJECT_INSTALL_DEFAULTS" -ne 1 ]]; then # default: install -y
+    printf "\n%b Do you want to change shell ZSH (current: %s) and install OH-MY-ZSH?" "${__info__}" "${SHELL}"
+    read -r -p " (y/N) " _install_zsh_and_ohmyzsh
+  else
+    _install_zsh_and_ohmyzsh="n"
+  fi
+
   # update dotfiles repository
-  ${PROJECT_CONFIGURATOR_FILE} update
-
-  # symlink dotfiles program (same for Darwin and Linux)
-  print_subsection "Symlinking dotfiles configurator program"
-  mkdir -p /usr/local/bin
-  sudo ln -vsf "$PROJECT_CONFIGURATOR_FILE" /usr/local/bin
-
-  case $CURRENT_OS in
-    Darwin)
-      print_subsection "Installing brew - Mac OSX package manager"
-      ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-
-      print_subsection "Installing required programs"
-      brew install wget
-      brew install curl
-      brew install zsh
-      brew install tmux
-      brew install lua
-      brew install python
-      brew install python3
-      brew install gpg2
-      brew install shellcheck
-
-      brew install vim --with-lua --with-python3
-      brew install macvim --with-lua --with-python3 --with-cscope --with-override-system-vim
-      brew install reattach-to-user-namespace # for copy from tmux to mac namespace
-
-      brew linkapps vim
-      brew linkapps macvim
+  printf "\n%b Do you want to update %s repository to latest version?" "${__info__}" "${PROJECT_NAME}"
+  read -r -p " (y/N) " _update_repository
+  case $_copy_default_configuration in
+    y|Y)
+      ${PROJECT_CONFIGURATOR_FILE} update
       ;;
-
-    Linux)
-      print_subsection "Installing required software for further steps"
-      sudo apt-get install -y software-properties-common
-
-      print_subsection "Checking and adding PPA repositories"
-      echo -e "Git PPA" && sudo add-apt-repository -y ppa:git-core/ppa
-      echo -e "Tmux PPA" && sudo add-apt-repository -y ppa:pi-rho/dev
-
-      print_subsection "Updating and installing required programs"
-      sudo apt-get update
-      sudo apt-get install -y python-software-properties software-properties-common curl wget xdg-utils fontconfig build-essential libssl-dev
-      sudo apt-get install -y editorconfig git zsh tmux
-      sudo apt-get install -y shellcheck # for checking syntax in vim for *.sh files
-
-      print_subsection "Install and compile Vim from source files"
-      # Install vim
-      # According to https://gist.github.com/akolosov/cedaac86b333a4ced95f
-      # with some improvements ;)
-      sudo apt-get remove --purge vim vim-runtime vim-gnome vim-tiny vim-common vim-gui-common
-      sudo apt-get install liblua5.2-dev luajit libluajit-5.2 python-dev python3-dev ruby-dev libperl-dev mercurial libncurses5-dev libgnome2-dev libgnomeui-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev
-
-
-      cd /tmp || exit
-      git clone https://github.com/vim/vim.git
-      ./configure --with-features=huge \
-                  --enable-gui=auto \
-                  --enable-cscope \
-                  --enable-largefile \
-                  --enable-pythoninterp \
-                  --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu \
-                  --enable-python3interp \
-                  --with-python3-config-dir=/usr/lib/python3.4/config-3.4m-x86_64-linux-gnu \
-                  --enable-perlinterp \
-                  --enable-rubyinterp \
-                  --enable-luainterp \
-                  --with-luajit \
-                  --enable-fail-if-missing \
-                  --prefix=/usr \
-                  --with-compiledby="${AUTHOR}"
-      make VIMRUNTIMEDIR=/usr/share/vim/vim80
-      sudo make install
-
-      print_subsection "Set VIM as default editor"
-      sudo update-alternatives --install /usr/bin/editor editor /usr/bin/vim 1
-      sudo update-alternatives --set editor /usr/bin/vim
-      sudo update-alternatives --install /usr/bin/vi vi /usr/bin/vim 1
-      sudo update-alternatives --set vi /usr/bin/vim
+    *)
       ;;
   esac
 
-  # vim
+  # symlink dotfiles program (same for Darwin and Linux)
+  print_subsection "Symlinking ${FILE_NAME} configurator program"
+  mkdir -p /usr/local/bin
+  sudo ln -vsf "$PROJECT_CONFIGURATOR_FILE" /usr/local/bin
+
+	if $IS_MAC; then
+    print_subsection "Installing brew - Mac OSX package manager"
+		ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+		print_subsection "Installing required programs"
+		brew install wget
+		brew install curl
+		brew install zsh
+		brew install tmux
+		brew install lua
+		brew install python
+		brew install python3
+		brew install gpg2
+		brew install shellcheck
+
+		brew install vim --with-lua --with-python3
+		brew install macvim --with-lua --with-python3 --with-cscope --with-override-system-vim
+		brew install reattach-to-user-namespace # for copy from tmux to mac namespace
+
+		brew linkapps vim
+		brew linkapps macvim
+  elif $IS_BASED_ON_UBUNTU_1604; then
+    print_subsection "Installing required software for further steps"
+    sudo apt-get install -y software-properties-common
+
+    print_subsection "Checking and adding PPA repositories"
+    printf "Git PPA"
+    sudo add-apt-repository -y ppa:git-core/ppa
+    print_last_command_status
+
+    printf "Tmux PPA"
+    sudo add-apt-repository -y ppa:pi-rho/dev
+    print_last_command_status
+
+    printf "TLP PPA"
+    sudo add-apt-repository -y ppa:linrunner/tlp
+    print_last_command_status
+
+    print_subsection "Updating and installing required programs"
+    sudo apt-get update
+    sudo apt-get install -y python-software-properties software-properties-common curl wget xdg-utils fontconfig build-essential libssl-dev
+    print_last_command_status
+
+    sudo apt-get install -y editorconfig git zsh tmux
+    print_last_command_status
+
+    sudo apt-get install -y shellcheck # for checking syntax in vim for *.sh files
+    print_last_command_status
+
+    sudo apt-get install -y tlp tlp-rdw
+    print_last_command_status
+
+    print_subsection "Install and compile Vim from source files"
+    # Install vim
+    # According to https://gist.github.com/akolosov/cedaac86b333a4ced95f
+    # with some improvements ;)
+    sudo apt-get remove --purge vim vim-runtime vim-gnome vim-tiny vim-common vim-gui-common
+    print_last_command_status
+
+    sudo apt-get install liblua5.1-dev luajit libluajit-5.1
+    print_last_command_status
+
+    sudo apt-get install python-dev python3-dev ruby-dev libperl-dev mercurial libncurses5-dev libgnome2-dev libgnomeui-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev
+    print_last_command_status
+
+    cd /tmp || exit
+    git clone https://github.com/vim/vim.git
+    ./configure --with-features=huge \
+                --enable-gui=auto \
+                --enable-cscope \
+                --enable-largefile \
+                --enable-pythoninterp \
+                --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu \
+                --enable-python3interp \
+                --with-python3-config-dir=/usr/lib/python3.4/config-3.4m-x86_64-linux-gnu \
+                --enable-perlinterp \
+                --enable-rubyinterp \
+                --enable-luainterp \
+                --with-luajit \
+                --enable-fail-if-missing \
+                --prefix=/usr \
+                --with-compiledby="${AUTHOR}"
+    make VIMRUNTIMEDIR=/usr/share/vim/vim80
+    sudo make install
+
+    print_subsection "Set VIM as default editor"
+    sudo update-alternatives --install /usr/bin/editor editor /usr/bin/vim 1
+    sudo update-alternatives --set editor /usr/bin/vim
+    sudo update-alternatives --install /usr/bin/vi vi /usr/bin/vim 1
+    sudo update-alternatives --set vi /usr/bin/vim
+  elif $IS_ARCH; then
+    sudo -S pacman -Syu
+
+    # gvim - contains also vim + gvim https://www.archlinux.org/news/vimgvim-72411-update/
+    # cmus - console player + optional libs
+    sudo -S pacman -S \
+      git \
+      gvim \
+      zsh \
+      wget curl \
+      tmux \
+      gnupg \
+      shellcheck \
+      tor \
+      cmus libmp4v2 opusfile \
+      dia \
+      tlp \
+      tlp-rdw \
+      lsb-release \
+      smartmontools
+
+    # Enable TLP
+    sudo systemctl enable tlp.service
+    sudo systemctl enable tlp-sleep.service
+    sudo systemctl enable NetworkManager-dispatcher.service
+    sudo systemctl mask systemd-rfkill.service
+  fi
+
+  print_subsection "Checking programs"
   check_program "vim:\t" "vim --version | head -n1"
-
-  # tmux
   check_program "tmux:\t" "tmux -V"
-
-  # git
   check_program "git:\t" "git --version"
 
-  # zsh
-  print_subsection "Changing default shell to ZSH"
-  sudo chsh -s "$(which zsh)" && echo -e "${__done__}"
+  # change shell to ZSH + oh-my-zsh
+  case $_install_zsh_and_ohmyzsh in
+    y|Y)
+      print_subsection "Changing default shell to ZSH"
+      sudo chsh -s "$(which zsh)"
+      print_last_command_status
 
-  print_subsection "Restore privacy for Ubuntu"
-  wget -q -O - https://fixubuntu.com/fixubuntu.sh | bash && echo -e "${__done__}"
+      print_subsection "Installing oh-my-zsh"
+      wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | sh
+      print_last_command_status
+      ;;
+    *)
+      ;;
+  esac
+
+  if $IS_BASED_ON_UBUNTU_1604; then
+    print_subsection "Restore privacy for Ubuntu"
+    wget -q -O - https://fixubuntu.com/fixubuntu.sh | bash
+    print_last_command_status
+  fi
 
   print_subsection "Downloading submodules of ${PROJECT_NAME} repository"
   git submodule update --init --recursive
-  echo -e "${__done__}"
-
-  # oh-my-zsh
-  print_subsection "Installing oh-my-zsh"
-  wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | sh
+  print_last_command_status
 
   # link honukai to oh-my-zsh themes
   print_subsection "Symlink honukai to oh-my-zsh themes"
@@ -462,22 +597,27 @@ do_install() {
   ${PROJECT_CONFIGURATOR_FILE} reconfigure
 
   print_subsection "Installing NeoBundle - Vim plugin manager"
-  curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh && echo -e "${__done__}"
+  curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh
+  print_last_command_status
 
   print_subsection "Installing Hack font"
-  case $CURRENT_OS in
-    Linux)
-      sudo apt-get install fonts-hack-ttf
-      ;;
-    Darwin)
-      brew cask install caskroom/fonts/font-hack
-      ;;
-  esac
-  echo -e "${__info__} To see more details for Hack font at http://sourcefoundry.org/hack/"
+  if $IS_MAC; then
+    brew cask install caskroom/fonts/font-hack
+    print_last_command_status
+  elif $IS_BASED_ON_UBUNTU_1604; then
+    sudo apt-get install fonts-hack-ttf
+    print_last_command_status
+  elif $IS_ARCH; then
+    sudo -S pacman -S ttf-hack
+    print_last_command_status
+  fi
+  printf "%b To see more details for Hack font at http://sourcefoundry.org/hack/" "${__info__}"
 
   # installing vim plugins (need to be after reconfiguration process of dotfiles configurator)
   print_subsection "Installing NeoBundle vim plugins"
+  printf "%b This operation might take some time.\n" "${__info__}"
   eval "$HOME/.vim/bundle/neobundle.vim/bin/neoinstall"
+  print_last_command_status
 
   # creating secure passwords file for mutt
   case $_configure_secure_mutt_gpg in
@@ -488,34 +628,35 @@ do_install() {
       ;;
   esac
 
-  case $CURRENT_OS in
-    Darwin)
-      print_subsection "Updating brew manager"
-      echo -e "${__info__} Be patient, it may take a while ;)"
-      echo -e "${__info__} brew update ..."
-      brew update
-      echo -e "${__info__} brew doctor ..."
-      brew doctor
-      ;;
-  esac
+  if $IS_MAC; then
+    print_subsection "\nUpdating brew manager"
+    printf "%b Be patient, it may take a while ;)" "${__info__}"
+    printf "%b Update brew\n" "${__info__}"
+    brew update
+    print_last_command_status
 
-  echo -e "\n\n${green}Congratulations!${endColor}"
-  echo -e "Configuration of ${PROJECT_NAME} complete successfully."
-  echo -e "Now you could run: '${FILE_NAME} --help' to find more about configurator."
+    printf "%b Doctor brew\n" "${__info__}"
+    brew doctor
+    print_last_command_status
+  fi
 
-  echo -e "\n${__info__} To finalize installation of ZSH shell, you need to reboot the system."
+  printf "\n\n%b" "${green}Congratulations!${endColor}\n"
+  printf "Configuration of ${PROJECT_NAME} complete successfully.\n"
+  printf "Now you could run: '%s' to find more about the configurator.\n" "${FILE_NAME} --help"
+
+  printf "\n%b To finalize installation of ZSH shell, you need to reboot the system." "${__info__}"
   if [[ "$PROJECT_INSTALL_DEFAULTS" -ne 1 ]]; then # default: install -y
-    echo -ne "${__info__}"
-    read -r -p " Would you like to do it now? (y/N) " _reboot_now
+    printf "%b Would you like to do it now?" "${__info__}"
+    read -r -p " (y/N) " _reboot_now
   else
     _reboot_now="n"
   fi
 
   if [[ $_reboot_now =~ ^([yY]) ]]; then
-    echo -e "${__info__} Now rebooting the system..."
+    printf "%b Now rebooting the system..." "${__info__}"
     sudo reboot
   else
-    echo -e "${__info__} Rebooting canceled by User"
+    printf "%b Rebooting canceled by User" ${__info__}
   fi
 }
 
@@ -523,34 +664,47 @@ do_fix_permissions() {
   # According to http://superuser.com/q/215504/250469
   print_section "Fix permissions for fragile files and directories"
   print_subsection "Fix $HOME directory"
-  chmod -v go-w "$HOME" && echo -e "${__done__}"
+  chmod -v go-w "$HOME"
+  print_last_command_status
 
   SSH_DIR="$HOME/.ssh"
   print_subsection "Fix SSH directory (default: ${SSH_DIR})"
-  chmod -v 700 "${SSH_DIR}" && echo -e "${__done__}"
-  chown -v "$USER" "${SSH_DIR}" && echo -e "${__done__}"
-  chmod -v 640 "${SSH_DIR}/authorized_keys"
-  chmod -v 644 "${SSH_DIR}/*.pub"
-  chmod -v 600 "${SSH_DIR}/id_rsa"
+  chmod -v 700 "${SSH_DIR}"
+  print_last_command_status
 
-  chmod -v 644 "${HOME}/.aliases.private" && echo -e "${__done__}"
-  chmod -v 640 "${HOME}/.envpass.private" && echo -e "${__done__}"
+  chown -v "$USER" "${SSH_DIR}"
+  print_last_command_status
+
+  chmod -v 640 "${SSH_DIR}/authorized_keys"
+  print_last_command_status
+
+  chmod -v 644 "${SSH_DIR}/*.pub"
+  print_last_command_status
+
+  chmod -v 600 "${SSH_DIR}/id_rsa"
+  print_last_command_status
+
+  chmod -v 644 "${HOME}/.aliases.private"
+  print_last_command_status
+
+  chmod -v 640 "${HOME}/.envpass.private"
+  print_last_command_status
 }
 
 do_uninstall() {
   print_section "Uninstall ${PROJECT_NAME}"
-  echo -ne "${__warning__}"
-  read -r -p " Are you sure you want to uninstall ${PROJECT_NAME}? (y/N) " _uninstall_repo
+  printf "%b Are you sure you want to uninstall %s?" "${__warning__}" "${PROJECT_NAME}"
+  read -r -p " (y/N) " _uninstall_repo
   case $_uninstall_repo in
     y|Y)
       if [[ -d "$PROJECT_REPOSITORY_DIR" && "$PROJECT_REPOSITORY_DIR" == ^. ]]; then
         rm "$PROJECT_REPOSITORY_DIR" -rf
       fi
-      echo -e "${__done__}"
+      printf "%b\n" "${__done__}"
       exit 1;
       ;;
     *)
-      echo -e "${__info__} Aborting unistalling of ${PROJECT_NAME}."
+      printf "%b Aborting uninstalling of ." "${__info__}" "${PROJECT_NAME}"
       ;;
   esac
 }
@@ -558,8 +712,8 @@ do_uninstall() {
 
 do_reconfigure() {
   print_section "Reconfigure ${PROJECT_NAME}"
-  echo -e "${__info__} Based on" "${PROJECT_CONFIG_FILE}"
-  make_symlink ".aliases" "${PROJECT_SETTINGS_COMMON_DIR}.aliases" "$HOME/.aliases"
+  printf "%b Based on '%s'" "${__info__}" "${PROJECT_CONFIG_FILE}"
+  make_symlink ".aliases" "${PROJECT_SETTINGS_COMMON_DIR}/.aliases" "$HOME/.aliases"
   make_symlink ".bashrc" "${PROJECT_SETTINGS_COMMON_DIR}/.bashrc" "$HOME/.bashrc"
   make_symlink ".dircolors" "${PROJECT_LIB_DIR}/dircolors-solarized/dircolors.256dark" "$HOME/.dircolors"
   make_symlink ".editorconfig" "${PROJECT_SETTINGS_COMMON_DIR}/.editorconfig" "$HOME/.editorconfig"
@@ -573,7 +727,6 @@ do_reconfigure() {
   make_symlink ".tmux.conf.local" "${PROJECT_SETTINGS_THEME_DIR}/.tmux.conf.local" "$HOME/.tmux.conf.local"
   make_symlink ".vim" "${PROJECT_SETTINGS_COMMON_DIR}/.vim" "$HOME/.vim"
   make_symlink ".vimrc" "${PROJECT_SETTINGS_COMMON_DIR}/.vimrc" "$HOME/.vimrc"
-  make_symlink ".vimrc.theme" "${PROJECT_SETTINGS_THEME_DIR}/.vimrc.theme" "$HOME/.vimrc.theme"
   make_symlink ".zshrc" "${PROJECT_SETTINGS_COMMON_DIR}/.zshrc" "$HOME/.zshrc"
   make_symlink ".zshrc.local" "${PROJECT_SETTINGS_THEME_DIR}/.zshrc.local" "$HOME/.zshrc.local"
 
@@ -590,8 +743,9 @@ do_reconfigure() {
       ;;
   esac
 
-  echo -e "\n${yellow}Checking NeoBundle:${endColor}"
+  printf "\n\n%b\n" "${yellow}Checking NeoBundle:${endColor}"
   wget https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh -q -O - | bash
+  print_last_command_status
 
   # fixing the permissions
   do_fix_permissions
@@ -599,35 +753,35 @@ do_reconfigure() {
 
 do_clean() {
   print_section "Clean ${PROJECT_NAME}"
-  echo -ne "${__warning__}"
-  read -r -p " Are you sure you want to clean old ${PROJECT_NAME} symlinks? (y/N) " _cleaning_symlinks
+  printf "%b Are you sure you want to clean old %s symlinks?" "${__warning__}" "${PROJECT_NAME}"
+  read -r -p " (y/N) " _cleaning_symlinks
   case $_cleaning_symlinks in
     y|Y)
-      echo -e "Removing previous/old symlinks of ${PROJECT_NAME}"
+      printf "Removing previous/old symlinks of %s\n" "${PROJECT_NAME}"
       remove_old_symlinks
-      echo -e "${__done__}"
+      printf "%b\n" "${__done__}"
       exit 1;
       ;;
     *)
-      echo -e "${__info__} Aborting cleaning of ${PROJECT_NAME} symlinks."
+      printf "%b Aborting cleaning of %s symlinks." "${__info__}" "${PROJECT_NAME}"
       ;;
   esac
 }
 
 do_clean_all() {
   print_section "Clean ${PROJECT_NAME}"
-  echo -ne "${__warning__}"
-  read -r -p " Are you sure you want to clean ALL ${PROJECT_NAME} symlinks? (y/N) " _cleaning_symlinks
+  printf "%b Are you sure you want to clean ALL %s symlinks?" "${__warning__}" "${PROJECT_NAME}"
+  read -r -p " (y/N) " _cleaning_symlinks
   case $_cleaning_symlinks in
     y|Y)
-      echo -e "Removing all symlinks of ${PROJECT_NAME}"
+      printf "Removing all symlinks of %s\n" "${PROJECT_NAME}"
       remove_old_symlinks
       remove_current_symlinks
-      echo -e "${__done__}"
+      printf "%b\n" "${__done__}"
       exit 1;
       ;;
     *)
-      echo -e "${__info__} Aborting cleaning of ${PROJECT_NAME} symlinks."
+      printf "%b Aborting cleaning of %s symlinks." "${__info__}" "${PROJECT_NAME}"
       ;;
   esac
 }
@@ -640,13 +794,13 @@ do_backup() {
   print_section "Making backup of your private files"
 
   if [ ${#BACKUP_FILES[@]} -eq 0 ]; then
-    echo -e "${__warning__} There is no backup files set yet. Add BACKUP_FILES to ${PROJECT_CONFIG_FILE}"
+    printf "%b There is no backup files set yet. Add BACKUP_FILES to %s\n" "${__warning__}" "${PROJECT_CONFIG_FILE}"
     exit 1;
   fi
 
-  echo -ne "${__info__}"
   BACKUP_DIR="${BACKUP_DIR}(${DATE_UTC})" # UTC but local
-  read -r -p " Write backup directory (default: '${BACKUP_DIR}') " _backup_dir
+  printf "%b Write backup directory (default path: '%s')\n" "${__info__}" "${BACKUP_DIR}"
+  read -r -p " " _backup_dir
   if [ -n "${_backup_dir}" ]; then # if not empty
     BACKUP_DIR=${_backup_dir}
   fi
@@ -680,7 +834,7 @@ case "$1" in
   list-config|-lc)
     do_list_local_config
     ;;
-  install|-i)
+  install|-i)dotfiles --help
     do_install
     ;;
   reconfigure|-r)
@@ -702,7 +856,8 @@ case "$1" in
     print_version
     ;;
   *)
-    echo -e "Nothing happened \xe2\x98\xba\nRun: '${FILE_NAME} --help' to print help menu." 1>&2;
+    printf "\nNothing happened %b\n" "\xe2\x98\xba"
+    printf "Run: '%s' to print help menu.\n" "${FILE_NAME} --help"
     exit 1
     ;;
 esac

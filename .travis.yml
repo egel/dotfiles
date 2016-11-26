@@ -1,22 +1,17 @@
-sudo: required
 language: bash
+sudo: required
+dist: xenial
 
-matrix:
-  include:
-    - os: linux
-      dist: xenial
-    - os: linux
-      dist: trusty
-    - os: osx
-      osx_image: xcode8
+before_cache:
+  - rm -rf $HOME/.cache
 
-branches:
-  only:
-    - master
+cache:
+  bundler: false
 
 before_script:
   - export DISPLAY=:99.0
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" && -f "/etc/init.d/xvfb" ]]; then sh -e /etc/init.d/xvfb start; fi
+  - rm -rf ~/.dotfiles
   - git clone --recursive https://github.com/egel/dotfiles.git ~/.dotfiles
 
 script:

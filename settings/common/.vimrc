@@ -43,9 +43,9 @@ set nocompatible
 
 " }}}
 " Load vim theme custom settings {{{
-  if filereadable(expand('~/.vimrc.theme'))
-    execute 'source' expand('~/.vimrc.theme')
-  endif
+"  if filereadable(expand('~/.vimrc.theme'))
+"    execute 'source' expand('~/.vimrc.theme')
+"  endif
 " }}}
 " Because a value is not set in $MYGVIMRC with the console, so we set it.
   if !exists($MYGVIMRC)

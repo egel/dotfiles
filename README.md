@@ -8,7 +8,7 @@
 [![MIT LICENSE](http://img.shields.io/badge/license-MIT-yellowgreen.svg?style=square)](https://github.com/egel/dotfiles/blob/master/LICENSE)
 [![Stories in Ready](https://badge.waffle.io/egel/dotfiles.svg?label=ready&title=Ready)](http://waffle.io/egel/dotfiles)
 
-> Dotfiles configurator for Mac OSX and Debian-based Linux distributions.
+> Personal dotfiles configurator for Mac OSX, Arch & Ubuntu 16.04 distributions.
 
 * * *
 [Installation](#installation) | [Update](#update) | [Learn more on Wiki][dotfiles-wiki] | [Shortcuts Cheat Sheet (PDF)][shortcuts-cheat-sheet]
@@ -28,7 +28,7 @@ secure way with ability to creating a backup of your fragile data.
 
 If you want to test it, feel free to run built-in [Dockerfile](https://github.com/egel/dotfiles/blob/master/Dockerfile).
 
-```
+```shell
 $ mkdir testdotfiles && cd testdotfiles && wget https://github.com/egel/dotfiles/blob/master/Dockerfile
 $ docker build -t egel/dotfiles:latest .
 $ docker run -it egel/dotfiles:latest
@@ -47,6 +47,7 @@ This set contains configuration for:
 -   **[Mutt][mutt-webpage]** (themes, secured passwords)
 -   **[EditorConfig][editorconfig-webpage]**
 -   **[Conky][conky-webpage]** (only for Linux)
+-   **[Virtualenvwrapper][virtulenvwrapper-webpage]
 
 Configurator features
 -   Easy to set your personal configuration/theme
@@ -68,13 +69,13 @@ use it wherever you like.
 
 Installation types:
 *   With github account
-    ```bash
+    ```shell
     $ git clone --recursive git@github.com:egel/dotfiles.git ~/.dotfiles
     $ ~/.dotfiles/bin/dotfiles install
     ```
 
 *   Without github account
-    ```bash
+    ```shell
     $ git clone --recursive https://github.com/egel/dotfiles.git ~/.dotfiles
     $ ~/.dotfiles/bin/dotfiles install
     ```
@@ -82,7 +83,7 @@ Installation types:
 When you pass through the installation, you should have `dotfiles` program
 globally installed, then run:
 
-```bash
+```shell
 $ dotfiles clean-all
 $ dotfiles reconfigur
 ```
@@ -98,7 +99,7 @@ Reopen the terminal and enjoy :)
 ## Update
 To update repository and its submodules
 
-```bash
+```shell
 $ dotfiles update
 ```
 
@@ -120,4 +121,5 @@ pages][dotfiles-wiki] and [shortcuts cheat sheet][shortcuts-cheat-sheet].
   [zsh-webpage]: http://www.zsh.org/
   [editorconfig-webpage]: http://editorconfig.org/
   [conky-webpage]: https://github.com/brndnmtthws/conky
+  [virtulenvwrapper-webpage]: https://virtualenvwrapper.readthedocs.io/en/latest/
 

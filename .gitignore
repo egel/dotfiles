@@ -19,6 +19,10 @@ settings/common/.mutt/cache/
 settings/common/.mutt/passwords.gpg
 settings/common/.mutt/gmailcerts
 
+
+# Editor
+.idea/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
