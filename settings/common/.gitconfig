@@ -26,23 +26,23 @@
 [alias]
   currentUser = ! git config --list | grep "user" | grep -v "currentUser"
 
-  st = status
+  ; st = status
 
-  cl = clone
-  ls = ls-tree --full-tree -r HEAD
+  ; cl = clone
+  ; ls = ls-tree --full-tree -r HEAD
 
-  aa = add --all
+  ; aa = add --all
 
   ci = commit
-  cm = commit -m
-  cma = commit -a -m
-  ca = commit --amend
-  amend = commit --amend
+  ; cm = commit -m
+  ; cma = commit -a -m
+  ; ca = commit --amend
+  ; amend = commit --amend
 
-  pf = push --force
+  ; pf = push --force
 
-  co = checkout
-  br = branch
+  ; co = checkout
+  ; br = branch
 
   pup = submodule foreach git pull
 
@@ -51,7 +51,7 @@
   diffword = diff --word-diff
   dw = diff --word-diff
   diff = diff
-  d = diff
+  ; d = diff
   dc = diff --cached
   dcw = diff --cached --word-diff
 
