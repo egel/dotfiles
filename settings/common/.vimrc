@@ -189,13 +189,13 @@ endif
       set guioptions-=L   " turn off GUI left scrollbar
 
       if s:is_macvim
-        set guifont=Hack:h13
+        set guifont=Hack:h11
       elseif s:is_linux
-        set guifont=Hack\ 13
+        set guifont=Hack\ 11
       elseif s:is_windows
         set guifont=Consolas:h11:cANSI
       else
-        set guifont=Hack:h13:cDEFAULT
+        set guifont=Hack:h11:cDEFAULT
       endif
     else " This for console Vim.
       if exists("+lines")
@@ -519,7 +519,6 @@ endif
 
     " if add other then linter will check one for another checker
     let g:syntastic_typescript_checkers = ['tslint'] " other 'tsc'
-    let g:syntastic_javascript_eslint_exec = '/Users/maciej/.nvm/versions/node/v5.7.1/bin/eslint'
     let g:syntastic_javascript_checkers = ['eslint'] " 'standard', 'jslint'
     let g:syntastic_go_checkers = ['go', 'govet', 'golint']
     let g:syntastic_python_checkers = ['flake8', 'pylint', 'pyflakes']
