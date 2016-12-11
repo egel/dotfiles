@@ -128,5 +128,7 @@ else
   echo "To fix this run: '$HOME/.dotfiles/bin/dotfiles -r; source $HOME/.zshrc'"
 fi
 
-source $ZSH/oh-my-zsh.sh
+# added by travis gem
+[ -f /home/maciej/.travis/travis.sh ] && source /home/maciej/.travis/travis.sh
 
+source $ZSH/oh-my-zsh.sh
