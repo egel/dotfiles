@@ -1,7 +1,7 @@
 [include]
   # For user, email, ect.
   path = ~/.gitconfig.local
-  ;path = ~/.gitconfig.local_itelo
+  ;path = ~/.gitconfig.local_work
 
 [color]
   ui = auto
