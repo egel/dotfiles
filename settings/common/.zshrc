@@ -86,7 +86,7 @@ export LANG=en_US.UTF-8
 
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Devel
-DOTFILES_VIRTUALENVWRAPPER_FILE=/usr/local/bin/virtualenvwrapper.sh
+DOTFILES_VIRTUALENVWRAPPER_FILE=$(which virtualenvwrapper.sh)
 [ -s "$DOTFILES_VIRTUALENVWRAPPER_FILE" ] && source $DOTFILES_VIRTUALENVWRAPPER_FILE
 
 # Node version manager config
