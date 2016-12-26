@@ -15,6 +15,9 @@ HIST_STAMPS="yyyy-mm-dd"
 # NOTE: Do not load nvm for eslint (more info https://github.com/roadhump/SublimeLinter-eslint#plugin-installation)
 plugins=(git git-flow colored-man-pages colorize tmux python npm gulp zsh-syntax-highlighting)
 
+# Ignore ORIG_HEAD in zsh git autocomplete
+zstyle ':completion:*:*' ignored-patterns '*ORIG_HEAD'
+
 case $(uname -s) in
   Darwin)
     # export mysql (and its sub-programs)
