@@ -1,24 +1,22 @@
 sudo: required
+language: bash
 
 matrix:
   include:
     - os: linux
       dist: xenial
-      sudo: required
     - os: linux
       dist: trusty
-      sudo: required
     - os: osx
       osx_image: xcode8
 
 branches:
   only:
     - master
-    - develop
 
 before_script:
   - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start; fi
   - git clone --recursive https://github.com/egel/dotfiles.git ~/.dotfiles
 
 script:
