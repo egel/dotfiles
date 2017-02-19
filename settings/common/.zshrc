@@ -27,13 +27,6 @@ case $(uname -s) in
     ;;
 esac
 
-# Load oh-my-zsh.sh if exsist
-if [[ -f $ZSH/oh-my-zsh.sh ]]; then
-  source $ZSH/oh-my-zsh.sh
-else
-  echo "Missing $ZSH/oh-my-zsh.sh file."
-fi
-
 # Configure dircolors
 case $(uname -s) in
   Darwin)
@@ -75,13 +68,11 @@ fi;
 # Preferred editor for local and remote sessions
 export EDITOR='vim'
 
-# Add public aliases
-DOTFILES_COMMON_ALIASES=$HOME/.aliases
-[ -s "$DOTFILES_COMMON_ALIASES" ] && source $DOTFILES_COMMON_ALIASES
-
 # Add private aliases
 DOTFILES_PRIVATE_ALIASES=$HOME/.aliases.private
-[ -s "$DOTFILES_PRIVATE_ALIASES" ] && source $DOTFILES_PRIVATE_ALIASES
+if [ -s "${DOTFILES_PRIVATE_ALIASES}" ]; then
+  source ${DOTFILES_PRIVATE_ALIASES}
+fi
 
 # Virtualenvwrapper
 export LC_ALL=en_US.UTF-8
@@ -101,23 +92,19 @@ export NVM_DIR="$HOME/.nvm"
 # add current node (+ node programs installed globally) to PATH
 # NOTE: nvm have to be configured to works
 CURRENT_NODE_VERSION=$(node --version)
-if [[ $PATH != *"nvm"* ]]; then
+if [[ $PATH != *"nvm"* && -d "$HOME/.nvm" ]]; then
   $PATH=$PATH':'$HOME'/.nvm/versions/node/'$CURRENT_NODE_VERSION'/bin'
+elif [ ! -d "$HOME/.nvm" ]; then
+  echo "Missing NVM (Node Version Manager)."
 fi
-
-
-# RVM - Ruby version manager
-# export PATH="$PATH:$HOME/.rvm/bin"
-
 
 # Golang
 export GOPATH=$HOME/golang
 export GOROOT=$HOME/golang/go-1.7
-export PATH=$PATH:$GOPATH/bin # additional go libraries
-export PATH=$PATH:$GOROOT/bin # path of go source
-# if [[ $PATH != *"go"* ]]; then
-# fi
-
+if [[ $PATH != *"go"* && -d "$GOPATH" && -d "$GOROOT" ]]; then
+  export PATH=$PATH:$GOPATH/bin # additional go libraries
+  export PATH=$PATH:$GOROOT/bin # path of go source
+fi
 
 # Load private passwords
 [ -s "$HOME/.envpass.private" ] && . "$HOME/.envpass.private"
@@ -131,7 +118,15 @@ else
   echo "To fix this run: '$HOME/.dotfiles/bin/dotfiles -r; source $HOME/.zshrc'"
 fi
 
-# added by travis gem
-[ -f /home/maciej/.travis/travis.sh ] && source /home/maciej/.travis/travis.sh
+# Added by travis gem
+if [ -f $HOME/.travis/travis.sh ]; then
+  source $HOME/.travis/travis.sh
+fi
 
-source $ZSH/oh-my-zsh.sh
+# ALWAYS AT THE END
+# Load oh-my-zsh.sh if exist
+if [[ -f $ZSH/oh-my-zsh.sh ]]; then
+  source $ZSH/oh-my-zsh.sh
+else
+  echo "Missing $ZSH/oh-my-zsh.sh file."
+fi
