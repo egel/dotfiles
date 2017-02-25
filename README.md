@@ -8,7 +8,7 @@
 [![MIT LICENSE](http://img.shields.io/badge/license-MIT-yellowgreen.svg?style=square)](https://github.com/egel/dotfiles/blob/master/LICENSE)
 [![Stories in Ready](https://badge.waffle.io/egel/dotfiles.svg?label=ready&title=Ready)](http://waffle.io/egel/dotfiles)
 
-> Personal dotfiles configurator for Mac OSX, Arch & Ubuntu 16.04 distributions.
+> Personal dotfiles configurator for Arch, Ubuntu 16.04 & Mac OSX.
 
 * * *
 [Installation](#installation) | [Update](#update) | [Learn more on Wiki][dotfiles-wiki] | [Shortcuts Cheat Sheet (PDF)][shortcuts-cheat-sheet]
