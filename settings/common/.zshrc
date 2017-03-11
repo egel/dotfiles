@@ -20,6 +20,8 @@ zstyle ':completion:*:*' ignored-patterns '*ORIG_HEAD'
 
 case $(uname -s) in
   Darwin)
+    export PATH="/usr/local/sbin:$PATH"
+
     # export mysql (and its sub-programs)
     if [[ -d "/usr/local/mysql" && $PATH != *'mysql'* ]]; then
       export PATH=$PATH:/usr/local/mysql/bin
