@@ -308,7 +308,7 @@ create_secure_mutt_passwords() {
 
 do_help() {
   print_dotfiles_logo
-  printf "%s sophisticated configurator for BASH/ZSH.\n" "${PROJECT_NAME}"
+  printf "%s sophisticated configurator for BASH/ZSH.\n\n" "${PROJECT_NAME}"
   printf "OPTIONS\n"
   printf "    backup\n"
   printf "        Create backup from files given into BACKUP_FILES variable\n"
@@ -320,12 +320,14 @@ do_help() {
   printf "        Clean all installation symlinks for current user home\n"
   printf "        directory (%s)\n\n" "$HOME"
   printf "    install\n"
-  printf "        Install and configure %s for current user.\n\n" "${PROJECT_CONFIG_FILE}"
+  printf "        Install and configure %s\n" "${PROJECT_CONFIG_FILE}"
+  printf "        for current user.\n\n"
   printf "    list-config, -lc\n"
-  printf "        List personal configuration file stored in %s for current user.\n\n" "${PROJECT_CONFIG_FILE}"
+  printf "        List personal configuration file stored in %s\n" "${PROJECT_CONFIG_FILE}"
+  printf "        for current user.\n\n"
   printf "    make-mutt-password, -mmp\n"
   printf "        Creating a secure (gpg) password file for mutt configuration.\n\n"
-  printf "    reconfigure, -r"
+  printf "    reconfigure, -r\n"
   printf "        Reconfigure %s symlinks for current user\n" "${PROJECT_NAME}"
   printf "        and fix permissions for fragile files and directories.\n\n"
   printf "    update, -u\n"
