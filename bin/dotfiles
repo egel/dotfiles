@@ -41,7 +41,6 @@ IS_BASED_ON_UBUNTU_1604=false
 
 if [ "$(uname -s)" == "Darwin" ]; then
 	IS_MAC=true
-    printf "DARWIN! %s" "$(uname -s)"
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
 	if [[ "$(uname -r)" =~ "ARCH" ]]; then
 		IS_ARCH=true
