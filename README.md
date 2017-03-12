@@ -40,14 +40,14 @@ Enjoy !
 ## Features
 
 This set contains configuration for:
--   **[ZSH][zsh-webpage]** shell (oh-my-zsh)
+-   **[BASH][bash-webpage]/[ZSH][zsh-webpage]** shell (oh-my-zsh)
 -   **[Git][git-webpage]** (account management, aliases)
 -   **[Vim][vim-webpage]**
 -   **[Tmux][tmux-webpage]** (key-bindings, copy-paste to system clipboard)
 -   **[Mutt][mutt-webpage]** (themes, secured passwords)
 -   **[EditorConfig][editorconfig-webpage]**
 -   **[Conky][conky-webpage]** (only for Linux)
--   **[Virtualenvwrapper][virtulenvwrapper-webpage]
+-   **[Virtualenvwrapper][virtulenvwrapper-webpage]**
 
 Configurator features
 -   Easy to set your personal configuration/theme
@@ -119,6 +119,7 @@ pages][dotfiles-wiki] and [shortcuts cheat sheet][shortcuts-cheat-sheet].
   [vim-webpage]: http://www.vim.org/
   [git-webpage]: https://git-scm.com/
   [zsh-webpage]: http://www.zsh.org/
+  [bash-webpage]: https://www.gnu.org/software/bash/
   [editorconfig-webpage]: http://editorconfig.org/
   [conky-webpage]: https://github.com/brndnmtthws/conky
   [virtulenvwrapper-webpage]: https://virtualenvwrapper.readthedocs.io/en/latest/
