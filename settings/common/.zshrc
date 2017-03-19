@@ -24,6 +24,10 @@ case $(uname -s) in
     if [[ -d "/usr/local/mysql" && $PATH != *'mysql'* ]]; then
       export PATH=$PATH:/usr/local/mysql/bin
     fi
+
+    if [[ -d "/usr/local/sbin" && $PATH != *'/usr/local/sbin'* ]]; then
+      export PATH="/usr/local/sbin:$PATH"
+    fi
     ;;
 esac
 
