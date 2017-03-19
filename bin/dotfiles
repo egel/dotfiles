@@ -40,13 +40,13 @@ IS_ARCH=false
 IS_BASED_ON_UBUNTU_1604=false
 
 if [ "$(uname -s)" == "Darwin" ]; then
-	IS_MAC=true
+  IS_MAC=true
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-	if [[ "$(uname -r)" =~ "ARCH" ]]; then
-		IS_ARCH=true
-	elif [[ "$(uname -a)" =~ "Ubuntu" && "$(uname -a)" =~ "16.04" ]]; then
-		IS_BASED_ON_UBUNTU_1604=true
-	elif [[ "$(uname -a)" =~ "Ubuntu" ]]; then
+  if [[ "$(uname -r)" =~ "ARCH" ]]; then
+    IS_ARCH=true
+  elif [[ "$(uname -a)" =~ "Ubuntu" && "$(uname -a)" =~ "16.04" ]]; then
+    IS_BASED_ON_UBUNTU_1604=true
+  elif [[ "$(uname -a)" =~ "Ubuntu" ]]; then
     # Load dotfiles config vars if the file is available
     # This action is required if we want to suppress message when enter
     if [ -f "${PROJECT_CONFIG_FILE}" ]; then
@@ -67,13 +67,13 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
             ;;
         esac
       fi
-	else
+  else
     printf "%b This program doesn't support this version of Linux (%s)" "${__warning__}" "$(uname -a)"
-		exit 1;
-	fi
+    exit 1;
+  fi
 elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
   printf "%b This program doesn't support Windows OS" "${__warning__}"
-	exit 1;
+  exit 1;
 fi
 
 # Config variables (Plugins)
@@ -442,27 +442,28 @@ do_install() {
   mkdir -p /usr/local/bin
   sudo ln -vsf "$PROJECT_CONFIGURATOR_FILE" /usr/local/bin
 
-	if $IS_MAC; then
+  if $IS_MAC; then
     print_subsection "Installing brew - Mac OSX package manager"
-		ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-		print_subsection "Installing required programs"
-		brew install wget
-		brew install curl
-		brew install zsh
-		brew install tmux
-		brew install lua
-		brew install python
-		brew install python3
-		brew install gpg2
-		brew install shellcheck
+    print_subsection "Installing required programs"
+    brew install coreutils
+    brew install wget
+    brew install curl
+    brew install zsh
+    brew install tmux
+    brew install lua
+    brew install python
+    brew install python3
+    brew install gpg2
+    brew install shellcheck
 
-		brew install vim --with-lua --with-python3
-		brew install macvim --with-lua --with-python3 --with-cscope --with-override-system-vim
-		brew install reattach-to-user-namespace # for copy from tmux to mac namespace
+    brew install vim --with-lua --with-python3
+    brew install macvim --with-lua --with-python3 --with-cscope --with-override-system-vim
+    brew install reattach-to-user-namespace # for copy from tmux to mac namespace
 
-		brew linkapps vim
-		brew linkapps macvim
+    brew linkapps vim
+    brew linkapps macvim
   elif $IS_BASED_ON_UBUNTU_1604; then
     print_subsection "Installing required software for further steps"
     sudo apt-get install -y software-properties-common
