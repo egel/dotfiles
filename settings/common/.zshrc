@@ -1,3 +1,7 @@
+# INFO
+# This file should contain commands to set up aliases, functions,
+# options, key bindings, etc.
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -20,7 +24,14 @@ zstyle ':completion:*:*' ignored-patterns '*ORIG_HEAD'
 
 case $(uname -s) in
   Darwin)
-    export PATH="/usr/local/sbin:$PATH"
+    if [[ $PATH != *"/usr/local/sbin"* && -d "/usr/local/sbin" ]]; then
+      export PATH="/usr/local/sbin:$PATH"
+    fi
+
+    # GNUBIN_DIR="/usr/local/opt/coreutils/libexec/gnubin"
+    # if [[ $PATH != *${GNUBIN_DIR}* && -d ${GNUBIN_DIR} ]]; then
+      # export PATH="${GNUBIN_DIR}:$PATH"
+    # fi
 
     # export mysql (and its sub-programs)
     if [[ -d "/usr/local/mysql" && $PATH != *'mysql'* ]]; then
@@ -70,9 +81,6 @@ bindkey "^[[B" history-beginning-search-forward
 if [[ "$COLORTERM" == "xfce4-terminal" ]]; then
   export TERM="xterm-256color"
 fi;
-
-# Preferred editor for local and remote sessions
-export EDITOR='vim'
 
 # Add private aliases
 DOTFILES_PRIVATE_ALIASES=$HOME/.aliases.private

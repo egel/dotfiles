@@ -99,6 +99,7 @@ CURRENT_SYMLINKS=(
   "$HOME/.vimrc"
   "$HOME/.vimrc.local"
   "$HOME/.zprofile"
+  "$HOME/.zshenv"
   "$HOME/.zshrc"
   "$HOME/.zshrc.local"
   "${DESTINATION_MUTT_DIR}"
@@ -729,6 +730,7 @@ do_reconfigure() {
   make_symlink ".tmux.conf.local" "${PROJECT_SETTINGS_THEME_DIR}/.tmux.conf.local" "$HOME/.tmux.conf.local"
   make_symlink ".vim" "${PROJECT_SETTINGS_COMMON_DIR}/.vim" "$HOME/.vim"
   make_symlink ".vimrc" "${PROJECT_SETTINGS_COMMON_DIR}/.vimrc" "$HOME/.vimrc"
+  make_symlink ".zshenv" "${PROJECT_SETTINGS_COMMON_DIR}/.zshenv" "$HOME/.zshenv"
   make_symlink ".zshrc" "${PROJECT_SETTINGS_COMMON_DIR}/.zshrc" "$HOME/.zshrc"
   make_symlink ".zshrc.local" "${PROJECT_SETTINGS_THEME_DIR}/.zshrc.local" "$HOME/.zshrc.local"
 
