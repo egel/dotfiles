@@ -1,0 +1,7 @@
+version: '2'
+services:
+  dotfiles-server:
+    build: foo_server
+    ports:
+     - "5000:5000"
+    container_name: foo_1
