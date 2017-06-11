@@ -75,3 +75,12 @@ submodule
 mixins
 git's
 webpack
+rebase
+Dockerfile
+gitlab
+GOROOT
+GOPATH
+configurator
+ZSH
+shellcheck
+dotfiles
