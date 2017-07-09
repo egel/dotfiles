@@ -167,6 +167,8 @@ fix_file_or_directory_permission() {
   fi
 
   printf "\n%bFixing permissions for %b %s\n" "${__info__}" "${purple}${_file_or_directory}${endColor}" "${_type}"
+
+  # NOTE: string that might contain magic * must be without quotes!
   chmod -v "${_permissions}" ${_file_or_directory}
   print_last_command_status
 }
@@ -236,8 +238,9 @@ print_dotfiles_logo() {
 remove_old_symlinks() {
   for item in "${CURRENT_SYMLINKS[@]}"
   do
-    # Removing the convention of SAVED backup for those files "<file_name>(DATE)"
-    rm -frv "${item}\(*"
+    # Removing backup for those files "<file_name>(DATE)"
+    # NOTE: string that might contain magic * must be without quotes!
+    rm -frv ${item}\(*
   done
 }
 
@@ -264,34 +267,31 @@ make_symlink() {
   __if=$2 # input file (~/.dotfiles/.vimrc)
   __of=$3 # output file (~/.vimrc)
 
-  printf "%b" "${purple}$__name${endColor}\n"
+  if [ -f "${__of}" ]; then
+    _type="file"
+  elif [ -d "${__of}" ]; then
+    _type="directory"
+  elif [ -L "${__of}" ]; then
+    _type="symlink"
+  fi
 
-  # it is not a file
-  if ! [ -f "$__of" ]; then
-    printf " > it is not a file or file does not exist\n"
-  else
-    mv "$__of" "$__of($DATE_UTC)"
-    printf " > file exist, so safely renaming it as %s\n" "$__of($DATE_UTC)"
+  printf "\n%b\n" "${purple}$__name${endColor}"
+
+  _renamed_file="$__of($DATE_UTC)"
+  if [[ ${_type} == "file" && ${_type} == "directory" ]]; then
+    printf "%b %b %s exist, so safely renaming it as %b\n" "${__info__}" "${purple}${__of}${endColor}" "${_type}" "${purple}${_renamed_file}${endColor}"
+    mv "$__of" "${_renamed_file}"
     print_last_command_status
   fi
 
-  # it is not a directory
-  if ! [ -d "$__of" ]; then
-    printf " > it is not a directory or directory does not exist\n"
+  if [ -z ${_type} ];then
+    printf "%b Symlinking %b\n" "${__info__}" "${purple}${__of}${endColor}"
   else
-    mv "$__of" "$__of($DATE_UTC)"
-    printf " > directory exist, so safely renaming it as %s\n" "$__of($DATE_UTC)"
-    print_last_command_status
+    printf "%b %b %s exist, so re-symlinking it\n" "${__info__}" "${purple}${__of}${endColor}" "${_type}"
   fi
 
-  # it is a symbolic link
-  if ! [ -L "$__of" ]; then
-    printf " > it is not a symlink, then create it\n"
-    ln -s "$__if" "$__of"
-    print_last_command_status
-  else
-    printf " > it is a symlink, so it should be %s\n" "${green}OK${endColor}"
-  fi
+  ln -sf "${__if}" "${__of}"
+  print_last_command_status
 }
 
 is_program_installed() {
@@ -473,8 +473,14 @@ do_install() {
 
   # symlink dotfiles program (same for Darwin and Linux)
   print_subsection "Symlinking ${FILE_NAME} configurator program"
-  mkdir -p /usr/local/bin
-  sudo ln -vsf "$PROJECT_CONFIGURATOR_FILE" /usr/local/bin
+  _destination_directory_for_configurator=/usr/local/bin
+  [ -d ${_destination_directory_for_configurator} ] || mkdir -p ${_destination_directory_for_configurator}
+  sudo ln -vsf "$PROJECT_CONFIGURATOR_FILE" "${_destination_directory_for_configurator}/"
+  if [ -L "${_destination_directory_for_configurator}/${FILE_NAME}" ]; then
+    printf "\n%bFile symlinked successfully.\n" "${__done__}"
+  else
+    printf "\n%bFile symlinked failed.\n" "${__error__}"
+  fi
 
   if $IS_MAC; then
     print_subsection "Installing brew - Mac OSX package manager"
@@ -656,7 +662,7 @@ do_install() {
     sudo -S pacman -S ttf-hack
     print_last_command_status
   fi
-  printf "%b To see more details for Hack font at http://sourcefoundry.org/hack/" "${__info__}"
+  printf "%b To see more details for Hack font at http://sourcefoundry.org/hack/\n\n" "${__info__}"
 
   # installing vim plugins (need to be after reconfiguration process of dotfiles configurator)
   print_subsection "Installing NeoBundle vim plugins"
@@ -689,7 +695,7 @@ do_install() {
   printf "Configuration of %s complete successfully.\n" "${PROJECT_NAME}"
   printf "Now you could run: '%s' to find more about the configurator.\n" "${FILE_NAME} --help"
 
-  printf "\n%b To finalize installation of ZSH shell, you need to reboot the system." "${__info__}"
+  printf "\n%b To finalize installation of ZSH shell, you need to reboot the system.\n" "${__info__}"
   if [[ "$PROJECT_INSTALL_DEFAULTS" -ne 1 ]]; then # default: install -y
     printf "%b Would you like to do it now?" "${__question__}"
     read -r -p " (y/N) " _reboot_now
@@ -742,7 +748,6 @@ do_uninstall() {
 
 do_reconfigure() {
   print_section "Reconfigure ${PROJECT_NAME}"
-  printf "%b Based on '%s'" "${__info__}" "${PROJECT_CONFIG_FILE}"
   make_symlink ".aliases" "${PROJECT_SETTINGS_COMMON_DIR}/.aliases" "$HOME/.aliases"
   make_symlink ".bashrc" "${PROJECT_SETTINGS_COMMON_DIR}/.bashrc" "$HOME/.bashrc"
   make_symlink ".dircolors" "${PROJECT_LIB_DIR}/dircolors-solarized/dircolors.256dark" "$HOME/.dircolors"
