@@ -151,6 +151,26 @@ print_last_command_status() {
   fi
 }
 
+fix_file_or_directory_permission() {
+  _file_or_directory=$1
+  _permissions=$2
+
+  if [[ "$_file_or_directory" == *"*"* ]]; then
+    _type="pattern"
+  elif [ -d "$_file_or_directory" ]; then
+    _type="directory"
+  elif [ -f "$_file_or_directory" ]; then
+    _type="file"
+  else
+    printf "\n%bNo such file, directory or pattern like %b\n" "${__warning__}" "${purple}${_file_or_directory}${endColor}"
+    return
+  fi
+
+  printf "\n%bFixing permissions for %b %s\n" "${__info__}" "${purple}${_file_or_directory}${endColor}" "${_type}"
+  chmod -v "${_permissions}" ${_file_or_directory}
+  print_last_command_status
+}
+
 do_copy_default_config_file() {
   print_subsection "Copy default config file"
   cp -fv "${DIR}/${PROJECT_CONFIG_NAME}" "${PROJECT_CONFIG_FILE}"
@@ -688,32 +708,17 @@ do_install() {
 do_fix_permissions() {
   # According to http://superuser.com/q/215504/250469
   print_section "Fix permissions for fragile files and directories"
-  print_subsection "Fix $HOME directory"
-  chmod -v go-w "$HOME"
-  print_last_command_status
+  fix_file_or_directory_permission "$HOME" 755
 
   SSH_DIR="$HOME/.ssh"
-  print_subsection "Fix SSH directory (default: ${SSH_DIR})"
-  chmod -v 700 "${SSH_DIR}"
-  print_last_command_status
+  fix_file_or_directory_permission "${SSH_DIR}" 700
 
-  chown -v "$USER" "${SSH_DIR}"
-  print_last_command_status
+  fix_file_or_directory_permission "${SSH_DIR}/authorized_keys" 640
 
-  chmod -v 640 "${SSH_DIR}/authorized_keys"
-  print_last_command_status
+  fix_file_or_directory_permission "${SSH_DIR}/*.pub" 644
+  fix_file_or_directory_permission "${SSH_DIR}/id_rsa" 600
 
-  chmod -v 644 "${SSH_DIR}/*.pub"
-  print_last_command_status
-
-  chmod -v 600 "${SSH_DIR}/id_rsa"
-  print_last_command_status
-
-  chmod -v 644 "${HOME}/.aliases.private"
-  print_last_command_status
-
-  chmod -v 640 "${HOME}/.envpass.private"
-  print_last_command_status
+  fix_file_or_directory_permission "${HOME}/.aliases.private" 700
 }
 
 do_uninstall() {
@@ -868,6 +873,9 @@ case "$1" in
     ;;
   make-mutt-password|-mmp)
     create_secure_mutt_passwords
+    ;;
+  fix-permissions|-fp)
+    do_fix_permissions
     ;;
   uninstall)
     do_uninstall
