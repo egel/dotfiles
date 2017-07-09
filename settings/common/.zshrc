@@ -17,7 +17,7 @@ HIST_STAMPS="yyyy-mm-dd"
 
 # Add wisely, as too many plugins slow down shell startup !!!
 # NOTE: Do not load nvm for eslint (more info https://github.com/roadhump/SublimeLinter-eslint#plugin-installation)
-plugins=(git git-flow colored-man-pages colorize tmux python npm gulp zsh-syntax-highlighting)
+plugins=(git git-flow colored-man-pages colorize tmux python npm gulp zsh-syntax-highlighting docker docker-compose)
 
 # Ignore ORIG_HEAD in zsh git autocomplete
 zstyle ':completion:*:*' ignored-patterns '*ORIG_HEAD'
@@ -113,8 +113,16 @@ elif [ ! -d "$HOME/.nvm" ]; then
 fi
 
 # Golang
-export GOPATH=$HOME/golang
-export GOROOT=$HOME/golang/go-1.7
+export GOPATH=$HOME/go-workspace
+case $(uname -s) in
+  Darwin)
+    export GOROOT=/usr/local/opt/go/libexec
+    ;;
+  Linux)
+    export GOROOT=$HOME/go-1.8.1
+    ;;
+esac
+
 if [[ $PATH != *"go"* && -d "$GOPATH" && -d "$GOROOT" ]]; then
   export PATH=$PATH:$GOPATH/bin # additional go libraries
   export PATH=$PATH:$GOROOT/bin # path of go source

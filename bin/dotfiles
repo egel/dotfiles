@@ -1,11 +1,10 @@
 #!/bin/bash
 
 FILE_NAME=${0##*/}
-CURRENT_OS=$(uname -s)
 PWD=$(pwd)
 
 # General colors
-black='\033[0;30m'
+# black='\033[0;30m'
 red='\033[0;31m'
 green='\033[0;32m' # '\e[1;32m' is too bright for white bg.
 blue='\033[1;34m'
@@ -15,10 +14,11 @@ cyan='\033[0;36m'
 endColor='\033[0m'
 
 # Type of messages
-__info__="${blue}Info    ${endColor}"
-__warning__="${yellow}Warning!${endColor}"
-__done__="${green}✔ Done  ${endColor}"
-__error__="${red}FAIL    ${endColor}"
+__question__="${purple}Question? ${endColor}"
+__info__="${blue}Info      ${endColor}"
+__warning__="${yellow}Warning!  ${endColor}"
+__done__="${green}✔ Done    ${endColor}"
+__error__="${red}FAIL      ${endColor}"
 __aborted__="${yellow}Action aborted${endColor}"
 
 # Current file variables
@@ -31,9 +31,8 @@ PROJECT_CONFIG_MISSING_VARIABLE_COUNTER=0
 PROJECT_INSTALL_DEFAULTS=
 DATE_UTC=$(date +%Y-%m-%dT%TZ)
 AUTHOR="Maciej Sypień"
-GIT_CURRENT_BRANCH=$(git branch | grep \* | cut -d ' ' -f2)
+GIT_CURRENT_BRANCH=$(git branch | grep "\*" | cut -d ' ' -f2)
 
-IS_WIN=false
 IS_MAC=false
 IS_LINUX=false
 IS_ARCH=false
@@ -41,22 +40,23 @@ IS_BASED_ON_UBUNTU_1604=false
 
 if [ "$(uname -s)" == "Darwin" ]; then
   IS_MAC=true
-elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+elif [ "$(uname)" == "Linux" ]; then
   if [[ "$(uname -r)" =~ "ARCH" ]]; then
     IS_ARCH=true
-  elif [[ "$(uname -a)" =~ "Ubuntu" && "$(uname -a)" =~ "16.04" ]]; then
+  elif [[ -f "/etc/lsb-release" && $(awk 'match($0, /Ubuntu 16.04/) { print substr($0, RSTART, RLENGTH) }' /etc/lsb-release) == "Ubuntu 16.04" ]]; then
     IS_BASED_ON_UBUNTU_1604=true
-  elif [[ "$(uname -a)" =~ "Ubuntu" ]]; then
+  elif [[ "$(uname)" == "Linux" ]]; then
+    IS_LINUX=true
     # Load dotfiles config vars if the file is available
     # This action is required if we want to suppress message when enter
     if [ -f "${PROJECT_CONFIG_FILE}" ]; then
       # shellcheck source=/dev/null
       . "${PROJECT_CONFIG_FILE}"
     fi
-      if [[ "${DOTFILES_IGNORE_UBUNTU_VERSION}" != "true" ]]; then
-        printf "%b This program didn't recognize your version of Ubuntu\n" "${__warning__}"
+      if [[ ${IS_LINUX} && "${DOTFILES_IGNORE_UBUNTU_VERSION}" != "true" ]]; then
+        printf "\n%b This program didn't recognize your Linux distribution\n" "${__warning__}"
         printf "Version (uname -a): %s\n" "$(uname -a)"
-        printf "\n%b Do you want continue as Ubuntu 16.04?" "${__info__}"
+        printf "\n%b Do you want continue as Ubuntu 16.04?" "${__question__}"
         read -r -p " (y/N) " _continue_as_ubuntu_1604
         case $_continue_as_ubuntu_1604 in
           y|Y)
@@ -68,11 +68,23 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
         esac
       fi
   else
-    printf "%b This program doesn't support this version of Linux (%s)" "${__warning__}" "$(uname -a)"
-    exit 1;
+    printf "\n%b This program doesn't support this Linux distribution (%s)\n" "${__warning__}" "$(uname -a)"
+    printf "\n%b WARNING: Do you want to continue as if it ware 'Linux Ubuntu 16.04'?" "${__question__}"
+    read -r -p " (y/N) " _forcefully_continue_as_ubuntu_1604
+    case $_forcefully_continue_as_ubuntu_1604 in
+      y|Y)
+        IS_BASED_ON_UBUNTU_1604=true
+        ;;
+      *)
+        exit 1
+        ;;
+    esac
   fi
-elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
+elif [[ $(expr substr "$(uname -s)" 1 10) == "MINGW32_NT" && "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]]; then
   printf "%b This program doesn't support Windows OS" "${__warning__}"
+  exit 1;
+elif [[ $(expr substr "$(uname -s)" 1 10) =~ "CYGWIN" ]]; then
+  printf "%b This program doesn't support Cygwin project" "${__warning__}"
   exit 1;
 fi
 
@@ -126,7 +138,7 @@ print_if_missing_variable() {
   _variable=$1
   _if_string_exsist=$(grep -c -F "$_variable" "$PROJECT_CONFIG_FILE")
   if [[ "$_if_string_exsist" -eq 0 ]]; then
-    printf "%b Add %b variable to your %s file." "${__info__}" "${yellow}${_variable}${endColor}" "${PROJECT_CONFIG_FILE}"
+    printf "\n%b Add %b variable to your %s file." "${__info__}" "${yellow}${_variable}${endColor}" "${PROJECT_CONFIG_FILE}"
     PROJECT_CONFIG_MISSING_VARIABLE_COUNTER=$((PROJECT_CONFIG_MISSING_VARIABLE_COUNTER + 1))
   fi
 }
@@ -176,7 +188,7 @@ else
       ;;
     *)
       printf "%b Missing %s file.\n" "${__warning__}" "$PROJECT_CONFIG_FILE"
-      printf "\n%b Do you want to copy default configuration file to fix it?" "${__info__}"
+      printf "\n%b Do you want to copy default configuration file to fix it?" "${__question__}"
       read -r -p " (y/N) " _copy_default_configuration
       case $_copy_default_configuration in
         y|Y)
@@ -192,7 +204,7 @@ fi
 
 # do before install (yes to all while install)
 if [ "$2" == "-y" ]; then # if second arg is -y then
-  printf "%b %s\n" "${__warning__}" "Install all with default values!"
+  printf "\n%bInstalling %s with default values for questions!" "${__warning__}" "${PROJECT_NAME}"
   PROJECT_INSTALL_DEFAULTS=1
 fi
 
@@ -205,7 +217,7 @@ remove_old_symlinks() {
   for item in "${CURRENT_SYMLINKS[@]}"
   do
     # Removing the convention of SAVED backup for those files "<file_name>(DATE)"
-    rm -frv ${item}\(*
+    rm -frv "${item}\(*"
   done
 }
 
@@ -213,7 +225,7 @@ remove_old_symlinks() {
 remove_current_symlinks() {
   for item in "${CURRENT_SYMLINKS[@]}"
   do
-    rm -frv ${item}
+    rm -frv "${item}"
   done
 }
 
@@ -309,7 +321,7 @@ create_secure_mutt_passwords() {
 
 do_help() {
   print_dotfiles_logo
-  printf "%s sophisticated configurator for BASH/ZSH.\n\n" "${PROJECT_NAME}"
+  printf "Sophisticated dotfiles configurator for BASH/ZSH shell.\n\n" "${PROJECT_NAME}"
   printf "OPTIONS\n"
   printf "    backup\n"
   printf "        Create backup from files given into BACKUP_FILES variable\n"
@@ -334,7 +346,7 @@ do_help() {
   printf "    update, -u\n"
   printf "        Update %s repository and it submodules.\n\n" "${PROJECT_NAME}"
   printf "    uninstall\n"
-  printf "        Uninstall %s from hard drive.\n\n" "${PROJECT_NAME}"
+  printf "        Uninstall %s from the hard drive.\n\n" "${PROJECT_NAME}"
   printf "    -h, --help\n"
   printf "        Show help.\n\n"
   printf "    --version\n"
@@ -342,10 +354,11 @@ do_help() {
   printf "LOCAL CONFIG FILE\n"
   printf "    %s\n\n" "${PROJECT_CONFIG_FILE}"
   printf "EXAMPLES OF USAGE\n"
-  printf "    Since %s is installed globally you can do:\n" "${FILE_NAME}"
+  printf "    Since %s is installed globally you can just type i.e.:\n" "${FILE_NAME}"
   printf "        %s --help\n" "${FILE_NAME}"
   printf "        %s install\n" "${FILE_NAME}"
-  printf "\n2014-%s %s - License MIT.\n" "$(date +%Y)" "${AUTHOR}"
+  printf "        %s reconfigure\n" "${FILE_NAME}"
+  printf "\n%s 2014-%s - %s - License MIT.\n" "${PROJECT_NAME}" "$(date +%Y)" "${AUTHOR}"
   printf "Further info at https://github.com/egel/dotfiles\n"
   exit 1;
 }
@@ -353,17 +366,18 @@ do_help() {
 do_update() {
   print_section "Updating ${PROJECT_NAME}"
   if ! [[ -d "${PROJECT_REPOSITORY_DIR}" ]]; then
-      printf "%b %s doesn't exist at %b. Perhaps you want to install it first?\n" "${__info__}" "${PROJECT_NAME}" "${blue}${PROJECT_REPOSITORY_DIR}${endColor}"
+      printf "\n%b %s doesn't exist at %b. Perhaps you want to install it first?\n" "${__question__}" "${PROJECT_NAME}" "${blue}${PROJECT_REPOSITORY_DIR}${endColor}"
       exit 1;
   else
     if [[ "$GIT_CURRENT_BRANCH" != "master" ]]; then
-      printf "%b %s repository is in %b git branch.\n" "${__warning__}" "${PROJECT_NAME}" "${red}${GIT_CURRENT_BRANCH}${endColor}"
-      printf "%b Do you want to switch from %b to %b and continue?" "${__info__}" "${red}${GIT_CURRENT_BRANCH}${endColor}" "${green}master${endColor}"
+      printf "\n%b %s repository is in %b git branch.\n" "${__warning__}" "${PROJECT_NAME}" "${red}${GIT_CURRENT_BRANCH}${endColor}"
+      printf "\n%b Do you want to switch from %b to %b and continue?" "${__question__}" "${red}${GIT_CURRENT_BRANCH}${endColor}" "${green}master${endColor}"
       read -r -p " (y/N) " _switch_to_master_branch_by_force
         case $_switch_to_master_branch_by_force in
         y|Y)
-          printf "%bSwitching %s to master branch (by force)" "${purple}" "${PROJECT_NAME}" "${endColor}"
-          git --git-dir="${PROJECT_REPOSITORY_DIR}/.git" --work-tree="${PROJECT_REPOSITORY_DIR}" checkout -f master
+          printf "\n%bSwitching %s to master branch (by force):%b" "${purple}" "${PROJECT_NAME}" "${endColor}"
+          git --git-dir="${PROJECT_REPOSITORY_DIR}/.git" --work-tree="${PROJECT_REPOSITORY_DIR}" checkout --force master > /dev/null 2>&1
+          print_last_command_status
           ;;
         *)
           printf "%b\n" "${__aborted__}"
@@ -372,11 +386,13 @@ do_update() {
       esac
     fi
 
-    printf "%bUpdating %s repository:%b" "${purple}" "${PROJECT_NAME}" "${endColor}"
-    git --git-dir="${PROJECT_REPOSITORY_DIR}/.git" --work-tree="${PROJECT_REPOSITORY_DIR}" fetch
+    printf "\n%bUpdating %s repository:%b" "${purple}" "${PROJECT_NAME}" "${endColor}"
+    git --git-dir="${PROJECT_REPOSITORY_DIR}/.git" --work-tree="${PROJECT_REPOSITORY_DIR}" fetch > /dev/null 2>&1
 
-    printf "%bUpdating %s submodules repositories%b" "${purple}" "${PROJECT_NAME}" "${endColor}"
-    git --git-dir="${PROJECT_REPOSITORY_DIR}/.git" submodule update --init --recursive
+    printf "\n%bUpdating %s submodules repositories:%b" "${purple}" "${PROJECT_NAME}" "${endColor}"
+    git --git-dir="${PROJECT_REPOSITORY_DIR}/.git" submodule update --init --recursive > /dev/null 2>&1
+    print_last_command_status
+    printf "\n"
   fi
 }
 
@@ -385,7 +401,7 @@ do_install() {
 
   if [[ "$PROJECT_INSTALL_DEFAULTS" -ne 1 ]]; then # default: install -y
     printf "Answer for few questions to adjust your configuration preferences.\n"
-    printf "\n%b Do you want to configure mutt with secured gpg password?" "${__info__}"
+    printf "\n%b Do you want to configure mutt with secured gpg password?" "${__question__}"
     read -r -p " (y/N) " _configure_secure_mutt_gpg
   else
     _configure_secure_mutt_gpg="n"
@@ -395,7 +411,7 @@ do_install() {
   if [ -f "$PROJECT_CONFIG_FILE" ]; then
     printf "\n%b You already have %s config file at %b\n" "${__warning__}" "${FILE_NAME}" "${blue}${PROJECT_CONFIG_FILE}${endColor}"
     if [[ "$PROJECT_INSTALL_DEFAULTS" -ne 1 ]]; then # default: install -y
-      printf "%b Do you want to copy default configuration file to override current one?" "${__info__}"
+      printf "%b Do you want to copy default configuration file to override current one?" "${__question__}"
       read -r -p " (y/N) " _copy_default_configuration
     else
       _copy_default_configuration="n"
@@ -421,22 +437,19 @@ do_install() {
   fi
 
   if [[ "$PROJECT_INSTALL_DEFAULTS" -ne 1 ]]; then # default: install -y
-    printf "\n%b Do you want to change shell ZSH (current: %s) and install OH-MY-ZSH?" "${__info__}" "${SHELL}"
+    printf "\n%bDo you want to change shell ZSH (current: %s) and install OH-MY-ZSH?" "${__question__}" "${SHELL}"
     read -r -p " (y/N) " _install_zsh_and_ohmyzsh
   else
     _install_zsh_and_ohmyzsh="n"
   fi
 
   # update dotfiles repository
-  printf "\n%b Do you want to update %s repository to latest version?" "${__info__}" "${PROJECT_NAME}"
-  read -r -p " (y/N) " _update_repository
-  case $_copy_default_configuration in
-    y|Y)
-      ${PROJECT_CONFIGURATOR_FILE} update
-      ;;
-    *)
-      ;;
-  esac
+  if [[ "$PROJECT_INSTALL_DEFAULTS" -ne 1 ]]; then # default: install -y
+    printf "\n%bDo you want to update %s repository to latest version?" "${__question__}" "${PROJECT_NAME}"
+    read -r -p " (y/N) " _update_repository
+  else
+    _update_repository="n"
+  fi
 
   # symlink dotfiles program (same for Darwin and Linux)
   print_subsection "Symlinking ${FILE_NAME} configurator program"
@@ -498,34 +511,35 @@ do_install() {
 
     print_subsection "Install and compile Vim from source files"
     # Install vim
-    # According to https://gist.github.com/akolosov/cedaac86b333a4ced95f
-    # with some improvements ;)
-    sudo apt-get remove --purge vim vim-runtime vim-gnome vim-tiny vim-common vim-gui-common
+    sudo apt-get remove -y --purge vim vim-runtime vim-gnome vim-tiny vim-common vim-gui-common
     print_last_command_status
 
-    sudo apt-get install liblua5.1-dev luajit libluajit-5.1
+    sudo apt-get install -y liblua5.1-dev luajit libluajit-5.1
     print_last_command_status
 
-    sudo apt-get install python-dev python3-dev ruby-dev libperl-dev mercurial libncurses5-dev libgnome2-dev libgnomeui-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev
+    sudo apt-get install -y python-dev python3-dev ruby-dev libperl-dev mercurial libncurses5-dev libgnome2-dev libgnomeui-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev
     print_last_command_status
 
     cd /tmp || exit
     git clone https://github.com/vim/vim.git
     ./configure --with-features=huge \
+                --enable-multibyte \
                 --enable-gui=auto \
+                --enable-gtk2-check \
+                --enable-gtk3-check \
+                --enable-gnome-check \
                 --enable-cscope \
                 --enable-largefile \
-                --enable-pythoninterp \
-                --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu \
-                --enable-python3interp \
-                --with-python3-config-dir=/usr/lib/python3.4/config-3.4m-x86_64-linux-gnu \
+                --enable-pythoninterp=dynamic --with-python-config-dir="$(python-config --configdir)" \
+                --enable-python3interp=dynamic --with-python3-config-dir="$(python3-config --configdir)" \
                 --enable-perlinterp \
-                --enable-rubyinterp \
-                --enable-luainterp \
+                --enable-rubyinterp=dynamic \
+                --enable-luainterp=dynamic \
                 --with-luajit \
-                --enable-fail-if-missing \
+                --with-x \
                 --prefix=/usr \
-                --with-compiledby="${AUTHOR}"
+                --with-compiledby="${AUTHOR}" \
+                --enable-fail-if-missing
     make VIMRUNTIMEDIR=/usr/share/vim/vim80
     sudo make install
 
@@ -588,8 +602,16 @@ do_install() {
     print_last_command_status
   fi
 
+  case $_update_repository in
+    y|Y)
+      ${PROJECT_CONFIGURATOR_FILE} update
+      ;;
+    *)
+      ;;
+  esac
+
   print_subsection "Downloading submodules of ${PROJECT_NAME} repository"
-  git submodule update --init --recursive
+  git --git-dir="${PROJECT_REPOSITORY_DIR}/.git" --work-tree="${PROJECT_REPOSITORY_DIR}" submodule update --init --recursive > /dev/null 2>&1
   print_last_command_status
 
   # link honukai to oh-my-zsh themes
@@ -644,12 +666,12 @@ do_install() {
   fi
 
   printf "\n\n%b" "${green}Congratulations!${endColor}\n"
-  printf "Configuration of ${PROJECT_NAME} complete successfully.\n"
+  printf "Configuration of %s complete successfully.\n" "${PROJECT_NAME}"
   printf "Now you could run: '%s' to find more about the configurator.\n" "${FILE_NAME} --help"
 
   printf "\n%b To finalize installation of ZSH shell, you need to reboot the system." "${__info__}"
   if [[ "$PROJECT_INSTALL_DEFAULTS" -ne 1 ]]; then # default: install -y
-    printf "%b Would you like to do it now?" "${__info__}"
+    printf "%b Would you like to do it now?" "${__question__}"
     read -r -p " (y/N) " _reboot_now
   else
     _reboot_now="n"
@@ -659,7 +681,7 @@ do_install() {
     printf "%b Now rebooting the system..." "${__info__}"
     sudo reboot
   else
-    printf "%b Rebooting canceled by User" ${__info__}
+    printf "%b Rebooting canceled by User" "${__info__}"
   fi
 }
 
@@ -696,7 +718,7 @@ do_fix_permissions() {
 
 do_uninstall() {
   print_section "Uninstall ${PROJECT_NAME}"
-  printf "%b Are you sure you want to uninstall %s?" "${__warning__}" "${PROJECT_NAME}"
+  printf "%b Are you sure you want to uninstall %s?" "${__question__}" "${PROJECT_NAME}"
   read -r -p " (y/N) " _uninstall_repo
   case $_uninstall_repo in
     y|Y)
@@ -757,7 +779,7 @@ do_reconfigure() {
 
 do_clean() {
   print_section "Clean ${PROJECT_NAME}"
-  printf "%b Are you sure you want to clean old %s symlinks?" "${__warning__}" "${PROJECT_NAME}"
+  printf "%b Are you sure you want to clean old %s symlinks?" "${__question__}" "${PROJECT_NAME}"
   read -r -p " (y/N) " _cleaning_symlinks
   case $_cleaning_symlinks in
     y|Y)
@@ -774,7 +796,7 @@ do_clean() {
 
 do_clean_all() {
   print_section "Clean ${PROJECT_NAME}"
-  printf "%b Are you sure you want to clean ALL %s symlinks?" "${__warning__}" "${PROJECT_NAME}"
+  printf "%b Are you sure you want to clean ALL %s symlinks?" "${__question__}" "${PROJECT_NAME}"
   read -r -p " (y/N) " _cleaning_symlinks
   case $_cleaning_symlinks in
     y|Y)
@@ -838,7 +860,7 @@ case "$1" in
   list-config|-lc)
     do_list_local_config
     ;;
-  install|-i)dotfiles --help
+  install|-i)
     do_install
     ;;
   reconfigure|-r)

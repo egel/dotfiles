@@ -22,6 +22,7 @@ settings/common/.mutt/gmailcerts
 
 # Editor
 .idea/
+**/*.iml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -47,7 +47,7 @@ set nocompatible
 "    execute 'source' expand('~/.vimrc.theme')
 "  endif
 " }}}
-" Because a value is not set in $MYGVIMRC with the console, so we set it.
+" Because a value is not set in $MYGVIMRC with the console, so we set it. {{{
   if !exists($MYGVIMRC)
     let $MYGVIMRC = expand('~/.gvimrc')
   endif
@@ -421,7 +421,7 @@ endif
           \ '__pycache__',
           \ '\.swp$',
           \ '\.DS_Store',
-          \ '\.git',
+          \ '\.git$',
           \ '\.hg',
           \ 'node_modules'
           \ ]
