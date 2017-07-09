@@ -24,14 +24,15 @@ __aborted__="${yellow}Action aborted${endColor}"
 # Current file variables
 __version__="2.3.0"
 PROJECT_NAME="The Egel dotfiles"
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"  #current path to file
-PROJECT_CONFIG_NAME='.dotfiles.config'
+CURRENT_FILE_DIRECTORY="$(cd "$(dirname "${BASH_SOURCE[0]}" )" && pwd)" #current path to file
+PROJECT_CONFIG_NAME=".dotfiles.config"
 PROJECT_CONFIG_FILE=$HOME/${PROJECT_CONFIG_NAME}
 PROJECT_CONFIG_MISSING_VARIABLE_COUNTER=0
 PROJECT_INSTALL_DEFAULTS=
 DATE_UTC=$(date +%Y-%m-%dT%TZ)
 AUTHOR="Maciej Sypień"
 GIT_CURRENT_BRANCH=$(git branch | grep "\*" | cut -d ' ' -f2)
+EMAIL_REGEXP="^[a-z0-9!#\$%&'*+/=?^_\`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])?\$"
 
 IS_MAC=false
 IS_LINUX=false
@@ -81,10 +82,10 @@ elif [ "$(uname)" == "Linux" ]; then
     esac
   fi
 elif [[ $(expr substr "$(uname -s)" 1 10) == "MINGW32_NT" && "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]]; then
-  printf "%b This program doesn't support Windows OS" "${__warning__}"
+  printf "%bThis program doesn't support Windows OS" "${__warning__}"
   exit 1;
 elif [[ $(expr substr "$(uname -s)" 1 10) =~ "CYGWIN" ]]; then
-  printf "%b This program doesn't support Cygwin project" "${__warning__}"
+  printf "%bThis program doesn't support Cygwin project" "${__warning__}"
   exit 1;
 fi
 
@@ -174,8 +175,8 @@ fix_file_or_directory_permission() {
 }
 
 do_copy_default_config_file() {
-  print_subsection "Copy default config file"
-  cp -fv "${DIR}/${PROJECT_CONFIG_NAME}" "${PROJECT_CONFIG_FILE}"
+  print_subsection "Copy dotfiles default config file"
+  cp -fv "${CURRENT_FILE_DIRECTORY}/${PROJECT_CONFIG_NAME}" "${PROJECT_CONFIG_FILE}"
   print_last_command_status
 }
 
@@ -183,8 +184,7 @@ do_set_config_vars() {
   # set some vars based on validate config
   PROJECT_REPOSITORY_DIR="${GIT_PROJECT_FOLDER_DIR}/${GIT_PROJECT_FOLDER_NAME}"
   PROJECT_LIB_DIR="$PROJECT_REPOSITORY_DIR/lib"
-  PROJECT_SETTINGS_COMMON_DIR="$PROJECT_REPOSITORY_DIR/settings/common"
-  PROJECT_SETTINGS_THEME_DIR="$PROJECT_REPOSITORY_DIR/settings/themes/$DOTFILES_THEME"
+  PROJECT_SETTINGS_COMMON_DIR="$PROJECT_REPOSITORY_DIR/configuration"
   PROJECT_CONFIGURATOR_FILE="$PROJECT_REPOSITORY_DIR/bin/$FILE_NAME"
 }
 
@@ -209,7 +209,7 @@ else
       # The installation process contains creating default config
       ;;
     *)
-      printf "%b Missing %s file.\n" "${__warning__}" "$PROJECT_CONFIG_FILE"
+      printf "%bMissing %s file.\n" "${__warning__}" "$PROJECT_CONFIG_FILE"
       printf "\n%b Do you want to copy default configuration file to fix it?" "${__question__}"
       read -r -p " (y/N) " _copy_default_configuration
       case $_copy_default_configuration in
@@ -255,10 +255,10 @@ remove_current_symlinks() {
 
 # Methods
 check_program() {
-  _name=$1
-  _command=$2
-  printf "%b" "${purple}${_name}${endColor}"
-  eval "${_command}"
+  __name=$1
+  __command=$2
+  printf "%b" "${purple}${__name}${endColor}"
+  eval "${__command}"
 }
 
 # Making simlint to file/folder
@@ -267,27 +267,30 @@ make_symlink() {
   __if=$2 # input file (~/.dotfiles/.vimrc)
   __of=$3 # output file (~/.vimrc)
 
-  if [ -f "${__of}" ]; then
-    _type="file"
-  elif [ -d "${__of}" ]; then
-    _type="directory"
-  elif [ -L "${__of}" ]; then
-    _type="symlink"
-  fi
-
   printf "\n%b\n" "${purple}$__name${endColor}"
 
-  _renamed_file="$__of($DATE_UTC)"
-  if [[ ${_type} == "file" && ${_type} == "directory" ]]; then
-    printf "%b %b %s exist, so safely renaming it as %b\n" "${__info__}" "${purple}${__of}${endColor}" "${_type}" "${purple}${_renamed_file}${endColor}"
+  if [ -f "${__if}" ]; then
+    _type="file"
+  elif [ -d "${__if}" ]; then
+    _type="directory"
+  elif [ -L "${__if}" ]; then
+    _type="symlink"
+  else
+    printf "%bNo such file or directory like %b\n" "${__warning__}" "${purple}${__if}${endColor}"
+    return
+  fi
+
+  _renamed_file="${__of}(${DATE_UTC})"
+  if [[ -d ${__of} || -f ${__of} ]]; then
+    printf "%b%b %s exist, so safely renaming it as %b\n" "${__info__}" "${purple}${__of}${endColor}" "${_type}" "${purple}${_renamed_file}${endColor}"
     mv "$__of" "${_renamed_file}"
     print_last_command_status
   fi
 
-  if [ -z ${_type} ];then
-    printf "%b Symlinking %b\n" "${__info__}" "${purple}${__of}${endColor}"
+  if ! [[ -d ${__of} || -f ${__of} ]]; then
+    printf "%bSymlinking %b\n" "${__info__}" "${purple}${__of}${endColor}"
   else
-    printf "%b %b %s exist, so re-symlinking it\n" "${__info__}" "${purple}${__of}${endColor}" "${_type}"
+    printf "%b%b %s exist, so re-symlinking it\n" "${__info__}" "${purple}${__of}${endColor}" "${_type}"
   fi
 
   ln -sf "${__if}" "${__of}"
@@ -299,7 +302,7 @@ is_program_installed() {
   _install_script=$2
 
   if hash "${_program}" 2>/dev/null; then
-    printf "%b Program %b already exist at %s\n" "${__done__}" "${blue}${_program}${endColor}" "$(which ${_program})"
+    printf "%bProgram %b already exist at %s\n" "${__done__}" "${blue}${_program}${endColor}" "$(which ${_program})"
   else
     printf "Installing %b program. Please wait.\n" "${blue}${_program}${endColor}"
     eval "${_install_script}"
@@ -312,21 +315,63 @@ create_secure_mutt_passwords() {
   _mutt_passwords_path="$HOME/.mutt/passwords.gpg"
 
   print_section "Creating secure passwords for mutt with GPG"
-  printf "%b Below is your list of gpg:" "${__info__}"
-  if [ -z "$(gpg --list-keys)" ]; then
-    printf "%b You have no GPG keys. Generate your pair 'gpg --gen-key'" "${__warning__}"
-    printf "or import, then re-run: '%s' to restart creating secure password for mutt" "${FILE_NAME} -mmp"
-  else
-    gpg --list-keys
-    printf "%b If you want to create new one pair of keys type: 'gpg --gen-key'" "${__info__}"
-  fi;
-  read -r -p "Type your e-mail address (that you are using in gpg; ex: 'john.doe@gmail.com'): " _email_address
-  read -s -p -r "Type your e-mail password: " _email_password
 
-  if ! [[ -d "${DESTINATION_MUTT_DIR}" ]]; then
+  if ! [ -d "${DESTINATION_MUTT_DIR}" ]; then
     print_subsection "Symlinking missing mutt directory"
     make_symlink ".mutt" "$PROJECT_SETTINGS_COMMON_DIR/.mutt" "$DESTINATION_MUTT_DIR"
     print_last_command_status
+  fi
+
+  printf "%bBelow is your list of gpg:" "${__info__}"
+  if [ -z "$(gpg --list-keys)" ]; then
+    printf "%bYou have no GPG keys. Generate your pair 'gpg --gen-key'" "${__warning__}"
+    printf "or import, then re-run: '%s' to restart creating secure password for mutt" "${FILE_NAME} -mmp"
+  else
+    gpg --list-keys
+    printf "%bIf you want to create new pair of keys, then type: 'gpg --gen-key'\n" "${__info__}"
+  fi
+  printf "\n%bType your e-mail address (that you are using in gpg; ex.: 'john.doe@gmail.com')\n" "${__info__}"
+  read -r -p "E-mail: " _email_address
+
+  if [ -z ${_email_address} ]; then
+    printf "%bE-mail cannot be empty\n" "${__warning__}"
+    read -r -p "E-mail: " _email_address
+  fi
+
+  if [ -z ${_email_address} ]; then
+    printf "%bE-mail not set, then exit.\n" "${__error__}"
+    exit 1
+  fi
+
+  if ! [[ ${_email_address} =~ ${EMAIL_REGEXP} ]]; then
+    printf "%bGiven e-mail <${_email_address}> seems to be invalid. Try again.\n" "${__error__}"
+    exit 1
+  fi
+
+  if [ $(gpg --list-keys | grep -c ${_email_address}) -gt 0 ]; then
+    gpg --fingerprint ${_email_address}
+    printf "%bIt looks that your e-mail <${_email_address}> might be already there\n" "${__info__}"
+    printf "%bDo you want to continue?" "${__question__}"
+    read -r -p " (y/N) " _forcefully_continue_creating_gpg_key
+    case $_forcefully_continue_creating_gpg_key in
+    y|Y)
+      ;;
+    *)
+      printf "%b\n" "${__aborted__}"
+      exit 1;
+      ;;
+    esac
+  fi
+
+  printf "%bType your password for <${_email_address}>\nPassword: " "${__info__}"
+  read -s _email_password
+
+  printf "\nRetype password: "
+  read -s _email_password_retype
+
+  if [ ${_email_password} -ne ${_email_password_retype} ]; then
+    printf "Passwords are not equal. Run program again."
+    exit 1;
   fi
 
   # This method will not store passwords on hard drive in plain text, ever!
@@ -335,7 +380,7 @@ create_secure_mutt_passwords() {
   echo -e "${_secret}" | gpg -r "${_email_address}" -e -a > "${_mutt_passwords_path}"
 
   if [ -f "${_mutt_passwords_path}" ]; then
-    printf "\n%s Successfully complete creating a secure passwords file for <%s>" "${__done__}" "${_email_address}"
+    printf "\n%b Successfully created secure password file for email <%s>\n" "${__done__}" "${_email_address}"
   fi
 }
 
@@ -431,7 +476,7 @@ do_install() {
   if [ -f "$PROJECT_CONFIG_FILE" ]; then
     printf "\n%b You already have %s config file at %b\n" "${__warning__}" "${FILE_NAME}" "${blue}${PROJECT_CONFIG_FILE}${endColor}"
     if [[ "$PROJECT_INSTALL_DEFAULTS" -ne 1 ]]; then # default: install -y
-      printf "%b Do you want to copy default configuration file to override current one?" "${__question__}"
+      printf "%bDo you want to copy default configuration file to override current one?" "${__question__}"
       read -r -p " (y/N) " _copy_default_configuration
     else
       _copy_default_configuration="n"
@@ -527,6 +572,9 @@ do_install() {
     print_last_command_status
 
     sudo apt-get install -y editorconfig git zsh tmux
+    print_last_command_status
+
+    sudo apt-get install gnupg2 # security tool used i.e. for mutt
     print_last_command_status
 
     sudo apt-get install -y shellcheck # for checking syntax in vim for *.sh files
@@ -662,11 +710,11 @@ do_install() {
     sudo -S pacman -S ttf-hack
     print_last_command_status
   fi
-  printf "%b To see more details for Hack font at http://sourcefoundry.org/hack/\n\n" "${__info__}"
+  printf "%bTo see more details for Hack font at http://sourcefoundry.org/hack/\n\n" "${__info__}"
 
   # installing vim plugins (need to be after reconfiguration process of dotfiles configurator)
   print_subsection "Installing NeoBundle vim plugins"
-  printf "%b This operation might take some time.\n" "${__info__}"
+  printf "%bThis operation might take some time.\n" "${__info__}"
   eval "$HOME/.vim/bundle/neobundle.vim/bin/neoinstall"
   print_last_command_status
 
@@ -681,12 +729,12 @@ do_install() {
 
   if $IS_MAC; then
     print_subsection "\nUpdating brew manager"
-    printf "%b Be patient, it may take a while ;)" "${__info__}"
-    printf "%b Update brew\n" "${__info__}"
+    printf "%bBe patient, it may take a while ;)" "${__info__}"
+    printf "%bUpdate brew\n" "${__info__}"
     brew update
     print_last_command_status
 
-    printf "%b Doctor brew\n" "${__info__}"
+    printf "%bDoctor brew\n" "${__info__}"
     brew doctor
     print_last_command_status
   fi
@@ -697,17 +745,17 @@ do_install() {
 
   printf "\n%b To finalize installation of ZSH shell, you need to reboot the system.\n" "${__info__}"
   if [[ "$PROJECT_INSTALL_DEFAULTS" -ne 1 ]]; then # default: install -y
-    printf "%b Would you like to do it now?" "${__question__}"
+    printf "%bWould you like to do it now?" "${__question__}"
     read -r -p " (y/N) " _reboot_now
   else
     _reboot_now="n"
   fi
 
   if [[ $_reboot_now =~ ^([yY]) ]]; then
-    printf "%b Now rebooting the system..." "${__info__}"
+    printf "%bNow rebooting the system..." "${__info__}"
     sudo reboot
   else
-    printf "%b Rebooting canceled by User" "${__info__}"
+    printf "%bRebooting canceled by User" "${__info__}"
   fi
 }
 
@@ -729,7 +777,7 @@ do_fix_permissions() {
 
 do_uninstall() {
   print_section "Uninstall ${PROJECT_NAME}"
-  printf "%b Are you sure you want to uninstall %s?" "${__question__}" "${PROJECT_NAME}"
+  printf "%bAre you sure you want to uninstall %s?" "${__question__}" "${PROJECT_NAME}"
   read -r -p " (y/N) " _uninstall_repo
   case $_uninstall_repo in
     y|Y)
@@ -740,7 +788,7 @@ do_uninstall() {
       exit 1;
       ;;
     *)
-      printf "%b Aborting uninstalling of ." "${__info__}" "${PROJECT_NAME}"
+      printf "%bAborting uninstalling of ." "${__info__}" "${PROJECT_NAME}"
       ;;
   esac
 }
@@ -756,15 +804,17 @@ do_reconfigure() {
   make_symlink ".gvimrc" "${PROJECT_SETTINGS_COMMON_DIR}/.gvimrc" "$HOME/.gvimrc"
   make_symlink ".ideavimrc" "${PROJECT_SETTINGS_COMMON_DIR}/.ideavimrc" "$HOME/.ideavimrc"
   make_symlink ".mutt" "${PROJECT_SETTINGS_COMMON_DIR}/.mutt" "$HOME/.mutt"
+  make_symlink ".muttrc" "${PROJECT_SETTINGS_COMMON_DIR}/.muttrc" "$HOME/.muttrc"
+  make_symlink ".muttrc.local" "${PROJECT_SETTINGS_COMMON_DIR}/.muttrc.local" "$HOME/.muttrc.local"
   make_symlink ".tmux-osx.conf" "${PROJECT_SETTINGS_COMMON_DIR}/.tmux-osx.conf" "$HOME/.tmux-osx.conf"
   make_symlink ".tmux-linux.conf" "${PROJECT_SETTINGS_COMMON_DIR}/.tmux-linux.conf" "$HOME/.tmux-linux.conf"
   make_symlink ".tmux.conf" "${PROJECT_SETTINGS_COMMON_DIR}/.tmux.conf" "$HOME/.tmux.conf"
-  make_symlink ".tmux.conf.local" "${PROJECT_SETTINGS_THEME_DIR}/.tmux.conf.local" "$HOME/.tmux.conf.local"
+  make_symlink ".tmux.conf.local" "${PROJECT_SETTINGS_COMMON_DIR}/.tmux.conf.local" "$HOME/.tmux.conf.local"
   make_symlink ".vim" "${PROJECT_SETTINGS_COMMON_DIR}/.vim" "$HOME/.vim"
   make_symlink ".vimrc" "${PROJECT_SETTINGS_COMMON_DIR}/.vimrc" "$HOME/.vimrc"
   make_symlink ".zshenv" "${PROJECT_SETTINGS_COMMON_DIR}/.zshenv" "$HOME/.zshenv"
   make_symlink ".zshrc" "${PROJECT_SETTINGS_COMMON_DIR}/.zshrc" "$HOME/.zshrc"
-  make_symlink ".zshrc.local" "${PROJECT_SETTINGS_THEME_DIR}/.zshrc.local" "$HOME/.zshrc.local"
+  make_symlink ".zshrc.local" "${PROJECT_SETTINGS_COMMON_DIR}/.zshrc.local" "$HOME/.zshrc.local"
 
   # $PATH variable not properly set in gvim/MacVim => http://stackoverflow.com/a/24542893/1977012
   make_symlink ".zprofile" "${PROJECT_SETTINGS_COMMON_DIR}/.zprofile" "$HOME/.zprofile"
@@ -789,7 +839,7 @@ do_reconfigure() {
 
 do_clean() {
   print_section "Clean ${PROJECT_NAME}"
-  printf "%b Are you sure you want to clean old %s symlinks?" "${__question__}" "${PROJECT_NAME}"
+  printf "%bAre you sure you want to clean old %s symlinks?" "${__question__}" "${PROJECT_NAME}"
   read -r -p " (y/N) " _cleaning_symlinks
   case $_cleaning_symlinks in
     y|Y)
@@ -799,14 +849,14 @@ do_clean() {
       exit 1;
       ;;
     *)
-      printf "%b Aborting cleaning of %s symlinks." "${__info__}" "${PROJECT_NAME}"
+      printf "%bAborting cleaning of %s symlinks." "${__info__}" "${PROJECT_NAME}"
       ;;
   esac
 }
 
 do_clean_all() {
   print_section "Clean ${PROJECT_NAME}"
-  printf "%b Are you sure you want to clean ALL %s symlinks?" "${__question__}" "${PROJECT_NAME}"
+  printf "%bAre you sure you want to clean ALL %s symlinks?" "${__question__}" "${PROJECT_NAME}"
   read -r -p " (y/N) " _cleaning_symlinks
   case $_cleaning_symlinks in
     y|Y)
@@ -817,7 +867,7 @@ do_clean_all() {
       exit 1;
       ;;
     *)
-      printf "%b Aborting cleaning of %s symlinks." "${__info__}" "${PROJECT_NAME}"
+      printf "%bAborting cleaning of %s symlinks." "${__info__}" "${PROJECT_NAME}"
       ;;
   esac
 }
@@ -830,12 +880,12 @@ do_backup() {
   print_section "Making backup of your private files"
 
   if [ ${#BACKUP_FILES[@]} -eq 0 ]; then
-    printf "%b There is no backup files set yet. Add BACKUP_FILES to %s\n" "${__warning__}" "${PROJECT_CONFIG_FILE}"
+    printf "%bThere is no backup files set yet. Add BACKUP_FILES to %s\n" "${__warning__}" "${PROJECT_CONFIG_FILE}"
     exit 1;
   fi
 
   BACKUP_DIR="${BACKUP_DIR}(${DATE_UTC})" # UTC but local
-  printf "%b Write backup directory (default path: '%s')\n" "${__info__}" "${BACKUP_DIR}"
+  printf "%bWrite backup directory (default path: '%s')\n" "${__info__}" "${BACKUP_DIR}"
   read -r -p " " _backup_dir
   if [ -n "${_backup_dir}" ]; then # if not empty
     BACKUP_DIR=${_backup_dir}
@@ -851,7 +901,7 @@ do_backup() {
     elif [ -f "${item}" ]; then # file
       cp -f "$item" "$BACKUP_DIR"
     fi
-    echo -e "Backup of $item completed ${__done__}"
+    printf "Backup of %s completed %b\n" "$item" "${__done__}"
   done
 
 }
@@ -901,5 +951,5 @@ case "$1" in
     ;;
 esac
 
-shift $((OPTIND - 1))
+shift "$((OPTIND - 1))"
 

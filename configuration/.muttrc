@@ -104,6 +104,6 @@ macro index A ":set confirmappend=no delete=yes\n<save-message>=archive\n<sync-m
 set quit=yes
 
 # Load local specyfic configuration
-# source $HOME/.mutt/muttrc.local
+source $HOME/.muttrc.local
 
 # vim: set ft=muttrc tw=0 nowrap:

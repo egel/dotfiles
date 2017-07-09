@@ -6,6 +6,7 @@ wiki/
 **/.vim/sessions/
 **/.vim/bundle/
 .vim(*
+**/.mutt/*.gpg
 
 # Mac specyfic files
 **/*.DS_Store
