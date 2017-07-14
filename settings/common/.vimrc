@@ -410,7 +410,10 @@ endif
   NeoBundle 'kylef/apiblueprint.vim'          " blueprint/apiari syntax
   NeoBundle 'smancill/conky-syntax.vim'       " conky file syntax
   NeoBundle 'ekalinin/Dockerfile.vim'         " dockerfile syntax
-  NeoBundle 'evanmiller/nginx-vim-syntax'
+  NeoBundle 'chr4/nginx.vim' "{{{
+    au BufRead,BufNewFile */usr/local/etc/nginx/sites-available/* set ft=nginx
+    au BufRead,BufNewFile */usr/local/etc/nginx/sites-enabled/* set ft=nginx
+  " }}}
   NeoBundle 'keith/tmux.vim'
 
 
