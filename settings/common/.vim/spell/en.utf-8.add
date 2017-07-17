@@ -84,3 +84,7 @@ configurator
 ZSH
 shellcheck
 dotfiles
+gitignore
+env
+Dockerization
+dockerization
