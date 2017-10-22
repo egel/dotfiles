@@ -1,0 +1,9 @@
+" vim: ft=vim fdm=marker ts=2 sts=2 sw=2
+
+    " else " This for console Vim.
+      " if exists("+lines")
+        " set lines=50
+      " endif
+      " if exists("+columns")
+        " set columns=100
+      " endif
