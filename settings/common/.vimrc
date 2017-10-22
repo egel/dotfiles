@@ -13,7 +13,7 @@ set nocompatible
   if !1 | finish | endif
 
 " }}}
-" Library functions
+" Library functions {{{
   " Remove newline char from string
   function! Chomp(string)
     return substitute(a:string, '\n\+$', '', '')
@@ -108,7 +108,7 @@ endif
     set fileformats=unix,dos                        " Prefer unix fileformat
     set backspace=indent,eol,start                  " Allow backspacing over everything in insert mode
 
-
+    " No default fold, using plugin instead
     set nofoldenable
     " set foldenable                                  "enable folds by default
     " set foldmethod=syntax                           "fold via syntax of files
@@ -140,12 +140,13 @@ endif
     let &shiftwidth=s:settings.default_indent       " Number of spaces per tab in insert mode
     let &softtabstop=s:settings.default_indent      " Number of spaces when indenting
     set expandtab                                   " Use spaces, not tab characters
+    set hlsearch                                    " auto highlight when search (even with * sign)
 
     " Display line numbers on every window split except NERDTree
     if(exists('t:NERDTreeBufName') && bufname('%') == t:NERDTreeBufName)
       set nonumber
     else
-      set number
+      set number relativenumber
     endif
 
     " Default wrap all files except NERDTree
@@ -196,13 +197,6 @@ endif
         set guifont=Consolas:h11:cANSI
       else
         set guifont=Hack:h11:cDEFAULT
-      endif
-    else " This for console Vim.
-      if exists("+lines")
-        set lines=50
-      endif
-      if exists("+columns")
-        set columns=100
       endif
     endif
 
@@ -293,14 +287,19 @@ endif
     NeoBundle 'kien/ctrlp.vim' " {{{
       let g:ctrlp_map = '<c-p>'
       let g:ctrlp_cmd = 'CtrlP'
+      let g:ctrlp_show_hidden = 1
       set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
       set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 
-      let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
       let g:ctrlp_custom_ignore = {
-        \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+        \ 'dir':  '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn|hg|idea))$',
         \ 'file': '\v\.(exe|so|dll)$',
         \ 'link': 'some_bad_symbolic_links',
+        \ }
+
+      let g:ctrlp_prompt_mappings = {
+        \ 'AcceptSelection("e")': ['<2-LeftMouse>'],
+        \ 'AcceptSelection("t")': ['<cr>'],
         \ }
     " }}}
     NeoBundle 'tpope/vim-unimpaired'  " useful keybindings for eg. fugitive plugin
@@ -438,11 +437,11 @@ endif
     let NERDTreeShowHidden=1
 
     " default NERDTree window size
-    let g:NERDTreeWinSize=30
+    let g:NERDTreeWinSize=40
 
     " Open a NERDTree automatically when vim starts up if no files were specified
-    autocmd StdinReadPre * let s:std_in=1
-    autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | wincmd p | endif
+    " autocmd StdinReadPre * let s:std_in=1
+    " autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | wincmd p | endif
 
     " NERDTree Files highlighting
     function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
@@ -542,6 +541,7 @@ endif
     let g:syntastic_json_checkers = ['jsonlint']
     let g:syntastic_sass_checkers=["sass_lint"]
     let g:syntastic_scss_checkers=["sass_lint"]
+    let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute " ,"trimming empty <", "unescaped &" , "lacks \"action", "is not recognized!", "discarding unexpected"]
 
     let g:syntastic_check_on_open = 1
     let g:syntastic_error_symbol = '✗'
@@ -770,7 +770,8 @@ endif
 
   " }}}
   " ---- <F3> key to hide current highlight for searched terms {{{
-      map <F3> :noh<CR>
+    map <F3> :noh<CR>
+    nnoremap <F3> :set hlsearch! hlsearch?<CR>
 
   " }}}
   " ---- Toggle spell check with <F4> (default: en_us) {{{
