@@ -17,7 +17,7 @@ HIST_STAMPS="yyyy-mm-dd"
 
 # Add wisely, as too many plugins slow down shell startup !!!
 # NOTE: Do not load nvm for eslint (more info https://github.com/roadhump/SublimeLinter-eslint#plugin-installation)
-plugins=(git git-flow colored-man-pages colorize tmux python npm gulp zsh-syntax-highlighting docker docker-compose)
+plugins=(git git-flow colored-man-pages colorize tmux python npm yarn gulp zsh-syntax-highlighting docker docker-compose)
 
 # Ignore ORIG_HEAD in zsh git autocomplete
 zstyle ':completion:*:*' ignored-patterns '*ORIG_HEAD'
@@ -102,6 +102,9 @@ DOTFILES_VIRTUALENVWRAPPER_FILE=$(which virtualenvwrapper.sh)
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 [[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
+
+# Yarn
+export PATH="$(yarn global bin):$PATH"
 
 # add current node (+ node programs installed globally) to PATH
 # NOTE: nvm have to be configured to works
