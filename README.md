@@ -13,45 +13,35 @@
 * * *
 [Installation](#installation) | [Update](#update) | [Learn more on Wiki][dotfiles-wiki] | [Shortcuts Cheat Sheet (PDF)][shortcuts-cheat-sheet]
 * * *
-**Sample screenshots for desktop theme**. See [gallery][wiki-gallery] for more.
+**Sample screenshots**
 
-<img src="http://i.imgur.com/WBaOs30.png" title="Tmux with friends - Git + dircolors + vim + 256color test" width="430" />
-<img src="http://i.imgur.com/fBkmExR.png" title="GUI Vim (MacVim)" width="430" />
+<img src="http://i.imgur.com/WBaOs30.png" title="Tmux with friends like git, vim into 256 color terminal" />
 
-> Used gruvbox terminal pallete, [see more][wiki-terminal-pallete].
-
+> Used gruvbox terminal pallete, [see more][https://github.com/morhetz/gruvbox].
 
 ## Why you should try it?
 Personalization of your tools has never been so easy, pleasant and quick to set.
 This tool allow you to manage your dotfiles configuration in more intuitive and
 secure way with ability to creating a backup of your fragile data.
 
-If you want to test it, feel free to run built-in [Dockerfile](https://github.com/egel/dotfiles/blob/master/Dockerfile).
-
 ```shell
-$ mkdir testdotfiles && cd testdotfiles && wget https://github.com/egel/dotfiles/blob/master/Dockerfile
-$ docker build -t egel/dotfiles:latest .
-$ docker run -it egel/dotfiles:latest
-root@1a911f5d10c2:/# dotfiles --help
+$ docker run -it egel/dotfiles:latest /bin/bash
 ```
-
-Enjoy !
 
 ## Features
 
 This set contains configuration for:
 -   **[BASH][bash-webpage]/[ZSH][zsh-webpage]** shell (oh-my-zsh)
 -   **[Git][git-webpage]** (account management, aliases)
--   **[Vim][vim-webpage]**
+-   **[Vim 8][vim-webpage]**
 -   **[Tmux][tmux-webpage]** (key-bindings, copy-paste to system clipboard)
--   **[Mutt][mutt-webpage]** (themes, secured passwords)
+-   **[Mutt][mutt-webpage]** (themes, secure passwords)
 -   **[EditorConfig][editorconfig-webpage]**
 -   **[Conky][conky-webpage]** (only for Linux)
 -   **[Virtualenvwrapper][virtulenvwrapper-webpage]**
 
 Configurator features
--   Easy to set your personal configuration/theme
--   Change themes in seconds
+-   Easy to set your personal configuration
 -   Create backups in seconds
 -   Intuitive and comfortable keybindings with [online cheatsheet][shortcuts-cheat-sheet]
 -   and much more inside
@@ -67,18 +57,10 @@ use it wherever you like.
 
 > If you want to agree to all defaults add `-y` flag at the end of install.
 
-Installation types:
-*   With github account
-    ```shell
-    $ git clone --recursive git@github.com:egel/dotfiles.git ~/.dotfiles
-    $ ~/.dotfiles/bin/dotfiles install
-    ```
-
-*   Without github account
-    ```shell
-    $ git clone --recursive https://github.com/egel/dotfiles.git ~/.dotfiles
-    $ ~/.dotfiles/bin/dotfiles install
-    ```
+```shell
+$ git clone --recursive https://github.com/egel/dotfiles.git ~/.dotfiles
+$ ~/.dotfiles/bin/dotfiles install
+```
 
 When you pass through the installation, you should have `dotfiles` program
 globally installed, then run:
@@ -93,7 +75,7 @@ default `terminal` and/or `guake` font. This is essential to correctly display
 powerline fonts already included into the Hack font (Read [FAQ][wiki-faq] for
 more).
 
-Reopen the terminal and enjoy :)
+Reopen the terminal and enjoy.
 
 
 ## Update
