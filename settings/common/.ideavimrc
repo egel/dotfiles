@@ -1,2 +1,5 @@
 source ~/.vimrc
 
+" Support for vim-surround commands ys, cs, ds, S
+set surround
+
