@@ -7,3 +7,21 @@
       " if exists("+columns")
         " set columns=100
       " endif
+
+
+
+" Load vim theme custom settings {{{
+"  if filereadable(expand('~/.vimrc.theme'))
+"    execute 'source' expand('~/.vimrc.theme')
+"  endif
+" }}}
+" Because a value is not set in $MYGVIMRC with the console, so we set it. {{{
+  if !exists($MYGVIMRC)
+    let $MYGVIMRC = expand('~/.gvimrc')
+  endif
+" }}}
+
+
+" Open a NERDTree automatically when vim starts up if no files were specified
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | wincmd p | endif

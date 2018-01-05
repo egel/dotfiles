@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - dotfiles: refactor installing ZSH theme
 
 ### Changed
+- Switch neobundle plugin manager in favor of simpler vim-plug (#65)
+
 ### Deprecated
 ### Removed
 ### Fixed

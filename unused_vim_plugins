@@ -1,9 +1,80 @@
 " vim: ft=vim fdm=marker ts=2 sts=2 sw=2
 
+    Plug 'SirVer/ultisnips' "{{{
+     " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+     let g:UltiSnipsExpandTrigger="<tab>" " default <tab>
+     let g:UltiSnipsJumpForwardTrigger="<tab>" " default: <c-b>
+     let g:UltiSnipsJumpBackwardTrigger="<S-tab>" " default: <c-z>
 
+     " Prevent UltiSnips from removing our carefully-crafted mappings
+     let g:UltiSnipsMappingsToIgnore = ['autocomplete']
+
+     " If you want :UltiSnipsEdit to split your window.
+     let g:UltiSnipsEditSplit="vertical"
+
+    }}}
+    Plug 'honza/vim-snippets'
+
+    if count(s:settings.plugin_groups, 'javascript') "{{{
+      NeoBundleLazy 'marijnh/tern_for_vim', {
+          \ 'autoload': { 'filetypes': ['javascript'] },
+          \ 'build': {
+            \ 'mac': 'npm install',
+            \ 'unix': 'npm install',
+            \ 'cygwin': 'npm install',
+            \ 'windows': 'npm install',
+          \ },
+        \ }
+
+    "}}}
+
+    Plug 'embear/vim-localvimrc' "{{{
+      let g:localvimrc_reverse = 0
+      let g:localvimrc_name = ['.lvimrc', '.vimrc_local' ]
+      let g:localvimrc_ask = 0 " do not ask to load local vimrc
+      let g:localvimrc_event = [ "BufEnter", "WinEnter", "TabEnter" ]
+      let g:localvimrc_debug = 0
+
+      " Helper method for .lvimrc files to finish
+      fun! MyLocalVimrcAlreadySourced(...)
+        " let sfile = expand(a:sfile)
+        let sfile = g:localvimrc_script
+        let guard_key = expand(sfile).'_'.getftime(sfile)
+        if exists('b:local_vimrc_sourced')
+          if type(b:local_vimrc_sourced) != type({})
+            echomsg "warning: b:local_vimrc_sourced is not a dict!"
+            let b:local_vimrc_sourced = {}
+          endif
+          if has_key(b:local_vimrc_sourced, guard_key)
+            return 1
+          endif
+        else
+          let b:local_vimrc_sourced = {}
+        endif
+        let b:local_vimrc_sourced[guard_key] = 1
+        return 0
+      endfun
+
+    " }}}
+
+    " Plug 'edkolev/tmuxline.vim' " {{{
+      " let g:tmuxline_preset = {
+        " \ 'a' : '#S',
+        " \ 'b' : '#W',
+        " \ 'c' : ['#H', "uptime #(uptime| cut -d' ' -f4-|cut -d, -f1)"],
+        " \ 'x' : '#(date)',
+        " \ 'y' : '#W',
+        " \ 'z' : ['#(whoami)', '#H']
+        " \ }
+
+    " " }}}
+
+  NeoBundleLazy 'derekwyatt/vim-scala', {'autoload':{'filetypes':['scala']}} "{{{ python syntax + integration
+
+  " }}}
+  Plug 'edthedev/pelican.vim'
+  Plug 'ashisha/image.vim'               " preview images
   NeoBundle 'jamessan/vim-gnupg'
-
-
   NeoBundleLazy 'kchmck/vim-coffee-script', {'autoload':{'filetypes':['coffee']}} "{{{
     autocmd BufRead,BufNewFile *.coffee setfiletype coffee
   "}}}

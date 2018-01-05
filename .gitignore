@@ -6,6 +6,10 @@
 **/.vim/bundle/
 .vim(*
 
+# vim-plug - vim plugin manager
+**/.vim/autoload/
+**/.vim/plugged/
+
 # Mac specyfic files
 **/*.DS_Store
 
