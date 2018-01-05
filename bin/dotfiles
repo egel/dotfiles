@@ -312,12 +312,6 @@ is_program_installed() {
   fi
 }
 
-do_install_vim_plugin_manager() {
-  print_subsection "Installing Vim plugin manager (Neobundle)"
-  wget https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh -q -O - | bash
-  print_last_command_status
-}
-
 do_install_font_assets() {
   print_subsection "Installing ${PROJECT_NAME} font assets"
   if $IS_MAC; then
@@ -758,12 +752,6 @@ do_install() {
 
   # installing font assets
   do_install_font_assets
-
-  # installing vim plugins (need to be after reconfiguration process of dotfiles configurator)
-  print_subsection "Installing NeoBundle vim plugins"
-  printf "%bThis operation might take some time.\n" "${__info__}"
-  eval "$HOME/.vim/bundle/neobundle.vim/bin/neoinstall"
-  print_last_command_status
 
   # creating secure passwords file for mutt
   case $_configure_secure_mutt_gpg in
