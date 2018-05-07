@@ -204,7 +204,7 @@ if [ -f "$PROJECT_CONFIG_FILE" ]; then
   do_set_config_vars
 else
   case $1 in
-    install)
+    install|--empty-run)
       # empty because we want to pass it only for installation process.
       # The installation process contains creating default config
       ;;
@@ -770,7 +770,6 @@ do_reconfigure() {
   # $PATH variable not properly set in gvim/MacVim => http://stackoverflow.com/a/24542893/1977012
   make_symlink ".zprofile" "${PROJECT_SETTINGS_COMMON_DIR}/.zprofile" "$HOME/.zprofile"
 
-
   # Copy specyfic folders
   case $DOTFILES_THEME in
     desktop)
@@ -894,6 +893,8 @@ case "$1" in
     ;;
   --version)
     print_version
+    ;;
+  --empty-run)
     ;;
   *)
     printf "\nNothing happened %b\n" "\xe2\x98\xba"
