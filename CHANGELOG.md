@@ -47,6 +47,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - dotfiles: Improvement patch mostly with visual and pattern recognition changes
 - dotfiles: Minor updates to help option
 - dotfiles: Move Dockerfile to dockerhub.com for simpler and quicker usage
+- dotfiles: Install fonts from local font assets (#102)
 
 ### Deprecated
 - Vim: NERDTree disable open sidebar when open vim or vim with empty content
