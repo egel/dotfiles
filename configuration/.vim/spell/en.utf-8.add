@@ -101,6 +101,7 @@ IE10
 IE11
 Quickstart
 atmina
+Atmina
 dockerhub
 submodules
 sudo
@@ -108,7 +109,6 @@ autocompletion
 dev
 oauth
 OAuth
-IntellJ
 CLI
 Wobcom
 symlinked
@@ -118,3 +118,18 @@ zsh
 abestmockadapter
 abest
 dockerignore
+Gmail
+solarized
+dircolors
+README
+symlinks
+Ctrl
+Nginx
+Syntastic
+symlinking
+EditorConfig
+IntelliJ
+zshenv
+ctrlp
+zshrc
+shunit2
