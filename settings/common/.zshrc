@@ -99,21 +99,21 @@ DOTFILES_VIRTUALENVWRAPPER_FILE=$(which virtualenvwrapper.sh)
 [ -s "$DOTFILES_VIRTUALENVWRAPPER_FILE" ] && source $DOTFILES_VIRTUALENVWRAPPER_FILE
 
 # Node version manager config
-#export NPM_CONFIG_PREFIX="/usr/local"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-[[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
 
 # Yarn
 export PATH="$(yarn global bin):$PATH"
 
-# add current node (+ node programs installed globally) to PATH
+# Add current version of node (+ node programs installed globally) to PATH
 # NOTE: nvm have to be configured to works
-CURRENT_NODE_VERSION=$(node --version)
-if [[ $PATH != *"nvm"* && -d "$HOME/.nvm" ]]; then
+CURRENT_NODE_VERSION=$(nvm ls default | sed 's/^.*v/v/')
+if [[ $PATH != *"nvm"* && -d "$HOME/.nvm" && -n $CURRENT_NODE_VERSION ]]; then
   $PATH=$PATH':'$HOME'/.nvm/versions/node/'$CURRENT_NODE_VERSION'/bin'
 elif [ ! -d "$HOME/.nvm" ]; then
-  echo "Missing NVM (Node Version Manager)."
+  printf "Missing NVM (Node Version Manager)\\n"
+elif [ -z $CURRENT_NODE_VERSION ]; then
+  printf "Missing defined default version of Node in NVM\\n"
 fi
 
 # Golang
@@ -140,8 +140,8 @@ DOTFILES_ZSH_LOCAL_FILE=$HOME/.zshrc.local
 if [ -f "$DOTFILES_ZSH_LOCAL_FILE" ]; then
   source "$DOTFILES_ZSH_LOCAL_FILE"
 else
-  echo "Missing $HOME/.zshrc.local. It might some .dotfiles ZSH settings will not be available."
-  echo "To fix this run: '$HOME/.dotfiles/bin/dotfiles -r; source $HOME/.zshrc'"
+  printf "Missing %s/.zshrc.local. It might some .dotfiles ZSH settings will not be available." $HOME
+  printf "To fix this run: '%s/.dotfiles/bin/dotfiles -r; source %s/.zshrc'" $HOME $HOME
 fi
 
 # Added by travis gem
@@ -154,5 +154,5 @@ fi
 if [[ -f $ZSH/oh-my-zsh.sh ]]; then
   source $ZSH/oh-my-zsh.sh
 else
-  echo "Missing $ZSH/oh-my-zsh.sh file."
+  printf "Missing %s/oh-my-zsh.sh file." $ZSH
 fi
