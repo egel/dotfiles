@@ -533,6 +533,7 @@ endif
     let g:syntastic_check_on_wq = 0
 
     " if add other then linter will check one for another checker
+    let g:syntastic_markdown_mdl_exec = 'markdownlint'
     let g:syntastic_typescript_checkers = ['tslint'] " other 'tsc'
     let g:syntastic_javascript_checkers = ['eslint'] " 'standard', 'jslint'
     let g:syntastic_go_checkers = ['go', 'govet', 'golint']
