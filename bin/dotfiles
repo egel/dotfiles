@@ -608,6 +608,9 @@ do_install() {
   check_program "tmux:\t" "tmux -V"
   check_program "git:\t" "git --version"
 
+  print_subsection "Install Tmux Plugin Manager"
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
   # change shell to ZSH + oh-my-zsh
   case $_install_zsh_and_ohmyzsh in
     y|Y)
