@@ -766,6 +766,8 @@ do_reconfigure() {
   make_symlink ".zshenv" "${PROJECT_SETTINGS_COMMON_DIR}/.zshenv" "$HOME/.zshenv"
   make_symlink ".zshrc" "${PROJECT_SETTINGS_COMMON_DIR}/.zshrc" "$HOME/.zshrc"
   make_symlink ".zshrc.local" "${PROJECT_SETTINGS_THEME_DIR}/.zshrc.local" "$HOME/.zshrc.local"
+  make_symlink ".mdlrc" "${PROJECT_SETTINGS_COMMON_DIR}/.mdlrc" "$HOME/.mdlrc"
+  make_symlink ".gemrc" "${PROJECT_SETTINGS_COMMON_DIR}/.gemrc" "$HOME/.gemrc"
 
   # $PATH variable not properly set in gvim/MacVim => http://stackoverflow.com/a/24542893/1977012
   make_symlink ".zprofile" "${PROJECT_SETTINGS_COMMON_DIR}/.zprofile" "$HOME/.zprofile"

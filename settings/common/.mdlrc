@@ -1,0 +1,2 @@
+# disabling rules for markdownlinter
+rules "~MD022"
