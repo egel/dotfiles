@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - dotfiles: Add unit test environment for main bash configurator
 - dotfiles: Cover few sample methods in dotfiles configurator with unit tests
 - dotfiles/Vim: Add linter configuration for markdown and .gemrc config file (#109)
+- Tmux: Add Tmux Plugin Manager (#97)
 
 ### Changed
 - Tmux: Update Linux key bindings for Tmux v2.4
