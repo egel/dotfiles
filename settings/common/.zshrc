@@ -116,21 +116,22 @@ elif [ ! -d "$HOME/.nvm" ]; then
   echo "Missing NVM (Node Version Manager)."
 fi
 
-# Golang
-export GOPATH=$HOME/go-workspace
-case $(uname -s) in
-  Darwin)
-    export GOROOT=/usr/local/opt/go/libexec
-    ;;
-  Linux)
-    export GOROOT=$HOME/go-1.8.1
-    ;;
-esac
+# # Golang
+# export GOPATH=$HOME/go-workspace
+# case $(uname -s) in
+  # Darwin)
+    # export GOROOT=/usr/local/opt/go/libexec
+    # ;;
+  # Linux)
+    # # /usr/bin/go
+    # # export GOROOT=$HOME/go
+    # ;;
+# esac
 
-if [[ $PATH != *"go"* && -d "$GOPATH" && -d "$GOROOT" ]]; then
-  export PATH=$PATH:$GOPATH/bin # additional go libraries
-  export PATH=$PATH:$GOROOT/bin # path of go source
-fi
+# if [[ $PATH != *"go"* && -d "$GOPATH" && -d "$GOROOT" ]]; then
+  # export PATH=$PATH:$GOPATH/bin # additional go libraries
+  # export PATH=$PATH:$GOROOT/bin # path of go source
+# fi
 
 # Load private passwords
 [ -s "$HOME/.envpass.private" ] && . "$HOME/.envpass.private"
