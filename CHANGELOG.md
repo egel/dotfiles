@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - dotfiles: Cover few sample methods in dotfiles configurator with unit tests
 - dotfiles/Vim: Add linter configuration for markdown and .gemrc config file (#109)
 - Tmux: Add Tmux Plugin Manager (#97)
+- Tmux/TPM: load the tmux-grovbox theme via TPM (#113)
 
 ### Changed
 - Tmux: Update Linux key bindings for Tmux v2.4
