@@ -1,5 +1,0 @@
-#############################################################
-##  Personal Configuration of .tmux.conf.local
-#############################################################
-source-file $HOME/.dotfiles/lib/tmux-gruvbox/tmux-gruvbox-dark.conf
-
