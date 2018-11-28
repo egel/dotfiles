@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - dotfiles: Add shunit2 bash testing framework v2.1.6 as a submodule
 - dotfiles: Add unit test environment for main bash configurator
 - dotfiles: Cover few sample methods in dotfiles configurator with unit tests
+- dotfiles: Move wiki inside the repository (#112)
 - dotfiles/Vim: Add linter configuration for markdown and .gemrc config file (#109)
 - Tmux: Add Tmux Plugin Manager (#97)
 - Tmux/TPM: load the tmux-grovbox theme via TPM (#113)
