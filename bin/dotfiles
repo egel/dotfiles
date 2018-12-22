@@ -770,7 +770,6 @@ do_reconfigure() {
   make_symlink ".tmux-osx.conf" "${PROJECT_SETTINGS_COMMON_DIR}/.tmux-osx.conf" "$HOME/.tmux-osx.conf"
   make_symlink ".tmux-linux.conf" "${PROJECT_SETTINGS_COMMON_DIR}/.tmux-linux.conf" "$HOME/.tmux-linux.conf"
   make_symlink ".tmux.conf" "${PROJECT_SETTINGS_COMMON_DIR}/.tmux.conf" "$HOME/.tmux.conf"
-  make_symlink ".tmux.conf.local" "${PROJECT_SETTINGS_COMMON_DIR}/.tmux.conf.local" "$HOME/.tmux.conf.local"
   make_symlink ".vim" "${PROJECT_SETTINGS_COMMON_DIR}/.vim" "$HOME/.vim"
   make_symlink ".vimrc" "${PROJECT_SETTINGS_COMMON_DIR}/.vimrc" "$HOME/.vimrc"
   make_symlink ".zshenv" "${PROJECT_SETTINGS_COMMON_DIR}/.zshenv" "$HOME/.zshenv"
