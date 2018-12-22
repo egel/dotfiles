@@ -683,9 +683,9 @@ do_install() {
   esac
 
   if $IS_MAC; then
-    print_subsection "\nUpdating brew manager"
+    print_subsection "Updating brew manager"
     printf "%b Be patient, it may take a while ;)" "${__info__}"
-    printf "%b Update brew\n" "${__info__}"
+    printf "\n%b Update brew\n" "${__info__}"
     brew update
     print_last_command_status
 
@@ -710,7 +710,7 @@ do_install() {
     printf "%b Now rebooting the system..." "${__info__}"
     sudo reboot
   else
-    printf "%b Rebooting canceled by User" "${__info__}"
+    printf "%b Rebooting canceled by User\n" "${__info__}"
   fi
 }
 
