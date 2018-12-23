@@ -5,7 +5,7 @@ set imap_user = 'maciejsypien@gmail.com'
 set smtp_url  = 'smtp://maciejsypien@smtp.gmail.com:587/'
 
 # file with encrypted passwords of 'smtp_pass' and 'imap_pass'
-source "gpg2 -dq $HOME/.mutt/passwords.gpg |"
+source "gpg -dq $HOME/.mutt/passwords.gpg |"
 
 # vim for editing, and move marker to line 7
 set editor="vim +13 -c 'set nobackup' -c 'set noswapfile' -c 'set nowritebackup' -c 'set tw=72 ft=mail noautoindent'"
@@ -103,7 +103,7 @@ macro index A ":set confirmappend=no delete=yes\n<save-message>=archive\n<sync-m
 #Don't prompt on exit
 set quit=yes
 
-# Load local specyfic configuration
-source $HOME/.muttrc.local
+# Load mutt theme
+source $HOME/.dotfiles/configuration/.mutt/themes/mutt-colors-solarized/mutt-colors-solarized-dark-256.muttrc
 
 # vim: set ft=muttrc tw=0 nowrap:

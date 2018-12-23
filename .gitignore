@@ -14,10 +14,10 @@
 *.swp
 
 # MUTT
-settings/common/.mutt/cache/
-settings/common/.mutt/passwords.gpg
-settings/common/.mutt/gmailcerts
-
+**/.mutt/cache/
+**/.mutt/passwords.gpg
+**/.mutt/gmailcerts
+**/.mutt/*.gpg
 
 # Editor
 .idea/

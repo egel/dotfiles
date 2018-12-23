@@ -13,13 +13,14 @@ purple='\033[1;35m'
 cyan='\033[0;36m'
 endColor='\033[0m'
 
-# Type of messages
+# Type of prefixes for messages
 __question__="${purple}Question? ${endColor}"
 __info__="${blue}Info      ${endColor}"
 __warning__="${yellow}Warning!  ${endColor}"
 __done__="${green}✔ Done    ${endColor}"
 __error__="${red}FAIL      ${endColor}"
 __aborted__="${yellow}Action aborted${endColor}"
+__empty__="          "
 
 # Current file variables
 __version__="2.3.0"
@@ -32,6 +33,7 @@ PROJECT_INSTALL_DEFAULTS=
 DATE_UTC=$(date +%Y-%m-%dT%TZ)
 AUTHOR="Maciej Sypień"
 GIT_CURRENT_BRANCH=$(git branch | grep "\*" | cut -d ' ' -f2)
+EMAIL_REGEXP="^[a-z0-9!#\$%&'*+/=?^_\`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])?\$"
 
 IS_MAC=false
 IS_LINUX=false
@@ -343,22 +345,89 @@ create_secure_mutt_passwords() {
   # password file name is related with muttrc settings
   _mutt_passwords_path="$HOME/.mutt/passwords.gpg"
 
-  print_section "Creating secure passwords for mutt with GPG"
-  printf "%b Below is your list of gpg:" "${__info__}"
+  print_section "Creating secure passwords for mutt with GPG key"
+
+  if ! [ -d "${DESTINATION_MUTT_DIR}" ]; then
+    print_subsection "Symlinking missing mutt configuration directory"
+    make_symlink ".mutt" "$PROJECT_SETTINGS_COMMON_DIR/.mutt" "$DESTINATION_MUTT_DIR"
+    print_last_command_status
+  fi
+
+  printf "How this works?\n\n"
+  printf "1.  You must have at least one GPG pair of keys created.\n"
+  printf "    We will use the GPG keys to encode your original e-mail password\n"
+  printf "    into a secure file, which further will be used by Mutt.\n"
+  printf "    -   If you have already a desired GPG keys you can continue.\n\n"
+  printf "    IMPORTANT NOTE: The e-mail used in GPG keys must be equal to e-mail\n"
+  printf "    address used in Gmail. That is how mutt knows which password is correct.\n\n"
+  printf "    TO CLARIFY: Your password will NEVER be stored as plain text! :)\n\n"
+  printf "2.  Program will ask you for an e-mail (Gmail) and a password to this\n"
+  printf "    e-mail in order to convert them into a secure file, which can be\n"
+  printf "    understand for mutt.\n"
+  printf "    -   If you're using Google 2-step verification you must to specify\n"
+  printf "        app specific password. Here is a link:\n"
+  printf "        https://security.google.com/settings/security/apppasswords\n\n"
+  printf "    -   If you don't use 2-steps verification use your regular password.\n\n"
+  printf "3.  After successful creation, you should get a secure password file at\n"
+  printf "    ${_mutt_passwords_path}\n\n"
+  printf "4.  Open mutt and use your GPG password to open your e-mail box.\n\n"
+
+  printf "Below is list of your GPG keys:\n\n"
   if [ -z "$(gpg --list-keys)" ]; then
-    printf "%b You have no GPG keys. Generate your pair 'gpg --gen-key'" "${__warning__}"
+    printf "%bYou have no GPG keys. Generate a new pair by 'gpg --gen-key'" "${__warning__}"
     printf "or import, then re-run: '%s' to restart creating secure password for mutt" "${FILE_NAME} -mmp"
   else
     gpg --list-keys
-    printf "%b If you want to create new one pair of keys type: 'gpg --gen-key'" "${__info__}"
-  fi;
-  read -r -p "Type your e-mail address (that you are using in gpg; ex: 'john.doe@gmail.com'): " _email_address
-  read -s -p -r "Type your e-mail password: " _email_password
+    printf "%bIf you want to create new pair of keys, then type: 'gpg --gen-key'\n" "${__info__}"
+  fi
+  printf "\n%bType your e-mail address (that you are using in GPG; e.g.: 'john.doe@gmail.com')\n" "${__info__}"
+  read -r -p "E-mail: " _email_address
 
-  if ! [[ -d "${DESTINATION_MUTT_DIR}" ]]; then
-    print_subsection "Symlinking missing mutt directory"
-    make_symlink ".mutt" "$PROJECT_SETTINGS_COMMON_DIR/.mutt" "$DESTINATION_MUTT_DIR"
-    print_last_command_status
+  # Inform user 1st time if email is empty
+  if [ -z ${_email_address} ]; then
+    printf "%bE-mail cannot be empty\n" "${__warning__}"
+    read -r -p "E-mail: " _email_address
+  fi
+
+  # Inform user last, 2nd time, if email is empty
+  if [ -z ${_email_address} ]; then
+    printf "%bE-mail not set, so exit.\n" "${__error__}"
+    exit 1
+  fi
+
+  if ! [[ ${_email_address} =~ ${EMAIL_REGEXP} ]]; then
+    printf "%bGiven e-mail <${_email_address}> seems to be invalid. Try again.\n" "${__error__}"
+    exit 1
+  fi
+
+  if [ $(gpg --list-keys | grep -c ${_email_address}) -gt 0 ]; then
+    gpg --fingerprint ${_email_address}
+    printf "%bGood! It looks like that your e-mail <${_email_address}> is already in GPG list.\n\n" "${__info__}"
+  fi
+
+  if [[ -f "${_mutt_passwords_path}" ]]; then
+    printf "%bYou have already defined the secure password file at %b.\n\n" "${__warning__}" "${_mutt_password_path}"
+    printf "%bDo you want to continue and create new one?" "${__question__}"
+    read -r -p " (y/N) " _forcefully_continue_creating_gpg_key
+    case $_forcefully_continue_creating_gpg_key in
+    y|Y)
+      ;;
+    *)
+      printf "%b\n" "${__aborted__}"
+      exit 1;
+      ;;
+    esac
+  fi
+
+  printf "%bType a password for <${_email_address}> (e-mail account password or app secure password)\nPassword: " "${__info__}"
+  read -s _email_password
+
+  printf "\nRetype password: "
+  read -s _email_password_retype
+
+  if [[ "${_email_password}" != "${_email_password_retype}" ]]; then
+    printf "Passwords are not equal. Run program again."
+    exit 1;
   fi
 
   # This method will not store passwords on hard drive in plain text, ever!
@@ -367,7 +436,8 @@ create_secure_mutt_passwords() {
   echo -e "${_secret}" | gpg -r "${_email_address}" -e -a > "${_mutt_passwords_path}"
 
   if [ -f "${_mutt_passwords_path}" ]; then
-    printf "\n%s Successfully complete creating a secure passwords file for <%s>" "${__done__}" "${_email_address}"
+    printf "\n%bSuccessfully created secured password file for your e-mail account <%s>\n" "${__done__}" "${_email_address}"
+    printf "%bYou can find the file at %b" "${__empty__}" "${_mutt_passwords_path}"
   fi
 }
 
@@ -516,10 +586,11 @@ do_install() {
     brew install curl
     brew install zsh
     brew install tmux
+    brew install mutt
     brew install lua
     brew install python
     brew install python3
-    brew install gpg2
+    brew install gnupg gnupg2
     brew install shellcheck
     brew install editorconfig
 
@@ -554,13 +625,18 @@ do_install() {
     sudo apt-get install -y editorconfig git zsh tmux
     print_last_command_status
 
+    sudo apt-get install gnupg2 # security tool used i.e. for mutt
+    print_last_command_status
+
     sudo apt-get install -y shellcheck # for checking syntax in vim for *.sh files
     print_last_command_status
 
     sudo apt-get install -y tlp tlp-rdw
     print_last_command_status
 
-    print_subsection "Install and compile Vim from source files"
+    sudo apt-get install -y mutt
+    print_last_command_status
+
     # Install vim
     print_subsection "Install and compile Vim from source files"
     sudo apt-get remove -y --purge vim vim-runtime vim-gnome vim-tiny vim-common vim-gui-common
@@ -611,6 +687,7 @@ do_install() {
       zsh \
       wget curl \
       tmux \
+      mutt \
       gnupg \
       shellcheck \
       tor \
@@ -780,6 +857,7 @@ do_reconfigure() {
   make_symlink ".gvimrc" "${PROJECT_SETTINGS_COMMON_DIR}/.gvimrc" "$HOME/.gvimrc"
   make_symlink ".ideavimrc" "${PROJECT_SETTINGS_COMMON_DIR}/.ideavimrc" "$HOME/.ideavimrc"
   make_symlink ".mutt" "${PROJECT_SETTINGS_COMMON_DIR}/.mutt" "$HOME/.mutt"
+  make_symlink ".muttrc" "${PROJECT_SETTINGS_COMMON_DIR}/.muttrc" "$HOME/.muttrc"
   make_symlink ".tmux-osx.conf" "${PROJECT_SETTINGS_COMMON_DIR}/.tmux-osx.conf" "$HOME/.tmux-osx.conf"
   make_symlink ".tmux-linux.conf" "${PROJECT_SETTINGS_COMMON_DIR}/.tmux-linux.conf" "$HOME/.tmux-linux.conf"
   make_symlink ".tmux.conf" "${PROJECT_SETTINGS_COMMON_DIR}/.tmux.conf" "$HOME/.tmux.conf"
