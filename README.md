@@ -6,7 +6,6 @@
 
 [![Build Status](https://travis-ci.org/egel/dotfiles.svg?branch=master)](https://travis-ci.org/egel/dotfiles)
 [![MIT LICENSE](http://img.shields.io/badge/license-MIT-yellowgreen.svg?style=square)](https://github.com/egel/dotfiles/blob/master/LICENSE)
-[![Stories in Ready](https://badge.waffle.io/egel/dotfiles.svg?label=ready&title=Ready)](http://waffle.io/egel/dotfiles)
 
 > Personal dotfiles configurator for Arch, Ubuntu 16.04 & Mac OSX.
 
