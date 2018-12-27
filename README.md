@@ -10,13 +10,13 @@
 > Personal dotfiles configurator for Arch, Ubuntu 16.04 & Mac OSX.
 
 * * *
-[Installation](#installation) | [Update](#update) | [Learn more on Wiki][dotfiles-wiki] | [Shortcuts Cheat Sheet (PDF)][shortcuts-cheat-sheet]
+[Installation](#installation) | [Update](#update) | [Learn more in Docs][dotfiles-docs] | [Shortcuts Cheat Sheet (PDF)][shortcuts-cheat-sheet]
 * * *
 **Sample screenshots**
 
-<img src="http://i.imgur.com/WBaOs30.png" title="Tmux with friends like git, vim into 256 color terminal" />
+<img src="https://github.com/egel/dotfiles/blob/master/docs/assets/dotfiles_screenshot.png" title="Tmux, git, vim into 256 color terminal" />
 
-> Used gruvbox terminal pallete, [see more][https://github.com/morhetz/gruvbox].
+> Used gruvbox pallete for [tmux](https://github.com/egel/tmux-gruvbox), [vim](https://github.com/morhetz/gruvbox) and terminal with [Hack font][hack-font-webpage].
 
 ## Why you should try it?
 Personalization of your tools has never been so easy, pleasant and quick to set.
@@ -28,7 +28,6 @@ $ docker run -it egel/dotfiles:latest /bin/bash
 ```
 
 ## Features
-
 This set contains configuration for:
 -   **[BASH][bash-webpage]/[ZSH][zsh-webpage]** shell (oh-my-zsh)
 -   **[Git][git-webpage]** (account management, aliases)
@@ -70,30 +69,26 @@ $ dotfiles reconfigur
 ```
 
 The last thing you should do is to set [`Hack font`][hack-font-webpage] as
-default `terminal` and/or `guake` font. This is essential to correctly display
-powerline fonts already included into the Hack font (Read [FAQ][wiki-faq] for
+default `terminal` font. This is essential to correctly display
+a powerline fonts which are already included into the Hack font (Read [FAQ][docs-faq] for
 more).
 
 Reopen the terminal and enjoy.
 
-
 ## Update
-To update repository and its submodules
+To update a repository and its submodules
 
 ```shell
 $ dotfiles update
 ```
 
 ## Learn more
-To find further information about this project, take a look at [wiki
-pages][dotfiles-wiki] and [shortcuts cheat sheet][shortcuts-cheat-sheet].
+To find further information about this project, take a look at [docs
+pages][dotfiles-docs] and [shortcuts cheat sheet][shortcuts-cheat-sheet].
 
-  [dotfiles-wiki]: https://github.com/egel/dotfiles/wiki
-  [wiki-gallery]: https://github.com/egel/dotfiles/wiki/Gallery
-  [wiki-faq]: https://github.com/egel/dotfiles/wiki/FAQ-(Frequently-Asked-Questions)
-  [wiki-terminal-pallete]: https://github.com/egel/dotfiles/wiki/FAQ-(Frequently-Asked-Questions)#terminal-color-pallete-gruvbox
+  [dotfiles-docs]: https://github.com/egel/dotfiles/blob/master/docs/index.md
+  [docs-faq]: https://github.com/egel/dotfiles/tree/master/docs/faq
   [shortcuts-cheat-sheet]: http://bit.ly/1wqcChS
-  [powerline-install-webpage]: https://powerline.readthedocs.org/en/latest/installation/linux.html#font-installation
   [hack-font-webpage]: http://sourcefoundry.org/hack/
   [mutt-webpage]: http://www.mutt.org/
   [tmux-webpage]: https://tmux.github.io/
