@@ -573,7 +573,7 @@ do_install() {
                 --prefix=/usr \
                 --with-compiledby="${AUTHOR}" \
                 --enable-fail-if-missing
-    make VIMRUNTIMEDIR=/usr/share/vim/vim80
+    make VIMRUNTIMEDIR=/usr/share/vim/vim81
     sudo make install
 
     print_subsection "Set VIM as default editor"
