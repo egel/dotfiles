@@ -562,6 +562,7 @@ do_install() {
 
     print_subsection "Install and compile Vim from source files"
     # Install vim
+    print_subsection "Install and compile Vim from source files"
     sudo apt-get remove -y --purge vim vim-runtime vim-gnome vim-tiny vim-common vim-gui-common
     print_last_command_status
 
@@ -789,12 +790,13 @@ do_reconfigure() {
   # $PATH variable not properly set in gvim/MacVim => http://stackoverflow.com/a/24542893/1977012
   make_symlink ".zprofile" "${PROJECT_SETTINGS_COMMON_DIR}/.zprofile" "$HOME/.zprofile"
 
-  # Copy specyfic folders
+  # copy conky configuration
   if [[ $IS_BASED_ON_UBUNTU_1604 || IS_ARCH  ]]; then
     print_subsection "Installing Conky configuration"
     make_symlink ".conkyrc" "${PROJECT_LIB_DIR}/conky-themes/conky_seamod/.conkyrc" "$HOME/.conkyrc" # only for desktops (servers terminals not need GUI)
   fi
 
+  # install vim plugin manager
   do_install_vim_plugin_manager
 
   # fixing the permissions
