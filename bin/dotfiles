@@ -174,7 +174,7 @@ fix_file_or_directory_permission() {
 
 do_copy_default_config_file() {
   print_subsection "Copy dotfiles default config file"
-  cp -fv "${CURRENT_FILE_DIRECTORY}/${PROJECT_CONFIG_NAME}" "${PROJECT_CONFIG_FILE}"
+  cp -f -v "${CURRENT_FILE_DIRECTORY}/${PROJECT_CONFIG_NAME}" "${PROJECT_CONFIG_FILE}"
   print_last_command_status
 }
 
@@ -238,7 +238,7 @@ remove_old_symlinks() {
   do
     # Removing backup for those files "<file_name>(DATE)"
     # NOTE: string that might contain magic * must be without quotes!
-    rm -frv ${item}\(*
+    rm -f -r -v ${item}\(*
   done
 }
 
@@ -246,7 +246,7 @@ remove_old_symlinks() {
 remove_current_symlinks() {
   for item in "${CURRENT_SYMLINKS[@]}"
   do
-    rm -frv "${item}"
+    rm -f -r -v "${item}"
   done
 }
 
@@ -732,7 +732,7 @@ do_fix_file_and_directories_permissions() {
 
   fix_file_or_directory_permission "${SSH_DIR}/authorized_keys" 640
 
-  fix_file_or_directory_permission "${SSH_DIR}/*.pub" 644
+  fix_file_or_directory_permission "${SSH_DIR}"/*.pub 644 # asterisk is a wildcard and can't be inside string quotesg
   fix_file_or_directory_permission "${SSH_DIR}/id_rsa" 600
 
   fix_file_or_directory_permission "${HOME}/.aliases.private" 700
