@@ -701,8 +701,12 @@ do_install() {
 
   if $IS_MAC; then
     print_subsection "Updating brew manager"
-    printf "%b Be patient, it may take a while ;)" "${__info__}"
-    printf "\n%b Update brew\n" "${__info__}"
+    printf "%bBe patient, it may take a while ;)" "${__info__}"
+    printf "\n%bCleaning unused brew packages\n" "${__info__}"
+    brew cleanup
+    print_last_command_status
+
+    printf "\n%bUpdate brew\n" "${__info__}"
     brew update
     print_last_command_status
 
