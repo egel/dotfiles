@@ -6,10 +6,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+## [2.4.0] - 2018-12-30
+### Added
 - Github: Add basic templates for Github
 - IntelliJ: Add vim-surround support for IntelliJ
-- Vim: Add ctrlp plugin for vim
+- Tmux/TPM: load the tmux-gruvbox theme via TPM (#113)
+- Tmux: Add Tmux Plugin Manager (#97)
 - Vim: Add EditorConfig to OSX brew installer
+- Vim: Add ctrlp plugin for vim
 - Vim: Add new spell words
 - Vim: Add new words for EN vim spell
 - Vim: Add new words to vim spell for EN
@@ -19,16 +29,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - ZSH/oh-my-zsh: Add zsh-completions to .zshrc plugins
 - ZSH: Add .zshenv and move important variables into it
 - ZSH: Add yarn plugin to .zshrc
-- dotfiles: Add missing changelog file
+- dotfiles/Vim: Add linter configuration for markdown and .gemrc config file (#109)
 - dotfiles: Add core utilities for OSX
+- dotfiles: Add missing changelog file
 - dotfiles: Add missing sbin to OSX/brew/ZSH configuration
 - dotfiles: Add shunit2 bash testing framework v2.1.6 as a submodule
 - dotfiles: Add unit test environment for main bash configurator
 - dotfiles: Cover few sample methods in dotfiles configurator with unit tests
 - dotfiles: Move wiki inside the repository (#112)
-- dotfiles/Vim: Add linter configuration for markdown and .gemrc config file (#109)
-- Tmux: Add Tmux Plugin Manager (#97)
-- Tmux/TPM: load the tmux-grovbox theme via TPM (#113)
 
 ### Changed
 - Tmux: Update Linux key bindings for Tmux v2.4
@@ -45,9 +53,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - dotfiles: Improve README with simpler docker setup
 - dotfiles: Improve symlinking into the configurator
 - dotfiles: Improvement patch mostly with visual and pattern recognition changes
+- dotfiles: Install fonts from local font assets (#102)
 - dotfiles: Minor updates to help option
 - dotfiles: Move Dockerfile to dockerhub.com for simpler and quicker usage
-- dotfiles: Install fonts from local font assets (#102)
 
 ### Deprecated
 - Vim: NERDTree disable open sidebar when open vim or vim with empty content
@@ -61,7 +69,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Vim: Fix some typos in comments
 
 ### Security
-- dotfiles: Improve fixing permissions for files and directories
+- dotfiles: Improve permissions for files and directories
 
 ## [2.3.0] - 2017-02-19
 ### Added
@@ -155,7 +163,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Git: Add few new aliases and rename few for EN
 - Tmux: Fix typos
 - Vim: Add new words to vim spell
-- dotfiles/Tmux: Upgrade tmux-grovbox submodule
+- dotfiles/Tmux: Upgrade tmux-gruvbox submodule
 - dotfiles/Tmux: Add tmux-gruvbox submodule
 - dotfiles/Tmux: Fix typo into tmux-gruvbox submodule name
 - dotfiles/Vim: Fix syntax errors
@@ -518,7 +526,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## 1.1.0 - 2015-05-18
 
-[Unreleased]: https://github.com/egel/dotfiles/compare/v2.3.0...HEAD
+[Unreleased]: https://github.com/egel/dotfiles/compare/v2.4.0...HEAD
+[2.4.0]: https://github.com/egel/dotfiles/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/egel/dotfiles/compare/v2.2.3...v2.3.0
 [2.2.3]: https://github.com/egel/dotfiles/compare/v2.2.2...v2.2.3
 [2.2.2]: https://github.com/egel/dotfiles/compare/v2.2.1...v2.2.2
