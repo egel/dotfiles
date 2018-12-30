@@ -82,10 +82,10 @@ elif [ "$(uname)" == "Linux" ]; then
         ;;
     esac
   fi
-elif [[ $(expr substr "$(uname -s)" 1 10) == "MINGW32_NT" && "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]]; then
+elif [[ "$( (substr "$(uname -s)" 1 10) )" == "MINGW32_NT" && "$( (substr "$(uname -s)" 1 10) )" == "MINGW64_NT" ]]; then
   printf "%bThis program doesn't support Windows OS" "${__warning__}"
   exit 1;
-elif [[ $(expr substr "$(uname -s)" 1 10) =~ "CYGWIN" ]]; then
+elif [[ "$( (substr "$(uname -s)" 1 10) )" =~ "CYGWIN" ]]; then
   printf "%bThis program doesn't support Cygwin project" "${__warning__}"
   exit 1;
 fi
@@ -145,7 +145,9 @@ print_if_missing_variable() {
 }
 
 print_last_command_status() {
-  if [ $? -eq 0 ]; then
+  # Intentionally want to check last executed command
+  # shellcheck disable=2181
+  if [[ "$?" -eq 0 ]]; then
     printf "↳ %b\n" "${__done__}"
   else
     printf "↳ %b\n" "${__error__}"
@@ -169,7 +171,8 @@ fix_file_or_directory_permission() {
 
   printf "\n%bFixing permissions for %b %s\n" "${__info__}" "${purple}${_file_or_directory}${endColor}" "${_type}"
 
-  # NOTE: string that might contain magic * must be without quotes!
+  # String that might contain magic * must be without quotes
+  # shellcheck disable=SC2086
   chmod -v "${_permissions}" ${_file_or_directory}
   print_last_command_status
 }
@@ -240,7 +243,7 @@ remove_old_symlinks() {
   do
     # Removing backup for those files "<file_name>(DATE)"
     # NOTE: string that might contain magic * must be without quotes!
-    rm -f -r -v ${item}\(*
+    rm -f -r -v "${item}"\(*
   done
 }
 
@@ -301,7 +304,7 @@ is_program_installed() {
   _install_script=$2
 
   if hash "${_program}" 2>/dev/null; then
-    printf "%bProgram %b already exist at %s\n" "${__done__}" "${blue}${_program}${endColor}" "$(which ${_program})"
+    printf "%bProgram %b already exist at %s\n" "${__done__}" "${blue}${_program}${endColor}" "$(command -v "${_program}")"
   else
     printf "Installing %b program. Please wait.\n" "${blue}${_program}${endColor}"
     eval "${_install_script}"
@@ -318,15 +321,14 @@ do_install_vim_plugin_manager() {
 do_install_font_assets() {
   print_subsection "Installing ${PROJECT_NAME} font assets"
   if $IS_MAC; then
-    print_subsection "For MAC 4"
     _font_dir="${HOME}/Library/Fonts"
-    [ -d ${_font_dir} ] || mkdir -p "${_font_dir}"
+    [[ -d "${_font_dir}" ]] || mkdir -p "${_font_dir}"
     cp -f -v -R "${PROJECT_REPOSITORY_DIR}"/assets/fonts/* "${_font_dir}/"
     print_last_command_status
   elif $IS_BASED_ON_UBUNTU_1604 || $IS_ARCH; then
     _font_dir="/usr/local/share/fonts"
     cp -f -v -r "${PROJECT_REPOSITORY_DIR}"/assets/fonts/* "${_font_dir}/" && fc-cache -f -v
-    fc-list | grep "$(ls ${_font_dir} | sort -n | head -1)" # confirm if fonts have been installed
+    fc-list | grep "$(ls "${_font_dir}" | sort -n | head -1)" # confirm if fonts have been installed
     print_last_command_status
   fi
   unset _font_dir
@@ -343,7 +345,7 @@ do_install_dotfiles_program_globally() {
 
 create_secure_mutt_passwords() {
   # password file name is related with muttrc settings
-  _mutt_passwords_path="$HOME/.mutt/passwords.gpg"
+  _mutt_password_path="$HOME/.mutt/passwords.gpg"
 
   print_section "Creating secure passwords for mutt with GPG key"
 
@@ -369,7 +371,7 @@ create_secure_mutt_passwords() {
   printf "        https://security.google.com/settings/security/apppasswords\n\n"
   printf "    -   If you don't use 2-steps verification use your regular password.\n\n"
   printf "3.  After successful creation, you should get a secure password file at\n"
-  printf "    ${_mutt_passwords_path}\n\n"
+  printf "    %b\n\n" "${_mutt_password_path}"
   printf "4.  Open mutt and use your GPG password to open your e-mail box.\n\n"
 
   printf "Below is list of your GPG keys:\n\n"
@@ -384,28 +386,28 @@ create_secure_mutt_passwords() {
   read -r -p "E-mail: " _email_address
 
   # Inform user 1st time if email is empty
-  if [ -z ${_email_address} ]; then
+  if [[ -z "${_email_address}" ]]; then
     printf "%bE-mail cannot be empty\n" "${__warning__}"
     read -r -p "E-mail: " _email_address
   fi
 
   # Inform user last, 2nd time, if email is empty
-  if [ -z ${_email_address} ]; then
+  if [[ -z "${_email_address}" ]]; then
     printf "%bE-mail not set, so exit.\n" "${__error__}"
     exit 1
   fi
 
-  if ! [[ ${_email_address} =~ ${EMAIL_REGEXP} ]]; then
+  if ! [[ "${_email_address}" =~ ${EMAIL_REGEXP} ]]; then
     printf "%bGiven e-mail <${_email_address}> seems to be invalid. Try again.\n" "${__error__}"
     exit 1
   fi
 
-  if [ $(gpg --list-keys | grep -c ${_email_address}) -gt 0 ]; then
-    gpg --fingerprint ${_email_address}
+  if [[ "$(gpg --list-keys | grep -c "${_email_address}")" -gt 0 ]]; then
+    gpg --fingerprint "${_email_address}"
     printf "%bGood! It looks like that your e-mail <${_email_address}> is already in GPG list.\n\n" "${__info__}"
   fi
 
-  if [[ -f "${_mutt_passwords_path}" ]]; then
+  if [[ -f "${_mutt_password_path}" ]]; then
     printf "%bYou have already defined the secure password file at %b.\n\n" "${__warning__}" "${_mutt_password_path}"
     printf "%bDo you want to continue and create new one?" "${__question__}"
     read -r -p " (y/N) " _forcefully_continue_creating_gpg_key
@@ -420,9 +422,13 @@ create_secure_mutt_passwords() {
   fi
 
   printf "%bType a password for <${_email_address}> (e-mail account password or app secure password)\nPassword: " "${__info__}"
+  # Explicitly disable rule for reading password
+  # shellcheck disable=2162
   read -s _email_password
 
   printf "\nRetype password: "
+  # Explicitly disable rule for reading password
+  # shellcheck disable=2162
   read -s _email_password_retype
 
   if [[ "${_email_password}" != "${_email_password_retype}" ]]; then
@@ -433,17 +439,17 @@ create_secure_mutt_passwords() {
   # This method will not store passwords on hard drive in plain text, ever!
   _secret="set imap_pass=${_email_password}"
   _secret="${_secret}\nset smtp_pass=${_email_password}"
-  echo -e "${_secret}" | gpg -r "${_email_address}" -e -a > "${_mutt_passwords_path}"
+  echo -e "${_secret}" | gpg -r "${_email_address}" -e -a > "${_mutt_password_path}"
 
-  if [ -f "${_mutt_passwords_path}" ]; then
+  if [ -f "${_mutt_password_path}" ]; then
     printf "\n%bSuccessfully created secured password file for your e-mail account <%s>\n" "${__done__}" "${_email_address}"
-    printf "%bYou can find the file at %b" "${__empty__}" "${_mutt_passwords_path}"
+    printf "%bYou can find the file at %b" "${__empty__}" "${_mutt_password_path}"
   fi
 }
 
 do_help() {
   print_dotfiles_logo
-  printf "Sophisticated dotfiles configurator for BASH/ZSH shell.\n\n" "${PROJECT_NAME}"
+  printf "Sophisticated dotfiles configurator for BASH/ZSH shell.\n\n"
   printf "OPTIONS\n"
   printf "    backup\n"
   printf "        Create backup from files given into BACKUP_FILES variable\n"
@@ -718,7 +724,7 @@ do_install() {
   case $_install_zsh_and_ohmyzsh in
     y|Y)
       print_subsection "Changing default shell to ZSH"
-      sudo chsh -s "$(which zsh)"
+      sudo chsh -s "$(command -v zsh)"
       print_last_command_status
 
       print_subsection "Installing oh-my-zsh"
@@ -873,7 +879,7 @@ do_reconfigure() {
   make_symlink ".zprofile" "${PROJECT_SETTINGS_COMMON_DIR}/.zprofile" "$HOME/.zprofile"
 
   # copy conky configuration
-  if [[ $IS_BASED_ON_UBUNTU_1604 || IS_ARCH  ]]; then
+  if [[ $IS_BASED_ON_UBUNTU_1604 || $IS_ARCH  ]]; then
     print_subsection "Installing Conky configuration"
     make_symlink ".conkyrc" "${PROJECT_LIB_DIR}/conky-themes/conky_seamod/.conkyrc" "$HOME/.conkyrc" # only for desktops (servers terminals not need GUI)
   fi
