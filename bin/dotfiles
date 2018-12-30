@@ -138,6 +138,12 @@ print_subsection() {
   printf "%s %b\n" "${_subsection}" "${endColor}"
 }
 
+print_subsubsection() {
+  _subsubsection=$1
+  printf "\n%b#--------------------------------------\n" "${blue}"
+  printf "%s %b\n" "${_subsubsection}" "${endColor}"
+}
+
 print_if_missing_variable() {
   _variable=$1
   _if_string_exsist=$(grep -c -F "$_variable" "$PROJECT_CONFIG_FILE")
@@ -346,6 +352,133 @@ do_install_ohmyzsh_theme() {
   make_symlink "honukai.zsh-theme" "${PROJECT_LIB_DIR}/honukai-iterm-zsh/honukai.zsh-theme" "$HOME/.oh-my-zsh/themes/honukai.zsh-theme"
 }
 
+# Install Vim editor from the source files
+do_install_vim_from_source() {
+  print_subsection "Install and compile Vim from the source files"
+  if $IS_ARCH; then
+    print_subsubsection "Update Arch packages"
+    sudo -S pacman -Syu
+
+    print_subsubsection "Install vim and gvim from source files"
+    # gvim - contains also vim + gvim https://www.archlinux.org/news/vimgvim-72411-update/
+    sudo -S pacman -S gvim
+  elif $IS_BASED_ON_UBUNTU_1604; then
+    print_subsubsection "Remove all previously installed versions of Vim"
+    sudo apt-get remove -y --purge \
+      vim \
+      vim-runtime \
+      vim-gnome \
+      vim-tiny \
+      vim-common \
+      vim-gui-common
+    print_last_command_status
+
+    print_subsubsection "Install all lua5.1 and luajit2 libs"
+    sudo apt-get install -y \
+      liblua5.1-dev \
+      luajit \
+      libluajit-5.1
+    print_last_command_status
+
+    print_subsubsection "Install python2 and python3"
+    sudo apt-get install -y \
+      python-dev \
+      python3-dev
+    print_last_command_status
+
+    print_subsubsection "Install ruby"
+    sudo apt-get install -y \
+      ruby-dev
+    print_last_command_status
+
+    print_subsubsection "Install perl"
+    sudo apt-get install -y \
+      perl \
+      libperl-dev
+    print_last_command_status
+
+    print_subsubsection "Install other recommended libraries to get more support from editor itself while coding"
+    sudo apt-get install -y \
+      perl \
+      libperl-dev \
+      mercurial \
+      libncurses5-dev \
+      libgnome2-dev \
+      libgnomeui-dev \
+      libgtk2.0-dev \
+      libatk1.0-dev \
+      libbonoboui2-dev \
+      libcairo2-dev \
+      libx11-dev \
+      libxpm-dev \
+      libxt-dev
+    print_last_command_status
+
+    print_subsubsection "Install vim from source files"
+    _tmp_vim_installer_path=/tmp/vim_installer
+    git clone https://github.com/vim/vim.git $_tmp_vim_installer_path
+    [[ -f "${_tmp_vim_installer_path}/configure" ]] || exit 1
+    (cd "${_tmp_vim_installer_path}" && exec ./configure \
+      --with-features=huge \
+      --enable-multibyte \
+      --enable-gui=auto \
+      --enable-gtk2-check \
+      --enable-gtk3-check \
+      --enable-gnome-check \
+      --enable-cscope \
+      --enable-largefile \
+      --enable-pythoninterp=dynamic \
+      --with-python-config-dir="$(python-config --configdir)" \
+      --enable-python3interp=dynamic \
+      --with-python3-config-dir="$(python3-config --configdir)" \
+      --enable-perlinterp \
+      --enable-rubyinterp=dynamic \
+      --enable-luainterp=dynamic \
+      --with-luajit \
+      --with-x \
+      --prefix=/usr \
+      --with-compiledby="${AUTHOR}" \
+      --enable-fail-if-missing
+    )
+
+    (cd "${_tmp_vim_installer_path}" && exec make VIMRUNTIMEDIR=/usr/share/vim/vim81)
+    (cd "${_tmp_vim_installer_path}" && exec sudo make install && print_last_command_status)
+  elif $IS_MAC; then
+    print_subsubsection "Install lua with luajit"
+    brew install lua@5.1
+    brew install luajit # luajit@2
+
+    print_subsubsection "Install ruby (via rbenv)"
+    brew install rbenv
+    brew upgrade rbenv ruby-build
+    rbenv init
+    rbenv install 2.5.5
+    rbenv version # print current version of ruby
+
+    print_subsubsection "Install Python 2"
+    # We will need Python2 to compile YouCompleteMe if you want
+    # to have both Python2 and Python3 supported by Vim.
+    # YCM don't recognize default python2 on OSX Mojave even if
+    # By default OSX Mojave already has preinstalled python2.7
+    # Here are details https://askubuntu.com/a/1021203/168174
+    brew install python@2
+
+    print_subsubsection "Install Python 3"
+    brew install python
+
+    print_subsubsection "Install console version of Vim"
+    brew install vim
+
+    print_subsubsection "Clean up brew installation"
+    brew cleanup
+
+    print_subsubsection  "Install the MacVim"
+    printf "In order to install the MacVim the best way is to\n"
+    printf "download the .dmg file from\n"
+    printf "https://github.com/macvim-dev/macvim/release\n\n"
+  fi
+}
+
 create_secure_mutt_passwords() {
   # password file name is related with muttrc settings
   _mutt_password_path="$HOME/.mutt/passwords.gpg"
@@ -463,9 +596,10 @@ do_help() {
   printf "    clean-all, -ca\n"
   printf "        Clean all installation symlinks for current user home\n"
   printf "        directory (%s)\n\n" "$HOME"
-  printf "    install\n"
+  printf "    install, -i [ vim ]\n"
   printf "        Install and configure %s\n" "${PROJECT_CONFIG_FILE}"
   printf "        for current user.\n\n"
+  printf "        vim - install Vim from source files.\n\n"
   printf "    list-config, -lc\n"
   printf "        List personal configuration file stored in %s\n" "${PROJECT_CONFIG_FILE}"
   printf "        for current user.\n\n"
@@ -488,6 +622,7 @@ do_help() {
   printf "    Since %s is installed globally you can just type i.e.:\n" "${FILE_NAME}"
   printf "        %s --help\n" "${FILE_NAME}"
   printf "        %s install\n" "${FILE_NAME}"
+  printf "        %s install vim\n" "${FILE_NAME}"
   printf "        %s reconfigure\n" "${FILE_NAME}"
   printf "\n%s 2014-%s - %s - License MIT.\n" "${PROJECT_NAME}" "$(date +%Y)" "${AUTHOR}"
   printf "Further info at https://github.com/egel/dotfiles\n"
@@ -605,18 +740,19 @@ do_install() {
     fi
   elif $IS_BASED_ON_UBUNTU_1604; then
     print_subsection "Installing required software for further steps"
-    sudo apt-get install -y software-properties-common
+    sudo apt-get install -y \
+                    software-properties-common
 
     print_subsection "Checking and adding PPA repositories"
-    printf "Git PPA"
+    printf "\nGit PPA"
     sudo add-apt-repository -y ppa:git-core/ppa
     print_last_command_status
 
-    printf "Tmux PPA"
+    printf "\nTmux PPA"
     sudo add-apt-repository -y ppa:pi-rho/dev
     print_last_command_status
 
-    printf "TLP PPA"
+    printf "\nTLP PPA"
     sudo add-apt-repository -y ppa:linrunner/tlp
     print_last_command_status
 
@@ -626,62 +762,42 @@ do_install() {
 
     print_subsection "Updating and installing required programs"
     sudo apt-get update
-    sudo apt-get install -y python-software-properties software-properties-common curl wget xdg-utils fontconfig build-essential libssl-dev
+    sudo apt-get install -y \
+                    python-software-properties \
+                    software-properties-common \
+                    curl \
+                    wget \
+                    xdg-utils \
+                    fontconfig \
+                    build-essential \
+                    libssl-dev
     print_last_command_status
 
-    sudo apt-get install -y editorconfig git zsh tmux
+    sudo apt-get install -y \
+                    editorconfig \
+                    git \
+                    zsh \
+                    tmux
     print_last_command_status
 
-    sudo apt-get install gnupg2 # security tool used i.e. for mutt
-    print_last_command_status
-
-    sudo apt-get install -y shellcheck # for checking syntax in vim for *.sh files
-    print_last_command_status
-
+    # Install TPL - Linux Advanced Power Management
     sudo apt-get install -y tlp tlp-rdw
     print_last_command_status
 
+    # Install gnupg - a security tool used e.g.: for mutt
+    sudo apt-get install gnupg2
+    print_last_command_status
+
+    # Install mutt email client
     sudo apt-get install -y mutt
     print_last_command_status
 
-    # Installing Cmake e.g. for YouCompleteMe Vim plugin
-    sudo apt-get install -y software-properties-common cmake
-
-    # Install vim
-    print_subsection "Install and compile Vim from source files"
-    sudo apt-get remove -y --purge vim vim-runtime vim-gnome vim-tiny vim-common vim-gui-common
+    # Install shellcheck for checking syntax in vim for *.sh files
+    sudo apt-get install -y shellcheck
     print_last_command_status
 
-    sudo apt-get install -y liblua5.1-dev luajit libluajit-5.1
-    print_last_command_status
-
-    sudo apt-get install -y python-dev python3-dev ruby-dev libperl-dev mercurial libncurses5-dev libgnome2-dev libgnomeui-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev
-    print_last_command_status
-
-    sudo apt-get install -y gnupg2 dirmngr
-
-    cd /tmp || exit
-    git clone https://github.com/vim/vim.git
-    ./configure --with-features=huge \
-                --enable-multibyte \
-                --enable-gui=auto \
-                --enable-gtk2-check \
-                --enable-gtk3-check \
-                --enable-gnome-check \
-                --enable-cscope \
-                --enable-largefile \
-                --enable-pythoninterp=dynamic --with-python-config-dir="$(python-config --configdir)" \
-                --enable-python3interp=dynamic --with-python3-config-dir="$(python3-config --configdir)" \
-                --enable-perlinterp \
-                --enable-rubyinterp=dynamic \
-                --enable-luainterp=dynamic \
-                --with-luajit \
-                --with-x \
-                --prefix=/usr \
-                --with-compiledby="${AUTHOR}" \
-                --enable-fail-if-missing
-    make VIMRUNTIMEDIR=/usr/share/vim/vim81
-    sudo make install
+    # Install vim from source files
+    do_install_vim_from_source
 
     print_subsection "Set VIM as default editor"
     sudo update-alternatives --install /usr/bin/editor editor /usr/bin/vim 1
@@ -691,11 +807,9 @@ do_install() {
   elif $IS_ARCH; then
     sudo -S pacman -Syu
 
-    # gvim - contains also vim + gvim https://www.archlinux.org/news/vimgvim-72411-update/
     # cmus - console player + optional libs
     sudo -S pacman -S \
       git \
-      gvim \
       zsh \
       wget curl \
       tmux \
@@ -800,7 +914,7 @@ do_install() {
   printf "Configuration of %s complete successfully.\n" "${PROJECT_NAME}"
   printf "Now you could run: '%s' to find more about the configurator.\n" "${FILE_NAME} --help"
 
-  printf "\n%b To finalize installation of ZSH shell, you need to reboot the system.\n" "${__info__}"
+  printf "\n%bTo finalize installation of ZSH shell, you need to reboot the system.\n" "${__info__}"
   if [[ "$PROJECT_INSTALL_DEFAULTS" -ne 1 ]]; then # default: install -y
     printf "%bWould you like to do it now?" "${__question__}"
     read -r -p " (y/N) " _reboot_now
@@ -826,7 +940,7 @@ do_fix_file_and_directories_permissions() {
 
   fix_file_or_directory_permission "${SSH_DIR}/authorized_keys" 640
 
-  fix_file_or_directory_permission "${SSH_DIR}"/*.pub 644 # asterisk is a wildcard and can't be inside string quotesg
+  fix_file_or_directory_permission "${SSH_DIR}"/*.pub 644 # asterisk is a wildcard and can't be inside string quotes
   fix_file_or_directory_permission "${SSH_DIR}/id_rsa" 600
 
   fix_file_or_directory_permission "${HOME}/.aliases.private" 700
@@ -875,12 +989,12 @@ do_reconfigure() {
   # $PATH variable not properly set in gvim/MacVim => http://stackoverflow.com/a/24542893/1977012
   make_symlink ".zprofile" "${PROJECT_SETTINGS_COMMON_DIR}/.zprofile" "$HOME/.zprofile"
 
-  if [[ $IS_BASED_ON_UBUNTU_1604 || $IS_ARCH  ]]; then
+  if [[ $IS_BASED_ON_UBUNTU_1604 = true || $IS_ARCH = true ]]; then
     print_subsection "Configuration specific for Linux"
     make_symlink ".conkyrc" "${PROJECT_LIB_DIR}/conky-themes/conky_seamod/.conkyrc" "$HOME/.conkyrc" # only for desktops (servers terminals not need GUI)
   fi
 
-  if [[ $IS_MAC ]]; then
+  if $IS_MAC; then
     print_subsection "Configuration specific for OSX"
     make_symlink "Brewfile" "${PROJECT_SETTINGS_COMMON_DIR}/Brewfile" "$HOME/Brewfile"
   fi
@@ -958,7 +1072,6 @@ do_backup() {
     fi
     printf "Backup of %s completed %b\n" "$item" "${__done__}"
   done
-
 }
 
 # Main
@@ -976,7 +1089,14 @@ case "$1" in
     do_list_local_config
     ;;
   install|-i)
-    do_install
+    case "$2" in
+      vim)
+        do_install_vim_from_source
+        ;;
+      *)
+        do_install
+        ;;
+    esac
     ;;
   reconfigure|-r)
     do_reconfigure
