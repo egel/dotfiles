@@ -1,3 +1,7 @@
+stages:
+  - test
+  - install
+
 language: bash
 sudo: required
 dist: xenial
@@ -14,5 +18,12 @@ before_script:
   - rm -rf ~/.dotfiles
   - git clone --recursive https://github.com/egel/dotfiles.git ~/.dotfiles
 
-script:
-  - ~/.dotfiles/bin/dotfiles install -y
+
+jobs:
+  include:
+  - stage: test
+    script:
+      - bash -c 'shopt -s globstar; shellcheck **/*.{sh,ksh,bash}'
+  - stage: install
+    script:
+      - ~/.dotfiles/bin/dotfiles install -y
