@@ -14,39 +14,39 @@ brew "nmap"
 brew "tree"
 brew "pandoc"
 
-# Libraries
+# Lua with luajit
 brew "lua"
 brew "luajit"
+
+# Python2 + Python3
+brew "python@2"
 brew "python"
-brew "python3"
 brew "cmake"
+
+# Ruby version manager
+brew "rbenv"
 
 # Programming
 brew "editorconfig"
 brew "shellcheck"
 brew "yarn", args: ["without-node"]
 
-# Vim
+# MacVim (not the terminal version)
 brew "cscope"
-brew "vim", args: ["with-lua", "with-python3"]
-brew "macvim", args: ["with-lua", "with-python3", "with-cscope", "with-override-system-vim"]
+brew "macvim", args: ["HEAD", "with-lua", "with-luajit", "with-python@2", "with-python3", "with-cscope"]
 
 # Golang
 brew "glide"
 brew "go"
 brew "hugo"
 
-# tmux
+# Tmux
 brew "tmux"
 brew "reattach-to-user-namespace" # for copy from tmux to mac namespace
 brew "gnupg" # for secure emailing
-brew "gnupg2" # for secure emailing
 
 # ZSH shell
 brew "zsh"
 
 # GPG suite
 brew "gnupg"
-
-# Ruby version manager
-brew "rbenv"

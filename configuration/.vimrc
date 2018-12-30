@@ -148,9 +148,19 @@ set nocompatible
       autocmd BufReadPost fugitive://* set bufhidden=delete
 
     "}}}
-    Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --cs-completer --go-completer --java-completer' } "{{{
+    Plug 'Valloric/YouCompleteMe', { 'do': 'python3 ./install.py --all' } "{{{
       let g:ycm_server_keep_logfiles = 1
+      let g:ycm_log_level = 'debug'
       let g:ycm_server_log_level = 'debug'
+
+      if s:is_macvim
+        let g:ycm_python_binary_path = '/usr/local/bin/python3'
+        let g:ycm_server_python_interpreter = '/usr/local/bin/python3'
+      elseif s:is_linux
+        let g:ycm_python_binary_path = '/usr/bin/python3'
+        let g:ycm_server_python_interpreter = '/usr/bin/python3'
+      endif
+
     "}}}
     Plug 'kien/ctrlp.vim' "{{{
       let g:ctrlp_map = '<c-p>'
