@@ -1,29 +1,28 @@
 stages:
-  - test
-  - install
+- test
+- install
 
 language: bash
 sudo: required
 dist: xenial
 
 before_cache:
-  - rm -rf $HOME/.cache
+- rm -rf $HOME/.cache
 
 cache:
   bundler: false
 
 before_script:
-  - export DISPLAY=:99.0
-  - if [[ "$TRAVIS_OS_NAME" == "linux" && -f "/etc/init.d/xvfb" ]]; then sh -e /etc/init.d/xvfb start; fi
-  - rm -rf ~/.dotfiles
-  - git clone --recursive https://github.com/egel/dotfiles.git ~/.dotfiles
-
+- export DISPLAY=:99.0
+- if [[ "$TRAVIS_OS_NAME" == "linux" && -f "/etc/init.d/xvfb" ]]; then sh -e /etc/init.d/xvfb start; fi
+- rm -rf ~/.dotfiles
+- git clone --recursive https://github.com/egel/dotfiles.git ~/.dotfiles
 
 jobs:
   include:
   - stage: test
     script:
-      - bash -c 'shopt -s globstar; shellcheck **/*.{sh,ksh,bash}'
+    - bash -c 'shopt -s globstar; shellcheck **/*.{sh,ksh,bash}'
   - stage: install
     script:
-      - ~/.dotfiles/bin/dotfiles install -y
+    - ~/.dotfiles/bin/dotfiles install -y
