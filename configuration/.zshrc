@@ -156,3 +156,6 @@ if [[ -f $ZSH/oh-my-zsh.sh ]]; then
 else
   echo "Missing $ZSH/oh-my-zsh.sh file."
 fi
+
+# Use rbenv instead of default system ruby version
+eval "$(rbenv init -)"
