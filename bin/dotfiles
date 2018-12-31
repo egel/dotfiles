@@ -580,6 +580,7 @@ do_install() {
   fi
 
   # copy dotfiles program to system binaries
+  do_install_dotfiles_program_globally
 
 
   if $IS_MAC; then
