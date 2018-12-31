@@ -848,7 +848,7 @@ do_uninstall() {
       exit 1;
       ;;
     *)
-      printf "%bAborting uninstalling of ." "${__info__}" "${PROJECT_NAME}"
+      printf "%bAborting uninstalling of %b." "${__info__}" "${PROJECT_NAME}"
       ;;
   esac
 }
