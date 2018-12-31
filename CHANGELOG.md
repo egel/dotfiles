@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Added
+- dotfiles/OSX: Added Brewfile - the configuration file for brew (#98)
+
 ### Changed
 ### Deprecated
 ### Removed

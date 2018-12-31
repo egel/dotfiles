@@ -1,0 +1,45 @@
+tap "homebrew/core"
+tap "homebrew/bundle"
+tap "caskroom/fonts"
+tap "caskroom/cask"
+
+# Basic
+brew "coreutils"
+brew "curl"
+brew "wget"
+brew "gawk"
+brew "imagemagick"
+brew "jq"
+brew "nmap"
+brew "tree"
+brew "pandoc"
+
+# Libraries
+brew "lua"
+brew "luajit"
+brew "python"
+brew "python3"
+
+# Programming
+brew "editorconfig"
+brew "shellcheck"
+brew "yarn", args: ["without-node"]
+
+# Vim
+brew "cscope"
+brew "vim", args: ["with-lua", "with-python3"]
+brew "macvim", args: ["with-lua", "with-python3", "with-cscope", "with-override-system-vim"]
+
+# Golang
+brew "glide"
+brew "go"
+brew "hugo"
+
+# tmux
+brew "tmux"
+brew "reattach-to-user-namespace" # for copy from tmux to mac namespace
+brew "gnupg" # for secure emailing
+brew "gnupg2" # for secure emailing
+
+# ZSH shell
+brew "zsh"
