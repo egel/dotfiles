@@ -19,6 +19,7 @@ brew "lua"
 brew "luajit"
 brew "python"
 brew "python3"
+brew "cmake"
 
 # Programming
 brew "editorconfig"

@@ -617,6 +617,10 @@ do_install() {
     sudo add-apt-repository -y ppa:linrunner/tlp
     print_last_command_status
 
+    printf "Cmake PPA"
+    sudo add-apt-repository ppa:george-edison55/cmake-3.x
+    print_last_command_status
+
     print_subsection "Updating and installing required programs"
     sudo apt-get update
     sudo apt-get install -y python-software-properties software-properties-common curl wget xdg-utils fontconfig build-essential libssl-dev
@@ -636,6 +640,9 @@ do_install() {
 
     sudo apt-get install -y mutt
     print_last_command_status
+
+    # Installing Cmake e.g. for YouCompleteMe Vim plugin
+    sudo apt-get install software-properties-common cmake
 
     # Install vim
     print_subsection "Install and compile Vim from source files"
@@ -696,7 +703,8 @@ do_install() {
       tlp \
       tlp-rdw \
       lsb-release \
-      smartmontools
+      smartmontools \
+      cmake
 
     # Enable TLP
     sudo systemctl enable tlp.service

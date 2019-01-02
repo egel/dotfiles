@@ -61,7 +61,6 @@ set nocompatible
   let s:settings={}
   let s:settings.default_indent=2
   let s:settings.max_column=120
-  let s:settings.autocomplete_method='neocomplete'
   let s:settings.enable_cursorcolumn=0
   let s:settings.background='dark'
   let s:settings.background_color='#282828'
@@ -148,6 +147,10 @@ set nocompatible
       nnoremap <silent> <leader>gr :Gremove<CR>
       autocmd BufReadPost fugitive://* set bufhidden=delete
 
+    "}}}
+    Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --cs-completer --go-completer --java-completer' } "{{{
+      let g:ycm_server_keep_logfiles = 1
+      let g:ycm_server_log_level = 'debug'
     "}}}
     Plug 'kien/ctrlp.vim' "{{{
       let g:ctrlp_map = '<c-p>'
