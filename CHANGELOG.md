@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Switch neobundle plugin manager in favor of simpler vim-plug (#65)
+- Replace NeoComplete with YouCompleteMe code-completion engine (#127)
 
 ### Deprecated
 ### Removed
