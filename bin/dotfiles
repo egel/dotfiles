@@ -343,6 +343,12 @@ do_install_dotfiles_program_globally() {
   print_last_command_status
 }
 
+# Link the "honukai" theme to all other oh-my-zsh themes
+do_install_ohmyzsh_theme() {
+  print_subsection "Install honukai theme for ZSH"
+  make_symlink "honukai.zsh-theme" "${PROJECT_LIB_DIR}/honukai-iterm-zsh/honukai.zsh-theme" "$HOME/.oh-my-zsh/themes/honukai.zsh-theme"
+}
+
 create_secure_mutt_passwords() {
   # password file name is related with muttrc settings
   _mutt_password_path="$HOME/.mutt/passwords.gpg"
@@ -747,13 +753,8 @@ do_install() {
   git --git-dir="${PROJECT_REPOSITORY_DIR}/.git" --work-tree="${PROJECT_REPOSITORY_DIR}" submodule update --init --recursive > /dev/null 2>&1
   print_last_command_status
 
-  # link honukai to oh-my-zsh themes
-  print_subsection "Symlink honukai to oh-my-zsh themes"
-  make_symlink "honukai.zsh-theme" "${PROJECT_LIB_DIR}/honukai-iterm-zsh/honukai.zsh-theme" "$HOME/.oh-my-zsh/themes/honukai.zsh-theme"
-
-  print_subsection "Installing NeoBundle - Vim plugin manager"
-  curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh
-  print_last_command_status
+  # install theme for ZSH shell
+  do_install_ohmyzsh_theme
 
   # installing font assets
   do_install_font_assets

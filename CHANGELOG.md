@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - dotfiles/OSX: Added Brewfile - the configuration file for brew (#98)
 - CI-CD: Added shellcheck linter (#122)
+- dotfiles: refactor installing ZSH theme
 
 ### Changed
 ### Deprecated
