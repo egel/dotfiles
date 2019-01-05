@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Deprecated
 ### Removed
 ### Fixed
+- Fix missing Brefile, .gemrc and .mdlrc when cleaning dotfiles (#131)
 ### Security
 
 ## [2.4.0] - 2018-12-30
