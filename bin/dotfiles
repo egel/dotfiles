@@ -101,6 +101,8 @@ CURRENT_SYMLINKS=(
   "$HOME/.dircolors"
   "$HOME/.editorconfig"
   "$HOME/.gitconfig"
+  "$HOME/.mdlrc"
+  "$HOME/.gemrc"
   "$HOME/.gvimrc"
   "$HOME/.ideavimrc"
   "$HOME/.muttrc"
@@ -115,6 +117,7 @@ CURRENT_SYMLINKS=(
   "$HOME/.zshenv"
   "$HOME/.zshrc"
   "$HOME/.zshrc.local"
+  "$HOME/Brewfile"
   "${DESTINATION_MUTT_DIR}"
 )
 
