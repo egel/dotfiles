@@ -1,11 +1,19 @@
 ## Table of Content
 
 1.  Configuration
-    1. [OSX](./configuration/osx.md)
-    1. [Theme customization](./configuration/themes.md)
+
+    1.  [OSX](./configuration/osx.md)
+    1.  [Theme customization](./configuration/themes.md)
+
+1.  Features
+
+    1.  [Vim](./docs/features/vim.md)
+
 1.  Frequently Asked Questions
+
     1.  [Dotfiles key-bindings](https://www.overleaf.com/project/54f073d367a05fe35700e747)
     1.  Terminal
+
         -   [Why I have wrong characters in my terminal (vim/tmux)](/docs/faq/terminal.md#why-i-have-wrong-characters-in-my-terminal-vimtmux)
         -   [Fix default terminal key mapping](/docs/faq/terminal.md#fix-the-default-terminal-key-mapping)
         -   [Terminal color palette (gruvbox)](/docs/faq/terminal.md#terminal-color-palette-gruvbox)

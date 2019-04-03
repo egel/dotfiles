@@ -1,26 +1,28 @@
 stages:
-- test
-- install
+  - test
+  - install
 
 language: bash
 sudo: required
 dist: xenial
 
 env:
-- DOTFILES_PATH=$HOME/.dotfiles
+  - DOTFILES_PATH=$HOME/.dotfiles
 
 before_script:
-- export DISPLAY=:99.0
-- if [[ "$TRAVIS_OS_NAME" == "linux" && -f "/etc/init.d/xvfb" ]]; then sh -e /etc/init.d/xvfb start; fi
-# Move default location of repository into desired ~/.dotfiles location
-- rm -r -f $DOTFILES_PATH
-- mv $TRAVIS_BUILD_DIR $DOTFILES_PATH
+  - export DISPLAY=:99.0
+  - if [[ "$TRAVIS_OS_NAME" == "linux" && -f "/etc/init.d/xvfb" ]]; then sh -e /etc/init.d/xvfb start; fi
+  # Move default location of repository into desired ~/.dotfiles location
+  - rm -r -f $DOTFILES_PATH
+  - mv $TRAVIS_BUILD_DIR $DOTFILES_PATH
 
 jobs:
   include:
-  - stage: test
-    script:
-    - bash -c "shopt -s globstar; shellcheck $DOTFILES_PATH/bin/**/*.sh"
-  - stage: install
-    script:
-    - $DOTFILES_PATH/bin/dotfiles install -y
+    - stage: test
+      name: "Lint shell scripts"
+      script:
+        - bash -c "shopt -s globstar; shellcheck $DOTFILES_PATH/bin/**/*.sh"
+    - stage: install
+      name: "Check default dotfiles installation"
+      script:
+        - $DOTFILES_PATH/bin/dotfiles install -y
