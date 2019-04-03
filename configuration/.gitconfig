@@ -1,7 +1,13 @@
 [include]
   # For user, email, ect.
   path = ~/.gitconfig.local
-  ;path = ~/.gitconfig.local_work
+  ; path = ~/.gitconfig.local_work
+
+[commit]
+	gpgsign = true
+
+[gpg]
+	program = /usr/local/bin/gpg
 
 [color]
   ui = auto
