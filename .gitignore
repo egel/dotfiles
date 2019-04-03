@@ -23,6 +23,9 @@
 **/.mutt/gmailcerts
 **/.mutt/*.gpg
 
+# NodeJS
+**/node_modules/
+
 # Editor
 .idea/
 **/*.iml

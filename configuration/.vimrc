@@ -230,6 +230,7 @@ set nocompatible
       augroup json_autocmd
         autocmd!
         autocmd FileType json set foldmethod=syntax
+        autocmd BufRead,BufNewFile .markdownlintrc,.remarkrc set ft=json
       augroup END
 
     "}}}
@@ -361,42 +362,74 @@ set nocompatible
       let g:SuperTabDefaultCompletionType = "<C-n>"
 
     "}}}
-    Plug 'scrooloose/syntastic' "{{{
-      let g:syntastic_mode_map = {
-        \ 'mode': 'active',
-        \ 'active_filetypes': ['python', 'javascript', 'jade'],
-        \ 'passive_filetypes': []
-      \ }
+    Plug 'w0rp/ale' "{{{
+      " Only run linters named in ale_linters settings.
+      let g:ale_linters_explicit = 0
 
-      set statusline+=%#warningmsg#
-      set statusline+=%{SyntasticStatuslineFlag()}
-      set statusline+=%*
+      " Enable completion where available.
+      " This setting must be set before ALE is loaded.
+      let g:ale_completion_enabled = 1
 
-      let g:syntastic_always_populate_loc_list = 1
-      let g:syntastic_auto_loc_list = 1
-      let g:syntastic_check_on_open = 1
-      let g:syntastic_check_on_wq = 0
+      " Set this. Airline will handle the rest.
+      let g:airline#extensions#ale#enabled = 1
 
-      " if add other then linter will check one for another checker
-      let g:syntastic_markdown_mdl_exec = 'markdownlint'
-      let g:syntastic_typescript_checkers = ['tslint'] " other 'tsc'
-      let g:syntastic_javascript_checkers = ['eslint'] " 'standard', 'jslint'
-      let g:syntastic_go_checkers = ['go', 'govet', 'golint']
-      let g:syntastic_python_checkers = ['flake8', 'pylint', 'pyflakes']
-      let g:syntastic_jade_checkers = ['jade_lint']
-      let g:syntastic_json_checkers = ['jsonlint']
-      let g:syntastic_sass_checkers=["sass_lint"]
-      let g:syntastic_scss_checkers=["sass_lint"]
-      let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute " ,"trimming empty <", "unescaped &" , "lacks \"action", "is not recognized!", "discarding unexpected"]
+      " Custom lint signs
+      let g:ale_sign_error = '✗'
+      let g:ale_sign_warning = '∆' " ⚠
 
-      let g:syntastic_check_on_open = 1
-      let g:syntastic_error_symbol = '✗'
-      let g:syntastic_warning_symbol = '∆' " ⚠
-      let g:syntastic_style_error_symbol = '✗'
-      let g:syntastic_style_warning_symbol = '∆' " ⚠
+      " Show signs always in git gutter column
+      let g:ale_sign_column_always = 1
+
+      " Show 5 lines of errors (default: 10)
+      let g:ale_list_window_size = 5
+
+      " Prettify the code on save
+      let g:ale_fix_on_save = 1
+
+      " ZSH and shellchek
+      let g:ale_sh_shell_default_shell = 'zsh'
+      let g:ale_sh_shellcheck_exclusions = ''
+      let g:ale_sh_shellcheck_executable = 'shellcheck'
+      let g:ale_sh_shellcheck_options = ''
+
+      " Define linters
+      let g:ale_linters = {
+      \  'javascript': ['eslint'],
+      \  'typescript': ['tslint'],
+      \  'markdown': ['remark-lint'],
+      \  'css': ['stylelint'],
+      \  'shell': ['shellcheck']
+      \}
+
+      let g:ale_fixers = {
+      \   'javascript': ['prettier'],
+      \   'typescript': ['prettier'],
+      \   'markdown': ['prettier'],
+      \   'css': ['prettier'],
+      \}
+
+      " Do not lint or fix minified files.
+      let g:ale_pattern_options = {
+      \ '\.min\.js$': {'ale_linters': [], 'ale_fixers': []},
+      \ '\.min\.css$': {'ale_linters': [], 'ale_fixers': []},
+      \}
+
+      function! LinterStatus() abort
+          let l:counts = ale#statusline#Count(bufnr(''))
+
+          let l:all_errors = l:counts.error + l:counts.style_error
+          let l:all_non_errors = l:counts.total - l:all_errors
+
+          return l:counts.total == 0 ? 'OK' : printf(
+          \   '%dW %dE',
+          \   all_non_errors,
+          \   all_errors
+          \)
+      endfunction
+
+      set statusline=%{LinterStatus()}
 
     "}}}
-
     Plug 'airblade/vim-gitgutter' "{{{
       let g:gitgutter_realtime = 1
       let g:gitgutter_sign_added = '+'
@@ -941,4 +974,3 @@ filetype plugin indent on
       endtry
     endfunction
   "}}}
-
