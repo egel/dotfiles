@@ -598,7 +598,7 @@ do_install() {
       # Brew has problem running outside of $HOME, so using subshell to
       # encapsulate method to not interfere with current program.
       # Enter the path before executing installation
-      (cd $HOME && brew bundle)
+      (cd "$HOME" && brew bundle)
     else
       printf "%bNo Brewfile. Do 'dotfiles --reconfigure'\n" "${__error__}"
       exit 1
