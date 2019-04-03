@@ -658,6 +658,8 @@ do_install() {
     sudo apt-get install -y python-dev python3-dev ruby-dev libperl-dev mercurial libncurses5-dev libgnome2-dev libgnomeui-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev
     print_last_command_status
 
+    sudo apt-get install -y gnupg2 dirmngr
+
     cd /tmp || exit
     git clone https://github.com/vim/vim.git
     ./configure --with-features=huge \
@@ -707,7 +709,8 @@ do_install() {
       tlp-rdw \
       lsb-release \
       smartmontools \
-      cmake
+      cmake \
+      gnupg
 
     # Enable TLP
     sudo systemctl enable tlp.service

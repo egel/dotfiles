@@ -44,3 +44,6 @@ brew "gnupg2" # for secure emailing
 
 # ZSH shell
 brew "zsh"
+
+# GPG suite
+brew "gnupg"

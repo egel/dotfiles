@@ -156,3 +156,22 @@ if [[ -f $ZSH/oh-my-zsh.sh ]]; then
 else
   echo "Missing $ZSH/oh-my-zsh.sh file."
 fi
+
+# Start SSH agent
+if [ -z "$SSH_AUTH_SOCK" ] ; then
+  eval `ssh-agent -s`
+  ssh-add
+fi
+
+#########################################
+# GPG, GPG-agent
+#########################################
+# It is important to set the environment variable GPG_TTY in your login shell
+export GPG_TTY="$(tty)"
+
+# If you enabled the Ssh Agent Support, you also need to tell ssh
+# about it by adding this to your init script
+unset SSH_AGENT_PID
+if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+fi
