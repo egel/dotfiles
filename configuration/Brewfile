@@ -47,3 +47,6 @@ brew "zsh"
 
 # GPG suite
 brew "gnupg"
+
+# Ruby version manager
+brew "rbenv"

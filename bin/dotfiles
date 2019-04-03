@@ -719,6 +719,10 @@ do_install() {
     sudo systemctl mask systemd-rfkill.service
   fi
 
+  # Install Ruby manager (rbenv)
+  git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+  cd ~/.rbenv && src/configure && make -C src
+
   print_subsection "Checking programs"
   check_program "vim:\t" "vim --version | head -n1"
   check_program "tmux:\t" "tmux -V"

@@ -157,7 +157,13 @@ else
   echo "Missing $ZSH/oh-my-zsh.sh file."
 fi
 
-# Start SSH agent
+# Use local Ruby manager (rbenv) instead of system ruby version
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+
+#########################################
+# SSH agent
+#########################################
 if [ -z "$SSH_AUTH_SOCK" ] ; then
   eval `ssh-agent -s`
   ssh-add
