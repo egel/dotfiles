@@ -1,7 +1,6 @@
 #!/bin/bash
 
 FILE_NAME=${0##*/}
-PWD=$(pwd)
 
 # General colors
 # black='\033[0;30m'
@@ -35,61 +34,6 @@ AUTHOR="Maciej Sypień"
 GIT_CURRENT_BRANCH=$(git branch | grep "\*" | cut -d ' ' -f2)
 EMAIL_REGEXP="^[a-z0-9!#\$%&'*+/=?^_\`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])?\$"
 
-IS_MAC=false
-IS_LINUX=false
-IS_ARCH=false
-IS_BASED_ON_UBUNTU_1604=false
-
-if [ "$(uname -s)" == "Darwin" ]; then
-  IS_MAC=true
-elif [ "$(uname)" == "Linux" ]; then
-  if [[ "$(uname -r)" =~ "ARCH" ]]; then
-    IS_ARCH=true
-  elif [[ -f "/etc/lsb-release" && $(awk 'match($0, /Ubuntu 16.04/) { print substr($0, RSTART, RLENGTH) }' /etc/lsb-release) == "Ubuntu 16.04" ]]; then
-    IS_BASED_ON_UBUNTU_1604=true
-  elif [[ "$(uname)" == "Linux" ]]; then
-    IS_LINUX=true
-    # Load dotfiles config vars if the file is available
-    # This action is required if we want to suppress message when enter
-    if [ -f "${PROJECT_CONFIG_FILE}" ]; then
-      # shellcheck source=/dev/null
-      . "${PROJECT_CONFIG_FILE}"
-    fi
-      if [[ ${IS_LINUX} && "${DOTFILES_IGNORE_UBUNTU_VERSION}" != "true" ]]; then
-        printf "\n%b This program didn't recognize your Linux distribution\n" "${__warning__}"
-        printf "Version (uname -a): %s\n" "$(uname -a)"
-        printf "\n%b Do you want continue as Ubuntu 16.04?" "${__question__}"
-        read -r -p " (y/N) " _continue_as_ubuntu_1604
-        case $_continue_as_ubuntu_1604 in
-          y|Y)
-            IS_BASED_ON_UBUNTU_1604=true
-            ;;
-          *)
-            exit 1
-            ;;
-        esac
-      fi
-  else
-    printf "\n%b This program doesn't support this Linux distribution (%s)\n" "${__warning__}" "$(uname -a)"
-    printf "\n%b WARNING: Do you want to continue as if it ware 'Linux Ubuntu 16.04'?" "${__question__}"
-    read -r -p " (y/N) " _forcefully_continue_as_ubuntu_1604
-    case $_forcefully_continue_as_ubuntu_1604 in
-      y|Y)
-        IS_BASED_ON_UBUNTU_1604=true
-        ;;
-      *)
-        exit 1
-        ;;
-    esac
-  fi
-elif [[ "$( (substr "$(uname -s)" 1 10) )" == "MINGW32_NT" && "$( (substr "$(uname -s)" 1 10) )" == "MINGW64_NT" ]]; then
-  printf "%bThis program doesn't support Windows OS" "${__warning__}"
-  exit 1;
-elif [[ "$( (substr "$(uname -s)" 1 10) )" =~ "CYGWIN" ]]; then
-  printf "%bThis program doesn't support Cygwin project" "${__warning__}"
-  exit 1;
-fi
-
 # Config variables (Plugins)
 DESTINATION_MUTT_DIR="$HOME/.mutt"
 
@@ -120,6 +64,102 @@ CURRENT_SYMLINKS=(
   "$HOME/Brewfile"
   "${DESTINATION_MUTT_DIR}"
 )
+
+IS_MAC=false
+IS_LINUX=false
+IS_ARCH=false
+IS_BASED_ON_UBUNTU_1604=false
+
+# Checks what kind of system is in use and set up obligatory variables
+check_system_requirements() {
+  if [[ "$(uname -s)" == "Darwin" ]]; then
+    IS_MAC=true
+  elif [[ "$(uname)" == "Linux" ]]; then
+    if [[ "$(uname -r)" =~ "ARCH" ]]; then
+      IS_ARCH=true
+    elif [[ -f "/etc/lsb-release" && $(awk 'match($0, /Ubuntu 16.04/) { print substr($0, RSTART, RLENGTH) }' /etc/lsb-release) == "Ubuntu 16.04" ]]; then
+      IS_BASED_ON_UBUNTU_1604=true
+    elif [[ "$(uname)" == "Linux" ]]; then
+      IS_LINUX=true
+      # Load dotfiles config vars if the file is available
+      # This action is required if we want to suppress message when enter
+      if [[ -f "${PROJECT_CONFIG_FILE}" ]]; then
+        # shellcheck source=/dev/null
+        . "${PROJECT_CONFIG_FILE}"
+      fi
+        if [[ ${IS_LINUX} && "${DOTFILES_IGNORE_UBUNTU_VERSION}" != "true" ]]; then
+          printf "\n%b This program didn't recognize your Linux distribution\n" "${__warning__}"
+          printf "Version (uname -a): %s\n" "$(uname -a)"
+          printf "\n%b Do you want continue as Ubuntu 16.04?" "${__question__}"
+          read -r -p " (y/N) " _continue_as_ubuntu_1604
+          case $_continue_as_ubuntu_1604 in
+            y|Y)
+              IS_BASED_ON_UBUNTU_1604=true
+              ;;
+            *)
+              exit 1
+              ;;
+          esac
+        fi
+    else
+      printf "\n%b This program doesn't support this Linux distribution (%s)\n" "${__warning__}" "$(uname -a)"
+      printf "\n%b WARNING: Do you want to continue as if it ware 'Linux Ubuntu 16.04'?" "${__question__}"
+      read -r -p " (y/N) " _forcefully_continue_as_ubuntu_1604
+      case $_forcefully_continue_as_ubuntu_1604 in
+        y|Y)
+          IS_BASED_ON_UBUNTU_1604=true
+          ;;
+        *)
+          exit 1
+          ;;
+      esac
+    fi
+  elif [[ "$( (substr "$(uname -s)" 1 10) )" == "MINGW32_NT" && "$( (substr "$(uname -s)" 1 10) )" == "MINGW64_NT" ]]; then
+    printf "%bThis program doesn't support Windows OS" "${__warning__}"
+    exit 1;
+  elif [[ "$( (substr "$(uname -s)" 1 10) )" =~ "CYGWIN" ]]; then
+    printf "%bThis program doesn't support Cygwin project" "${__warning__}"
+    exit 1;
+  fi
+}
+
+load_system_variables() {
+  # Load config variables for the project
+  if [[ -f "$PROJECT_CONFIG_FILE" ]]; then
+    # shellcheck source=/dev/null
+    . "$PROJECT_CONFIG_FILE"
+
+    print_if_missing_variable "GIT_PROJECT_FOLDER_NAME"
+    print_if_missing_variable "GIT_PROJECT_FOLDER_DIR"
+    print_if_missing_variable "DOTFILES_THEME"
+
+    if [[ "$PROJECT_CONFIG_MISSING_VARIABLE_COUNTER" -gt 0 ]]; then
+      exit 1
+    fi
+
+    do_set_config_vars
+  else
+    case $1 in
+      install|--empty-run)
+        # empty because we want to pass it only for installation process.
+        # The installation process contains creating default config
+        ;;
+      *)
+        printf "%bMissing %s file.\n" "${__warning__}" "$PROJECT_CONFIG_FILE"
+        printf "\n%b Do you want to copy default configuration file to fix it?" "${__question__}"
+        read -r -p " (y/N) " _copy_default_configuration
+        case $_copy_default_configuration in
+          y|Y)
+            do_copy_default_config_file
+            ;;
+          *)
+            ;;
+        esac
+        exit 1
+        ;;
+    esac
+  fi
+}
 
 print_version() {
   printf "v%s\n" "${__version__}"
@@ -199,48 +239,6 @@ do_set_config_vars() {
   PROJECT_SETTINGS_COMMON_DIR="$PROJECT_REPOSITORY_DIR/configuration"
   PROJECT_CONFIGURATOR_FILE="$PROJECT_REPOSITORY_DIR/bin/$FILE_NAME"
 }
-
-# Load config variables for the project
-if [ -f "$PROJECT_CONFIG_FILE" ]; then
-  # shellcheck source=/dev/null
-  . "$PROJECT_CONFIG_FILE"
-
-  print_if_missing_variable "GIT_PROJECT_FOLDER_NAME"
-  print_if_missing_variable "GIT_PROJECT_FOLDER_DIR"
-  print_if_missing_variable "DOTFILES_THEME"
-
-  if [[ "$PROJECT_CONFIG_MISSING_VARIABLE_COUNTER" -gt 0 ]]; then
-    exit 1
-  fi
-
-  do_set_config_vars
-else
-  case $1 in
-    install|--empty-run)
-      # empty because we want to pass it only for installation process.
-      # The installation process contains creating default config
-      ;;
-    *)
-      printf "%bMissing %s file.\n" "${__warning__}" "$PROJECT_CONFIG_FILE"
-      printf "\n%b Do you want to copy default configuration file to fix it?" "${__question__}"
-      read -r -p " (y/N) " _copy_default_configuration
-      case $_copy_default_configuration in
-        y|Y)
-          do_copy_default_config_file
-          ;;
-        *)
-          ;;
-      esac
-      exit 1
-      ;;
-  esac
-fi
-
-# do before install (yes to all while install)
-if [ "$2" == "-y" ]; then # if second arg is -y then
-  printf "\n%bInstalling %s with default values for questions!" "${__warning__}" "${PROJECT_NAME}"
-  PROJECT_INSTALL_DEFAULTS=1
-fi
 
 print_dotfiles_logo() {
   cat "${PROJECT_REPOSITORY_DIR}/bin/.project_logo"
@@ -1082,7 +1080,7 @@ do_reconfigure() {
 }
 
 do_clean() {
-  print_section "Clean ${PROJECT_NAME}"
+  print_section "Clean old symlinks of ${PROJECT_NAME}"
   printf "%bAre you sure you want to clean old %s symlinks?" "${__question__}" "${PROJECT_NAME}"
   read -r -p " (y/N) " _cleaning_symlinks
   case $_cleaning_symlinks in
@@ -1093,14 +1091,14 @@ do_clean() {
       exit 1;
       ;;
     *)
-      printf "%bAborting cleaning of %s symlinks." "${__info__}" "${PROJECT_NAME}"
+      printf "%bAborting cleaning of %s symlinks.\n" "${__info__}" "${PROJECT_NAME}"
       ;;
   esac
 }
 
 do_clean_all() {
-  print_section "Clean ${PROJECT_NAME}"
-  printf "%bAre you sure you want to clean ALL %s symlinks?" "${__question__}" "${PROJECT_NAME}"
+  print_section "Clean all symlinks of ${PROJECT_NAME}"
+  printf "%bAre you sure you want to clean ALL (old and current) %s symlinks?" "${__question__}" "${PROJECT_NAME}"
   read -r -p " (y/N) " _cleaning_symlinks
   case $_cleaning_symlinks in
     y|Y)
@@ -1138,73 +1136,86 @@ do_backup() {
   mkdir -p "${BACKUP_DIR}"
   for item in "${BACKUP_FILES[@]}"
   do
-    if [ -L "${item}" ]; then # symlinks
+    if [[ -L "${item}" ]]; then # symlinks
       cp -L "$item" "$BACKUP_DIR"
-    elif [ -d "${item}" ]; then # directory
+    elif [[ -d "${item}" ]]; then # directory
       cp -R -f "$item" "$BACKUP_DIR"
-    elif [ -f "${item}" ]; then # file
+    elif [[ -f "${item}" ]]; then # file
       cp -f "$item" "$BACKUP_DIR"
     fi
     printf "Backup of %s completed %b\n" "$item" "${__done__}"
   done
 }
 
-# Main
-case "$1" in
-  clean|-c)
-    do_clean
-    ;;
-  clean-all|-ca)
-    do_clean_all
-    ;;
-  --help|-h)
-    do_help
-    ;;
-  list-config|-lc)
-    do_list_local_config
-    ;;
-  install|-i)
-    case "$2" in
-      vim)
-        do_install_vim_from_source
-        ;;
-      code-linters)
-        do_install_code_linters
-        ;;
-      *)
-        do_install
-        ;;
-    esac
-    ;;
-  reconfigure|-r)
-    do_reconfigure
-    ;;
-  make-mutt-password|-mmp)
-    create_secure_mutt_passwords
-    ;;
-  fix-permissions|-fp)
-    do_fix_file_and_directories_permissions
-    ;;
-  uninstall)
-    do_uninstall
-    ;;
-  update|-u)
-    do_update
-    ;;
-  backup)
-    do_backup
-    ;;
-  --version)
-    print_version
-    ;;
-  --empty-run)
-    ;;
-  *)
-    printf "\nNothing happened %b\n" "\xe2\x98\xba"
-    printf "Run: '%s' to print help menu.\n" "${FILE_NAME} --help"
-    exit 1
-    ;;
-esac
+main() {
+  load_system_variables "$@"
 
-shift "$((OPTIND - 1))"
+  check_system_requirements
 
+  # do before install (yes to all while install)
+  if [[ "$2" == "-y" ]]; then # if second arg is -y then
+    printf "\n%bInstalling %s with default values for questions!" "${__warning__}" "${PROJECT_NAME}"
+    PROJECT_INSTALL_DEFAULTS=1
+  fi
+
+  # Main
+  case "$1" in
+    clean|-c)
+      do_clean
+      ;;
+    clean-all|-ca)
+      do_clean_all
+      ;;
+    --help|-h)
+      do_help
+      ;;
+    list-config|-lc)
+      do_list_local_config
+      ;;
+    install|-i)
+      case "$2" in
+        vim)
+          do_install_vim_from_source
+          ;;
+        code-linters)
+          do_install_code_linters
+          ;;
+        *)
+          do_install
+          ;;
+      esac
+      ;;
+    reconfigure|-r)
+      do_reconfigure
+      ;;
+    make-mutt-password|-mmp)
+      create_secure_mutt_passwords
+      ;;
+    fix-permissions|-fp)
+      do_fix_file_and_directories_permissions
+      ;;
+    uninstall)
+      do_uninstall
+      ;;
+    update|-u)
+      do_update
+      ;;
+    backup)
+      do_backup
+      ;;
+    --version)
+      print_version
+      ;;
+    --empty-run)
+      ;;
+    *)
+      printf "\nNothing happened %b\n" "\xe2\x98\xba"
+      printf "Run: '%s' to print help menu.\n" "${FILE_NAME} --help"
+      exit 1
+      ;;
+  esac
+
+  shift "$((OPTIND - 1))"
+}
+
+main "$@"

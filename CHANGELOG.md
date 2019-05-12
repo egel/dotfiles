@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Replace NeoComplete with YouCompleteMe code-completion engine (#127)
 - Upgrade vim installation from source files (#120)
 - Vim: Moved from Syntastic to Vim-ALE linter (#134)
+- dotfiles: Refactor internals of dotfiles configurator (#142)
 
 ### Deprecated
 ### Removed
