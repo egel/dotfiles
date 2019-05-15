@@ -1,7 +1,7 @@
 # Vim
 
 Vim Version: 8+
-Vim Plugin Manager: [Vim-Plug]
+Vim Plugin Manager: [Vim-Plug](https://github.com/junegunn/vim-plug)
 
 ## Plugins
 

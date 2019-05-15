@@ -1,0 +1,23 @@
+{
+  "name": "dotfiles",
+  "version": "0.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:egel/dotfiles.git",
+  "author": "Maciej Sypień <maciejsypien@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "lint-md": "remark ."
+  },
+  "remarkConfig": {
+    "plugins": [
+      "remark-preset-lint-recommended",
+      "remark-validate-links"
+    ]
+  },
+  "devDependencies": {
+    "remark-cli": "^6.0.1",
+    "remark-preset-lint-recommended": "^3.0.2",
+    "remark-validate-links": "^8.0.2"
+  }
+}

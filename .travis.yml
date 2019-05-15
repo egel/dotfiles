@@ -11,7 +11,9 @@ env:
 
 before_script:
   - export DISPLAY=:99.0
-  - if [[ "$TRAVIS_OS_NAME" == "linux" && -f "/etc/init.d/xvfb" ]]; then sh -e /etc/init.d/xvfb start; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" && -f "/etc/init.d/xvfb" ]]; then
+      sh -e /etc/init.d/xvfb start;
+    fi
   # Move default location of repository into desired ~/.dotfiles location
   - rm -r -f $DOTFILES_PATH
   - mv $TRAVIS_BUILD_DIR $DOTFILES_PATH
@@ -22,6 +24,16 @@ jobs:
       name: "Lint shell scripts"
       script:
         - bash -c "shopt -s globstar; shellcheck $DOTFILES_PATH/bin/**/*.sh"
+    - stage: test
+      name: "Lint markdown"
+      language: node_js
+      node_js:
+        - "11"
+      before_install:
+        - yarn install
+      script:
+        - yarn run lint-md
+
     - stage: install
       name: "Check default dotfiles installation"
       script:

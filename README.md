@@ -59,7 +59,7 @@ use it wherever you like.
 > configurations**. It will only save them all, simply by renaming files with
 > current date.
 
-> If you want to agree to all defaults add `-y` flag at the end of install.
+If you want to agree to all defaults add `-y` flag at the end of install.
 
 ```shell
 $ git clone --recursive https://github.com/egel/dotfiles.git ~/.dotfiles
