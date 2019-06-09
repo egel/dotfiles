@@ -258,7 +258,6 @@ set nocompatible
 
     "}}}
     Plug 'kylef/apiblueprint.vim'          " blueprint/apiari syntax
-    Plug 'smancill/conky-syntax.vim'       " conky file syntax
     Plug 'ekalinin/Dockerfile.vim'         " dockerfile syntax
     Plug 'chr4/nginx.vim' "{{{
       au BufRead,BufNewFile */usr/local/etc/nginx/sites-available/* set ft=nginx

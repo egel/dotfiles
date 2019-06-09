@@ -41,7 +41,6 @@ DESTINATION_MUTT_DIR="$HOME/.mutt"
 CURRENT_SYMLINKS=(
   "$HOME/.aliases"
   "$HOME/.bashrc"
-  "$HOME/.conkyrc"
   "$HOME/.dircolors"
   "$HOME/.editorconfig"
   "$HOME/.gitconfig"
@@ -1064,7 +1063,7 @@ do_reconfigure() {
 
   if [[ $IS_BASED_ON_UBUNTU_1604 = true || $IS_ARCH = true ]]; then
     print_subsection "Configuration specific for Linux"
-    make_symlink ".conkyrc" "${PROJECT_LIB_DIR}/conky-themes/conky_seamod/.conkyrc" "$HOME/.conkyrc" # only for desktops (servers terminals not need GUI)
+    printf "No special Linux configuration, so continuing... %b\n\n" "${__done__}"
   fi
 
   if $IS_MAC; then

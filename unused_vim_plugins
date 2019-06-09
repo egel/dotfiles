@@ -1,5 +1,7 @@
 " vim: ft=vim fdm=marker ts=2 sts=2 sw=2
 
+    Plug 'smancill/conky-syntax.vim'       " conky file syntax
+
     Plug 'SirVer/ultisnips' "{{{
      " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
      let g:UltiSnipsExpandTrigger="<tab>" " default <tab>
