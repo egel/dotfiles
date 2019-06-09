@@ -9,33 +9,42 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
--   dotfiles/OSX: Added Brewfile - the configuration file for brew (#98)
--   CI-CD: Added shellcheck linter (#122)
--   dotfiles: refactor installing ZSH theme
--   devops: Add markdown linter runner to the project (#140)
-
 ### Changed
-
--   Switch neobundle plugin manager in favor of simpler vim-plug (#65)
--   Replace NeoComplete with YouCompleteMe code-completion engine (#127)
--   Upgrade vim installation from source files (#120)
--   Vim: Moved from Syntastic to Vim-ALE linter (#134)
--   dotfiles: Refactor internals of dotfiles configurator (#142)
 
 ### Deprecated
 
 ### Removed
 
--   Removed unused Conky configuration (#144)
+### Fixed
+
+### Security
+
+## [v2.5.0][2.5.0] - 2019-06-09
+
+### Added
+
+-   CI-CD: Added shellcheck linter (#122)
+-   devops: Add markdown linter runner to the project (#140)
+-   dotfiles/OSX: Added Brewfile - the configuration file for brew (#98)
+-   dotfiles: refactored installing ZSH theme
+
+### Changed
+
+-   Replaced NeoComplete with YouCompleteMe code-completion engine (#127)
+-   Switched neobundle plugin manager in favor of simpler vim-plug (#65)
+-   Upgraded vim installation from source files (#120)
+-   Vim: Moved from Syntastic to Vim-ALE linter (#134)
+-   dotfiles: Refactored internals of dotfiles configurator (#142)
+
+### Removed
+
 -   Removed configuration for non-existent .zprofile file (#121)
+-   Removed unused Conky configuration (#144)
 
 ### Fixed
 
 -   Fix missing Brefile, .gemrc and .mdlrc when cleaning dotfiles (#131)
 -   Vim: Fixed broken settings for Utilsnips plugin (#129)
--   Fix missing Brefile, .gemrc and .mdlrc when cleaning dotfiles (#131)
-
-### Security
 
 ## [v2.4.0][2.4.0] - 2018-12-30
 
@@ -637,7 +646,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## 1.1.0 - 2015-05-18
 
-[unreleased]: https://github.com/egel/dotfiles/compare/v2.4.0...HEAD
+[unreleased]: https://github.com/egel/dotfiles/compare/v2.5.0...HEAD
+[2.5.0]: https://github.com/egel/dotfiles/compare/v2.4.0...v2.5.0
 [2.4.0]: https://github.com/egel/dotfiles/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/egel/dotfiles/compare/v2.2.3...v2.3.0
 [2.2.3]: https://github.com/egel/dotfiles/compare/v2.2.2...v2.2.3
