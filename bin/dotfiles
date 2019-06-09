@@ -56,7 +56,6 @@ CURRENT_SYMLINKS=(
   "$HOME/.vim"
   "$HOME/.vimrc"
   "$HOME/.vimrc.local"
-  "$HOME/.zprofile"
   "$HOME/.zshenv"
   "$HOME/.zshrc"
   "$HOME/.zshrc.local"
@@ -1057,9 +1056,6 @@ do_reconfigure() {
   make_symlink ".zshrc.local" "${PROJECT_SETTINGS_COMMON_DIR}/.zshrc.local" "$HOME/.zshrc.local"
   make_symlink ".mdlrc" "${PROJECT_SETTINGS_COMMON_DIR}/.mdlrc" "$HOME/.mdlrc"
   make_symlink ".gemrc" "${PROJECT_SETTINGS_COMMON_DIR}/.gemrc" "$HOME/.gemrc"
-
-  # $PATH variable not properly set in gvim/MacVim => http://stackoverflow.com/a/24542893/1977012
-  make_symlink ".zprofile" "${PROJECT_SETTINGS_COMMON_DIR}/.zprofile" "$HOME/.zprofile"
 
   if [[ $IS_BASED_ON_UBUNTU_1604 = true || $IS_ARCH = true ]]; then
     print_subsection "Configuration specific for Linux"
