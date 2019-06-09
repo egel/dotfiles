@@ -117,7 +117,7 @@ elif [ ! -d "$HOME/.nvm" ]; then
 fi
 
 # Golang
-export GOPATH=$HOME/go-workspace
+export GOPATH=$HOME/go
 case $(uname -s) in
   Darwin)
     export GOROOT=/usr/local/opt/go/libexec
