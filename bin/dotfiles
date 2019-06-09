@@ -22,7 +22,7 @@ __aborted__="${yellow}Action aborted${endColor}"
 __empty__="          "
 
 # Current file variables
-__version__="2.4.0"
+__version__="2.5.0"
 PROJECT_NAME="The Egel dotfiles"
 CURRENT_FILE_DIRECTORY="$(cd "$(dirname "${BASH_SOURCE[0]}" )" && pwd)" #current path to file
 PROJECT_CONFIG_NAME=".dotfiles.config"
