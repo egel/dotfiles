@@ -212,6 +212,26 @@ set nocompatible
         let g:go_highlight_build_constraints = 1
 
     "}}}
+      let g:SuperTabDefaultCompletionType = "<C-n>"
+
+    "}}}
+    " Utilsnips settings {{{
+      Plug 'ervandew/supertab' " configuration for supertab is connected to ultisnips
+      Plug 'SirVer/ultisnips'
+      Plug 'honza/vim-snippets'
+      " default location for Utilsnips snippets is in ~/.vim/Utilsnips
+
+      " make YCM compatible with UltiSnips (using supertab)
+      let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+      let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+      let g:SuperTabDefaultCompletionType = '<C-n>'
+
+      " better key bindings for UltiSnipsExpandTrigger
+      let g:UltiSnipsExpandTrigger = "<tab>"
+      let g:UltiSnipsJumpForwardTrigger = "<tab>"
+      let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+    "}}}
     Plug 'statianzo/vim-jade', {'for': 'jade'} " jade, unmaintained (vim-pug is not ready yet)
     Plug 'digitaltoad/vim-pug', {'for': 'pug'} " pug (formerly Jade)
     Plug 'mustache/vim-mustache-handlebars', {'for': ['mustache','handlebars']}
@@ -355,10 +375,6 @@ set nocompatible
     "}}}
     Plug 'scrooloose/nerdcommenter' "{{{
       let NERDSpaceDelims = 1
-
-    "}}}
-    Plug 'ervandew/supertab' "{{{
-      let g:SuperTabDefaultCompletionType = "<C-n>"
 
     "}}}
     Plug 'w0rp/ale' "{{{
