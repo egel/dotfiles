@@ -41,7 +41,6 @@ This set contains configuration for:
 -   **[Tmux][tmux-webpage]** (key-bindings, copy-paste to system clipboard)
 -   **[Mutt][mutt-webpage]** (themes, secure passwords)
 -   **[EditorConfig][editorconfig-webpage]**
--   **[Conky][conky-webpage]** (only for Linux)
 -   **[Virtualenvwrapper][virtulenvwrapper-webpage]**
 
 Configurator features
@@ -77,8 +76,8 @@ $ dotfiles reconfigur
 
 The last thing you should do is to set [`Hack font`][hack-font-webpage] as
 default `terminal` font. This is essential to correctly display
-a powerline fonts which are already included into the Hack font (Read [FAQ][docs-faq] for
-more).
+a powerline fonts which are already included into the Hack font (Read
+[FAQ][docs-faq] for more).
 
 Reopen the terminal and enjoy.
 
@@ -106,5 +105,4 @@ pages][dotfiles-docs] and [shortcuts cheat sheet][shortcuts-cheat-sheet].
 [zsh-webpage]: http://www.zsh.org/
 [bash-webpage]: https://www.gnu.org/software/bash/
 [editorconfig-webpage]: http://editorconfig.org/
-[conky-webpage]: https://github.com/brndnmtthws/conky
 [virtulenvwrapper-webpage]: https://virtualenvwrapper.readthedocs.io/en/latest/
