@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Deprecated
 ### Removed
 - Removed unused Conky configuration (#144)
+- Removed configuration for non-existent .zprofile file (#121)
 
 ### Fixed
 - Fix missing Brefile, .gemrc and .mdlrc when cleaning dotfiles (#131)
