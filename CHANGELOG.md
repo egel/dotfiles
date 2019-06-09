@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 - Fix missing Brefile, .gemrc and .mdlrc when cleaning dotfiles (#131)
+- Vim: Fixed broken settings for Utilsnips plugin (#129)
 
 ### Security
 
