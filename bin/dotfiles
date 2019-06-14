@@ -1104,7 +1104,7 @@ do_clean_all() {
       exit 1;
       ;;
     *)
-      printf "%bAborting cleaning of %s symlinks." "${__info__}" "${PROJECT_NAME}"
+      printf "%bAborting cleaning of %s symlinks.\n" "${__info__}" "${PROJECT_NAME}"
       ;;
   esac
 }
