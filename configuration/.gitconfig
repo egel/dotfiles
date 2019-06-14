@@ -19,7 +19,7 @@
   editor = vim
 
 [merge]
-  tool = meld
+  tool = vimdiff
 
 [diff]
   tool = vimdiff
