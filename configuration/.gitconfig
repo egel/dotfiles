@@ -19,10 +19,20 @@
   editor = vim
 
 [merge]
-  tool = vimdiff
-
+    tool = intellij
+[mergetool "intellij"]
+    cmd = /Users/maciejsypien/Library/Application\\ Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/191.7479.19/IntelliJ\\ IDEA.app/Contents/MacOS/idea merge $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") $(cd $(dirname "$REMOTE") && pwd)/$(basename "$REMOTE") $(cd $(dirname "$BASE") && pwd)/$(basename "$BASE") $(cd $(dirname "$MERGED") && pwd)/$(basename "$MERGED")
+    trustExitCode = true
 [diff]
-  tool = vimdiff
+    tool = intellij
+[difftool "intellij"]
+    cmd = /Users/maciejsypien/Library/Application\\ Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/191.7479.19/IntelliJ\\ IDEA.app/Contents/MacOS/idea diff $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") $(cd $(dirname "$REMOTE") && pwd)/$(basename "$REMOTE")
+
+; [merge]
+  ; tool = vimdiff
+
+; [diff]
+  ; tool = vimdiff
 
 [alias]
   # show currently using git user
