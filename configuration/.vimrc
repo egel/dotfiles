@@ -814,6 +814,10 @@ filetype plugin indent on
     map <F8> :execute 'silent! tabmove' . (tabpagenr()+1) <CR>
 
   "}}}
+  " ---- Beautify JSON {{{
+    map <Leader>jq <Esc>:%!jq '.'<CR>
+
+  "}}}
   " ---- Open and hide NERDTree with multiple tabs {{{
     map <Leader>p <plug>NERDTreeTabsToggle<CR>
 
