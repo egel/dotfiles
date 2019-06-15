@@ -559,7 +559,7 @@ set nocompatible
   let &undolevels=s:settings.history_levels       " Use many muchos levels of undo
   set ruler                                       " Show row and column in footer
 
-  set scrolloff=5                                 " Minimum lines above/below cursor
+  set scrolloff=20                                " Minimum lines above/below cursor
   set mouse=a                                     " Enable use of the mouse for all modes
   set laststatus=2                                " Always show status bar
   set ttimeoutlen=600                             " Vim timeout for insert related/continue command
