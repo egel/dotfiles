@@ -43,7 +43,7 @@ brew "hugo"
 # Tmux
 brew "tmux"
 brew "reattach-to-user-namespace" # for copy from tmux to mac namespace
-brew "gnupg" # for secure emailing
+brew "gnupg" # for confirming peoples identity
 
 # ZSH shell
 brew "zsh"
