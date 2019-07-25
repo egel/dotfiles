@@ -16,6 +16,8 @@
   default = simple
 
 [core]
+  ; For OSX and Linux "input"
+  autocrlf = input
   editor = vim
 
 [merge]
