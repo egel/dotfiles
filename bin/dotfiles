@@ -927,6 +927,10 @@ do_install() {
       print_subsection "Installing oh-my-zsh"
       wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | sh
       print_last_command_status
+
+      print_subsection "Installing zsh-completions plugin"
+      git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions
+      print_last_command_status
       ;;
     *)
       ;;
