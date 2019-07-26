@@ -203,7 +203,7 @@ set nocompatible
 
     "}}}
     " golang {{{
-      Plug 'fatih/vim-go', {'for': 'go'}
+      Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoUpdateBinaries'}
         let g:go_highlight_functions = 1
         let g:go_highlight_methods = 1
         let g:go_highlight_fields = 1
