@@ -354,7 +354,7 @@ set nocompatible
 
     "}}}
     Plug 'jistr/vim-nerdtree-tabs', { 'on': 'NERDTreeToggle' } "{{{
-      let g:nerdtree_tabs_open_on_gui_startup=1
+      let g:nerdtree_tabs_open_on_gui_startup=0
       let g:nerdtree_tabs_open_on_new_tab=1
       let g:nerdtree_tabs_autoclose=1
       let g:nerdtree_tabs_autofind=0
@@ -614,7 +614,7 @@ set nocompatible
 " Font, window dimmensions {{{
   " Hack font support Powerline characters
   if has("gui_running")
-    set lines=999 columns=9999 " open maximized
+    set lines=30 columns=140 " open in medium side window
     set linespace=12    " set space between lines (option only for GUI)
     set guioptions-=T   " turn off GUI toolbar (icons)
     set guioptions+=c   " use console dialogs
@@ -623,13 +623,13 @@ set nocompatible
     set guioptions-=L   " turn off GUI left scrollbar
 
     if s:is_macvim
-      set guifont=Hack:h11
+      set guifont=Hack:h15
     elseif s:is_linux
-      set guifont=Hack\ 11
+      set guifont=Hack\ 15
     elseif s:is_windows
-      set guifont=Consolas:h11:cANSI
+      set guifont=Consolas:h15:cANSI
     else
-      set guifont=Hack:h11:cDEFAULT
+      set guifont=Hack:h15:cDEFAULT
     endif
   endif
 
