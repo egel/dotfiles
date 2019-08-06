@@ -167,13 +167,14 @@ set nocompatible
       let g:ctrlp_cmd = 'CtrlP'
       let g:ctrlp_show_hidden = 1
       set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
-      set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 
       let g:ctrlp_custom_ignore = {
         \ 'dir':  '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn|hg|idea))$',
         \ 'file': '\v\.(exe|so|dll)$',
         \ 'link': 'some_bad_symbolic_links',
         \ }
+
+      let g:ctrlp_user_command = 'find %s -type f'  " MacOSX/Linux
 
       let g:ctrlp_prompt_mappings = {
         \ 'AcceptSelection("e")': ['<2-LeftMouse>'],
