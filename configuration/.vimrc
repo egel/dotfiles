@@ -560,10 +560,9 @@ set nocompatible
   let &undolevels=s:settings.history_levels       " Use many muchos levels of undo
   set ruler                                       " Show row and column in footer
 
-  set scrolloff=20                                " Minimum lines above/below cursor
-  set mouse=a                                     " Enable use of the mouse for all modes
+  set scrolloff=25                                " Minimum lines above/below cursor
   set laststatus=2                                " Always show status bar
-  set ttimeoutlen=600                             " Vim timeout for insert related/continue command
+  set ttimeoutlen=1500                             " Vim timeout for insert related/continue command
   set showcmd                                     " Show partial commands in the last line of the screen
   set title                                       " Change the terminal's title
   set list                                        " Highlight whitespace
@@ -573,7 +572,6 @@ set nocompatible
   let &shiftwidth=s:settings.default_indent       " Number of spaces per tab in insert mode
   let &softtabstop=s:settings.default_indent      " Number of spaces when indenting
   set expandtab                                   " Use spaces, not tab characters
-  set hlsearch                                    " auto highlight when search (even with * sign)
 
   " Display line numbers on every window split except NERDTree
   if(exists('t:NERDTreeBufName') && bufname('%') == t:NERDTreeBufName)
@@ -676,6 +674,11 @@ filetype plugin indent on
     "}}}
     " ---- Show trailing white spaces and spaces before a tab {{{
     autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
+
+    "}}}
+    " ---- Disable mouse scroll for all vim instances {{{
+    autocmd BufEnter * set mouse=             " Disable use of the mouse for all modes
+    autocmd BufEnter * set ttymouse=
 
     "}}}
     " ---- Open files with proper syntax {{{
