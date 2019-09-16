@@ -330,15 +330,17 @@ is_program_installed() {
 }
 
 do_install_font_assets() {
-  print_subsection "Installing ${PROJECT_NAME} font assets"
+  print_subsection "Installing ${PROJECT_NAME} core-font and google-webfonts from assets"
   if $IS_MAC; then
     _font_dir="${HOME}/Library/Fonts"
     [[ -d "${_font_dir}" ]] || mkdir -p "${_font_dir}"
-    cp -f -v -R "${PROJECT_REPOSITORY_DIR}"/assets/fonts/* "${_font_dir}/"
+    cp -f -v -R "${PROJECT_REPOSITORY_DIR}"/assets/core-fonts/* "${_font_dir}/"
+    cp -f -v -R "${PROJECT_REPOSITORY_DIR}"/assets/google-webfonts/* "${_font_dir}/"
     print_last_command_status
   elif $IS_BASED_ON_UBUNTU_1604 || $IS_ARCH; then
     _font_dir="/usr/local/share/fonts"
-    cp -f -v -r "${PROJECT_REPOSITORY_DIR}"/assets/fonts/* "${_font_dir}/" && fc-cache -f -v
+    cp -f -v -r "${PROJECT_REPOSITORY_DIR}"/assets/core-fonts/* "${_font_dir}/" && fc-cache -f -v
+    cp -f -v -r "${PROJECT_REPOSITORY_DIR}"/assets/google-webfonts/* "${_font_dir}/" && fc-cache -f -v
     fc-list | grep "$(ls "${_font_dir}" | sort -n | head -1)" # confirm if fonts have been installed
     print_last_command_status
   fi
