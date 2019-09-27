@@ -177,13 +177,12 @@ set nocompatible
       let g:ctrlp_show_hidden = 1
       set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 
+
       let g:ctrlp_custom_ignore = {
-        \ 'dir':  '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn|hg|idea))$',
-        \ 'file': '\v\.(exe|so|dll)$',
+        \ 'dir':  '\.git$\|\.swp$\|\.idea$\|build$\|bower_components\|node_modules\|dist\|target',
+        \ 'file': '\v\.(swp|exe|so|dll|DS_Store)$',
         \ 'link': 'some_bad_symbolic_links',
         \ }
-
-      let g:ctrlp_user_command = 'find %s -type f'  " MacOSX/Linux
 
       let g:ctrlp_prompt_mappings = {
         \ 'AcceptSelection("e")': ['<2-LeftMouse>'],
@@ -600,6 +599,10 @@ set nocompatible
   set wildignore+=*sass-cache*    " ignore sass related stuff
   set wildignore+=*DS_Store*      " ignore Mac related stuff
   set wildignore+=log/**,tmp/**   " ignore Linux related stuff
+  set wildignore+=*/.git/*        " ignore main git directory for repository
+  set wildignore+=*/.svn/*        " ignore main SVN directory for repository
+  set wildignore+=*/.idea/*       " ignore main SVN directory for repository
+  set wildignore+=*/vendor        " ignore Go related directory
 
   set ignorecase                    " Use case insensitive search, except when using capital letters
   set smartcase                     " Do case-sensitive if there's a capital letter
