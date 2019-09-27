@@ -148,6 +148,15 @@ set nocompatible
       autocmd BufReadPost fugitive://* set bufhidden=delete
 
     "}}}
+    Plug 'christoomey/vim-sort-motion' "{{{
+      " requirements to work
+      Plug 'kana/vim-textobj-indent' "{{{
+        " requirements to work
+        Plug 'kana/vim-textobj-user'
+
+        "}}}
+      "}}}
+    "}}}
     Plug 'Valloric/YouCompleteMe', { 'do': 'python3 ./install.py --all' } "{{{
       let g:ycm_server_keep_logfiles = 1
       let g:ycm_log_level = 'debug'
