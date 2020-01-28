@@ -171,7 +171,7 @@ set nocompatible
       endif
 
     "}}}
-    Plug 'kien/ctrlp.vim' "{{{
+    Plug 'ctrlpvim/ctrlp.vim' "{{{
       let g:ctrlp_map = '<c-p>'
       let g:ctrlp_cmd = 'CtrlP'
       let g:ctrlp_show_hidden = 1
@@ -191,7 +191,9 @@ set nocompatible
 
     "}}}
     Plug 'tpope/vim-unimpaired'             " useful keybindings for eg. fugitive plugin
-    Plug 'editorconfig/editorconfig-vim'    " editorconfig plugin
+    Plug 'editorconfig/editorconfig-vim'    " editorconfig plugin {{{
+
+    "}}}
     Plug 'Konfekt/FastFold' "{{{
       let g:tex_fold_enabled=1
       let g:vimsyn_folding='af'
@@ -386,6 +388,13 @@ set nocompatible
       let NERDSpaceDelims = 1
 
     "}}}
+    Plug 'prettier/vim-prettier' , {
+      \ 'do': 'yarn install',
+      \ 'for': [
+        \ 'javascript', 'typescript', 'css', 'less', 'scss',
+        \ 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'
+      \ ]
+    \ }
     Plug 'w0rp/ale' "{{{
       " Only run linters named in ale_linters settings.
       let g:ale_linters_explicit = 0
