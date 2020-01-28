@@ -17,7 +17,7 @@ HIST_STAMPS="yyyy-mm-dd"
 
 # Add wisely, as too many plugins slow down shell startup !!!
 # NOTE: Do not load nvm for eslint (more info https://github.com/roadhump/SublimeLinter-eslint#plugin-installation)
-plugins=(git git-flow colored-man-pages colorize tmux python npm yarn docker docker-compose zsh-completions)
+plugins=(git git-flow colored-man-pages colorize tmux python npm yarn docker docker-compose zsh-completions vi-mode)
 autoload -U compinit && compinit
 
 # Ignore ORIG_HEAD in zsh git autocomplete
