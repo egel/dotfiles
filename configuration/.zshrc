@@ -162,15 +162,7 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
 #########################################
-# SSH agent
-#########################################
-if [ -z "$SSH_AUTH_SOCK" ] ; then
-  eval `ssh-agent -s`
-  ssh-add
-fi
-
-#########################################
-# GPG, GPG-agent
+# GPG, GPG-agent (allows for SSH communication)
 #########################################
 # It is important to set the environment variable GPG_TTY in your login shell
 export GPG_TTY="$(tty)"
