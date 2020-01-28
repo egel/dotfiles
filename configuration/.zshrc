@@ -173,3 +173,7 @@ unset SSH_AGENT_PID
 if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
   export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 fi
+
+# User should not be allowed to push force with this shortcut!! It's too close to ggfl!
+# Use safer "gp -f" instead.
+ggf() {}
