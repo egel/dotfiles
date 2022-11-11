@@ -1,5 +1,9 @@
 # Project foldes
 
+################################
+# Configurations
+################################
+
 # Vim session folder
 **/.vim/tmp/
 **/.vim/sessions/
@@ -10,6 +14,15 @@
 **/.vim/autoload/
 **/.vim/plugged/
 
+# Neovim
+configuration/.config/nvim/plugged
+
+# MUTT
+**/.mutt/cache/
+**/.mutt/passwords.gpg
+**/.mutt/gmailcerts
+**/.mutt/*.gpg
+
 # Mac specyfic files
 **/*.DS_Store
 
@@ -17,11 +30,6 @@
 *.add.spl
 *.swp
 
-# MUTT
-**/.mutt/cache/
-**/.mutt/passwords.gpg
-**/.mutt/gmailcerts
-**/.mutt/*.gpg
 
 # NodeJS
 **/node_modules/
