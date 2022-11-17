@@ -8,7 +8,7 @@
   syntax on " enable syntax highlighting
 
   set number relativenumber " Show line number and relative line number
-  
+
   "General tab settings
   set tabstop=4       " number of visual spaces per TAB
   set softtabstop=4   " number of spaces in tab when editing
@@ -20,15 +20,16 @@
   set cursorline
   set hlsearch
   set confirm                                     " Raise a dialogue asking if you wish to save changed files
-	set history=1000          " Remember more commands and search history
+  set history=1000          " Remember more commands and search history
   set undolevels=1000       " Use many muchos levels of undo
   set ruler                                       " Show row and column in footer
+let &colorcolumn="80,".join(range(120,999),",")
 
   set noshelltemp                                 " Use pipes
   set clipboard=unnamed,unnamedplus               " Use the system clipboard for yank/put/delete
   set fileformats=unix,dos                        " Prefer unix fileformat
   set backspace=indent,eol,start                  " Allow backspacing over everything in insert mode
-  
+
   set nofoldenable          " No default fold, using plugin instead
 
   set list                                        " Highlight whitespace

@@ -1,7 +1,7 @@
 --
 -- Maciej Sypien personal configuration for NeoVim
 --
--- inspired by github.com/jdhao/nvim-config
+-- inspired by https://github.com/tjdevries/config_manager/tree/master/xdg_config/nvim
 --
 
 local api = vim.api
@@ -17,19 +17,34 @@ if nvim_ver ~= expected_ver then
   return
 end
 
--- Load configurations
-local core_config_files = {
+-- Load standard/core configuration files
+local core_config_files = { -- order matters
   "options.vim",
   "plugins.vim",
   "mappings.lua",
 }
-
 for _, name in ipairs(core_config_files) do
   local path = string.format("%s/core/%s", vim.fn.stdpath("config"), name)
   local source_cmd = "source " .. path
   vim.cmd(source_cmd)
 end
 
+-- load colorscheme
 vim.cmd("colorscheme gruvbox")
 
+--
+-- Load setup for plugins
+--
+
+-- setup cmp plugins (& lsp)
 require('cmp-config/config')
+
+-- prettier: save files according to opinionated standard
+require('null-ls-config/config')
+require('prettier-config/config')
+
+-- telescope: search for files, grep text and more
+require('telescope-config/config')
+
+-- Snippets
+require('luasnip-config/config')
