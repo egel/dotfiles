@@ -113,7 +113,9 @@ call plug#begin('~/.config/nvim/plugged')
 
   "}}}
 
-  Plug 'vim-test/vim-test'
+  Plug 'vim-test/vim-test' "{{{
+    let g:test#javascript#runner = 'jest'
+  "}}}
 
   "{{{ Golang support
   Plug 'ray-x/go.nvim'
