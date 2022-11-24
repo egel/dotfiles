@@ -4,6 +4,22 @@
 -- more info: https://neovim.io/doc/user/map.html
 --
 --
+
+local keymap = vim.keymap
+local api = vim.api
+
+function setMySpellLanguage ()
+    vim.g.myLang = vim.g.myLang + 1
+    local myLang = vim.g.myLang
+    local myLangList = vim.g.myLangList
+    if myLang >= #(myLangList) then vim.g.myLang = 0 end
+    if myLang == 1 then vim.cmd('set nospell') end
+    if myLang == 2 then vim.cmd('setlocal spell spelllang=en_us') end
+    if myLang == 3 then vim.cmd('setlocal spell spelllang=pl') end
+    if myLang == 4 then vim.cmd('setlocal spell spelllang=de_de') end
+    print("Set spell language:", myLangList[myLang])
+end
+
 -- Modes (more at :map-listing)
 --      n = normal
 --      v = visual & select
@@ -30,9 +46,6 @@
 --      cmap - works recursively in command-line mode.
 --      omap - works recursively in operator pending mode.
 --
-
-local keymap = vim.keymap
-local api = vim.api
 
 -- Map W, Q and WQ, WA as usual typo
 keymap.set("c", "WQ", "wq")
@@ -62,14 +75,13 @@ keymap.set("n", "C-n", "<Esc>:tabnew<CR>", { desc = "new tab", remap = true })
 keymap.set("v", "<Leader>s", ":sort<CR>", { desc = "sort lines", noremap = true })
 
 -- Beautify JSON
-vim.api.nvim_buf_create_user_command( -- not working
-    0,
-    "JsonBeautify",
-    "<cmd>:%!jq . %<CR>",
-    {
-        desc = "Beautify JSON file from",
-    }
-) -- end not working
+--vim.api.nvim_create_user_command( -- not working
+    --"JsonBeautify",
+    --"<cmd>:%!jq . %<CR>",
+    --{
+        --desc = "Beautify JSON file from",
+    --}
+--) -- end not working
 local jsonBeautify = "<Esc>:%!jq . <CR>"
 local jsonUglyfy = "<Esc>:%!jq -c . <CR>"
 keymap.set("n", "<Leader>jq", jsonBeautify) -- perform: jq on current buffer
@@ -81,3 +93,8 @@ keymap.set('n', "<F8>", "<Esc>:execute 'silent! tabmove' . (tabpagenr()+1)<CR>")
 
 -- Reload nvim configuration (without exit)
 keymap.set('n', "<Leader>~", "<Esc>:source $MYVIMRC<CR>") -- $MYVIMRC is a special variable used in nvim to point to configuration
+
+-- Toggle spell check with <F4> (default: en_us)
+vim.g.myLang = 0
+vim.g.myLangList = { "nospell", "en_us", "pl", "de_de" }
+keymap.set('n', '<F4>', ':lua setMySpellLanguage()<CR>', { noremap = false, silent = false })
