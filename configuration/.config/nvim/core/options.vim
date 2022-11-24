@@ -23,7 +23,7 @@
   set history=1000          " Remember more commands and search history
   set undolevels=1000       " Use many muchos levels of undo
   set ruler                                       " Show row and column in footer
-let &colorcolumn="80,".join(range(120,999),",")
+  let &colorcolumn="80,".join(range(120,999),",")
 
   set noshelltemp                                 " Use pipes
   set clipboard=unnamed,unnamedplus               " Use the system clipboard for yank/put/delete
