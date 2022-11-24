@@ -1,7 +1,19 @@
 local telescope = require('telescope')
 
-telescope.setup{
+local options = {
   defaults = {
+    vimgrep_arguments = {
+      "rg",
+      "-L",
+      "--color=never",
+      "--no-heading",
+      "--with-filename",
+      "--line-number",
+      "--column",
+      "--smart-case",
+    },
+    --prompt_prefix = "   ",
+
     -- Default configuration for telescope goes here:
     -- config_key = value,
     mappings = {
@@ -37,3 +49,6 @@ telescope.setup{
 --vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 --vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 --vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+--
+
+telescope.setup(options)
