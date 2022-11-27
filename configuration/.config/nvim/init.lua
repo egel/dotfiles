@@ -32,7 +32,7 @@ for _, name in ipairs(core_config_files) do
 end
 
 -- load colorscheme
-vim.cmd("colorscheme gruvbox")
+vim.cmd('colorscheme gruvbox')
 
 --
 -- Load setup for plugins
@@ -40,6 +40,8 @@ vim.cmd("colorscheme gruvbox")
 
 -- setup cmp plugins (& lsp)
 require('cmp-config/config')
+
+require('lsp-config/config')
 
 -- prettier: save files according to opinionated standard
 require('null-ls-config/config')
@@ -49,4 +51,5 @@ require('prettier-config/config')
 require('telescope-config/config')
 
 -- Snippets
+-- should be before cmp-config
 require('luasnip-config/config')
