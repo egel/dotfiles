@@ -21,3 +21,10 @@ nvim_lsp['gopls'].setup{
     usePlaceholders = true,
   }
 }
+
+--vim.diagnostic.config({
+    --virtual_test = true
+--})
+
+-- show line diagnostic automatically in popup window
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, { noremap = true, silent = true })
