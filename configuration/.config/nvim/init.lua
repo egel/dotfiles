@@ -38,7 +38,11 @@ vim.cmd('colorscheme gruvbox')
 -- Load setup for plugins
 --
 
--- setup cmp plugins (& lsp)
+-- load lualine theme
+require('lualine-config/config')
+
+
+-- setup cmp plugins
 require('cmp-config/config')
 
 require('lsp-config/config')

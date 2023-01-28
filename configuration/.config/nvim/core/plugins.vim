@@ -89,7 +89,7 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'L3MON4D3/LuaSnip', {'tag': 'v1.1.0'}
 
 
-  " Plug 'glepnir/galaxyline.nvim', { 'branch': 'main' }
+  Plug 'nvim-lualine/lualine.nvim'
 
   " Prettier
   " Plug 'neovim/nvim-lspconfig' " required (loaded before)
