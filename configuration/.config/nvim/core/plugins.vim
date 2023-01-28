@@ -144,6 +144,7 @@ call plug#begin('~/.config/nvim/plugged')
       "\ }
 
   ""}}}
-  Plug 'ryanoasis/vim-devicons' " Always load the vim-devicons as the very last one
+  " Plug 'ryanoasis/vim-devicons' " Always load the vim-devicons as the very last one
+  Plug 'kyazdani42/nvim-web-devicons'
 call plug#end()
 
