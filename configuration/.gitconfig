@@ -1,13 +1,13 @@
-[include]
-  # For user, email, ect.
+# IMPORTANT: includeIf works only with git >= v2.13
+# For work user, email, ect.
+[includeIf "gitdir/i:~/workspace/"]
+  path = ~/.gitconfig.local_work
+# For private user, email, ect.
+[includeIf "gitdir/i:~/privatespace/"]
   path = ~/.gitconfig.local
-  ; path = ~/.gitconfig.local_work
-
-[commit]
-	gpgsign = true
 
 [gpg]
-	program = /usr/local/bin/gpg
+  program = /usr/local/bin/gpg
 
 [color]
   ui = auto
@@ -16,7 +16,8 @@
   default = simple
 
 [core]
-  editor = vim
+  editor = nvim
+  excludesfile = ~/.gitignore_global
 
 [merge]
   tool = vimdiff
@@ -34,7 +35,11 @@
   # list commands
   last = log -1 HEAD
 
+  # show files from commit
+  sf = git diff-tree --no-commit-id --name-only -r
+
 [filter "lfs"]
   clean = git-lfs clean %f
   smudge = git-lfs smudge %f
   required = true
+
