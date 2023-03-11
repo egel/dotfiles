@@ -1,52 +1,65 @@
-tap "homebrew/core"
 tap "homebrew/bundle"
-tap "caskroom/fonts"
-tap "caskroom/cask"
+tap "homebrew/cask"
+tap "homebrew/core"
+tap "homebrew/cask-fonts"
 
 # Basic
 brew "coreutils"
+brew "bash"
 brew "curl"
 brew "wget"
 brew "gawk"
 brew "imagemagick"
 brew "jq"
+brew "git"
 brew "nmap"
 brew "tree"
 brew "pandoc"
+brew "k9s"
+brew "helm"
+brew "kubectx"
+brew "kubernetes-cli", link: false
+brew "shellcheck"
+brew "svgo"
+brew "jsonlint"
+brew "go"
+brew "editorconfig"
+brew "neovim"
+brew "vim"
 
-# Lua with luajit
+# GPG - to signed your commits
+brew "gnutls"
+brew "pinentry"
+brew "pinentry-mac"
+brew "gnupg"
+
+# Support
 brew "lua"
 brew "luajit"
+brew "python@3.9"
+brew "rbenv" # Ruby version manager
 
-# Python2 + Python3
-brew "python@2"
-brew "python"
-brew "cmake"
-
-# Ruby version manager
-brew "rbenv"
-
-# Programming
-brew "editorconfig"
-brew "shellcheck"
-brew "yarn", args: ["without-node"]
-
-# MacVim (not the terminal version)
+# Productivity
+cask "amethyst"
+cask "font-hack"
+brew "watch"
+cask "lens"
+brew "fzf"
 brew "cscope"
-brew "macvim", args: ["HEAD", "with-lua", "with-luajit", "with-python@2", "with-python3", "with-cscope"]
-
-# Golang
-brew "glide"
-brew "go"
-brew "hugo"
+brew "macvim" # MacVim (not the terminal version)
+brew "ripgrep"
 
 # Tmux
 brew "tmux"
 brew "reattach-to-user-namespace" # for copy from tmux to mac namespace
-brew "gnupg" # for secure emailing
 
-# ZSH shell
-brew "zsh"
-
-# GPG suite
-brew "gnupg"
+# Others
+brew "cmake"
+brew "gobject-introspection"
+brew "harfbuzz"
+brew "libheif"
+brew "unbound"
+brew "guile"
+brew "librsvg"
+brew "pango"
+brew "nghttp2"
