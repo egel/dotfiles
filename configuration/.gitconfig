@@ -1,45 +1,48 @@
 # IMPORTANT: includeIf works only with git >= v2.13
 # For work user, email, ect.
 [includeIf "gitdir/i:~/workspace/"]
-  path = ~/.gitconfig.local_work
+    path = ~/.gitconfig.local_work
 # For private user, email, ect.
 [includeIf "gitdir/i:~/privatespace/"]
-  path = ~/.gitconfig.local
+    path = ~/.gitconfig.local
 
 [gpg]
-  program = /usr/local/bin/gpg
+    # select correct program for linux, macOS Intel & Silicon versions
+    program = /opt/homebrew/bin/gpg
 
 [color]
-  ui = auto
+    ui = auto
 
 [push]
-  default = simple
+    default = simple
 
 [core]
-  editor = nvim
-  excludesfile = ~/.gitignore_global
+    editor = nvim
+    excludesfile = ~/.gitignore_global
+    eol = lf
+    autocrlf = false
+
 
 [merge]
-  tool = vimdiff
+    tool = vimdiff
 
 [diff]
-  tool = vimdiff
+    tool = vimdiff
 
 [alias]
-  # show currently using git user
-  currentUser = ! git config --list | grep "user" | grep -v "currentUser"
+    # show currently using git user
+    currentUser = ! git config --list | grep "user" | grep -v "currentUser"
 
-  # diff the last commit
-  dl = diff HEAD^ HEAD
+    # diff the last commit
+    dl = diff HEAD^ HEAD
 
-  # list commands
-  last = log -1 HEAD
+    # list commands
+    last = log -1 HEAD
 
-  # show files from commit
-  sf = git diff-tree --no-commit-id --name-only -r
+    # show files from commit
+    sf = git diff-tree --no-commit-id --name-only -r
 
 [filter "lfs"]
-  clean = git-lfs clean %f
-  smudge = git-lfs smudge %f
-  required = true
-
+    clean = git-lfs clean %f
+    smudge = git-lfs smudge %f
+    required = true
