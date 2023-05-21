@@ -179,16 +179,16 @@ export NVM_DIR="$HOME/.nvm"
 # add current node (+ node programs installed globally) to PATH
 # NOTE: nvm have to be configured to works
 CURRENT_NODE_VERSION=$(node --version)
-if [[ $PATH != *"nvm"* && -d "$HOME/.nvm" ]]; then
+if [[ $PATH != *"nvm"* && -d "$HOME/.nvm" && $(find . -mindepth 1 -maxdepth 1 -type d | wc -l) ]]; then
   $PATH=$PATH':'$HOME'/.nvm/versions/node/'$CURRENT_NODE_VERSION'/bin'
 elif [ ! -d "$HOME/.nvm" ]; then
   echo "Missing NVM (Node Version Manager)."
+  echo "Visit https://github.com/nvm-sh/nvm to install it."
 fi
 
 #########################################
 # Yarn
 #########################################
-
 export PATH="$(yarn global bin):$PATH"
 
 #########################################
@@ -246,8 +246,8 @@ fi
 # rbenv
 #########################################
 # Use local Ruby manager (rbenv) instead of system ruby version
-if [[ -f $(brew --prefix rbenv) ]]; then
-  export PATH="$HOME/.rbenv/bin:$PATH"
+if [ -d "$(brew --prefix rbenv)" ]; then
+  # export PATH="$HOME/.rbenv/bin:$PATH"
   eval "$(rbenv init -)"
 fi
 
