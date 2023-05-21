@@ -7,7 +7,7 @@
 [![Build Status](https://travis-ci.org/egel/dotfiles.svg?branch=master)](https://travis-ci.org/egel/dotfiles)
 [![MIT LICENSE](http://img.shields.io/badge/license-MIT-yellowgreen.svg?style=square)](https://github.com/egel/dotfiles/blob/master/LICENSE)
 
-> Personal dotfiles configurator for Arch, Ubuntu 16.04 & Mac OSX.
+> Personal dotfiles configurator for macOS & Linux Ubuntu.
 
 ---
 
@@ -44,4 +44,5 @@ Editors
 - sublime-text-3
 
 [shortcuts-cheat-sheet]: http://bit.ly/1wqcChS
+[hack-font-webpage]: https://sourcefoundry.org/hack/
 
