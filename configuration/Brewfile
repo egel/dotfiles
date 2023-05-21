@@ -1,7 +1,7 @@
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/core"
-tap "homebrew/cask-fonts"
+tap "homebrew/cask-fonts" # Nerd Fonts
 
 # Basic
 brew "coreutils"
@@ -19,10 +19,13 @@ brew "k9s"
 brew "helm"
 brew "kubectx"
 brew "kubernetes-cli", link: false
+brew "awscli"
+brew "minikube"
 brew "shellcheck"
 brew "svgo"
 brew "jsonlint"
 brew "go"
+brew "golang-migrate" # go migrations
 brew "editorconfig"
 brew "neovim"
 brew "vim"
