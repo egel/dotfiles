@@ -115,6 +115,12 @@ call plug#begin('~/.config/nvim/plugged')
 
   Plug 'vim-test/vim-test' "{{{
     let g:test#javascript#runner = 'jest'
+
+    nmap <silent> <leader>t :TestNearest<CR>
+    nmap <silent> <leader>T :TestFile<CR>
+    nmap <silent> <leader>a :TestSuite<CR>
+    nmap <silent> <leader>l :TestLast<CR>
+    nmap <silent> <leader>g :TestVisit<CR>
   "}}}
 
   "{{{ Golang support
@@ -145,6 +151,11 @@ call plug#begin('~/.config/nvim/plugged')
 
   ""}}}
   " Plug 'ryanoasis/vim-devicons' " Always load the vim-devicons as the very last one
+  Plug 'ap/vim-css-color'
+  Plug 'leafgarland/typescript-vim'
+  "Plug 'peitalin/vim-jsx-typescript'
+  Plug 'maxmellon/vim-jsx-pretty'
+
   Plug 'kyazdani42/nvim-web-devicons'
 call plug#end()
 

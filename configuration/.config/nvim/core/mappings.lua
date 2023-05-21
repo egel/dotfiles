@@ -66,6 +66,10 @@ keymap.set("n", "k", "gk")
 keymap.set("v", "k", "gk", { noremap = true })
 keymap.set("v", "k", "gk", { noremap = true })
 
+-- Change variables (local & global)
+keymap.set("n", "gr", "gd[{V%::s/<C-R>///gc<left><left><left>") -- local file
+keymap.set("n", "gR", "gD:%s/<C-R>///gc<left><left><left>") -- Global
+
 -- Go to next/previous tab
 keymap.set("n", "<Leader>m", "<Esc>:tabnext<CR>", { desc = "next tab"})
 keymap.set("n", "<Leader>n", "<Esc>:tabprevious<CR>", { desc = "previous tab"})
@@ -98,3 +102,4 @@ keymap.set('n', "<Leader>~", "<Esc>:source $MYVIMRC<CR>") -- $MYVIMRC is a speci
 vim.g.myLang = 0
 vim.g.myLangList = { "nospell", "en_us", "pl", "de_de" }
 keymap.set('n', '<F4>', ':lua setMySpellLanguage()<CR>', { noremap = false, silent = false })
+
