@@ -29,6 +29,7 @@ brew "golang-migrate" # go migrations
 brew "editorconfig"
 brew "neovim"
 brew "vim"
+brew "fd" # nvim telescope
 
 # GPG - to signed your commits
 brew "gnutls"
