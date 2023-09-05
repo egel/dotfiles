@@ -49,9 +49,13 @@ myColorScheme()
 -- load lualine theme
 require('lualine-config/config')
 
+-- load treesitter
+require('nvim-treesitter/config')
 
 -- setup cmp plugins
 require('cmp-config/config')
+
+require('mason-config/config')
 
 require('lsp-config/config')
 
