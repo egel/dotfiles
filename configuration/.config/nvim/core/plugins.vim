@@ -72,29 +72,54 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'preservim/nerdcommenter'
   Plug 'editorconfig/editorconfig-vim'    " editorconfig plugin
 
+  " Add git info message after the line
+  Plug 'f-person/git-blame.nvim'
+
+  " Help operating on CSV files
   Plug 'mechatroner/rainbow_csv'
 
-  "{{{ nvim completition
+  " The fastest syntax highlighter
+  Plug 'mfussenegger/nvim-dap'
+  Plug 'rcarriga/nvim-dap-ui'
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'theHamsta/nvim-dap-virtual-text'
+
+  " Mason (should be before lsp)
+  Plug 'williamboman/mason.nvim'
+  Plug 'williamboman/mason-lspconfig.nvim'
+
+  "{{{ nvim LSP completition
   Plug 'neovim/nvim-lspconfig'
+  Plug 'hrsh7th/nvim-cmp'
   Plug 'hrsh7th/cmp-nvim-lsp'
   Plug 'hrsh7th/cmp-nvim-lua' " lua completitions
   Plug 'hrsh7th/cmp-buffer'   " allow to show hints from current buffer
   Plug 'hrsh7th/cmp-path'     " help to complete file
   Plug 'hrsh7th/cmp-cmdline'
-  Plug 'hrsh7th/nvim-cmp'
   Plug 'onsails/lspkind.nvim' " allows for showing better context/origin of hints
 
-  " LuaSnip.
-  Plug 'L3MON4D3/LuaSnip', {'tag': 'v1.1.0'}
+  " LuaSnip
+  Plug 'L3MON4D3/LuaSnip', {'tag': 'v1.1.0'} " (required by lsp-zero)
 
+  "Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
+  "}}}
 
+  " Add nice bottom line in editor modes
   Plug 'nvim-lualine/lualine.nvim'
+
+  Plug 'nvim-lua/plenary.nvim' " don't forget to add this one if you don't have it yet!
+  Plug 'theprimeagen/harpoon'
 
   " Prettier
   " Plug 'neovim/nvim-lspconfig' " required (loaded before)
-  Plug 'nvim-lua/plenary.nvim' " INFO: Somehow got problems while not having it while opening angular ts components
-  Plug 'jose-elias-alvarez/null-ls.nvim'
-  Plug 'MunifTanjim/prettier.nvim'
+  "Plug 'nvim-lua/plenary.nvim' " INFO: Somehow got problems while not having it while opening angular ts components
+  "Plug 'jose-elias-alvarez/null-ls.nvim'
+  "Plug 'MunifTanjim/prettier.nvim'
+  "Plug 'prettier/vim-prettier', {
+    "\ 'do': 'yarn install --frozen-lockfile --production',
+    "\ 'branch': 'release/0.x',
+    "\ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html']
+    "\ }
 
   "Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " use telescope instead
 
@@ -102,24 +127,16 @@ call plug#begin('~/.config/nvim/plugged')
   " required:
   "   nvim-lua/popup.nvim
   "   nvim-lua/plenary.nvim
-  Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' } "{{{
-    " Find files using Telescope command-line sugar.
-    nnoremap <leader>ff <cmd>Telescope find_files<cr>
-    nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-    nnoremap <leader>fb <cmd>Telescope buffers<cr>
-    nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-    nnoremap <leader>fl <cmd>Telescope git_files<cr>
-
-  "}}}
+  Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.2' }
 
   Plug 'vim-test/vim-test' "{{{
     let g:test#javascript#runner = 'jest'
 
     nmap <silent> <leader>t :TestNearest<CR>
     nmap <silent> <leader>T :TestFile<CR>
-    nmap <silent> <leader>a :TestSuite<CR>
+    "nmap <silent> <leader>a :TestSuite<CR>
     nmap <silent> <leader>l :TestLast<CR>
-    nmap <silent> <leader>g :TestVisit<CR>
+    "nmap <silent> <leader>g :TestVisit<CR>
   "}}}
 
   "{{{ Golang support
@@ -130,30 +147,11 @@ call plug#begin('~/.config/nvim/plugged')
     let g:go_info_mode='gopls'
   "}}}
 
-  "Plug 'ctrlpvim/ctrlp.vim' "{{{
-    "let g:ctrlp_map = '<c-p>'
-    "let g:ctrlp_cmd = 'CtrlP'
-    "let g:ctrlp_show_hidden = 1
-    "let g:ctrlp_clear_cache_on_exit = 0 " persist cache between sessions
-    "set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+  "Plug 'davidhalter/jedi-vim'
 
-    "let g:ctrlp_custom_ignore = {
-      "\ 'dir':  '\.git$\|\.swp$\|\.idea$\|build$\|bower_components\|node_modules\|dist\|target\|_site',
-      "\ 'file': '\v\.(swp|exe|so|dll|DS_Store)$',
-      "\ 'link': 'some_bad_symbolic_links',
-      "\ }
-
-    "let g:ctrlp_prompt_mappings = {
-      "\ 'AcceptSelection("e")': ['<2-LeftMouse>'],
-      "\ 'AcceptSelection("t")': ['<cr>'],
-      "\ }
-
-  ""}}}
-  " Plug 'ryanoasis/vim-devicons' " Always load the vim-devicons as the very last one
+  " Preview CSS colors inside terminal
+  " It's not perfectly accurate but gives relative information about a color
   Plug 'ap/vim-css-color'
-  Plug 'leafgarland/typescript-vim'
-  "Plug 'peitalin/vim-jsx-typescript'
-  Plug 'maxmellon/vim-jsx-pretty'
 
   Plug 'kyazdani42/nvim-web-devicons'
 call plug#end()
