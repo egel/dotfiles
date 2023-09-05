@@ -112,6 +112,11 @@ cmp.setup({
         ghost_text = true,
       }
     })
+  },
+
+  -- source: https://github.com/hrsh7th/nvim-cmp/issues/598
+  performance = {
+    trigger_debounce_time = 100 -- time after last key-input to next reload of available options
   }
 })
 
@@ -122,7 +127,7 @@ cmp.setup.filetype('gitcommit', {
   }, {
     { name = 'buffer' },
   })
-  })
+})
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline({ '/', '?' }, {

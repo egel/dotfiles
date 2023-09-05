@@ -4,35 +4,58 @@ local options = {
   defaults = {
     vimgrep_arguments = {
       "rg",
-      "-L",
-      "--color=never",
-      "--no-heading",
-      "--with-filename",
-      "--line-number",
-      "--column",
-      "--smart-case",
-    },
-    --prompt_prefix = "   ",
+      "--follow", -- follow symbolic links
+      "--hidden", -- search for hidden files
+      "--no-heading", -- Don't group matches by each file
+      "--with-filename", -- Print the file path with the matched lines
+      "--ignore-case", -- Case insensitive search
+      "--line-number", -- Show line numbers
+      "--column", -- Show column numbers
+      "--smart-case", -- Smart case search
+      --"--debug", -- Show debug messages
 
-    -- Default configuration for telescope goes here:
-    -- config_key = value,
+      -- Exclude some patterns from search
+      "--glob=!**/.git/*",
+      "--glob=!**/.idea/*",
+      "--glob=!**/.vscode/*",
+      "--glob=!**/build/*",
+      "--glob=!**/dist/*",
+      "--glob=!**/yarn.lock",
+      "--glob=!**/package-lock.json",
+      "--glob-case-insensitive",
+    },
+
+    prompt_prefix = "🔍  ",
+
     mappings = {
-      i = {
+      -- i = {
         -- map actions.which_key to <C-h> (default: <C-/>)
         -- actions.which_key shows the mappings for your picker,
         -- e.g. git_{create, delete, ...}_branch for the git_branches picker
         --["<C-h>"] = "which_key"
-      }
+      -- }
     }
   },
   pickers = {
-    -- Default configuration for builtin pickers goes here:
-    -- picker_name = {
-    --   picker_config_key = value,
-    --   ...
-    -- }
-    -- Now the picker_config_key will be applied every time you call this
-    -- builtin picker
+    find_files = {
+      hidden = true,
+      find_command = {
+        "rg",
+        "--files",
+        "--hidden",
+        "--glob=!**/.git/*",
+        "--glob=!**/.idea/*",
+        "--glob=!**/.vscode/*",
+        "--glob=!**/build/*",
+        "--glob=!**/dist/*",
+        "--glob=!**/yarn.lock",
+        "--glob=!**/package-lock.json",
+        "--glob-case-insensitive",
+      },
+    },
+    live_grep = {
+      --hidden = true,
+    }
   },
   extensions = {
     -- Your extension configuration goes here:
