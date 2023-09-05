@@ -32,7 +32,15 @@ for _, name in ipairs(core_config_files) do
 end
 
 -- load colorscheme
-vim.cmd('colorscheme gruvbox')
+function myColorScheme(color)
+  color = color or "gruvbox"
+  vim.cmd.colorscheme(color)
+
+  -- Set transparent background
+  vim.api.nvim_set_hl(0, "Normal", {bg = "none"})
+  vim.api.nvim_set_hl(0, "NormalFloat", {bg = "none"})
+end
+myColorScheme()
 
 --
 -- Load setup for plugins
