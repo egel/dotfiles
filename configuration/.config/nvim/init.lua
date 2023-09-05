@@ -20,7 +20,7 @@ end
 
 -- Load standard/core configuration files
 local core_config_files = { -- order matters
-  "options.vim",
+  "options.lua", -- file where gradually migrate values from vim's options.vim file
   "autocmds.lua",
   "plugins.vim",
   "mappings.lua",
