@@ -1,7 +1,6 @@
 "
 " Plugins for neovim
 "
-"
 " store the plugins in plugged dir
 call plug#begin('~/.config/nvim/plugged')
 
@@ -51,11 +50,11 @@ call plug#begin('~/.config/nvim/plugged')
     " Show hidden files (default, switch by 'Shift + I')
     let NERDTreeShowHidden=1
 
-    " default NERDTree window size
-    let g:NERDTreeWinSize=40
+    " Default NERDTree window size
+    let g:NERDTreeWinSize=50
 
     " Minimal menu
-    let g:NERDTreeMinimalMenu=1
+    let g:NERDTreeMinimalMenu=0
 
   "}}}
   Plug 'jistr/vim-nerdtree-tabs', { 'on': 'NERDTreeToggle' } "{{{
@@ -65,7 +64,7 @@ call plug#begin('~/.config/nvim/plugged')
     let g:nerdtree_tabs_autofind=0
 
     " ---- Open and hide NERDTree for all available tabs {{{
-      noremap <C-e> <plug>NERDTreeTabsToggle<CR>
+      nnoremap <C-e> <plug>NERDTreeTabsToggle<CR>
 
     "}}}
 
