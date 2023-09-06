@@ -259,20 +259,19 @@ if [ -d "$(brew --prefix rbenv)" ]; then
 fi
 
 #########################################
-# Fuzzy files
+# pyenv
+#########################################
+if [ -d "$(brew --prefix pyenv)" ]; then
+    eval "$(pyenv init -)"
+fi
+
+#########################################
+# Fuzzy files finder
 #########################################
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-# Ignore some dir/files for fzf
-# source: https://github.com/junegunn/fzf/issues/1625#issuecomment-507674106
 #
-# determines search program for fzf
-#if type ag &> /dev/null; then
-    #export FZF_DEFAULT_COMMAND='ag -p ~/.gitignore -g ""'
-#fi
-# refer rg over ag
-if type rg &> /dev/null; then
-    export FZF_DEFAULT_COMMAND='rg --files --hidden'
-fi
+# Ctrl + t -> open file finder
+# Ctrl + r -> open last commands
 
 #########################################
 # ALWAYS AT THE END
