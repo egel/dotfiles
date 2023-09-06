@@ -95,10 +95,16 @@ bindkey "^[[B" history-beginning-search-forward
 #########################################
 # Dotfiles: Add private aliases
 #########################################
-DOTFILES_PRIVATE_ALIASES=$HOME/.aliases.private
-if [ -s "${DOTFILES_PRIVATE_ALIASES}" ]; then
-  source ${DOTFILES_PRIVATE_ALIASES}
+DOTFILES_ALIASES_PRIVATE=$HOME/.aliases.private
+if [ -s "${DOTFILES_ALIASES_PRIVATE}" ]; then
+  source ${DOTFILES_ALIASES_PRIVATE}
 fi
+
+DOTFILES_ALIASES_WORK=$HOME/.aliases.work
+if [ -s "${DOTFILES_ALIASES_WORK}" ]; then
+  source ${DOTFILES_ALIASES_WORK}
+fi
+
 
 alias vim='nvim'
 export EDITOR='nvim'
