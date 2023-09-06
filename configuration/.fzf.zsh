@@ -13,5 +13,5 @@ fi
 # enable completion for everything
 zstyle ':completion:*' fzf-search-display true
 
-# only aws command completion 
+# only aws command completion
 #zstyle ':completion:*:*:aws' fzf-search-display true
