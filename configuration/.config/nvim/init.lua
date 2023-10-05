@@ -22,7 +22,7 @@ end
 local core_config_files = { -- order matters
   "options.lua",
   "autocmds.lua",
-  "plugins.vim",
+  "plugins.lua",
   "mappings.lua",
 }
 for _, name in ipairs(core_config_files) do
