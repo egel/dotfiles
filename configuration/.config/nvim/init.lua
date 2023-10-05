@@ -45,27 +45,29 @@ myColorScheme()
 --
 -- Load setup for plugins
 --
+-- The order of loading plugins matter!
+--
+-- Start loading plugins by default from "lua" directory
+--
 
 -- load lualine theme
-require('lualine-config/config')
+require('lualine-config')
 
 -- load treesitter
-require('nvim-treesitter/config')
+require('nvim-treesitter')
 
+require('luasnip-config') -- Snippets should be before cmp-config
+--
 -- setup cmp plugins
-require('cmp-config/config')
-
-require('mason-config/config')
-
-require('lsp-config/config')
-
--- prettier: save files according to opinionated standard
-require('null-ls-config/config')
-require('prettier-config/config')
+require('cmp-config')
+require('mason-config')
+require('lsp-config')
+require('gitsigns-config')
 
 -- telescope: search for files, grep text and more
-require('telescope-config/config')
+require('telescope-config')
 
--- Snippets
--- should be before cmp-config
-require('luasnip-config/config')
+-- load project.nvim
+require('project-nvim-config')
+
+require('nvim-tree-config')

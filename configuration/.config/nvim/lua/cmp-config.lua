@@ -49,6 +49,7 @@ cmp.setup({
     { name = 'look' },
     { name = 'buffer', keyword_length = 2, max_item_count = 10 }, -- start suggesting from X chars
     { name = 'ultisnips' }, -- For ultisnips users.
+    { name = 'luasnip' }, -- For luasnip users.
   }),
 
   formatting = {
