@@ -105,7 +105,6 @@ if [ -s "${DOTFILES_ALIASES_WORK}" ]; then
   source ${DOTFILES_ALIASES_WORK}
 fi
 
-
 alias vim='nvim'
 alias v='nvim'
 export EDITOR='nvim'
@@ -194,28 +193,6 @@ elif [ ! -d "$HOME/.nvm" ]; then
 fi
 
 #########################################
-# Yarn
-#########################################
-export PATH="$(yarn global bin):$PATH"
-
-#########################################
-# Golang
-#########################################
-export GOPATH=$HOME/go
-case $(uname -s) in
-  Darwin)
-    export GOROOT="$(brew --prefix golang)/libexec"
-    ;;
-  Linux)
-    export GOROOT=$HOME/go-1.20.0
-    ;;
-esac
-if [[ $PATH != *"go"* && -d "$GOPATH" && -d "$GOROOT" ]]; then
-  export PATH=$PATH:$GOPATH/bin # additional go libraries
-  export PATH=$PATH:$GOROOT/bin # path of go source
-fi
-
-#########################################
 # SSH agent
 #########################################
 if [ -z "$SSH_AUTH_SOCK" ] ; then
@@ -265,6 +242,14 @@ if [ -d "$(brew --prefix pyenv)" ]; then
     eval "$(pyenv init -)"
 fi
 
+## LLVM (CPP)
+export PATH="$(brew --prefix llvm)/bin:$PATH"
+
+#########################################
+# gvm
+#########################################
+[[ -s "/Users/maciejsypien/.gvm/scripts/gvm" ]] && source "/Users/maciejsypien/.gvm/scripts/gvm"
+
 #########################################
 # Fuzzy files finder
 #########################################
@@ -272,6 +257,12 @@ fi
 #
 # Ctrl + t -> open file finder
 # Ctrl + r -> open last commands
+
+#########################################
+# sdkman (java version manager)
+#########################################
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 #########################################
 # ALWAYS AT THE END
@@ -282,7 +273,3 @@ if [[ -f $ZSH/oh-my-zsh.sh ]]; then
 else
   echo "Missing $ZSH/oh-my-zsh.sh file."
 fi
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
