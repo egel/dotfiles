@@ -33,19 +33,21 @@ vim.opt.backspace = "indent,eol,start"     -- Allow backspacing over everything 
 vim.opt.foldenable = false          -- No default fold, using plugin instead
 
 vim.opt.list = true                                        -- Highlight whitespace
-vim.opt.listchars = "tab:»·,trail:•,eol:¬,nbsp:_,extends:❯,precedes:❮" -- show extra space characters
+vim.opt.listchars = "tab:»·,trail:•,eol:¬,nbsp:␣,extends:❯,precedes:❮" -- show extra space characters
 vim.opt.autoindent = true            -- Set auto indent to match adjacent lines
 
 vim.opt.wildmenu = true                 -- Show list for autocompletion
 vim.opt.wildignore = "*.o,*.obj,*~"     -- Stuff to ignore when tab completing
-.. "*sass-cache*"    -- ignore sass related stuff
-.. "*.DS_Store"      -- ignore Mac related stuff
-.. "log/**,tmp/**"   -- ignore Linux related stuff
-.. "*/.git/*"        -- ignore git directory for repository
-.. "*/.svn/*"        -- ignore SVN directory for repository
-.. "*/.idea/*"       -- ignore IntelliJ directory for repository
-.. "*/venv/*"        -- ignore default python virtual environment directory for repository
-.. "*/vendor"        -- ignore Go related directory
+.. "*sass-cache*"     -- ignore sass related stuff
+.. "*.DS_Store"       -- ignore Mac related stuff
+.. "log/**,tmp/**"    -- ignore Linux related stuff
+.. "*/.git/*"         -- ignore git directory for repository
+.. "*/.svn/*"         -- ignore SVN directory for repository
+.. "*/.idea/*"        -- ignore IntelliJ directory for repository
+.. "*/.vscode/*"      -- ignore VSCode directory for repository
+.. "*/venv/*"         -- ignore default python virtual environment directory for repository
+.. "*/vendor"         -- ignore Go related directory
+.. "*/node_modules/*" -- ignore Node related directory
 
 vim.opt.history = 1000          -- Remember more commands and search history
 vim.opt.undolevels = 1000       -- Use many muchos levels of undo

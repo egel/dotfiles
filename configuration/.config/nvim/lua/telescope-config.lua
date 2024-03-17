@@ -25,7 +25,7 @@ local options = {
       "--glob-case-insensitive",
     },
 
-    prompt_prefix = "🔍  ",
+    prompt_prefix = " 🔍 ",
 
     mappings = {
       -- i = {

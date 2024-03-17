@@ -68,6 +68,19 @@ require('gitsigns-config')
 require('telescope-config')
 
 -- load project.nvim
-require('project-nvim-config')
+-- require('project-nvim-config') -- temporarly disable
 
 require('nvim-tree-config')
+
+require('ale-config')
+
+require('nerdcommenter-config')
+
+-- vim-test plugin
+require('nvim-neotest-config')
+
+-- mdx
+require('mdx-config')
+
+-- colorizer
+require('nvim-colorizer')
