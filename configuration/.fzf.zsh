@@ -7,7 +7,11 @@
 #fi
 # refer rg over ag
 if type rg &> /dev/null; then
-    export FZF_DEFAULT_COMMAND='rg --files --hidden'
+    export FZF_DEFAULT_COMMAND='rg \
+        --files \
+        --hidden \
+        --glob=!**/node_modules/* \
+        --glob=!**/.git/*'
 fi
 
 # enable completion for everything
