@@ -11,7 +11,7 @@
 
 ---
 
-[Shortcuts Cheat Sheet (PDF)][shortcuts-cheat-sheet]
+[Shortcuts Cheat Sheet (PDF)][shortcuts-cheat-sheet] | [Configs][docs-configurations]
 
 ---
 
@@ -24,25 +24,28 @@
 ## Configurations
 
 -   ZSH (aliases)
--   git
--   mutt
+-   git (modes: private, work)
 -   tmux
 -   prettier
 -   remark
 -   editorconfig
 -   gnupg (git, email)
+-   mutt
 
 Packages
 
--   brew
--   ruby (gems)
--   npm (global packages)
+-   brew (core packages)
+-   rbenv (ruby gems)
+-   nvm (npm global packages)
 
 Editors
 
--   nvim
--   vim (gvim, intelliJ)
+-   nvim (lsp, linters, battle tested)
+-   vim (gvim, IntelliJ)
 -   sublime-text-3
+
+You can find here all available [detailed configurations][docs-configurations].
 
 [shortcuts-cheat-sheet]: http://bit.ly/1wqcChS
 [hack-font-webpage]: https://sourcefoundry.org/hack/
+[docs-configurations]: ./configuration/README.md
