@@ -410,9 +410,10 @@ set nocompatible
       " Define linters
       let g:ale_linters = {
       \  'javascript': ['eslint'],
-      \  'typescript': ['tslint'],
+      \  'typescript': ['eslint'],
       \  'markdown': ['remark-lint'],
       \  'css': ['stylelint'],
+      \  'scss': ['stylelint'],
       \  'shell': ['shellcheck']
       \}
 
@@ -452,6 +453,7 @@ set nocompatible
       let g:gitgutter_sign_removed = '-'
       let g:gitgutter_sign_removed_first_line = '^^'
       let g:gitgutter_sign_modified_removed = '~-'
+      let g:gitgutter_max = -1 " default is 500
 
       if (&bg=='dark')
         highlight clear SignColumn
