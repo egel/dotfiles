@@ -22,7 +22,6 @@
     eol = lf
     autocrlf = false
 
-
 [merge]
     tool = vimdiff
 
@@ -36,6 +35,9 @@
     # diff the last commit
     dl = diff HEAD^ HEAD
 
+    # diff the last commit (list of files)
+    dll = diff HEAD^ HEAD --stat
+
     # list commands
     last = log -1 HEAD
 
@@ -46,3 +48,6 @@
     clean = git-lfs clean %f
     smudge = git-lfs smudge %f
     required = true
+
+[rerere]
+    enabled = true
