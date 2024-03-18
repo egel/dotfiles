@@ -42,12 +42,3 @@ case $(uname -s) in
     ;;
 esac
 
-# For shell variants
-CUR_SHELL=echo $SHELL
-case $(CUR_SHELL) in
-  /bin/bash)
-    alias livelog='~/.dotfiles/scripts/git-loglive.sh'
-    alias show-gitsubmodules='git submodule status | cut -d" " -f3-4'
-    ;;
-esac
-
