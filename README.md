@@ -11,7 +11,7 @@
 
 ---
 
-[Shortcuts Cheat Sheet (PDF)][shortcuts-cheat-sheet] | [Configs][docs-configurations]
+[Shortcuts Cheat Sheet (PDF)][shortcuts-cheat-sheet] | [Configs][docs-configurations] | [Assets][docs-assets]
 
 ---
 
@@ -22,6 +22,8 @@
 > Used gruvbox palette for [tmux](https://github.com/egel/tmux-gruvbox), [vim](https://github.com/morhetz/gruvbox) and terminal with [Hack font][hack-font-webpage].
 
 ## Configurations
+
+You can find here all available [detailed configurations][docs-configurations] and [assets][docs-assets].
 
 -   ZSH (aliases)
 -   git (modes: private, work)
@@ -44,8 +46,11 @@ Editors
 -   vim (gvim, IntelliJ)
 -   sublime-text-3
 
-You can find here all available [detailed configurations][docs-configurations].
+Assets
+
+-   fonts
 
 [shortcuts-cheat-sheet]: http://bit.ly/1wqcChS
 [hack-font-webpage]: https://sourcefoundry.org/hack/
 [docs-configurations]: ./configuration/README.md
+[docs-assets]: ./assets/README.md
