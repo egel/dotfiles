@@ -80,11 +80,42 @@ chmod 600 ~/.ssh/config/
 
 ### gvm
 
-<https://github.com/moovweb/gvm>
+Go version manager - <https://github.com/moovweb/gvm>.
 
-I use many versions of Golang, this package helps me to use dedicated version based on project needs.
+I use many versions of Golang, this package manager helps me to use dedicated version based on project needs.
+
+```
+$ which go
+/Users/johndoe/.gvm/gos/go1.21.6/bin/go
+```
+
+#### Alternatively go via brew
+
+If you do not care or use single go version you can install it via brew, or other package manager.
+I add sample configuration below for better reference:
+
+```bash
+#########################################
+# Golang
+#########################################
+export GOPATH=$HOME/go
+case $(uname -s) in
+  Darwin)
+    export GOROOT="$(brew --prefix golang)/libexec"
+    ;;
+  Linux)
+    export GOROOT=$HOME/go-1.20.0
+    ;;
+esac
+if [[ $PATH != *"go"* && -d "$GOPATH" && -d "$GOROOT" ]]; then
+  export PATH=$PATH:$GOPATH/bin # additional go libraries
+  export PATH=$PATH:$GOROOT/bin # path of go source
+fi
+```
 
 ### nvim
+
+Neovim - <https://github.com/neovim/neovim>
 
 INFO: installation is trivial, but to have complete, full working nvim configuration you may need to install some additional programs. To install them I use some popular package managers (e.g.: brew, nvm, gvm, rbenv). Configuration for them you can also find here.
 
@@ -103,9 +134,29 @@ go install golang.org/x/vuln/cmd/govulncheck@latest
 go install github.com/abenz1267/gomvp@latest
 ```
 
-### nvm & node & yarn
+### vim
+
+IMPORTANT: I do not anymore actively use my vim configuration (as mainly use nvim instead).
+
+### nvm
+
+Node package manager - <https://github.com/nvm-sh/nvm>
 
 - INFO: `yarn` is related to node version, therefore I always install it via global npm package.
+
+  ```bash
+  $ which yarn
+  /Users/johndoe/.nvm/versions/node/v20.11.0/bin/yarn
+  ```
+
+  If you do not care, you can install it via brew (info it will be bound to your local node version, possibly latest). Below simple config for `.zshrc`:
+
+  ```bash
+  #########################################
+  # Yarn
+  #########################################
+  export PATH="$(yarn global bin):$PATH"
+  ```
 
 #### npm global packages
 
@@ -131,5 +182,34 @@ npm install -g $(<configuration/npm.global.txt)
   # append sample mynewpackage to end of file
   echo "mynewpackage@1.0.0" >> configuration/npm.global.txt
   ```
+
+### rbenv
+
+Ruby environments - <https://github.com/rbenv/rbenv>
+
+#### First install
+
+```bash
+brew install rbenv
+
+# Display list of all possible versions"
+rbenv install --list
+
+# install (example with 2.7.7)
+rbenv install -v 2.7.7
+rbenv global 2.7.7
+
+# add if not have already in .zshrc
+echo 'eval "$(rbenv init -)"' >> ~/.zshrc
+source ~/.zshrc
+
+# check ruby
+$ which ruby
+/Users/johndoe/.rbenv/shims/ruby
+
+# check version
+$ ruby -v
+ruby 2.7.7p221 (2022-11-24 revision 168ec2b1e5) [arm64-darwin22]
+```
 
 [shortcuts-cheat-sheet]: http://bit.ly/1wqcChS
