@@ -2,23 +2,22 @@
 
 This document is meant for explain how to configure available features/programs.
 
-INFO: I use a custom keybindings for the configuration in this folder. If you're interested see [my keybindings cheatsheet][shortcuts-cheat-sheet].
+> [!IMPORTANT]
+> All configurations are based on downloaded repository to localhost, and using symlinks connect files from the repository.
+>
+> I prefer this approach as it allow me to quickly update my configuration files when they changes and update my main repository.
+>
+> If you prefer to copy files instead due to e.g.: security reasons, feel free to do so.
 
----
+> [!NOTE]
+> I use a custom keybindings for the configuration in this folder. If you're interested see [my keybindings cheatsheet][shortcuts-cheatsheet].
+>
+> In daily work I heavily rely on nvim used inside tmux sessions while using TKL keyboard types, so the configuration have most effective shortcuts for this particular combination.
 
-DISCLAIMER: All configurations are based on downloaded repository to localhost, and using symlinks connect files from the repository.
+> [!TIP]
+> To avoid problems during setup, it's much saver to use absolute paths while cleating symlinks.
 
-I prefer this approach as it allow me to quickly update my configuration files when they changes and update my main repository.
-
-If you prefer to copy files instead due to e.g.: security reasons, feel free to do so.
-
----
-
-HINTS:
-
-- to avoid problems it's much saver to use absolute paths when symlinks.
-
-### zsh
+### zsh (shell)
 
 ```bash
 ln -sf ${PWD}/.zshrc ${HOME}/.zshrc
@@ -37,9 +36,12 @@ ln -sf ${PWD}/.aliases ${HOME}/.aliases
 
 ### fzf
 
-Requires:
+Fuzzy finder
 
-- oh-my-zsh
+> [!NOTE]
+> Requirements:
+>
+> - oh-my-zsh
 
 ```bash
 # install oh-my-zsh and then
@@ -50,11 +52,12 @@ ln -sf ${PWD}/.fzf.zsh ${HOME}/.fzf.zsh
 
 ### SSH
 
-SSH is generally very private space. To keep it clean use protected directory to load your personal ssh configurations for each of servers/clients:
-
-- ~/.ssh/config.d/personal
-- ~/.ssh/config.d/client1
-- ~/.ssh/config.d/client2
+> [!TIP]
+> SSH is generally very private space. To keep it clean use protected directory to load your ssh configurations for each personal, or clients/servers, like in the example below:
+>
+> - ~/.ssh/config.d/personal
+> - ~/.ssh/config.d/client1
+> - ~/.ssh/config.d/client2
 
 It's good to add below settings to your `~/.ssh/config`
 
@@ -82,7 +85,7 @@ chmod 600 ~/.ssh/config/
 
 Go version manager - <https://github.com/moovweb/gvm>.
 
-I use many versions of Golang, this package manager helps me to use dedicated version based on project needs.
+I tend using many versions of Golang. This package manager helps me to use desired version based on project needs and switch them in fly.
 
 ```
 $ which go
@@ -117,7 +120,14 @@ fi
 
 Neovim - <https://github.com/neovim/neovim>
 
-INFO: installation is trivial, but to have complete, full working nvim configuration you may need to install some additional programs. To install them I use some popular package managers (e.g.: brew, nvm, gvm, rbenv). Configuration for them you can also find here.
+> [!NOTE]
+> Installation is trivial, but to have a complete, full working nvim configuration you may need to install some additional programs.
+>
+> To install them I use some popular package managers (e.g.: brew, nvm, gvm, rbenv). Configuration for them you can also find here.
+
+> [!TIP]
+>
+> The full key-binding configuration can be found in [Shortcuts Cheatsheet][shortcuts-cheatsheet]
 
 ```bash
 makedir -p ${HOME}/.config/
@@ -136,27 +146,12 @@ go install github.com/abenz1267/gomvp@latest
 
 ### vim
 
-IMPORTANT: I do not anymore actively use my vim configuration (as mainly use nvim instead).
+> [!WARNING]
+> I do not anymore actively plan to work/enhance my vim configuration. I switched to nvim as daily driver.
 
 ### nvm
 
 Node package manager - <https://github.com/nvm-sh/nvm>
-
-- INFO: `yarn` is related to node version, therefore I always install it via global npm package.
-
-  ```bash
-  $ which yarn
-  /Users/johndoe/.nvm/versions/node/v20.11.0/bin/yarn
-  ```
-
-  If you do not care, you can install it via brew (info it will be bound to your local node version, possibly latest). Below simple config for `.zshrc`:
-
-  ```bash
-  #########################################
-  # Yarn
-  #########################################
-  export PATH="$(yarn global bin):$PATH"
-  ```
 
 #### npm global packages
 
@@ -183,11 +178,32 @@ npm install -g $(<configuration/npm.global.txt)
   echo "mynewpackage@1.0.0" >> configuration/npm.global.txt
   ```
 
+#### yarn
+
+> [!NOTE]
+>
+> `yarn` is related/bound to the Node version, therefore I always install it via global npm package.
+
+```bash
+npm install -g yarn
+
+$ which yarn
+/Users/johndoe/.nvm/versions/node/v20.11.0/bin/yarn
+```
+
+> [!TIP]
+> If you do not care how , you can install it via brew (info it will be bound to your local node version, possibly latest). Below simple config for `.zshrc`:
+>
+> ```bash
+> #########################################
+> # Yarn
+> #########################################
+> export PATH="$(yarn global bin):$PATH"
+> ```
+
 ### rbenv
 
 Ruby environments - <https://github.com/rbenv/rbenv>
-
-#### First install
 
 ```bash
 brew install rbenv
@@ -212,4 +228,27 @@ $ ruby -v
 ruby 2.7.7p221 (2022-11-24 revision 168ec2b1e5) [arm64-darwin22]
 ```
 
-[shortcuts-cheat-sheet]: http://bit.ly/1wqcChS
+### pyenv
+
+```bash
+brew instal pyenv
+
+# pyenv install --list   # list all available python versions to install
+pyenv install 3.11.6
+
+# setup global version
+$ pyenv global 3.11.6
+
+# test if global version is setup correcty
+$ pyenv global
+3.11.6
+
+# test if using correct python
+$ which python
+/Users/myuser/.pyenv/shims/python
+
+$ python --version
+Python 3.11.6
+```
+
+[shortcuts-cheatsheet]: http://bit.ly/1wqcChS
