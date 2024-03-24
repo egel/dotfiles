@@ -1,11 +1,7 @@
-```
- ____  __    ____  _         ___   ___  _____  ____  _   _     ____  __
-| |_  / /`_ | |_  | |       | | \ / / \  | |  | |_  | | | |   | |_  ( (`
-|_|__ \_\_/ |_|__ |_|__     |_|_/ \_\_/  |_|  |_|   |_| |_|__ |_|__ _)_)
-```
-
-[![Build Status](https://travis-ci.org/egel/dotfiles.svg?branch=master)](https://travis-ci.org/egel/dotfiles)
-[![MIT LICENSE](http://img.shields.io/badge/license-MIT-yellowgreen.svg?style=square)](https://github.com/egel/dotfiles/blob/master/LICENSE)
+![GitHub Release](https://img.shields.io/github/v/release/egel/dotfiles)
+![GitHub License](https://img.shields.io/github/license/egel/dotfiles)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/egel/dotfiles)
+![GitHub repo size](https://img.shields.io/github/repo-size/egel/dotfiles)
 
 > Personal dotfiles for macOS & Linux Ubuntu.
 
