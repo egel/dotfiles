@@ -164,10 +164,29 @@ local plugins = {
   --
 
   -- Ale linting tool
+  -- {
+    -- 'dense-analysis/ale',
+    -- event = 'VeryLazy',
+  -- },
+
+  -- Linting manager
+  --
   {
-    'dense-analysis/ale',
-    event = 'VeryLazy',
+    "mfussenegger/nvim-lint",
+    event = {
+      "BufReadPre",
+      "BufNewFile",
+    },
   },
+
+  -- Formatting manager
+  --
+  {
+    'stevearc/conform.nvim',
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {},
+  },
+
 
   -- Preview CSS colors inside terminal
   -- It's not perfectly accurate but gives relative information about a color

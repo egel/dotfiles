@@ -9,7 +9,7 @@ local utils = require("utils/utils")
 local semver = require("utils/semver")
 
 -- check if we have the latest stable version of nvim
-local expected_ver = semver('0.8.0')
+local expected_ver = semver("0.8.0")
 local nvim_ver = semver(utils.get_nvim_version())
 
 if expected_ver > nvim_ver then
@@ -32,15 +32,16 @@ for _, name in ipairs(core_config_files) do
 end
 
 -- load colorscheme
-function myColorScheme(color)
+--
+function SetColorScheme(color)
   color = color or "gruvbox"
   vim.cmd.colorscheme(color)
 
   -- Set transparent background
-  vim.api.nvim_set_hl(0, "Normal", {bg = "none"})
-  vim.api.nvim_set_hl(0, "NormalFloat", {bg = "none"})
+  vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+  vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 end
-myColorScheme()
+SetColorScheme()
 
 --
 -- Load setup for plugins
@@ -51,36 +52,37 @@ myColorScheme()
 --
 
 -- load lualine theme
-require('lualine-config')
+require("lualine-config")
 
 -- load treesitter
-require('nvim-treesitter')
+require("nvim-treesitter")
 
-require('luasnip-config') -- Snippets should be before cmp-config
+require("luasnip-config") -- Snippets should be before cmp-config
 --
 -- setup cmp plugins
-require('cmp-config')
-require('mason-config')
-require('lsp-config')
-require('gitsigns-config')
+require("cmp-config")
+require("mason-config")
+require("lsp-config")
+require("gitsigns-config")
 
 -- telescope: search for files, grep text and more
-require('telescope-config')
+require("telescope-config")
 
 -- load project.nvim
 -- require('project-nvim-config') -- temporarly disable
 
-require('nvim-tree-config')
+require("nvim-tree-config")
 
-require('ale-config')
+require("nvim-lint-config")
+require("conform-config")
 
-require('nerdcommenter-config')
+require("nerdcommenter-config")
 
 -- vim-test plugin
-require('nvim-neotest-config')
+require("nvim-neotest-config")
 
 -- mdx
-require('mdx-config')
+require("mdx-config")
 
 -- colorizer
-require('nvim-colorizer')
+require("nvim-colorizer")

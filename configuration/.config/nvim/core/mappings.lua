@@ -16,29 +16,29 @@ vim.mapleader = ","
 -- Use <leader> in global plugin.
 vim.g.mapleader = ","
 
--- setMySpellLanguage change current spell lang and rotate with next from
--- the list
+-- SetMySpellLanguage change current spell lang and rotate with next from
+-- the list.
 --
-function setMySpellLanguage()
-    vim.g.myLang = vim.g.myLang + 1
-    local myLang = vim.g.myLang
-    local myLangList = vim.g.myLangList
-    if myLang >= #(myLangList) then
-        vim.g.myLang = 1
-    end
-    if myLang == 1 then
-        vim.cmd("set nospell")
-    end
-    if myLang == 2 then
-        vim.cmd("setlocal spell spelllang=en_us")
-    end
-    if myLang == 3 then
-        vim.cmd("setlocal spell spelllang=pl")
-    end
-    if myLang == 4 then
-        vim.cmd("setlocal spell spelllang=de_de")
-    end
-    print("Set spell language to:", myLangList[myLang])
+function SetNextSpellLanguage()
+  vim.g.myLang = vim.g.myLang + 1
+  local myLang = vim.g.myLang
+  local myLangList = vim.g.myLangList
+  if myLang >= #myLangList then
+    vim.g.myLang = 1
+  end
+  if myLang == 1 then
+    vim.cmd("set nospell")
+  end
+  if myLang == 2 then
+    vim.cmd("setlocal spell spelllang=en_us")
+  end
+  if myLang == 3 then
+    vim.cmd("setlocal spell spelllang=pl")
+  end
+  if myLang == 4 then
+    vim.cmd("setlocal spell spelllang=de_de")
+  end
+  print("Set spell language to:", myLangList[myLang])
 end
 
 -- Modes (more at :map-listing)
@@ -112,40 +112,50 @@ keymap.set("n", "<leader>~", "<Esc>:source $MYVIMRC<CR>")
 -- Toggle spell check with <F4> (default: en_us)
 --
 vim.g.myLang = 1
-vim.g.myLangList = {"nospell", "en_us", "pl", "de_de"}
-keymap.set("n", "<F4>", ":lua setMySpellLanguage()<CR>", {noremap = false, silent = false})
+vim.g.myLangList = { "nospell", "en_us", "pl", "de_de" }
+keymap.set("n", "<F4>", ":lua SetNextSpellLanguage()<CR>", { noremap = false, silent = false })
 
 -- ##################################
 -- Diagnostics
 -- ##################################
 --
 local border = {
-      {"🭽", "FloatBorder"},
-      {"▔", "FloatBorder"},
-      {"🭾", "FloatBorder"},
-      {"▕", "FloatBorder"},
-      {"🭿", "FloatBorder"},
-      {"▁", "FloatBorder"},
-      {"🭼", "FloatBorder"},
-      {"▏", "FloatBorder"},
+  { "╭", "FloatBorder" },
+  { "─", "FloatBorder" },
+  { "╮", "FloatBorder" },
+  { "│", "FloatBorder" },
+  { "╯", "FloatBorder" },
+  { "─", "FloatBorder" },
+  { "╰", "FloatBorder" },
+  { "│", "FloatBorder" },
 }
 
-vim.diagnostic.config(
-    {
-        border = border,
-        signs = true,
-        underline = true,
-        update_in_insert = false,
-        severity_sort = false,
-        virtual_text = {
-            source = "always",
-            prefix = '▎', -- Could be '■', '●', '▎', 'x'
-        },
-        float = {
-            source = "always",
-        }
-    }
-)
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+  border = border,
+})
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+  border = border,
+})
+
+-- Show boarder in popup windows (diagnostic, hover, help)
+--
+vim.diagnostic.config({
+  border = border,
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = false,
+  virtual_text = {
+    source = "always",
+    prefix = "▎", -- Could be '■', '●', '▎', 'x'
+  },
+  float = {
+    border = border,
+    source = "always",
+  },
+})
+-- override theme's floating window background color to be same as in terminal
+vim.cmd("autocmd ColorScheme * highlight! link FloatBorder Normal")
 
 -- Change diagnostic symbols in the sign column (gutter)
 --
@@ -155,34 +165,32 @@ for type, icon in pairs(signs) do
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
--- Show line diagnostics automatically in hover window
---
 -- You will likely want to reduce updatetime which affects CursorHold
 -- note: this setting is global and should be set only once
-vim.o.updatetime = 250
+vim.o.updatetime = 300
 vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+  desc = "Show line diagnostics automatically in hover window",
   group = vim.api.nvim_create_augroup("float_diagnostic_cursor", { clear = true }),
-  callback = function ()
-    vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})
-  end
+  callback = function()
+    vim.diagnostic.open_float(nil, { focus = false, scope = "cursor" })
+  end,
 })
 -- vim.cmd([[
-  -- autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})
+-- autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})
 -- ]])
 
 -- Go to next diagnostic warning/error
 --
-vim.keymap.set("n", "]g", vim.diagnostic.goto_next)
-vim.keymap.set("n", "[g", vim.diagnostic.goto_prev)
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, {
-  desc = 'Show diagnostic [E]rror messages',
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, {
+  desc = "Show diagnostic [E]rror messages",
   noremap = true,
   silent = true,
 })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, {
-  desc = 'Open diagnostic [Q]uickfix list'
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, {
+  desc = "Open diagnostic [Q]uickfix list",
 })
-
 
 -- ##################################
 -- Navigation, Movement & Mobility
@@ -202,10 +210,10 @@ vim.keymap.set("n", "<F2>", "<ESC>:let @+=expand('%:p')<CR>")
 --  Use CTRL+<hjkl> to switch between windows
 --
 --  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
+vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
+vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
+vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 
 -- Move entire selection Up/Down
 --
@@ -216,14 +224,14 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv'")
 --
 keymap.set("n", "j", "gj")
 keymap.set("n", "k", "gk")
-keymap.set("v", "k", "gk", {noremap = true})
-keymap.set("v", "k", "gk", {noremap = true})
+keymap.set("v", "k", "gk", { noremap = true })
+keymap.set("v", "k", "gk", { noremap = true })
 
 -- Go to next/previous tab
 --
-keymap.set("n", "<leader>m", "<Esc>:bnext<CR>", {desc = "next tab"})
-keymap.set("n", "<leader>n", "<Esc>:bprev<CR>", {desc = "previous tab"})
-keymap.set("n", "C-n", "<Esc>:tabnew<CR>", {desc = "new tab", remap = true})
+keymap.set("n", "<leader>m", "<Esc>:bnext<CR>", { desc = "next tab" })
+keymap.set("n", "<leader>n", "<Esc>:bprev<CR>", { desc = "previous tab" })
+keymap.set("n", "C-n", "<Esc>:tabnew<CR>", { desc = "new tab", remap = true })
 
 -- Move tab to left/right position in top tab-bar
 --
@@ -232,19 +240,31 @@ keymap.set("n", "<F8>", "<Esc>:execute 'silent! tabmove' . (tabpagenr()+1)<CR>")
 
 -- Resize windows
 --
--- there is = instead of + because on standard ASCII keyboard to create + sign
--- you need to also press Shift
+-- Explain: there is = instead of + because on standard ASCII keyboard to
+-- create + sign you need to also press Shift
 --
-vim.keymap.set("n", "<C-w><", "<ESC>:vertical resize +5<CR>", { desc = 'Resize window 5 points to left', noremap = true})
-vim.keymap.set("n", "<C-w>>", "<ESC>:vertical resize -5<CR>", {desc = 'Resize window 5 points to right', noremap = true})
-vim.keymap.set("n", "<C-w>=", "<ESC>:resize -5<CR>", {desc = 'Resize window 5 points to down', noremap = true})
-vim.keymap.set("n", "<C-w>-", "<ESC>:resize +5<CR>", {desc = 'Resize window 5 points to up', noremap = true})
+vim.keymap.set("n", "<C-w>>", "<ESC>:vertical resize +5<CR>", {
+  desc = "Resize window 5 points to left",
+  noremap = true,
+})
+vim.keymap.set("n", "<C-w><", "<ESC>:vertical resize -5<CR>", {
+  desc = "Resize window 5 points to right",
+  noremap = true,
+})
+vim.keymap.set("n", "<C-w>=", "<ESC>:resize -5<CR>", {
+  desc = "Resize window 5 points to down",
+  noremap = true,
+})
+vim.keymap.set("n", "<C-w>-", "<ESC>:resize +5<CR>", {
+  desc = "Resize window 5 points to up",
+  noremap = true,
+})
 
--- When J back prev line cursor stays at same place
+-- DX improvenent: When J back prev line cursor stays at same place
 --
 vim.keymap.set("n", "J", "mzJ`z")
 
--- Cursor stays in middle when ...
+-- DX improvenent: Cursor stays in middle when ...
 --
 vim.keymap.set("n", "<C-d>", "<C-d>zz") -- when moving half page down
 vim.keymap.set("n", "<C-u>", "<C-u>zz") -- when moving half page up
@@ -254,17 +274,17 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz") -- when moving half page up
 -- ##################################
 --
 
--- Disable text highlight
+-- DX improvenent: Disable text highlight
 --
 local disable_text_highlight = "<Esc>:noh<CR>"
 keymap.set("n", "<F3>", disable_text_highlight)
 keymap.set("v", "<F3>", disable_text_highlight)
 
-vim.keymap.set("n", "n", "nzzzv") -- when highlight next item
-vim.keymap.set("n", "N", "Nzzzv") -- when highlight previous item
+vim.keymap.set("n", "n", "nzzzv") -- DX improvenent: when highlight next item
+vim.keymap.set("n", "N", "Nzzzv") -- DX improvenent: when highlight previous item
 
--- do not replace copied buffer with system buffer while pasting
--- and send replaced to Void
+-- DX improvenent: do not replace copied buffer with system buffer while
+-- pasting and send replaced to Void
 --
 vim.keymap.set("x", "<leader>p", '"_dP')
 
@@ -272,16 +292,11 @@ vim.keymap.set("x", "<leader>p", '"_dP')
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
 -- format code
-vim.keymap.set(
-    "n",
-    "<leader>f",
-    function()
-        vim.lsp.buf.format()
-    end,
-    {
-      desc = "format code",
-    }
-)
+vim.keymap.set("n", "<leader>f", function()
+  vim.lsp.buf.format()
+end, {
+  desc = "format code",
+})
 
 -- ##################################
 -- Code (re)formatting or (re)shuffling
@@ -303,7 +318,7 @@ keymap.set("n", "gr", "gd[{V%::s/<C-R>///gc<left><left><left>") -- local file
 keymap.set("n", "gR", "gD:%s/<C-R>///gc<left><left><left>") -- Global
 
 -- Sort selected lines A-Z
-keymap.set("v", "<leader>s", ":sort<CR>", {desc = "[s]ort lines vertically", noremap = true})
+keymap.set("v", "<leader>s", ":sort<CR>", { desc = "[s]ort lines vertically", noremap = true })
 
 -- Inline Sort
 --
@@ -322,125 +337,124 @@ keymap.set("n", "<leader>ujq", jsonUglyfy) -- perform: undo jq on current buffer
 
 -- nvim-tree
 --
-vim.keymap.set("n", "<F9>", "<Esc>:NvimTreeToggle<CR>", {noremap = true})
-vim.keymap.set("n", "<F10>", "<Esc>:NvimTreeFindFile<CR>", {noremap = true})
+vim.keymap.set("n", "<F9>", "<Esc>:NvimTreeToggle<CR>", { noremap = true })
+vim.keymap.set("n", "<F10>", "<Esc>:NvimTreeFindFile<CR>", { noremap = true })
 
 -- nvim-telescope
 --
-local builtin = require("telescope.builtin")
-vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "[f]ind [f]iles" })
-vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
-vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
-vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
-vim.keymap.set('n', "<leader>gI", builtin.lsp_implementations, { desc = '[g]oto [I]mplementation' })
-vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "[c]ode [a]ction" })
-vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover documentation" })
+local telescope_builtin = require("telescope.builtin")
+vim.keymap.set("n", "<leader>ff", telescope_builtin.find_files, {
+  desc = "[f]ind [f]iles",
+})
+vim.keymap.set("n", "<leader>fg", telescope_builtin.live_grep, {
+  desc = "[f]ind [g]rep",
+})
+vim.keymap.set("n", "<leader>fb", telescope_builtin.buffers, {
+  desc = "[f]ind in [b]uffers",
+})
+vim.keymap.set("n", "<leader>fh", telescope_builtin.help_tags, {})
+vim.keymap.set("n", "<leader>gI", telescope_builtin.lsp_implementations, {
+  desc = "[g]oto [I]mplementation",
+})
 
--- Rename the variable under your cursor
---  Most Language Servers support renaming across files, etc.
-vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, { desc = "[r]e[n]ame"})
-
--- gitsigns
+-- LSP
 --
-require("gitsigns").setup {
-    on_attach = function(bufnr)
-        local gs = package.loaded.gitsigns
+-- Use LspAttach autocommand to only map the following keys
+-- after the language server attaches to the current buffer
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+  callback = function(ev)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
-        local function map(mode, l, r, opts)
-            opts = opts or {}
-            opts.buffer = bufnr
-            vim.keymap.set(mode, l, r, opts)
-        end
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, {
+      desc = { "[g]o to [d]efinition" },
+      buffer = ev.buf,
+    })
+    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, {
+      desc = { "[g]o to [D]eclaration" },
+      buffer = ev.buf,
+    })
+    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {
+      desc = "[c]ode [a]ction",
+      buffer = ev.buf,
+    })
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, {
+      desc = "Hover documentation",
+      buffer = ev.buf,
+    })
+    vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, {
+      buffer = ev.buf,
+    })
+    vim.keymap.set("n", "gr", vim.lsp.buf.references, {
+      buffer = ev.buf,
+    })
 
-        -- Navigation
-        map(
-            "n",
-            "]c",
-            function()
-                if vim.wo.diff then
-                    return "]c"
-                end
-                vim.schedule(
-                    function()
-                        gs.next_hunk()
-                    end
-                )
-                return "<Ignore>"
-            end,
-            {expr = true}
-        )
+    -- Rename the variable under your cursor (WORKS ONLY WITH LSP)
+    vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, {
+      desc = "[r]ename",
+      buffer = ev.buf,
+    })
+  end,
+})
 
-        map(
-            "n",
-            "[c",
-            function()
-                if vim.wo.diff then
-                    return "[c"
-                end
-                vim.schedule(
-                    function()
-                        gs.prev_hunk()
-                    end
-                )
-                return "<Ignore>"
-            end,
-            {expr = true}
-        )
+-- gitsigns (plugin)
+--
+require("gitsigns").setup({
+  on_attach = function(bufnr)
+    local gs = package.loaded.gitsigns
 
-        -- Actions
-        map("n", "<leader>hs", gs.stage_hunk, { desc = "[h]unk [s]tage" })
-        map("n", "<leader>hr", gs.reset_hunk)
-        map(
-            "v",
-            "<leader>hs",
-            function()
-                gs.stage_hunk {vim.fn.line("."), vim.fn.line("v")}
-            end
-        )
-        map(
-            "v",
-            "<leader>hr",
-            function()
-                gs.reset_hunk {vim.fn.line("."), vim.fn.line("v")}
-            end
-        )
-        map("n", "<leader>hS", gs.stage_buffer)
-        map("n", "<leader>hu", gs.undo_stage_hunk, { desc = "[h]unk [u]ndo staged" })
-        map("n", "<leader>hR", gs.reset_buffer)
-        map("n", "<leader>hp", gs.preview_hunk)
-        map(
-            "n",
-            "<leader>hb",
-            function()
-                gs.blame_line {full = true}
-            end
-        )
-        map("n", "<leader>tb", gs.toggle_current_line_blame)
-        map("n", "<leader>hd", gs.diffthis)
-        map(
-            "n",
-            "<leader>hD",
-            function()
-                gs.diffthis("~")
-            end
-        )
-        map("n", "<leader>td", gs.toggle_deleted)
-
-        -- Text object
-        map({"o", "x"}, "ih", ":<C-U>Gitsigns select_hunk<CR>")
+    local function map(mode, l, r, opts)
+      opts = opts or {}
+      opts.buffer = bufnr
+      vim.keymap.set(mode, l, r, opts)
     end
-}
 
--- harpoon mappings
---
---local mark = require("harpoon.mark")
---local ui = require("harpoon.ui")
+    -- Navigation
+    map("n", "]c", function()
+      if vim.wo.diff then
+        return "]c"
+      end
+      vim.schedule(function()
+        gs.next_hunk()
+      end)
+      return "<Ignore>"
+    end, { expr = true })
 
---vim.keymap.set("n", "<leader>a", mark.add_file)
---vim.keymap.set("n", "<C-b>", ui.toggle_quick_menu)
+    map("n", "[c", function()
+      if vim.wo.diff then
+        return "[c"
+      end
+      vim.schedule(function()
+        gs.prev_hunk()
+      end)
+      return "<Ignore>"
+    end, { expr = true })
 
---vim.keymap.set("n", "<C-1>", function() ui.nav_file(1) end)
---vim.keymap.set("n", "<C-2>", function() ui.nav_file(2) end)
---vim.keymap.set("n", "<C-3>", function() ui.nav_file(3) end)
---vim.keymap.set("n", "<C-4>", function() ui.nav_file(4) end)
+    -- Actions
+    map("n", "<leader>hs", gs.stage_hunk, { desc = "[h]unk [s]tage" })
+    map("n", "<leader>hr", gs.reset_hunk)
+    map("v", "<leader>hs", function()
+      gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+    end)
+    map("v", "<leader>hr", function()
+      gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+    end)
+    map("n", "<leader>hS", gs.stage_buffer)
+    map("n", "<leader>hu", gs.undo_stage_hunk, { desc = "[h]unk [u]ndo staged" })
+    map("n", "<leader>hR", gs.reset_buffer)
+    map("n", "<leader>hp", gs.preview_hunk)
+    map("n", "<leader>hb", function()
+      gs.blame_line({ full = true })
+    end)
+    map("n", "<leader>tb", gs.toggle_current_line_blame)
+    map("n", "<leader>hd", gs.diffthis)
+    map("n", "<leader>hD", function()
+      gs.diffthis("~")
+    end)
+    map("n", "<leader>td", gs.toggle_deleted)
 
+    -- Text object
+    map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
+  end,
+})

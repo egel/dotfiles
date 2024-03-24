@@ -13,6 +13,6 @@ local rep = require("luasnip.extras").rep
 ls.add_snippets({
   all = {
     -- available in any file type
-    ls.parser.parse_snippet("expand", "-- expanded into this!")
+    ls.parser.parse_snippet("expand", "-- expanded into this!"),
   },
 })
