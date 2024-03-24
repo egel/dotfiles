@@ -44,23 +44,28 @@ nvim_lsp["pyright"].setup({
   cmd = { "pyright" }, -- installed from :Mason
 })
 
--- JavaScript / TypeScript
+-- TypeScript
 --
 nvim_lsp["tsserver"].setup({}) -- installed from :Mason
 
 -- CSS
-nvim_lsp["stylelint_lsp"].setup({})
-nvim_lsp["cssmodules_ls"].setup({ -- installed from :Mason
-  -- provide your on_attach to bind keymappings
-  on_attach = custom_on_attach,
-  -- optionally
-  init_options = {
-    camelCase = "dashes",
-  },
+--
+-- Enable (broadcasting) snippet capability for completion
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+nvim_lsp["cssls"].setup({
+  capabilities = capabilities,
 })
 
--- HTML
-nvim_lsp["html"].setup({})
+-- HTML (css + javascript)
+--
+nvim_lsp["html"].setup({
+  capabilities = capabilities,
+})
+
+-- Angular
+--
+-- nvim_lsp["angularls"].setup({})
 
 -- Lua
 --
