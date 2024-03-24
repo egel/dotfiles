@@ -251,4 +251,10 @@ $ python --version
 Python 3.11.6
 ```
 
+#### python global packages
+
+```bash
+python install -r python.global.txt
+```
+
 [shortcuts-cheatsheet]: http://bit.ly/1wqcChS
