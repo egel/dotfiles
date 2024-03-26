@@ -1,12 +1,14 @@
 @angular/cli@17.0.0
 @angular/language-server@17.0.0
 @compodoc/compodoc@1.1.21
+eslint_d@latest
 jest@29.6.1
 lua-fmt
+markdownlint@latest
 nx@17.0.3
 prettier@3.0.0
+stylelint@latest
 ts-node
 typescript-language-server@3.3.2
 typescript@5.1.6
 yarn@1.22.19
-stylelint@latest
