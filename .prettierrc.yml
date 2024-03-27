@@ -1,0 +1,10 @@
+---
+singleQuote: true
+tabWidth: 4
+bracketSpacing: true
+arrowParens: avoid
+semi: true
+printWidth: 120
+htmlWhitespaceSensitivity: strict
+bracketSameLine: true
+trailingComma: none
