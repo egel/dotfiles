@@ -1,4 +1,4 @@
-## Configuration
+# Configuration
 
 This document is meant for explain how to configure available features/programs.
 
@@ -17,7 +17,10 @@ This document is meant for explain how to configure available features/programs.
 > [!TIP]
 > To avoid problems during setup, it's much saver to use absolute paths while cleating symlinks.
 
-### zsh (shell)
+## zsh
+
+| type | Shell |
+| ---- | ----- |
 
 ```bash
 ln -sf ${PWD}/.zshrc ${HOME}/.zshrc
@@ -25,7 +28,18 @@ ln -sf ${PWD}/.zshenv ${HOME}/.zshenv
 ln -sf ${PWD}/.zprofile ${HOME}/.zprofile
 ```
 
-#### shell aliases
+### shell personal config
+
+Optional.
+
+> [!TIP]
+> File `.zshrc.private` is excluded from accidental commiting in this repo.
+
+```
+touch ~/.
+```
+
+### shell aliases
 
 I use aliases to modify behavior of some programs or add new useful shortcuts:
 
@@ -34,7 +48,28 @@ I use aliases to modify behavior of some programs or add new useful shortcuts:
 ln -sf ${PWD}/.aliases ${HOME}/.aliases
 ```
 
-### fzf
+### shell private passwords
+
+In case you may need private passwords accessible on shell level.
+
+> [!TIP]
+> File `.passwords.private` is excluded from accidental commiting in this repo.
+
+> [!DANGER]
+> Do not store here any critical passwords!
+
+```bash
+# create your private passwords accessible on shell level
+touch ~/.envpass.private
+
+# make sure only you can manage the file
+chmod 600 ~/.envpass.private
+```
+
+## fzf
+
+| type | Search program |
+| ---- | -------------- |
 
 Fuzzy finder
 
@@ -50,7 +85,7 @@ git clone https://github.com/lincheney/fzf-tab-completion.git ${ZSH_CUSTOM:=~/.o
 ln -sf ${PWD}/.fzf.zsh ${HOME}/.fzf.zsh
 ```
 
-### SSH
+## SSH
 
 > [!TIP]
 > SSH is generally very private space. To keep it clean use protected directory to load your ssh configurations for each personal, or clients/servers, like in the example below:
@@ -81,7 +116,10 @@ chmod 644 ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/config/
 ```
 
-### gvm
+## gvm
+
+| type | Version Manager |
+| ---- | --------------- |
 
 Go version manager - <https://github.com/moovweb/gvm>.
 
@@ -92,7 +130,7 @@ $ which go
 /Users/johndoe/.gvm/gos/go1.21.6/bin/go
 ```
 
-#### Alternatively go via brew
+### Alternatively go via brew
 
 If you do not care or use single go version you can install it via brew, or other package manager.
 I add sample configuration below for better reference:
@@ -116,7 +154,10 @@ if [[ $PATH != *"go"* && -d "$GOPATH" && -d "$GOROOT" ]]; then
 fi
 ```
 
-### nvim
+## nvim
+
+| type | Text Editor |
+| ---- | ----------- |
 
 Neovim - <https://github.com/neovim/neovim>
 
@@ -144,16 +185,22 @@ go install golang.org/x/vuln/cmd/govulncheck@latest
 go install github.com/abenz1267/gomvp@latest
 ```
 
-### vim
+## vim
+
+| type | Text Editor |
+| ---- | ----------- |
 
 > [!WARNING]
 > I do not anymore actively plan to work/enhance my vim configuration. I switched to nvim as daily driver.
 
-### nvm
+## nvm
+
+| type | Version Manager |
+| ---- | --------------- |
 
 Node package manager - <https://github.com/nvm-sh/nvm>
 
-#### npm global packages
+### npm global packages
 
 If you using different versions of node, it might be useful for you to persist same global packages available when switching to different node versions.
 
@@ -163,7 +210,7 @@ Install my personal list of global npm packages:
 npm install -g $(<configuration/npm.global.txt)
 ```
 
-##### List all global packages or add new?
+#### List all global packages or add new?
 
 - list all global packages (when using `nvm` this apply to active version)
 
@@ -178,7 +225,7 @@ npm install -g $(<configuration/npm.global.txt)
   echo "mynewpackage@1.0.0" >> configuration/npm.global.txt
   ```
 
-#### yarn
+### yarn
 
 > [!NOTE]
 >
@@ -201,7 +248,10 @@ $ which yarn
 > export PATH="$(yarn global bin):$PATH"
 > ```
 
-### rbenv
+## rbenv
+
+| type | Version Manager |
+| ---- | --------------- |
 
 Ruby environments - <https://github.com/rbenv/rbenv>
 
@@ -228,7 +278,10 @@ $ ruby -v
 ruby 2.7.7p221 (2022-11-24 revision 168ec2b1e5) [arm64-darwin22]
 ```
 
-### pyenv
+## pyenv
+
+| type | Version Manager |
+| ---- | --------------- |
 
 ```bash
 brew instal pyenv
@@ -252,6 +305,11 @@ Python 3.11.6
 ```
 
 #### python global packages
+
+> [!NOTE]
+> When using many different python versions (or switch between them often) there is a need to persist come global packages that serve the need for other programs.
+>
+> The list below contains some packages that are used by other programs (e.g.: linters, checkers)
 
 ```bash
 python install -r python.global.txt
