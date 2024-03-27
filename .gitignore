@@ -1,5 +1,8 @@
 # Project foldes
 
+# nvim Lazy plugin
+*/lazy-lock.json
+
 ################################
 # Configurations
 ################################
