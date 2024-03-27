@@ -3,6 +3,9 @@
 # nvim Lazy plugin
 */lazy-lock.json
 
+# Brew
+*/Brewfile.lock.json
+
 ################################
 # Configurations
 ################################
