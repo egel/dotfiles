@@ -35,6 +35,27 @@ require("mason-lspconfig").setup({
     -- @see https://github.com/hrsh7th/vscode-langservers-extracted
 
     -- Linter
+    --"luacheck",
+    --"yamllint",
+
+    -- Formatter
+    --"beautysh",
+    --"black",
+    --"stylua",
+  },
+  automatic_installation = false,
+})
+
+-- This plugin allow to use Mason server names instead
+-- if some installers cannot be installed in via Mason, put them here
+require("mason-tool-installer").setup({
+  ensure_installed = {
+    -- LSP
+    "prettierd",
+    "isort",
+    "cspell",
+
+    -- Linter
     "luacheck",
     "markdownlint",
     "shellcheck",
@@ -45,5 +66,4 @@ require("mason-lspconfig").setup({
     "black",
     "stylua",
   },
-  automatic_installation = false,
 })
