@@ -107,6 +107,7 @@ fi
 
 alias vim='nvim'
 alias v='nvim'
+alias nvimdiff='nvim -d'
 export EDITOR='nvim'
 
 #########################################
