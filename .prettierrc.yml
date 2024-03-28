@@ -8,3 +8,9 @@ printWidth: 120
 htmlWhitespaceSensitivity: strict
 bracketSameLine: true
 trailingComma: none
+overrides:
+  - files:
+      # by default package.json have 2 spaces
+      - "package.json"
+    options:
+      tabWidth: 2
