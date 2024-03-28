@@ -1,7 +1,7 @@
 # Project foldes
 
 # nvim Lazy plugin
-
+yarn.lock
 **/lazy-lock.json
 
 # Brew

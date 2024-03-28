@@ -7,7 +7,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "lint-md": "remark ."
+    "lint-md": "remark .",
+    "upgrade-list": "npx npm-check-updates"
   },
   "remarkConfig": {
     "plugins": [
@@ -16,8 +17,8 @@
     ]
   },
   "devDependencies": {
-    "remark-cli": "^6.0.1",
-    "remark-preset-lint-recommended": "^3.0.2",
-    "remark-validate-links": "^8.0.2"
+    "remark-cli": "^12.0.0",
+    "remark-preset-lint-recommended": "^6.1.3",
+    "remark-validate-links": "^13.0.0"
   }
 }
