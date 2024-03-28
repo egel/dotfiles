@@ -13,7 +13,7 @@ indent_style = space
 indent_size = 4
 trim_trailing_whitespace = false
 
-[*.json, *.py]
+[*.py]
 indent_size = 4
 
 [.gitconfig, .gitconfig.*, .gitmodules]
