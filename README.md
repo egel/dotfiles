@@ -15,7 +15,7 @@
 
 **Sample screenshots**
 
-<img src="https://github.com/egel/dotfiles/blob/master/docs/assets/dotfiles_screenshot.png" alt="Tmux, git, vim into 256 color terminal" />
+<img src="https://github.com/egel/dotfiles/blob/main/docs/assets/dotfiles_screenshot.png" alt="Tmux, git, vim into 256 color terminal" />
 
 > Used gruvbox palette for [tmux](https://github.com/egel/tmux-gruvbox), [vim](https://github.com/morhetz/gruvbox) and terminal with [Hack font][hack-font-webpage].
 
