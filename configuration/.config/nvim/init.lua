@@ -19,11 +19,16 @@ if expected_ver > nvim_ver then
 end
 
 -- Load standard/core configuration files
+--
+-- the order matters
+--
 local core_config_files = { -- order matters
   "options.lua",
   "autocmds.lua",
-  "plugins.lua",
+
+  -- only general mappings. plugin mappings are inside plugins
   "mappings.lua",
+  "plugins.lua",
 }
 for _, name in ipairs(core_config_files) do
   local path = string.format("%s/core/%s", vim.fn.stdpath("config"), name)
@@ -31,58 +36,3 @@ for _, name in ipairs(core_config_files) do
   vim.cmd(source_cmd)
 end
 
--- load colorscheme
---
-function SetColorScheme(color)
-  color = color or "gruvbox"
-  vim.cmd.colorscheme(color)
-
-  -- Set transparent background
-  vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-  vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-end
-SetColorScheme()
-
---
--- Load setup for plugins
---
--- The order of loading plugins matter!
---
--- Start loading plugins by default from "lua" directory
---
-
--- load lualine theme
-require("lualine-config")
-
--- load treesitter
-require("nvim-treesitter")
-
-require("luasnip-config") -- Snippets should be before cmp-config
---
--- setup cmp plugins
-require("cmp-config")
-require("mason-config")
-require("lsp-config")
-require("gitsigns-config")
-
--- telescope: search for files, grep text and more
-require("telescope-config")
-
--- load project.nvim
--- require('project-nvim-config') -- temporarly disable
-
-require("nvim-tree-config")
-
-require("nvim-lint-config")
-require("conform-config")
-
-require("nerdcommenter-config")
-
--- vim-test plugin
-require("nvim-neotest-config")
-
--- mdx
-require("mdx-config")
-
--- colorizer
-require("nvim-colorizer")

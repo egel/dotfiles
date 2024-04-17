@@ -11,18 +11,30 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Example using a list of specs with the default options
-vim.g.mapleader = "," -- Make sure to set `mapleader` before lazy so your mappings are correct
-
 local plugins = {
+  --{
+  --"folke/tokyonight.nvim",
+  --lazy = false,
+  --priority = 1000,
+  --opts = {},
+  --config = function()
+  --vim.cmd.colorscheme('tokyonight-storm')
+  --end
+  --},
   {
     "ellisonleao/gruvbox.nvim",
     lazy = false, -- load during startup
     priority = 1000,
-    config = true,
     opts = {
       background = "dark",
     },
+    config = function()
+      vim.cmd.colorscheme("gruvbox")
+
+      -- Set transparent background
+      vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+      vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+    end,
   },
 
   "tpope/vim-fugitive",
@@ -30,9 +42,9 @@ local plugins = {
   "tpope/vim-repeat",
   "tpope/vim-surround",
 
-  "lewis6991/gitsigns.nvim",
+  { import = "plugins/gitsigns-config" },
 
-  "preservim/nerdcommenter",
+  { import = "plugins/nerdcommenter-config" },
 
   {
     "dstein64/vim-startuptime",
@@ -44,16 +56,11 @@ local plugins = {
     end,
   },
 
+  -- vimdiff
+  { import = "plugins/diffview-nvim-config" },
+
   -- add sidebar tree window (for easier overview on directories structure)
-  {
-    "nvim-tree/nvim-tree.lua",
-    event = "VeryLazy",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-      "MunifTanjim/nui.nvim",
-    },
-  },
+  { import = "plugins/nvim-tree-config" },
 
   -- editorconfig plugin
   {
@@ -62,10 +69,7 @@ local plugins = {
   },
 
   -- Add git info message after the line
-  {
-    "f-person/git-blame.nvim",
-    event = "VeryLazy",
-  },
+  { import = "plugins/git-blame-nvim-config" },
 
   -- Help operating on CSV files
   {
@@ -73,183 +77,78 @@ local plugins = {
     event = "VeryLazy",
   },
 
-  --  the fastest syntax highlighter
-  {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    dependencies = {
-      -- syntax highlight
-      "mfussenegger/nvim-dap",
-      "rcarriga/nvim-dap-ui",
-      "theHamsta/nvim-dap-virtual-text",
-    },
-  },
-  --{
-  --  'styled-components/vim-styled-components',
-  --  branch = "main",
-  --},
-
-  {
-    "williamboman/mason-lspconfig.nvim",
-    requires = {
-      "neovim/nvim-lspconfig",
-      "williamboman/mason.nvim",
-    },
-  },
-
-  -- Installing missing progams from mason
-  {
-    "WhoIsSethDaniel/mason-tool-installer.nvim",
-    dependencies = {
-      "williamboman/mason.nvim",
-    },
-  },
-
+  { import = "plugins/mason-lspconfig-nvim-config" },
+  --
   -- nvim LSP completition
-  {
-    "neovim/nvim-lspconfig",
-    event = "VeryLazy",
-    dependencies = {
-      -- Mason (should be before lsp)
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
+  { import = "plugins/nvim-lspconfig-config" },
 
-      "hrsh7th/nvim-cmp",
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-nvim-lua", -- lua completitions
-      "hrsh7th/cmp-buffer", -- allow to show hints from current buffer
-      "hrsh7th/cmp-path", -- help to complete file
-      "hrsh7th/cmp-cmdline",
-      "onsails/lspkind.nvim", -- " allows for showing better context/origin of hints
-    },
-  },
-
-  {
-    "L3MON4D3/LuaSnip", -- (required by lsp-zero)
-    event = "VeryLazy",
-    tag = "v1.1.0",
-  },
+  { import = "plugins/cmp-config" },
+  { import = "plugins/luasnip-config" },
 
   -- add nice bottom bar to show additional informations
-  {
-    "nvim-lualine/lualine.nvim", -- Add nice bottom line in editor modes
-    lazy = false, -- load during startup
-  },
-
-  -- harpoon
-  {
-    "theprimeagen/harpoon",
-    event = "VeryLazy",
-
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-  },
+  --
+  { import = "plugins/lualine-nvim-config" },
 
   -- Telescope
-  {
-    "nvim-telescope/telescope.nvim",
-    event = "VimEnter",
-    tag = "0.1.2",
-    dependencies = {
-      "nvim-lua/popup.nvim",
-      "nvim-lua/plenary.nvim",
-    },
-  },
+  { import = "plugins/telescope-config" },
 
   -- Add enhancement for structuring projects (+ telescope)
   --'ahmedkhalf/project.nvim',
 
   -- Golang
-  {
-    "ray-x/go.nvim",
-    dependencies = {
-      "ray-x/guihua.lua", -- " recommanded if need floating window support
-      "neovim/nvim-lspconfig",
-      "nvim-treesitter/nvim-treesitter",
-    },
-    config = function()
-      require("go").setup()
-    end,
-    event = { "CmdlineEnter" },
-    ft = { "go", "gomod" },
-    build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
-  },
-
-  -- 'davidhalter/jedi-vim',
-  --
-
-  -- Ale linting tool
-  -- {
-  -- 'dense-analysis/ale',
-  -- event = 'VeryLazy',
-  -- },
+  { import = "plugins/go-nvim-config" },
 
   -- Linting manager
   --
-  {
-    "mfussenegger/nvim-lint",
-    event = {
-      "BufReadPre",
-      "BufNewFile",
-    },
-  },
+  { import = "plugins/nvim-lint-config" },
 
   -- Formatting manager
   --
-  {
-    "stevearc/conform.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    opts = {},
-  },
+  { import = "plugins/conform-config" },
 
   -- Preview CSS colors inside terminal
   -- It's not perfectly accurate but gives relative information about a color
-  {
-    "norcalli/nvim-colorizer.lua",
-    event = "VeryLazy",
-  },
+  { import = "plugins/nvim-colorizer-config" },
+
+  --  the fastest syntax highlighter
+  { import = "plugins/nvim-treesitter-config" },
+  { import = "plugins/nvim-neotest-config" },
 
   -- tabs
-  {
-    "romgrk/barbar.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      "lewis6991/gitsigns.nvim", -- OPTIONAL: for git status
-      "nvim-tree/nvim-web-devicons", -- OPTIONAL: for file icons
+  { import = "plugins/barbar-nvim-config" },
+
+  -- Custom
+  --{ import = "custom/mdx-config" },
+}
+
+local options = {
+  performance = {
+    cache = {
+      enabled = false,
     },
-    init = function()
-      vim.g.barbar_auto_setup = false
-    end,
-    opts = {
-      -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
-      -- animation = true,
-      -- insert_at_start = true,
-      -- …etc.
+    rtp = {
+      disabled_plugins = {},
     },
-    version = "^1.0.0", -- optional: only update when a new 1.x version is released
   },
-
-  -- tests
-  {
-    "nvim-neotest/neotest",
-    event = "VeryLazy",
-    dependencies = {
-      "nvim-neotest/nvim-nio",
-      "nvim-lua/plenary.nvim",
-      "antoinemadec/FixCursorHold.nvim",
-      "nvim-treesitter/nvim-treesitter",
-
-      -- plugins
-      "nvim-neotest/neotest-plenary",
-      "nvim-neotest/neotest-vim-test",
-      "nvim-neotest/neotest-jest",
-      "nvim-neotest/neotest-python",
-      "nvim-neotest/neotest-go",
+  ui = {
+    -- If you are using a Nerd Font: set icons to an empty table which will use the
+    -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
+    icons = vim.g.have_nerd_font and {} or {
+      cmd = "⌘",
+      config = "🛠",
+      event = "📅",
+      ft = "📂",
+      init = "⚙",
+      keys = "🗝",
+      plugin = "🔌",
+      runtime = "💻",
+      require = "🌙",
+      source = "📄",
+      start = "🚀",
+      task = "📌",
+      lazy = "💤 ",
     },
   },
 }
-
-local options = {}
 
 require("lazy").setup(plugins, options)
