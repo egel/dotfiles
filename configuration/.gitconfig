@@ -22,11 +22,14 @@
     eol = lf
     autocrlf = false
 
+###
+# More info how to integrate git with visual merge tool
+# https://web.archive.org/web/20090328164007/http://gitguru.com/2009/02/22/integrating-git-with-a-visual-merge-tool/
 [merge]
-    tool = vimdiff
+    tool = nvimdiff
 
 [diff]
-    tool = vimdiff
+    tool = nvimdiff
 
 [alias]
     # show currently using git user
