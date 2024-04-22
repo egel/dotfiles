@@ -114,6 +114,10 @@ keymap.set("n", "Q", "<nop>")
 keymap.set("n", "<leader>y", '"+y')
 keymap.set("v", "<leader>y", '"+y')
 
+-- Paste effectively (also very large files) from system clipboard
+--
+keymap.set("n", "<leader>p", '"+p')
+
 -- Reload nvim configuration (without exit)
 --
 -- INFO: $MYVIMRC is a special variable used in nvim which points to configuration
