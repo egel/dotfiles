@@ -1,7 +1,8 @@
 return {
   "L3MON4D3/LuaSnip", -- (required by lsp-zero)
   event = "VeryLazy",
-  tag = "v1.1.0",
+  tag = "v2.*",
+  build = "make install_jsregexp",
   config = function()
     local luasnip = require("luasnip")
 
@@ -23,7 +24,7 @@ return {
     })
 
     -- Lazy-load snippets, i.e. only when required, like for given filetype
-    require("luasnip.loaders.from_lua").lazy_load({ paths = "~/.config/nvim/LuaSnip/" })
+    require("luasnip.loaders.from_lua").load({ path = "~/.config/nvim/LuaSnip" })
 
     --
     -- Mappings
