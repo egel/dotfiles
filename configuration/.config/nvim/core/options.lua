@@ -69,6 +69,8 @@ vim.opt.splitright = true
 vim.opt.breakindent = true -- preserve horizontal block indent
 vim.opt.showbreak = "↪" -- Character to show before the lines that have been soft-wrapped
 
+vim.wo.wrap = false
+
 -- No backup, no swap, PERIOD !!!
 vim.opt.backup = false
 vim.opt.writebackup = false
