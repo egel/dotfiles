@@ -111,12 +111,12 @@ keymap.set("n", "Q", "<nop>")
 
 -- Copy to system clipboard
 --
-keymap.set("n", "<leader>y", '"+y')
-keymap.set("v", "<leader>y", '"+y')
+keymap.set("n", "<leader>y", '"+y', { desc = "Copy to system clipboard (normal)" })
+keymap.set("v", "<leader>y", '"+y', { desc = "Copy to system clipboard (visual)" })
 
 -- Paste effectively (also very large files) from system clipboard
 --
-keymap.set("n", "<leader>p", '"+p')
+keymap.set("n", "<leader>p", '"+p', { desc = "Pasting from system clipboard" })
 
 -- Reload nvim configuration (without exit)
 --
