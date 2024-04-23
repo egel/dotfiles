@@ -6,6 +6,9 @@
 [includeIf "gitdir/i:~/privatespace/"]
     path = ~/.gitconfig.local
 
+[include]
+    path = ~/.git-delta-themes
+
 [gpg]
     # select correct program for linux, macOS Intel & Silicon versions
     program = /opt/homebrew/bin/gpg
@@ -21,15 +24,30 @@
     excludesfile = ~/.gitignore_global
     eol = lf
     autocrlf = false
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+[add.interactive]
+    useBuiltin = true # required for git >= 2.37.0
+
+[delta]
+    features = gruvmax-fang # delta theme that match gruvbox theme
+    navigate = true    # use n and N to move between diff sections
+    line-numbers = true
+    dark = true # better adjust to dark theme
+    side-by-side = true
 
 ###
 # More info how to integrate git with visual merge tool
 # https://web.archive.org/web/20090328164007/http://gitguru.com/2009/02/22/integrating-git-with-a-visual-merge-tool/
 [merge]
     tool = nvimdiff
+    conflictstyle = diff3
 
 [diff]
     tool = nvimdiff
+    colorMoved = default
 
 [alias]
     # show currently using git user
@@ -52,5 +70,8 @@
     smudge = git-lfs smudge %f
     required = true
 
+
 [rerere]
     enabled = true
+
+# vi: ts=4 sw=4

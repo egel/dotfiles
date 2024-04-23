@@ -32,6 +32,7 @@ brew "vim"
 brew "fd" # nvim telescope
 brew "wrk" # measure http sever speed (req/res)
 brew "stylua" # lua formatter
+brew "git-delta" # helps with better visual diff the content
 
 # GPG - to signed your commits
 brew "gnutls"
@@ -73,3 +74,5 @@ brew "guile"
 brew "librsvg"
 brew "pango"
 brew "nghttp2"
+
+# vi: ft=ruby
