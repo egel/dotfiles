@@ -10,7 +10,7 @@ vim.opt.guicursor = "" -- bold cursor
 vim.opt.cursorline = true -- show current line with color
 vim.opt.number = true
 vim.opt.relativenumber = true
-vim.opt.showmode = false -- do not show the mode as it is already in status line
+vim.opt.showmode = true -- do not show the mode as it is already in status line
 
 -- General tab settings
 --

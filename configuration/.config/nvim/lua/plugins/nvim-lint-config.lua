@@ -1,25 +1,29 @@
 return {
   "mfussenegger/nvim-lint",
-  event = {
-    "BufReadPre",
-    "BufNewFile",
+  events = "LazyFile",
+  opts = {
+    events = {
+      "BufWritePost",
+      "BufReadPost",
+      "InsertLeave",
+    },
+    linters_by_ft = {
+      -- eslint is slower then eslint_d, but works better between multiple projects open
+      javascript = { "eslint" }, -- from npm global
+      typescript = { "eslint" },
+      javascriptreact = { "eslint_d" },
+      typescriptreact = { "eslint_d" },
+      -- svelte = { "eslint_d" },
+      -- kotlin = { "ktlint" },
+      terraform = { "tflint" },
+      ruby = { "standardrb" },
+      markdown = { "markdownlint" }, --
+      lua = { "luacheck" }, -- from :Mason
+      yaml = { "yamllint" },
+      css = { "stylelint" },
+      scss = { "stylelint" },
+    },
   },
-  linters_by_ft = {
-    javascript = { "eslint" }, -- from npm global
-    typescript = { "eslint" },
-    javascriptreact = { "eslint_d" },
-    typescriptreact = { "eslint_d" },
-    -- svelte = { "eslint_d" },
-    -- kotlin = { "ktlint" },
-    terraform = { "tflint" },
-    ruby = { "standardrb" },
-    markdown = { "markdownlint" }, --
-    lua = { "luacheck" }, -- from :Mason
-    yaml = { "yamllint" },
-    css = { "stylelint" },
-    scss = { "stylelint" },
-  },
-
   config = function()
     local lint = require("lint")
     local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })

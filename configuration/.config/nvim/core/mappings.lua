@@ -102,8 +102,8 @@ keymap.set("c", "WQ", "wq")
 keymap.set("c", "Wq", "wq")
 keymap.set("c", "Wa", "wa")
 keymap.set("c", "WA", "wa")
-keymap.set("c", "W", "w")
-keymap.set("c", "Q", "q")
+--keymap.set("c", "W", "w")
+--keymap.set("c", "Q", "q")
 
 -- Disable capital Q
 --
@@ -113,6 +113,8 @@ keymap.set("n", "Q", "<nop>")
 --
 keymap.set("n", "<leader>y", '"+y', { desc = "Copy to system clipboard (normal)" })
 keymap.set("v", "<leader>y", '"+y', { desc = "Copy to system clipboard (visual)" })
+keymap.set("n", "<leader>d", '"+y<Esc>gvd', { desc = "Copy to system clipboard and delete (normal)" })
+keymap.set("v", "<leader>d", '"+y<Esc>gvd', { desc = "Copy to system clipboard and delete (visual)" })
 
 -- Paste effectively (also very large files) from system clipboard
 --
@@ -178,7 +180,13 @@ keymap.set("n", "<leader>ee", vim.cmd.Explore) -- Open netrw explorer
 -- copy current filepath to clipboard
 -- (starting from base path - vim starting directory aka pwd)
 --
-keymap.set("n", "<F2>", "<ESC>:let @+=expand('%:p')<CR>")
+keymap.set(
+  "n",
+  "<S-F2>",
+  "<ESC>:let @+ = expand('%:p')<CR>",
+  { desc = "Copy absolute path to currect file to system clipboard" }
+)
+keymap.set("n", "<F2>", "<ESC>:let @+ = expand('%:t')<CR>", { desc = "Copy current filename to system clipboard" })
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
