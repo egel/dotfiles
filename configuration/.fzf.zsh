@@ -11,6 +11,9 @@ if type rg &> /dev/null; then
         --files \
         --hidden \
         --glob=!**/node_modules/* \
+        --glob=!**/coverage/* \
+        --glob=!**/dist/* \
+        --glob=!**/.nx/* \
         --glob=!**/.git/*'
 fi
 
