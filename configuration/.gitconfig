@@ -43,7 +43,7 @@
 # https://web.archive.org/web/20090328164007/http://gitguru.com/2009/02/22/integrating-git-with-a-visual-merge-tool/
 [merge]
     tool = nvimdiff
-    conflictstyle = diff3
+    conflictstyle = merge # diff3
 
 [diff]
     tool = nvimdiff
