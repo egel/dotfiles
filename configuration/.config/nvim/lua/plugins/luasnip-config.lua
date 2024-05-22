@@ -1,7 +1,7 @@
 return {
   "L3MON4D3/LuaSnip", -- (required by lsp-zero)
   event = "VeryLazy",
-  tag = "v2.*",
+  version = "v3.*",
   build = "make install_jsregexp",
   config = function()
     local luasnip = require("luasnip")

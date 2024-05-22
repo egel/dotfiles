@@ -1,10 +1,12 @@
 return {
   "nvim-tree/nvim-tree.lua",
   event = "VimEnter",
+  version = "v1.*",
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
     "MunifTanjim/nui.nvim",
+    "3rd/image.nvim", -- optional: to have image preview
   },
   config = function()
     local nvim_tree = require("nvim-tree")
@@ -14,12 +16,11 @@ return {
     nvim_tree.setup({
       view = {
         width = 50,
-        relativenumber = true
+        relativenumber = true,
       },
       sort = {
         sorter = "case_sensitive",
       },
-
       -- change folder arrow icons
       renderer = {
         indent_markers = {
