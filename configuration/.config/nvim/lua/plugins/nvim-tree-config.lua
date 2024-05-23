@@ -1,6 +1,6 @@
 return {
   "nvim-tree/nvim-tree.lua",
-  event = "VimEnter",
+  lazy = false,
   version = "v1.*",
   dependencies = {
     "nvim-lua/plenary.nvim",
@@ -17,10 +17,16 @@ return {
       view = {
         width = 50,
         relativenumber = true,
+        debounce_delay = 50,
+        float = {
+          enable = false,
+        },
       },
       sort = {
         sorter = "case_sensitive",
       },
+      -- I want still use netrw without modify current buffer
+      hijack_netrw = false,
       -- change folder arrow icons
       renderer = {
         indent_markers = {
@@ -46,18 +52,30 @@ return {
         },
       },
       filters = {
-        custom = { ".DS_Store" },
         dotfiles = true,
+        git_ignored = true,
+        -- Hide custom dir/files even when hidden
+        custom = {
+          "^\\.DS_Store$",
+          "^\\.git$",
+        },
+        -- Always show some files
+        exclude = {
+          "^\\.gitlab-ci.yml$",
+        },
       },
       git = {
+        enable = true,
         ignore = false,
       },
     })
 
     local keymap = vim.keymap
 
-    -- custom mappings
-    --"<Esc>:NvimTreeToggle<CR>", {
+    -- ##############################
+    -- CUSTOM MAPPINGS
+    -- ##############################
+
     keymap.set("n", "<F9>", "<cmd>NvimTreeToggle<CR>", {
       desc = "Toggle open file tree",
       noremap = true,
@@ -65,6 +83,19 @@ return {
     keymap.set("n", "<F10>", "<cmd>NvimTreeFindFile<CR>", {
       desc = "Find current file in file tree",
       noremap = true,
+    })
+
+    -- Silently open in new tab
+    --
+    -- Sometimes, we only want to open a tab, but don't want to jump to that tab immediately.
+    local function open_tab_silent(node)
+      local api = require("nvim-tree.api")
+
+      api.node.open.tab(node)
+      vim.cmd.tabprev()
+    end
+    keymap.set("n", "T", open_tab_silent, {
+      desc = "Open Tab Silently",
     })
   end,
 }
