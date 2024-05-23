@@ -52,7 +52,7 @@ return {
         },
       },
       filters = {
-        dotfiles = true,
+        dotfiles = false,
         git_ignored = true,
         -- Hide custom dir/files even when hidden
         custom = {
