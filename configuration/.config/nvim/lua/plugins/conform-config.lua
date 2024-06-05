@@ -28,7 +28,7 @@ return {
         markdown = { { "prettierd", "prettier" } },
         -- erb = { "htmlbeautifier" },
         html = { { "prettierd", "htmlbeautifier" } },
-        bash = { "beautysh" },
+        bash = { "shfmt", "beautysh" },
         proto = { "buf" },
         rust = { "rustfmt" },
         --yaml = { "yamlfmt" },

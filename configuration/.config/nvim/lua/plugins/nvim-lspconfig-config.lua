@@ -192,6 +192,10 @@ return {
     --
     -- nvim_lsp["angularls"].setup({})
 
+    -- Shell / Bash
+    --
+    lspconfig["bashls"].setup({})
+
     -- Lua
     --
     lspconfig["lua_ls"].setup({
