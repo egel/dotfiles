@@ -42,7 +42,7 @@ Packages
 
 Editors
 
--   nvim (lsp, linters, battle tested)
+-   nvim (lsp, linters, formatters, fast & battle tested)
 -   vim (gvim, IntelliJ)
 -   sublime-text-3
 
