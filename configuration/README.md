@@ -15,7 +15,7 @@ This document is meant for explain how to configure available features/programs.
 > In daily work I heavily rely on nvim used inside tmux sessions while using TKL keyboard types, so the configuration have most effective shortcuts for this particular combination.
 
 > [!TIP]
-> To avoid problems during setup, it's much saver to use absolute paths while cleating symlinks.
+> To avoid problems during setup, it's much saver to use absolute paths while creating symlinks.
 
 ## zsh
 
@@ -33,7 +33,7 @@ ln -sf ${PWD}/.zprofile ${HOME}/.zprofile
 Optional.
 
 > [!TIP]
-> File `.zshrc.private` is excluded from accidental commiting in this repo.
+> File `.zshrc.private` is excluded from accidental committing in this repo.
 
 ```
 touch ~/.
@@ -53,7 +53,7 @@ ln -sf ${PWD}/.aliases ${HOME}/.aliases
 In case you may need private passwords accessible on shell level.
 
 > [!TIP]
-> File `.passwords.private` is excluded from accidental commiting in this repo.
+> File `.passwords.private` is excluded from accidental committing in this repo.
 
 > [!DANGER]
 > Do not store here any critical passwords!
@@ -329,7 +329,7 @@ pyenv install 3.11.6
 # setup global version
 $ pyenv global 3.11.6
 
-# test if global version is setup correcty
+# test if global version is setup correctly
 $ pyenv global
 3.11.6
 
