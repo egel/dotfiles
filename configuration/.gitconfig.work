@@ -1,0 +1,16 @@
+[user]
+	name = Gal Anonim
+	email = gal.anonim@example.com
+	signingKey = 123XYZ456ABC0987
+
+[commit]
+	gpgSign = true
+	template = ~/.gitmessage.work
+
+# This is for big repositories that are so huge that e.g. 'git status' is slow.
+# It performs some background caching, therfore some operations like git status
+# are faster.
+[maintenance]
+	repo = /Users/galanonim/workspace/my.space.com/myproject
+
+# vim: ft=ini fdm=marker tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab

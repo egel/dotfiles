@@ -66,6 +66,43 @@ touch ~/.envpass.private
 chmod 600 ~/.envpass.private
 ```
 
+## git
+
+Requirements:
+
+- `git` >= 2.13
+- [`git-lfs`][weblink-git-lfs]
+- [`git-delta`][weblink-git-delta]
+
+Git configuration for multiple users (private/personal & work) to conveniently separate your private projects from the work.
+
+- git large files support
+- multiple git users support
+- large git repository support (see 'maintenance' section in related .gitconfig file)
+- better git diffs using git-delta
+- optional: global gitignore to ignore
+
+```bash
+# link main configuration
+ln -sf ${PWD}/.gitconfig ${HOME}/.gitconfig
+
+# link git-delta themes
+ln -sf ${PWD}/.git-delta-themes ${HOME}/.git-delta-themes
+
+# copy config for personal/private account (root dir ~/privatespace)
+cp -sf ${PWD}/.gitconfig.private ${HOME}/.gitconfig.private
+# your private projects may need certain custom rules while committing messages
+cp -sf ${PWD}/.gitmessage.private
+
+# copy config for work account (root dir ~/workspace)
+cp -sf ${PWD}/.gitconfig.work ${HOME}/.gitconfig.work
+# some jobs have certain, custom rules while committing messages
+cp -sf ${PWD}/.gitmessage.work
+
+# optional: add global gitignore file to ignore files from any repo
+ln -sf ${PWD}/.gitignore_global ${HOME}/.gitignore_global
+```
+
 ## fzf
 
 | type | Search program |
@@ -316,3 +353,5 @@ python install -r python.global.txt
 ```
 
 [shortcuts-cheatsheet]: http://bit.ly/1wqcChS
+[weblink-git-lfs]: https://git-lfs.com/
+[weblink-git-delta]: https://github.com/dandavison/delta

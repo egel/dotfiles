@@ -1,0 +1,13 @@
+[user]
+	name = Gal Anonim
+	email = gal.anonim@example.com
+	# signingKey = 321ABC123DEF4567 # take from gpg key
+
+[github]
+	user = anonim
+
+[commit]
+	gpgsign = true
+	template = ~/.gitmessage.private
+
+# vi: ft=ini fdm=marker tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab

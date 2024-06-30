@@ -1,77 +1,78 @@
 # IMPORTANT: includeIf works only with git >= v2.13
 # For work user, email, ect.
 [includeIf "gitdir/i:~/workspace/"]
-    path = ~/.gitconfig.local_work
+	path = ~/.gitconfig.work
 # For private user, email, ect.
 [includeIf "gitdir/i:~/privatespace/"]
-    path = ~/.gitconfig.local
+	path = ~/.gitconfig.private
 
 [include]
-    path = ~/.git-delta-themes
+	path = ~/.git-delta-themes
 
 [gpg]
-    # select correct program for linux, macOS Intel & Silicon versions
-    program = /opt/homebrew/bin/gpg
+	# select correct program for linux, macOS Intel & Silicon versions
+	program = /opt/homebrew/bin/gpg
 
 [color]
-    ui = auto
+	ui = auto
 
 [push]
-    default = simple
+	default = simple
 
 [core]
-    editor = nvim
-    excludesfile = ~/.gitignore_global
-    eol = lf
-    autocrlf = false
-    pager = delta
+	editor = nvim
+	excludesfile = ~/.gitignore_global
+	eol = lf
+	autocrlf = false
+	pager = delta
 
 [interactive]
-    diffFilter = delta --color-only
+	diffFilter = delta --color-only
 [add.interactive]
-    useBuiltin = true # required for git >= 2.37.0
+	useBuiltin = true # required for git >= 2.37.0
 
 [delta]
-    features = gruvmax-fang # delta theme that match gruvbox theme
-    navigate = true    # use n and N to move between diff sections
-    line-numbers = true
-    dark = true # better adjust to dark theme
-    side-by-side = true
+	features = gruvmax-fang # delta theme that match gruvbox theme
+	navigate = true    # use n and N to move between diff sections
+	line-numbers = true
+	dark = true # better adjust to dark theme
+	side-by-side = true
 
 ###
 # More info how to integrate git with visual merge tool
 # https://web.archive.org/web/20090328164007/http://gitguru.com/2009/02/22/integrating-git-with-a-visual-merge-tool/
 [merge]
-    tool = nvimdiff
-    conflictstyle = merge # diff3
+	tool = nvimdiff
+	conflictstyle = merge # diff3
 
 [diff]
-    tool = nvimdiff
-    colorMoved = default
+	tool = nvimdiff
+	colorMoved = default
 
 [alias]
-    # show currently using git user
-    currentUser = ! git config --list | grep "user" | grep -v "currentUser"
+	# show currently using git user
+	currentUser = ! git config --list | grep "user" | grep -v "currentUser"
 
-    # diff the last commit
-    dl = diff HEAD^ HEAD
+	# diff the last commit
+	dl = diff HEAD^ HEAD
 
-    # diff the last commit (list of files)
-    dll = diff HEAD^ HEAD --stat
+	# diff the last commit (list of files)
+	dll = diff HEAD^ HEAD --stat
 
-    # list commands
-    last = log -1 HEAD
+	# list commands
+	last = log -1 HEAD
 
-    # show files from commit
-    sf = git diff-tree --no-commit-id --name-only -r
+	# show files from commit
+	sf = git diff-tree --no-commit-id --name-only -r
 
 [filter "lfs"]
-    clean = git-lfs clean %f
-    smudge = git-lfs smudge %f
-    required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	required = true
+	process = git-lfs filter-process
 
 
 [rerere]
-    enabled = true
+	enabled = true
 
-# vi: ts=4 sw=4
+# vi: ft=ini fdm=marker tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab

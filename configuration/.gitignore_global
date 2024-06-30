@@ -1,0 +1,18 @@
+###############################################################################
+# This file is for ignoring all file from any git repository
+#
+# TIP:
+#  - Use for general system specyfic configuration
+#  - Do not overuse this file
+###############################################################################
+
+# vim files
+*~
+
+# Default mac
+.DS_Store
+
+# files created from git mergetool (nvimdiff)
+**/*.orig
+
+# vi: ft=gitignore

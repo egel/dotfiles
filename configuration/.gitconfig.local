@@ -1,8 +1,0 @@
-[user]
-	name = Gal Anonim
-	email = gal.anonim@gmail.com
-
-[github]
-	user = anonim
-
-" vim: ft=ini fdm=marker ts=2 sts=2 sw=2

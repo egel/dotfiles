@@ -1,0 +1,11 @@
+# <type>:(<ref number>) <short summary>
+#   |           |               |
+#   |           |               +-> Summary in present tense
+#   |           |
+#   |           +-> Refers to story/card/issue #
+#   |
+#   +-> Type: feat|bug|chore|fix|refactor|style|test
+# Commit subject line should not exceed 50 characters.
+# Remainder of gitmessage should wrap at 72 characters.
+
+# vim: ft=ini
