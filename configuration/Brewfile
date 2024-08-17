@@ -43,8 +43,10 @@ brew "gnupg"
 # Support
 brew "lua"
 brew "luajit"
+brew "luarocks"
 brew "python@3.9"
 brew "rbenv" # Ruby version manager
+brew "pyenv" # Python version manager
 
 # Productivity
 cask "amethyst"
@@ -55,6 +57,7 @@ brew "fzf"
 brew "cscope"
 brew "macvim" # MacVim (not the terminal version)
 brew "ripgrep"
+brew "ansible" # managing multiple servers
 
 # Linters & parsers
 brew "luacheck"
@@ -74,5 +77,8 @@ brew "guile"
 brew "librsvg"
 brew "pango"
 brew "nghttp2"
+
+# Networking
+cask "wireshark" # UI app
 
 # vi: ft=ruby
