@@ -34,15 +34,15 @@ return {
         vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
         keymap.set("n", "gd", vim.lsp.buf.definition, {
-          desc = { "[g]o to [d]efinition" },
+          desc = "[g]o to [d]efinition",
           buffer = ev.buf,
         })
         keymap.set("n", "gD", vim.lsp.buf.declaration, {
-          desc = { "[g]o to [D]eclaration" },
+          desc = "[g]o to [D]eclaration",
           buffer = ev.buf,
         })
         keymap.set("n", "gr", vim.lsp.buf.references, {
-          desc = { "[g]o to [r]eferences" },
+          desc = "[g]o to [r]eferences",
           buffer = ev.buf,
         })
         keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {
