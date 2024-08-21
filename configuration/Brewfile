@@ -59,6 +59,11 @@ brew "macvim" # MacVim (not the terminal version)
 brew "ripgrep"
 brew "ansible" # managing multiple servers
 
+# Browsers
+cask "google-chrome"
+cask "brave-browser"
+cask "firefox"
+
 # Linters & parsers
 brew "luacheck"
 brew "prettier"
