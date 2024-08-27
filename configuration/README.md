@@ -83,6 +83,8 @@ Git configuration for multiple users (private/personal & work) to conveniently s
 - optional: global gitignore to ignore
 
 ```bash
+cd configuration
+
 # link main configuration
 ln -sf ${PWD}/.gitconfig ${HOME}/.gitconfig
 
@@ -92,7 +94,7 @@ ln -sf ${PWD}/.git-delta-themes ${HOME}/.git-delta-themes
 # copy config for personal/private account (root dir ~/privatespace)
 cp -sf ${PWD}/.gitconfig.private ${HOME}/.gitconfig.private
 # your private projects may need certain custom rules while committing messages
-cp -sf ${PWD}/.gitmessage.private
+cp -sf ${PWD}/.gitmessage.private ${HOME}/.gitmessage.private
 
 # copy config for work account (root dir ~/workspace)
 cp -sf ${PWD}/.gitconfig.work ${HOME}/.gitconfig.work
