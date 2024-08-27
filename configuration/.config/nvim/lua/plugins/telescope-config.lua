@@ -1,7 +1,7 @@
 return {
   "nvim-telescope/telescope.nvim",
   event = "VimEnter",
-  tag = "0.1.2",
+  tag = "0.1.8",
   dependencies = {
     "nvim-lua/popup.nvim",
     "nvim-lua/plenary.nvim",

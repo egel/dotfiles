@@ -42,6 +42,10 @@ local plugins = {
   "tpope/vim-repeat",
   "tpope/vim-surround",
 
+  -- Vue
+  --
+  "posva/vim-vue",
+
   { import = "plugins/gitsigns-config" },
 
   { import = "plugins/nerdcommenter-config" },
