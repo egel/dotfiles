@@ -28,3 +28,4 @@ yabai -m rule --add app="^Calculator$" manage=off
 yabai -m rule --add app="^Stickies$" manage=off
 yabai -m rule --add app="^Karabiner-Elements$" manage=off
 yabai -m rule --add app="^KeyCastr$" manage=off
+yabai -m rule --add app="^ColorSlurp$" manage=off
