@@ -58,6 +58,7 @@ brew "cscope"
 brew "macvim" # MacVim (not the terminal version)
 brew "ripgrep"
 brew "ansible" # managing multiple servers
+cask "caffeine" # prevent system from going to sleep
 
 # Browsers
 cask "google-chrome"
