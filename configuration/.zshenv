@@ -1,4 +1,7 @@
-# INFO
+# INFO .zshenv
+#
+# [Read every time]
+#
 # This file should contain commands to set the command search path, plus other
 # important environment variables. `.zshenv' should not contain commands that
 # produce output or assume the shell is attached to a tty.
@@ -9,7 +12,9 @@ export EDITOR='nvim'
 # Set default shell
 export SHELL=/bin/zsh
 
-# Note that in the default coreutils installation, all GNU utilities will be
-# prefixed with g. So, you'd use gls instead of ls.
-# You can override that behavior by adding them to your path.
-export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+#########################################
+# GPG, GPG-agent
+#########################################
+# It is important to set the environment variable GPG_TTY in your login shell
+export GPG_TTY="$(tty)"
+
