@@ -1,3 +1,7 @@
+# INFO .zshrc
+#
+# [Read when interactive]
+#
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -136,7 +140,7 @@ case $(uname -s) in
 
     # export mysql (and its sub-programs)
     if [[ -d "/usr/local/mysql" && $PATH != *'mysql'* ]]; then
-      export PATH=$PATH:/usr/local/mysql/bin
+      export PATH="/usr/local/mysql/bin:$PATH"
     fi
     ;;
 esac
@@ -180,15 +184,16 @@ DOTFILES_VIRTUALENVWRAPPER_FILE=$(which virtualenvwrapper.sh)
 #########################################
 # NVM config
 #########################################
+# nvm installed from orginal nvm script
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 [[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
 
 # add current node (+ node programs installed globally) to PATH
-# NOTE: nvm have to be configured to works
+# NOTE: nvm have to be installed & configured before to make it works
 CURRENT_NODE_VERSION=$(node --version)
 if [[ $PATH != *"nvm"* && -d "$HOME/.nvm" && $(find . -mindepth 1 -maxdepth 1 -type d | wc -l) ]]; then
-  $PATH=$PATH':'$HOME'/.nvm/versions/node/'$CURRENT_NODE_VERSION'/bin'
+  export PATH="$PATH:$HOME/.nvm/versions/node/$CURRENT_NODE_VERSION/bin"
 elif [ ! -d "$HOME/.nvm" ]; then
   echo "Missing NVM (Node Version Manager)."
   echo "Visit https://github.com/nvm-sh/nvm to install it."
@@ -202,14 +207,8 @@ if [ -z "$SSH_AUTH_SOCK" ] ; then
   ssh-add
 fi
 
-#########################################
-# GPG, GPG-agent
-#########################################
-# It is important to set the environment variable GPG_TTY in your login shell
-export GPG_TTY="$(tty)"
-
-# If you enabled the Ssh Agent Support, you also need to tell ssh
-# about it by adding this to your init script
+# If you enabled the SSH Agent Support, you also need to tell ssh about it
+# by adding this to your init script
 unset SSH_AGENT_PID
 if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
   export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
@@ -224,8 +223,8 @@ fi
 #########################################
 # Travis
 #########################################
-if [ -f $HOME/.travis/travis.sh ]; then
-  source $HOME/.travis/travis.sh
+if [[ -f "$HOME/.travis/travis.sh" ]]; then
+    source "$HOME/.travis/travis.sh"
 fi
 
 #########################################
@@ -233,8 +232,7 @@ fi
 #########################################
 # Use local Ruby manager (rbenv) instead of system ruby version
 if [ -d "$(brew --prefix rbenv)" ]; then
-  # export PATH="$HOME/.rbenv/bin:$PATH"
-  eval "$(rbenv init -)"
+    eval "$(rbenv init -)"
 fi
 
 #########################################
@@ -245,17 +243,19 @@ if [ -d "$(brew --prefix pyenv)" ]; then
 fi
 
 ## LLVM (CPP)
-export PATH="$(brew --prefix llvm)/bin:$PATH"
+if [ -d "$(brew --prefix llvm)" ]; then
+    export PATH="$(brew --prefix llvm)/bin:$PATH"
+fi
 
 #########################################
 # gvm
 #########################################
-[[ -s "/Users/maciejsypien/.gvm/scripts/gvm" ]] && source "/Users/maciejsypien/.gvm/scripts/gvm"
+[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 
 #########################################
 # Fuzzy files finder
 #########################################
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[[ -f "$HOME/.fzf.zsh" ]] && source "$HOME/.fzf.zsh"
 #
 # Ctrl + t -> open file finder
 # Ctrl + r -> open last commands
@@ -270,8 +270,8 @@ export SDKMAN_DIR="$HOME/.sdkman"
 # ALWAYS AT THE END
 # oh-my-zsh.sh
 #########################################
-if [[ -f $ZSH/oh-my-zsh.sh ]]; then
-  source $ZSH/oh-my-zsh.sh
+if [[ -f "$ZSH/oh-my-zsh.sh" ]]; then
+  source "$ZSH/oh-my-zsh.sh"
 else
   echo "Missing $ZSH/oh-my-zsh.sh file."
 fi
