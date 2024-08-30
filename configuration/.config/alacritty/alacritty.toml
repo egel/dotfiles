@@ -1,0 +1,23 @@
+import = []
+live_config_reload = true
+
+[env]
+TERM = "xterm-256color"
+
+[window]
+padding.x = 0
+padding.y = 0
+decorations = "Full" # Buttonless
+dimensions = { columns = 120, lines = 30 }
+opacity = 0.7
+blur = true
+option_as_alt = "Both"
+
+[font]
+normal = { family = "Hack Nerd Font Mono", style="Regular" }
+size = 20
+
+[cursor]
+style = { shape = "Block", blinking = "Off" }
+unfocused_hollow = true
+thickness = 0.15
