@@ -33,6 +33,7 @@ brew "fd" # nvim telescope
 brew "wrk" # measure http sever speed (req/res)
 brew "stylua" # lua formatter
 brew "git-delta" # helps with better visual diff the content
+brew "mutt" # console email client
 
 # GPG - to signed your commits
 brew "gnutls"
@@ -48,6 +49,9 @@ brew "python@3.9"
 brew "rbenv" # Ruby version manager
 brew "pyenv" # Python version manager
 
+# Usibility
+brew "podman"
+
 # Productivity
 cask "amethyst"
 cask "font-hack"
@@ -59,6 +63,7 @@ brew "macvim" # MacVim (not the terminal version)
 brew "ripgrep"
 brew "ansible" # managing multiple servers
 cask "caffeine" # prevent system from going to sleep
+brew "ollama"
 
 # Browsers
 cask "google-chrome"
