@@ -155,6 +155,14 @@ chmod 644 ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/config/
 ```
 
+## alacritty
+
+fast and simple terminal emulator (currently under test, if I like it)
+
+```bash
+ln -sf ~/privatespace/github.com/egel/dotfiles/configuration/.config/alacritty ~/.config/alacritty
+```
+
 ## gvm
 
 | type | Version Manager |
