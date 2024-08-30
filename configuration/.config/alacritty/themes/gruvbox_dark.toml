@@ -1,4 +1,6 @@
 # Colors (Gruvbox dark)
+#
+# Source: https://github.com/alacritty/alacritty-theme/blob/master/themes/gruvbox_dark.toml
 
 # Default colors
 [colors.primary]

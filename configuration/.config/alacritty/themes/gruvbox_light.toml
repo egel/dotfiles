@@ -1,4 +1,6 @@
 # Colors (Gruvbox light)
+#
+# Source: https://github.com/alacritty/alacritty-theme/blob/master/themes/gruvbox_light.toml
 
 # Default colors
 [colors.primary]
