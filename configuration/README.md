@@ -172,7 +172,15 @@ Go version manager - <https://github.com/moovweb/gvm>.
 
 I tend using many versions of Golang. This package manager helps me to use desired version based on project needs and switch them in fly.
 
-```
+```bash
+# show all available versions
+$ go listall
+
+# install and enable
+$ go install go1.21.6
+$ go use go1.21.6
+
+# test if using correct version
 $ which go
 /Users/johndoe/.gvm/gos/go1.21.6/bin/go
 ```
