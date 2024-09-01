@@ -52,9 +52,7 @@ return {
       -- If this is set, Conform will run the formatter asynchronously after save.
       -- It will pass the table to conform.format().
       -- This can also be a function that returns the table.
-      format_after_save = {
-        lsp_fallback = true,
-      },
+      stop_after_first = false,
     })
   end,
 }
