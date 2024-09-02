@@ -178,11 +178,14 @@ $ go listall
 
 # install and enable
 $ go install go1.21.6
-$ go use go1.21.6
+$ go use go1.21.6 --default # set default go version
 
 # test if using correct version
 $ which go
 /Users/johndoe/.gvm/gos/go1.21.6/bin/go
+
+# (optional) disable telemetry
+go telemetry off
 ```
 
 ### Alternatively go via brew
