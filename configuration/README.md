@@ -243,6 +243,20 @@ go install golang.org/x/vuln/cmd/govulncheck@latest
 go install github.com/abenz1267/gomvp@latest
 ```
 
+### Ollama
+
+local LLM model.
+
+to work on macOS require App from <https://github.com/ollama/ollama>
+
+```bash
+# install ollama
+brew install ollama
+
+# install small model
+ollama pull codellama:7b  # nvim is already configured to use this model
+```
+
 ## vim
 
 | type | Text Editor |

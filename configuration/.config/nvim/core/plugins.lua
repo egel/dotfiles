@@ -121,6 +121,8 @@ local plugins = {
   -- tabs
   { import = "plugins/barbar-nvim-config" },
 
+  { import = "plugins/nomnivore-ollama-config" },
+
   -- Custom
   --{ import = "custom/mdx-config" },
 }
