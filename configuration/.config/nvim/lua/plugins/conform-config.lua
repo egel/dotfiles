@@ -7,6 +7,8 @@ return {
   opts = {},
   config = function()
     local conform = require("conform")
+    local prettier = { "prettierd", "prettier" }
+
     conform.setup({
       formatters_by_ft = {
         lua = { "stylua" },
@@ -16,25 +18,25 @@ return {
         python = { "black" },
 
         -- Use a sub-list to run only the first available formatter
-        javascript = { { "prettierd", "prettier" } },
-        typescript = { { "prettierd", "prettier" } },
-        javascriptreact = { { "prettierd", "prettier" } },
-        typescriptreact = { { "prettierd", "prettier" } },
-        json = { { "prettierd", "prettier" } },
-        graphql = { { "prettierd", "prettier" } },
+        javascript = prettier,
+        typescript = prettier,
+        javascriptreact = prettier,
+        typescriptreact = prettier,
+        json = prettier,
+        graphql = prettier,
         java = { "google-java-format" },
         -- kotlin = { "ktlint" },
         -- ruby = { "standardrb" },
-        markdown = { { "prettierd", "prettier" } },
+        markdown = prettier,
         -- erb = { "htmlbeautifier" },
-        html = { { "prettierd", "htmlbeautifier" } },
+        html = { "prettierd", "htmlbeautifier" },
         bash = { "shfmt", "beautysh" },
         proto = { "buf" },
         rust = { "rustfmt" },
-        --yaml = { "yamlfmt" },
+        yaml = { "yamlfmt" },
         toml = { "taplo" },
-        css = { { "prettierd", "prettier" } },
-        scss = { { "prettierd", "prettier" } },
+        css = prettier,
+        scss = prettier,
         -- zig = { "zigfmt" },
 
         -- TODO: ignore propose lint: *.min.css, *.min.js
