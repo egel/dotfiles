@@ -38,6 +38,7 @@ return {
         "gitignore",
         "dockerfile",
         "latex",
+        "muttrc",
       },
 
       -- Install parsers synchronously (only applied to `ensure_installed`)
