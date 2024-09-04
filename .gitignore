@@ -19,6 +19,7 @@
 # vim-plug - vim plugin manager
 **/.vim/autoload/
 **/.vim/plugged/
+**/.vim/undodir/
 
 # Neovim
 configuration/.config/nvim/plugged
