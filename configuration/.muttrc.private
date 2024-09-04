@@ -1,0 +1,20 @@
+GMAIL_USER="johndoe"
+
+# Gmail
+set realname  = 'John Doe'
+set from      = "${GMAIL_USER}@gmail.com"
+set imap_user = "${GMAIL_USER}@gmail.com"
+set smtp_url  = "smtp://${GMAIL_USER}@smtp.gmail.com:587/"
+
+# Gmail have the notion of labels
+# If a message has several labels, we actually need to move it to the
+# trash to remove all labels (delete from all folders)
+# This one requires mutt with the trash patch
+# set trash = '[Gmail]/Trash'
+
+# REMOTE GMAIL FOLDERS
+set folder    = 'imaps://imap.gmail.com:993'
+set spoolfile = '+INBOX'
+set postponed = '+[Gmail]/Drafts'
+
+# vi: ft=bash

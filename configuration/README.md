@@ -387,6 +387,24 @@ Python 3.11.6
 python install -r python.global.txt
 ```
 
+## mutt
+
+Console e-mail client
+
+> config is for Gmail, if you use different client please adapt config
+
+```brew
+# install mutt client
+brew install mutt
+
+# link config files
+ln -sf ${PWD}/.configuration/.mutt ${HOME}/.mutt
+ln -sf ${PWD}/.configuration/.muttrc ${HOME}/.muttrc
+
+# copy template with private variables and adjust
+cp ${PWD}/.configuration/.muttrc.private ${HOME}/.muttrc.private
+```
+
 [shortcuts-cheatsheet]: http://bit.ly/1wqcChS
 [weblink-git-lfs]: https://git-lfs.com/
 [weblink-git-delta]: https://github.com/dandavison/delta

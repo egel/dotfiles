@@ -1,25 +1,11 @@
-# Gmail
-set realname  = 'Maciej Sypień'
-set from      = 'maciejsypien@gmail.com'
-set imap_user = 'maciejsypien@gmail.com'
-set smtp_url  = 'smtp://maciejsypien@smtp.gmail.com:587/'
+# load private details
+source "$HOME/.muttrc.private"
 
 # file with encrypted passwords of 'smtp_pass' and 'imap_pass'
 source "gpg -dq $HOME/.mutt/passwords.gpg |"
 
 # vim for editing, and move marker to line 7
 set editor="vim +13 -c 'set nobackup' -c 'set noswapfile' -c 'set nowritebackup' -c 'set tw=72 ft=mail noautoindent'"
-
-# REMOTE GMAIL FOLDERS
-set folder    = 'imaps://imap.gmail.com:993'
-set spoolfile = '+INBOX'
-set postponed = '+[Gmail]/Drafts'
-
-# Gmail have the notion of labels
-# If a message has several labels, we actually need to move it to the
-# trash to remove all labels (delete from all folders)
-# This one requires mutt with the trash patch
-# set trash = '[Gmail]/Trash'
 
 # LOCAL FOLDERS FOR CACHED HEADERS AND CERTIFICATES
 set header_cache=~/.mutt/cache/headers"
