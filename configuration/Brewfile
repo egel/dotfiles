@@ -65,6 +65,7 @@ brew "ripgrep"
 brew "ansible" # managing multiple servers
 cask "caffeine" # prevent system from going to sleep
 brew "ollama"
+brew "audacity"
 
 # Browsers
 cask "google-chrome"
