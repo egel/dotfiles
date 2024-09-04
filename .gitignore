@@ -25,8 +25,11 @@ configuration/.config/nvim/plugged
 
 # MUTT
 **/.mutt/cache/
+**/.mutt/password
+**/.mutt/passwords
+**/.mutt/password.gpg
 **/.mutt/passwords.gpg
-**/.mutt/gmailcerts
+**/.mutt/certificates
 **/.mutt/*.gpg
 
 # Mac specyfic files

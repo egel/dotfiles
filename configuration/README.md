@@ -397,13 +397,48 @@ Console e-mail client
 # install mutt client
 brew install mutt
 
+# enter config dir
+cd configuration
+
 # link config files
-ln -sf ${PWD}/.configuration/.mutt ${HOME}/.mutt
-ln -sf ${PWD}/.configuration/.muttrc ${HOME}/.muttrc
+ln -sf ${PWD}/.mutt/ ${HOME}/.mutt
+ln -sf ${PWD}/.muttrc ${HOME}/.muttrc
 
 # copy template with private variables and adjust
 cp ${PWD}/.configuration/.muttrc.private ${HOME}/.muttrc.private
 ```
+
+### create secure password
+
+Requirements:
+
+- gpg key configured (see previous sections for reference)
+
+> How to setup password app in Gmail? [Info link](https://support.google.com/accounts/answer/185833?hl=en)
+>
+> - Create new App password: <https://myaccount.google.com/apppasswords>
+
+```
+# create temporarly file with passwords
+cat << EOF | tee -a ~/.mutt/passwords
+set smtp_pass="XXXXXXX"
+set imap_pass="XXXXXXX"
+EOF
+
+# update passwords
+vim ~/.mutt/passwords
+
+# see available keys
+gpg --list-keys
+
+# encrypt file with your gpg key
+gpg -r johndoe@gmail.com -e ~/.mutt/passwords
+
+# remove plain text file with password
+rm ~/.mutt/passwords
+```
+
+open mutt
 
 [shortcuts-cheatsheet]: http://bit.ly/1wqcChS
 [weblink-git-lfs]: https://git-lfs.com/

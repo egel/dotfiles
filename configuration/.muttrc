@@ -1,5 +1,5 @@
 # load private details
-source "$HOME/.muttrc.private"
+source "$HOME/.muttrc.gmail"
 
 # file with encrypted passwords of 'smtp_pass' and 'imap_pass'
 source "gpg -dq $HOME/.mutt/passwords.gpg |"
@@ -10,13 +10,13 @@ set editor="vim +13 -c 'set nobackup' -c 'set noswapfile' -c 'set nowritebackup'
 # LOCAL FOLDERS FOR CACHED HEADERS AND CERTIFICATES
 set header_cache=~/.mutt/cache/headers"
 set message_cachedir=~/.mutt/cache/bodies"
-#
+
 # On some configurations this option is not recognised. It should
 # default to "" anyway. If this is a valid option, uncomment this.
 # unset ssl_ca_certificates_file
 # Don't trust the system.
 unset ssl_usesystemcerts
-set certificate_file="~/.mutt/gmailcerts"
+set certificate_file="~/.mutt/certificates"
 # set ssl_ca_certificates_file="~/.mutt/google.crt"
 
 # SSL hardening
@@ -35,7 +35,6 @@ set charset=utf-8
 set send_charset=utf-8
 
 set imap_check_subscribed
-set hostname = 'gmail.com'
 set mail_check = 120
 set timeout = 300
 set imap_keepalive = 300
@@ -90,6 +89,6 @@ macro index A ":set confirmappend=no delete=yes\n<save-message>=archive\n<sync-m
 set quit=yes
 
 # Load mutt theme
-source $HOME/.dotfiles/configuration/.mutt/themes/mutt-colors-solarized/mutt-colors-solarized-dark-256.muttrc
+source $HOME/.mutt/themes/mutt-colors-solarized/mutt-colors-solarized-dark-256.muttrc
 
 # vim: set ft=muttrc tw=0 nowrap:
