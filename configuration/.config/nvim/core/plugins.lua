@@ -30,6 +30,7 @@ local plugins = {
     },
     config = function()
       vim.cmd.colorscheme("gruvbox")
+      vim.o.background = "light"
 
       -- Set transparent background
       vim.api.nvim_set_hl(0, "Normal", { bg = "none" })

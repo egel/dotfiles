@@ -39,6 +39,7 @@
 	# use n and N to move between diff sections
 	navigate = true
 	line-numbers = true
+	dark = light
 	side-by-side = true
 
 ###
