@@ -172,7 +172,7 @@ return {
 
     -- TypeScript
     --
-    lspconfig["tsserver"].setup({
+    lspconfig["ts_ls"].setup({
       capabilities = capabilities,
     }) -- installed from :Mason
 
