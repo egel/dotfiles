@@ -244,6 +244,13 @@ fi
 ## LLVM (CPP)
 if [ -d "$(brew --prefix llvm)" ]; then
     export PATH="$(brew --prefix llvm)/bin:$PATH"
+fi 
+
+#########################################
+# Rust / cargo programs
+#########################################
+if [[ -d "$HOME/.cargo/bin" ]]; then
+    export PATH="$HOME/.cargo/bin:$PATH"
 fi
 
 #########################################
