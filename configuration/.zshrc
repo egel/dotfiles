@@ -273,6 +273,12 @@ fi
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
+
+#########################################
+# Golang (installed via 'go install')
+#########################################
+export PATH="$HOME/go/bin:$GOPATH/bin:$PATH"
+
 #########################################
 # ALWAYS AT THE END
 # oh-my-zsh.sh
