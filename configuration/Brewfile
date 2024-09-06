@@ -35,6 +35,7 @@ brew "stylua" # lua formatter
 brew "git-delta" # helps with better visual diff the content
 brew "mutt" # console email client
 brew "awk" # for advance search & test manupulation
+brew "rustfmt"
 
 # GPG - to signed your commits
 brew "gnutls"

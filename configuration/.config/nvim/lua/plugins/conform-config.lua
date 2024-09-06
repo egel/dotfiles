@@ -30,7 +30,7 @@ return {
         markdown = prettier,
         -- erb = { "htmlbeautifier" },
         html = { "prettierd", "htmlbeautifier" },
-        bash = { "shfmt", "beautysh" },
+        bash = { "shfmt" }, -- beautysh
         proto = { "buf" },
         rust = { "rustfmt" },
         yaml = { "yamlfmt" },

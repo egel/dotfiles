@@ -42,6 +42,8 @@ return {
         "tsserver",
         "yamlls", -- yaml language-server
         "zls",
+
+        "taplo",
         -- Additionally install npm package vscode-langservers-extracted
         --
         -- @see https://github.com/hrsh7th/vscode-langservers-extracted
@@ -74,12 +76,16 @@ return {
 
         -- Formatter
         "beautysh", -- shell
+        "shfmt", -- shell
         "black", -- python
         "buf", -- proto buffs
         "goimports", -- go
         "gofumpt", -- go
         "stylua", -- lua
         "yamlfmt",
+        "htmlbeautifier", -- html
+        "google-java-format", -- java
+        "rustfmt", -- rust
       },
     })
   end,

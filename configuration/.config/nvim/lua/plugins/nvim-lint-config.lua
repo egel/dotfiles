@@ -22,6 +22,7 @@ return {
       yaml = { "yamllint" },
       css = { "stylelint" },
       scss = { "stylelint" },
+      bash = { "shellcheck" },
 
       -- Use the "*" filetype to run formatters on all filetypes.
       ["*"] = {},
