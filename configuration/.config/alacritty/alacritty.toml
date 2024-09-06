@@ -1,6 +1,4 @@
-import = [
-    "~/.config/alacritty/themes/gruvbox_dark.toml"
-]
+import = ["~/.config/alacritty/themes/gruvbox_dark.toml"]
 
 live_config_reload = true
 
@@ -10,14 +8,15 @@ TERM = "xterm-256color"
 [window]
 padding.x = 0
 padding.y = 0
-decorations = "Full" # Transparent, Full
+decorations = "Full"                       # Transparent, Full
 dimensions = { columns = 120, lines = 30 }
 opacity = 0.7
 blur = true
 option_as_alt = "Both"
 
 [font]
-normal = { family = "Hack Nerd Font Mono", style="Regular" }
+# TIP: Hack Nerd Font have bigger icons, then Hack Nerd Font Mono
+normal = { family = "Hack Nerd Font", style = "Regular" }
 size = 20
 
 [cursor]
