@@ -256,10 +256,8 @@ fi
 #########################################
 # gvm
 #########################################
-if [[ -s "$HOME/.gvm/scripts/gvm" ]]; then
-    source "$HOME/.gvm/scripts/gvm"
-    export GOROOT_BOOTSTRAP=$GOROOT
-fi
+[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
+# export GOROOT_BOOTSTRAP=$GOROOT
 
 #########################################
 # Fuzzy files finder
