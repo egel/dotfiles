@@ -56,5 +56,10 @@ return {
       -- This can also be a function that returns the table.
       stop_after_first = false,
     })
+
+    -- shfmt: modification
+    conform.formatters.shfmt = {
+      prepend_args = { "-i", "2" },
+    }
   end,
 }

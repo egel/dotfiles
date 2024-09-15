@@ -35,4 +35,3 @@ for _, name in ipairs(core_config_files) do
   local source_cmd = "source " .. path
   vim.cmd(source_cmd)
 end
-
