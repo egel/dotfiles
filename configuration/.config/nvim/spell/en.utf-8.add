@@ -225,3 +225,13 @@ zshenv
 zshrc
 alacritty
 TPM
+shfmt
+modeline
+gruvbox
+gruvbox
+symlink
+formatters
+shellcheck
+shfmt
+customizable
+hostname
