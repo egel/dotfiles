@@ -67,10 +67,13 @@ local plugins = {
   { import = "plugins/nvim-tree-config" },
 
   -- editorconfig plugin
-  {
-    "editorconfig/editorconfig-vim",
-    lazy = false, -- load during startup
-  },
+  --
+  -- nvim support editor config by default (https://neovim.io/doc/user/editorconfig.html)
+  --
+  -- {
+  -- "editorconfig/editorconfig-vim",
+  -- lazy = false, -- load during startup
+  -- },
 
   -- Add git info message after the line
   { import = "plugins/git-blame-nvim-config" },
