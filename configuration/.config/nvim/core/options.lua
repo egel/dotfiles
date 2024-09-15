@@ -6,6 +6,7 @@ vim.opt.encoding = "UTF-8"
 --
 vim.wo.colorcolumn = "80,120"
 
+vim.opt.termguicolors = true
 vim.opt.guicursor = "" -- bold cursor
 vim.opt.cursorline = true -- show current line with color
 vim.opt.number = true
