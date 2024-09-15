@@ -28,14 +28,17 @@
 
 [interactive]
 	diffFilter = delta --color-only
+
 [add.interactive]
-	useBuiltin = true # required for git >= 2.37.0
+	# required for git >= 2.37.0
+	useBuiltin = true
 
 [delta]
-	features = gruvmax-fang # delta theme that match gruvbox theme
-	navigate = true    # use n and N to move between diff sections
+	# delta theme that match gruvbox theme
+	features = gruvmax-fang
+	# use n and N to move between diff sections
+	navigate = true
 	line-numbers = true
-	dark = true # better adjust to dark theme
 	side-by-side = true
 
 ###
@@ -43,7 +46,12 @@
 # https://web.archive.org/web/20090328164007/http://gitguru.com/2009/02/22/integrating-git-with-a-visual-merge-tool/
 [merge]
 	tool = nvimdiff
-	conflictstyle = merge # diff3
+	# conflictstyle: diff3, merge
+	conflictstyle = merge
+
+[mergetool]
+	# do not save .orig files after nvimdiff
+	keepBackup = false
 
 [diff]
 	tool = nvimdiff
@@ -70,7 +78,6 @@
 	smudge = git-lfs smudge -- %f
 	required = true
 	process = git-lfs filter-process
-
 
 [rerere]
 	enabled = true
