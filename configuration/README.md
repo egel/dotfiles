@@ -1,21 +1,21 @@
 # Configuration
 
-This document is meant for explain how to configure available features/programs.
+This document is meant to explain how to configure available features/programs.
 
 > [!IMPORTANT]
 > All configurations are based on downloaded repository to localhost, and using symlinks connect files from the repository.
 >
-> I prefer this approach as it allow me to quickly update my configuration files when they changes and update my main repository.
+> I prefer this approach as it allows me to quickly update my configuration files when they change and update my main repository.
 >
 > If you prefer to copy files instead due to e.g.: security reasons, feel free to do so.
 
 > [!NOTE]
-> I use a custom keybindings for the configuration in this folder. If you're interested see [my keybindings cheatsheet][shortcuts-cheatsheet].
+> I use custom keybindings for the configuration in this folder. If you're interested see [my keybindings cheatsheet][shortcuts-cheatsheet].
 >
-> In daily work I heavily rely on nvim used inside tmux sessions while using TKL keyboard types, so the configuration have most effective shortcuts for this particular combination.
+> In daily work I heavily rely on nvim used inside tmux sessions while using TKL keyboard types, so the configuration has the most effective shortcuts for this particular combination.
 
 > [!TIP]
-> To avoid problems during setup, it's much saver to use absolute paths while creating symlinks.
+> To avoid problems during setup, it's much safer to use absolute paths while creating symlinks.
 
 ## zsh
 
@@ -41,7 +41,7 @@ touch ~/.
 
 ### shell aliases
 
-I use aliases to modify behavior of some programs or add new useful shortcuts:
+I use aliases to modify the behavior of some programs or add new useful shortcuts:
 
 ```bash
 # public aliases
@@ -50,7 +50,7 @@ ln -sf ${PWD}/.aliases ${HOME}/.aliases
 
 ### shell private passwords
 
-In case you may need private passwords accessible on shell level.
+In case you may need private passwords accessible on the shell level.
 
 > [!TIP]
 > File `.passwords.private` is excluded from accidental committing in this repo.
@@ -127,13 +127,13 @@ ln -sf ${PWD}/.fzf.zsh ${HOME}/.fzf.zsh
 ## SSH
 
 > [!TIP]
-> SSH is generally very private space. To keep it clean use protected directory to load your ssh configurations for each personal, or clients/servers, like in the example below:
+> SSH is generally a very private space. To keep it clean use a protected directory to load your SSH configurations for each personal, or clients/servers, like in the example below:
 >
 > - ~/.ssh/config.d/personal
 > - ~/.ssh/config.d/client1
 > - ~/.ssh/config.d/client2
 
-It's good to add below settings to your `~/.ssh/config`
+It's good to add the below settings to your `~/.ssh/config`
 
 ```sshconfig
 # Include additional configuration files
@@ -170,7 +170,7 @@ ln -sf ~/privatespace/github.com/egel/dotfiles/configuration/.config/alacritty ~
 
 Go version manager - <https://github.com/moovweb/gvm>.
 
-I tend using many versions of Golang. This package manager helps me to use desired version based on project needs and switch them in fly.
+I tend to use many versions of Golang. This package manager helps me to use the desired version based on project needs and switch them on the fly.
 
 ```bash
 # show all available versions
@@ -190,8 +190,8 @@ go telemetry off
 
 ### Alternatively go via brew
 
-If you do not care or use single go version you can install it via brew, or other package manager.
-I add sample configuration below for better reference:
+If you do not care or use a single `go` version, you can install it via brew, or other package managers.
+I have added a sample configuration below for better reference:
 
 ```bash
 #########################################
@@ -234,7 +234,7 @@ ln -sf ${PWD}/.config/nvim ${HOME}/.config/nvim
 ```
 
 - Open nvim and install plugins `:Lazy` ([Lazy nvim](https://github.com/folke/lazy.nvim) package manager)
-- Some plugin may require additional programs to install. You can check it all via `:checkhealth` command.
+- Some plugins may require additional programs to install. You can check it all via `:checkhealth` command.
   - I use my brew (`Brewfile`) and npm (`npm.global.txt`) configuration files to install some additional programs used to properly run all nvim features (especially for lsp and linters).
 
 ```bash
@@ -247,7 +247,7 @@ go install github.com/abenz1267/gomvp@latest
 
 local LLM model.
 
-to work on macOS require App from <https://github.com/ollama/ollama>
+to work on macOS requires an App from <https://github.com/ollama/ollama>
 
 ```bash
 # install ollama
@@ -263,7 +263,7 @@ ollama pull codellama:7b  # nvim is already configured to use this model
 | ---- | ----------- |
 
 > [!WARNING]
-> I do not anymore actively plan to work/enhance my vim configuration. I switched to nvim as daily driver.
+> I do not anymore actively plan to work/enhance my vim configuration. I switched to nvim as a daily driver.
 
 ## nvm
 
@@ -274,7 +274,7 @@ Node package manager - <https://github.com/nvm-sh/nvm>
 
 ### npm global packages
 
-If you using different versions of node, it might be useful for you to persist same global packages available when switching to different node versions.
+If you using different versions of nodes, it might be useful for you to persist the same global packages available when switching to different node versions.
 
 Install my personal list of global npm packages:
 
@@ -282,15 +282,15 @@ Install my personal list of global npm packages:
 npm install -g $(<configuration/npm.global.txt)
 ```
 
-#### List all global packages or add new?
+#### List all global packages or add new ones?
 
-- list all global packages (when using `nvm` this apply to active version)
+- list all global packages (when using `nvm` this applies to the active version)
 
   ```bash
   npm list -g --depth=0
   ```
 
-- add new package with sample command below (or simply edit the file manually):
+- add a new package with the sample command below (or simply edit the file manually):
 
   ```bash
   # append sample mynewpackage to end of file
@@ -301,7 +301,7 @@ npm install -g $(<configuration/npm.global.txt)
 
 > [!NOTE]
 >
-> `yarn` is related/bound to the Node version, therefore I always install it via global npm package.
+> `yarn` is related/bound to the Node version, therefore I always install it via the global npm package.
 
 ```bash
 npm install -g yarn
@@ -311,7 +311,7 @@ $ which yarn
 ```
 
 > [!TIP]
-> If you do not care how , you can install it via brew (info it will be bound to your local node version, possibly latest). Below simple config for `.zshrc`:
+> If you do not care how, you can install it via brew (info it will be bound to your local node version, possibly the latest). Below simple config for `.zshrc`:
 >
 > ```bash
 > #########################################
@@ -370,7 +370,7 @@ $ pyenv global
 
 # test if using correct python
 $ which python
-/Users/myuser/.pyenv/shims/python
+/Users/johndoe/.pyenv/shims/python
 
 $ python --version
 Python 3.11.6
@@ -379,7 +379,7 @@ Python 3.11.6
 #### python global packages
 
 > [!NOTE]
-> When using many different python versions (or switch between them often) there is a need to persist come global packages that serve the need for other programs.
+> When using many different python versions (or switching between them often) there is a need to persist come global packages that serve the need for other programs.
 >
 > The list below contains some packages that are used by other programs (e.g.: linters, checkers)
 
@@ -391,9 +391,9 @@ python install -r python.global.txt
 
 Console e-mail client
 
-> config is for Gmail, if you use different client please adapt config
+> config is for Gmail, if you use a different client please adapt the config
 
-```brew
+```bash
 # install mutt client
 brew install mutt
 
@@ -414,12 +414,12 @@ Requirements:
 
 - gpg key configured (see previous sections for reference)
 
-> How to setup password app in Gmail? [Info link](https://support.google.com/accounts/answer/185833?hl=en)
+> How to set up a password app in Gmail? [Info link](https://support.google.com/accounts/answer/185833?hl=en)
 >
-> - Create new App password: <https://myaccount.google.com/apppasswords>
+> - Create a new App password: <https://myaccount.google.com/apppasswords>
 
-```
-# create temporarly file with passwords
+```bash
+# create temporary file with passwords
 cat << EOF | tee -a ~/.mutt/passwords
 set smtp_pass="XXXXXXX"
 set imap_pass="XXXXXXX"
