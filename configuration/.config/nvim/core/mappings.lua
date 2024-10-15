@@ -118,7 +118,8 @@ keymap.set("v", "<leader>d", '"+y<Esc>gvd', { desc = "Copy to system clipboard a
 
 -- Paste effectively (also very large files) from system clipboard
 --
-keymap.set("n", "<leader>p", '"+p', { desc = "Pasting from system clipboard" })
+keymap.set("n", "<leader>p", '"+p', { desc = "Pasting from system clipboard (after cursor)" })
+keymap.set("n", "<leader>P", '"+P', { desc = "Pasting from system clipboard (before cursor)" })
 
 -- Reload nvim configuration (without exit)
 --
