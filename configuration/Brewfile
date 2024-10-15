@@ -68,6 +68,8 @@ brew "ansible" # managing multiple servers
 cask "caffeine" # prevent system from going to sleep
 brew "ollama"
 brew "audacity"
+brew "scroll-reverser" # when using trackball & mousepad
+brew "keycastr" # to show key inputs on screen
 
 # Browsers
 cask "google-chrome"
