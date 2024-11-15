@@ -107,7 +107,7 @@ local plugins = {
 
   -- Linting manager
   --
-  { import = "plugins/nvim-lint-config" },
+  --{ import = "plugins/nvim-lint-config" },
 
   -- Formatting manager
   --

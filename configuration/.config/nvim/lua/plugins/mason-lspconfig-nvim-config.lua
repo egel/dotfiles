@@ -39,7 +39,7 @@ return {
         "pyright",
         "sqlls",
         "stylelint_lsp",
-        "tsserver",
+        "ts_ls",
         "yamlls", -- yaml language-server
         "zls",
 
@@ -86,6 +86,7 @@ return {
         "htmlbeautifier", -- html
         "google-java-format", -- java
         "rustfmt", -- rust
+        "jsonlint", -- json
       },
     })
   end,

@@ -25,12 +25,14 @@ return {
         json = prettier,
         graphql = prettier,
         java = { "google-java-format" },
+        vue = prettier,
         -- kotlin = { "ktlint" },
         -- ruby = { "standardrb" },
         markdown = prettier,
         -- erb = { "htmlbeautifier" },
         html = { "prettierd", "htmlbeautifier" },
         bash = { "shfmt" }, -- beautysh
+        sh = { "shfmt" }, -- beautysh
         proto = { "buf" },
         rust = { "rustfmt" },
         yaml = { "yamlfmt" },

@@ -180,12 +180,14 @@ return {
     --
     lspconfig["cssls"].setup({
       capabilities = capabilities,
+      -- cmd = { "vscode-html-languageservice", "--stdio" },
     })
 
     -- HTML (css + javascript)
     --
     lspconfig["html"].setup({
       capabilities = capabilities,
+      --cmd = { "vscode-html-languageservice", "--stdio" },
     })
 
     -- Angular

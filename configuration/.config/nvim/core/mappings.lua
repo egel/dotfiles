@@ -256,8 +256,8 @@ keymap.set("n", "J", "mzJ`z")
 
 -- DX improvenent: Cursor stays in middle when ...
 --
-keymap.set("n", "<C-d>", "<C-d>zz") -- when moving half page down
-keymap.set("n", "<C-u>", "<C-u>zz") -- when moving half page up
+keymap.set("n", "<C-d>", "<C-d>zz") -- when moving half page down and recenter
+keymap.set("n", "<C-u>", "<C-u>zz") -- when moving half page up and recenter
 
 -- ##################################
 -- Enhance visualizations
