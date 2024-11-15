@@ -104,15 +104,22 @@ if [ -s "${DOTFILES_ALIASES_PRIVATE}" ]; then
   source ${DOTFILES_ALIASES_PRIVATE}
 fi
 
-DOTFILES_ALIASES_WORK=$HOME/.aliases.work
-if [ -s "${DOTFILES_ALIASES_WORK}" ]; then
-  source ${DOTFILES_ALIASES_WORK}
-fi
-
+# Use nvim instead of vim
 alias vim='nvim'
 alias v='nvim'
 alias nvimdiff='nvim -d'
 alias vimdiff='nvim -d'
+# provide some quick access to vim
+alias vim_old='vim'
+alias vimdiff_old='vimdiff'
+
+#########################################
+# Dotfiles: Add private aliases
+#########################################
+DOTFILES_ALIASES_WORK=$HOME/.aliases.work
+if [ -s "${DOTFILES_ALIASES_WORK}" ]; then
+  source ${DOTFILES_ALIASES_WORK}
+fi
 
 #########################################
 # Dotfiles: Load private passwords
@@ -244,7 +251,7 @@ fi
 ## LLVM (CPP)
 if [ -d "$(brew --prefix llvm)" ]; then
     export PATH="$(brew --prefix llvm)/bin:$PATH"
-fi 
+fi
 
 #########################################
 # Rust / cargo programs
