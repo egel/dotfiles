@@ -3,6 +3,9 @@
 # nvim Lazy plugin
 #**/lazy-lock.json
 
+# ignore sub-dirs for FZF
+**/.vim/plugged
+
 # Brew
 */Brewfile.lock.json
 

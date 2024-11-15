@@ -267,12 +267,32 @@ fi
 # export GOROOT_BOOTSTRAP=$GOROOT
 
 #########################################
-# Fuzzy files finder
+# fzf (fuzzy files finder)
 #########################################
-[[ -f "$HOME/.fzf.zsh" ]] && source "$HOME/.fzf.zsh"
 #
 # Ctrl + t -> open file finder
 # Ctrl + r -> open last commands
+#
+IS_EXIST_FZF=$(command -v fzf)
+IS_EXIST_RG=$(command -v rg)
+if [ -s "${IS_FZF_EXIST}" ]; then
+  # refer rg over ag
+  if type rg &> /dev/null; then
+      export FZF_DEFAULT_COMMAND='rg \
+          --files \
+          --hidden \
+          --glob=!**/node_modules/* \
+          --glob=!**/coverage/* \
+          --glob=!**/dist/* \
+          --glob=!**/.nx/* \
+          --glob=!**/.git/* \
+          --glob=!**/.vim/plugged/* \
+          --glob=!**/.angular/*'
+  fi
+
+  # enable completion for everything
+  zstyle ':completion:*' fzf-search-display true
+fi
 
 #########################################
 # sdkman (java version manager)
