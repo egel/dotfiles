@@ -315,3 +315,47 @@ if [[ -f "$ZSH/oh-my-zsh.sh" ]]; then
 else
   echo "Missing $ZSH/oh-my-zsh.sh file."
 fi
+
+
+###
+# Change a string in filename friendly for save:
+# - lowercase
+# - kebab-case
+# - no spaces " "
+# - no colons ":"
+# - no curly brackets "{}"
+# - no brackets "()"
+# - no square brackets "[]"
+# - no angle brackets "<>"
+# - no dots in between "."
+# - no comas in between ","
+# - no double hyphens "--"
+#
+# min: POSIX compatible
+#
+function toFileName () {
+  local filename=$1
+  result="$(echo -n "${filename}" \
+    | tr '[:upper:]' '[:lower:]' \
+    | tr ':' '-' \
+    | tr '.' '-' \
+    | tr '(' '-' \
+    | tr ')' '-' \
+    | tr '{' '-' \
+    | tr '}' '-' \
+    | tr '[' '-' \
+    | tr ']' '-' \
+    | tr '<' '-' \
+    | tr '>' '-' \
+    | tr ',' '-' \
+    | tr ' ' '-' \
+    | sed -e 's@--@-@g' \
+  )"
+  # extra space below is necessary!
+  lastChar=$(echo -n "$result" | tail -c 1)
+  if [[ "$lastChar" == "-" ]]; then
+    result=${result::-1}
+  fi
+  printf "Original:\n%s\n" "${filename}"
+  printf "Improved:\n%s\n" "${result}"
+}
