@@ -76,7 +76,7 @@ return {
           menu = {
             buffer = "[buf]",
             nvim_lsp = "[LSP]",
-            nvim_lua = "[API]",
+            nvim_lua = "[LUA]",
             path = "[path]",
             ultisnips = "[snip]",
           },

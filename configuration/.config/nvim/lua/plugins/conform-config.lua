@@ -1,8 +1,9 @@
 return {
   "stevearc/conform.nvim",
   event = {
-    "BufReadPre",
+    "BufReadPost",
     "BufNewFile",
+    "LspAttach",
   },
   opts = {},
   config = function()
@@ -50,7 +51,7 @@ return {
       format_on_save = {
         -- I recommend these options. See :help conform.format for details.
         lsp_fallback = true,
-        timeout_ms = 500,
+        timeout_ms = 2500,
       },
 
       -- If this is set, Conform will run the formatter asynchronously after save.
