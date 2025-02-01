@@ -73,6 +73,10 @@
 	# show files from commit
 	sf = git diff-tree --no-commit-id --name-only -r
 
+	# show git scopes
+	# example: "feat(lib): improve method x", and the scope is "lib"
+	scopes = git log --oneline | awk -F'[()]' '/\(/ {print $2}' | sort | uniq
+
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
