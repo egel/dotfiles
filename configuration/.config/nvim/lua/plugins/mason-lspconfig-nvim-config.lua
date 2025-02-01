@@ -40,6 +40,7 @@ return {
         "sqlls",
         "stylelint_lsp",
         "ts_ls",
+        "tailwindcss",
         "yamlls", -- yaml language-server
         "zls",
 

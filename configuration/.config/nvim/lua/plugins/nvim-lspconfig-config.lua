@@ -185,6 +185,13 @@ return {
 
     -- HTML (css + javascript)
     --
+    lspconfig["tailwindcss"].setup({
+      capabilities = capabilities,
+      --cmd = { "vscode-html-languageservice", "--stdio" },
+    })
+
+    -- HTML (css + javascript)
+    --
     lspconfig["html"].setup({
       capabilities = capabilities,
       --cmd = { "vscode-html-languageservice", "--stdio" },
