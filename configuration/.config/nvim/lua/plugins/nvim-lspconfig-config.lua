@@ -49,8 +49,12 @@ return {
           desc = "[g]o to [i]mplementation",
           buffer = ev.buf,
         })
-        keymap.set("n", "gr", vim.lsp.buf.references, {
-          desc = "[g]o to [r]eferences",
+        -- keymap.set("n", "gr", vim.lsp.buf.references, {
+        -- desc = "[g]o to [r]eferences",
+        -- buffer = ev.buf,
+        -- })
+        keymap.set("n", "gr", "<cmd>Telescope lsp_references<cr>", {
+          desc = "[g]o to telescope [r]eferences",
           buffer = ev.buf,
         })
         keymap.set("n", "<leader>dl", "<cmd>Telescope diagnostics<cr>", {

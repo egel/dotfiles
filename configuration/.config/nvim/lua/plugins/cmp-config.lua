@@ -12,6 +12,9 @@ return {
   config = function()
     local lspkind = require("lspkind")
 
+    -- for sorting the results
+    local compare = require("cmp.config.compare")
+
     -- Set up nvim-cmp.
     local cmp = require("cmp")
 
@@ -43,6 +46,13 @@ return {
           behavior = cmp.ConfirmBehavior.Insert,
           select = true, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
         }),
+        ["<C-x>"] = cmp.mapping(cmp.mapping.complete({
+          config = {
+            sources = cmp.config.sources({
+              { name = "cmp_ai" },
+            }),
+          },
+        })),
       }),
 
       -- you can also configure:
@@ -51,6 +61,7 @@ return {
       --    max_item_count  - useful when having to many results from specific section
       sources = cmp.config.sources({
         -- The order reflect in completion results
+        { name = "cmp_ai" }, -- include input from cmp-ai plugin
         { name = "cmp_git" },
         { name = "nvim_lsp" },
         { name = "path" },
@@ -107,6 +118,11 @@ return {
             Event = "",
             Operator = "󰆕",
             TypeParameter = "",
+            -- icons for cmp-ai completion
+            HF = "",
+            OpenAI = "",
+            Codestral = "",
+            Bard = "",
           },
 
           -- The function below will be called before any actual modifications from lspkind
@@ -122,6 +138,21 @@ return {
             ghost_text = true,
           },
         }),
+      },
+
+      sorting = {
+        priority_weight = 2,
+        comparators = {
+          require("cmp_ai.compare"),
+          compare.offset,
+          compare.exact,
+          compare.score,
+          compare.recently_used,
+          compare.kind,
+          compare.sort_text,
+          compare.length,
+          compare.order,
+        },
       },
 
       -- source: https://github.com/hrsh7th/nvim-cmp/issues/598

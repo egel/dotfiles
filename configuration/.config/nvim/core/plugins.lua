@@ -89,6 +89,7 @@ local plugins = {
   -- nvim LSP completition
   { import = "plugins/nvim-lspconfig-config" },
 
+  { import = "plugins/cmp-ai" }, -- need to be before cmp-config
   { import = "plugins/cmp-config" },
   { import = "plugins/luasnip-config" },
 
