@@ -284,6 +284,7 @@ keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 -- format code
 keymap.set("n", "<leader>f", function()
   vim.lsp.buf.format()
+  vim.notify("code formatted")
 end, {
   desc = "format code",
 })

@@ -41,12 +41,24 @@ return {
           desc = "[g]o to [D]eclaration",
           buffer = ev.buf,
         })
+        keymap.set("n", "gt", vim.lsp.buf.type_definition, {
+          desc = "[g]o to [t]ype definition",
+          buffer = ev.buf,
+        })
+        keymap.set("n", "gi", vim.lsp.buf.implementation, {
+          desc = "[g]o to [i]mplementation",
+          buffer = ev.buf,
+        })
         keymap.set("n", "gr", vim.lsp.buf.references, {
           desc = "[g]o to [r]eferences",
           buffer = ev.buf,
         })
+        keymap.set("n", "<leader>dl", "<cmd>Telescope diagnostics<cr>", {
+          desc = "Open telescope [d]iagnostic [l]ist",
+          buffer = ev.buf,
+        })
         keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {
-          desc = "[c]ode [a]ction",
+          desc = "Show possible [c]ode [a]ctions",
           buffer = ev.buf,
         })
         keymap.set("n", "K", vim.lsp.buf.hover, {
