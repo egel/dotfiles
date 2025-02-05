@@ -177,6 +177,104 @@ if [[ "$COLORTERM" == "xfce4-terminal" ]]; then
   export TERM="xterm-256color"
 fi;
 
+###
+# Change a string in filename friendly for save:
+# - lowercase
+# - kebab-case
+# - no spaces " "
+# - no colons ":"
+# - no curly brackets "{}"
+# - no brackets "()"
+# - no square brackets "[]"
+# - no angle brackets "<>"
+# - no dots in between "."
+# - no comas in between ","
+# - no doube quotes in between '"'
+# - no single quotes in between "'"
+# - no at signs in between "@"
+# - no double hyphens "--"
+#
+# min: POSIX compatible
+#
+function toFileName () {
+  local filename=$1
+  result="$(echo -n "${filename}" \
+    | tr '[:upper:]' '[:lower:]' \
+    | tr ':' '-' \
+    | tr '.' '-' \
+    | tr '(' '-' \
+    | tr ')' '-' \
+    | tr '{' '-' \
+    | tr '}' '-' \
+    | tr '[' '-' \
+    | tr ']' '-' \
+    | tr '<' '-' \
+    | tr '>' '-' \
+    | tr ',' '-' \
+    | tr '"' '-' \
+    | tr "'" '-' \
+    | tr '@' '-' \
+    | tr ' ' '-' \
+    | sed -e 's@--@-@g' \
+  )"
+  # extra space below is necessary!
+  lastChar=$(echo -n "$result" | tail -c 1)
+  if [[ "$lastChar" == "-" ]]; then
+    result=${result::-1}
+  fi
+  printf "Original:\n\n\t%s\n\n" "${filename}"
+  printf "Improved:\n\n\t%s\n" "${result}"
+}
+
+# convert given "webm" file and convert into new with "mp4" extension
+function convertWebmToMp4 () {
+    local fullfile=$1
+    local fileNameWithExt="${fullfile##*/}" # foo.txt
+    local fileNameOnly="${fullfile%.*}" # foo
+    local fileExtOnly="${filename##*.}" # .txt
+    ffmpeg -y -fflags +genpts -i "${fullfile}" -r 24 "${fileNameOnly}.mp4"
+}
+
+# beautify JSON file (override current file)
+function jsonBeautify () {
+    local fullfile=$1
+    local tmpSuffix="_tmp"
+    local fileNameWithExt="${fullfile##*/}" # foo.txt
+    local fileNameOnly="${fullfile%.*}" # foo
+    local fileExtOnly="${filename##*.}" # .txt
+    jq --sort-keys . "${fullfile}" > "${fileNameOnly}${tmpSuffix}${fileExtOnly}" && mv "${fileNameOnly}${tmpSuffix}${fileExtOnly}" "${fullfile}"
+}
+
+# jsonUglyfy JSON file as save in new file with `_min` suffix
+function jsonUglyfy () {
+    local fullfile=$1
+    local tmpSuffix="_min"
+    local fileNameWithExt="${fullfile##*/}" # foo.txt
+    local fileNameOnly="${fullfile%.*}" # foo
+    local fileExtOnly="${filename##*.}" # .txt
+    cat "${fullfile}" | jq -c > "${fileNameOnly}${tmpSuffix}${fileExtOnly}"
+}
+
+# decode file and save in new file with `_decoded` suffix
+function base64DecodeFile () {
+    local fullfile=$1
+    local tmpSuffix="_decoded"
+    local fileNameWithExt="${fullfile##*/}" # foo.txt
+    local fileNameOnly="${fullfile%.*}" # foo
+    local fileExtOnly="${filename##*.}" # .txt
+    cat "${fullfile}" | base64 -d > "${fileNameOnly}${tmpSuffix}${fileExtOnly}"
+}
+
+# encode file and save it in new file with `_encoded` suffix
+function base64EncodeFile () {
+    local fullfile=$1
+    local tmpSuffix="_encoded"
+    local fileNameWithExt="${fullfile##*/}" # foo.txt
+    local fileNameOnly="${fullfile%.*}" # foo
+    local fileExtOnly="${filename##*.}" # .txt
+    cat "${fullfile}" | base64 > "${fileNameOnly}${tmpSuffix}${fileExtOnly}"
+}
+
 #########################################
 # Virtualenvwrapper
 #########################################
@@ -204,6 +302,15 @@ elif [ ! -d "$HOME/.nvm" ]; then
   echo "Missing NVM (Node Version Manager)."
   echo "Visit https://github.com/nvm-sh/nvm to install it."
 fi
+
+
+# pnpm
+export PNPM_HOME="$HOME/Library/pnpm" # macOS location
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
 
 #########################################
 # SSH agent
@@ -316,46 +423,4 @@ else
   echo "Missing $ZSH/oh-my-zsh.sh file."
 fi
 
-
-###
-# Change a string in filename friendly for save:
-# - lowercase
-# - kebab-case
-# - no spaces " "
-# - no colons ":"
-# - no curly brackets "{}"
-# - no brackets "()"
-# - no square brackets "[]"
-# - no angle brackets "<>"
-# - no dots in between "."
-# - no comas in between ","
-# - no double hyphens "--"
-#
-# min: POSIX compatible
-#
-function toFileName () {
-  local filename=$1
-  result="$(echo -n "${filename}" \
-    | tr '[:upper:]' '[:lower:]' \
-    | tr ':' '-' \
-    | tr '.' '-' \
-    | tr '(' '-' \
-    | tr ')' '-' \
-    | tr '{' '-' \
-    | tr '}' '-' \
-    | tr '[' '-' \
-    | tr ']' '-' \
-    | tr '<' '-' \
-    | tr '>' '-' \
-    | tr ',' '-' \
-    | tr ' ' '-' \
-    | sed -e 's@--@-@g' \
-  )"
-  # extra space below is necessary!
-  lastChar=$(echo -n "$result" | tail -c 1)
-  if [[ "$lastChar" == "-" ]]; then
-    result=${result::-1}
-  fi
-  printf "Original:\n%s\n" "${filename}"
-  printf "Improved:\n%s\n" "${result}"
-}
+export GGML_METAL_PATH_RESOURCES="$(brew --prefix whisper-cpp)/share/whisper-cpp"
