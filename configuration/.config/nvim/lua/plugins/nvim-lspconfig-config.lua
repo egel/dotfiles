@@ -21,6 +21,7 @@ return {
     local lspconfig = require("lspconfig")
     local mason_lspconfig = require("mason-lspconfig")
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
+    local telescope = require("telescope.builtin")
 
     local vim_api = vim.api
     local keymap = vim.keymap
@@ -33,24 +34,40 @@ return {
         -- Enable completion triggered by <c-x><c-o>
         vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
-        keymap.set("n", "gd", vim.lsp.buf.definition, {
-          desc = "[g]o to [d]efinition",
+        keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<cr>", {
+          desc = "[g]o to telescope [d]efinition",
           buffer = ev.buf,
         })
+        -- keymap.set("n", "gd", vim.lsp.buf.definition, {
+        -- desc = "[g]o to [d]efinition",
+        -- buffer = ev.buf,
+        -- })
         keymap.set("n", "gD", vim.lsp.buf.declaration, {
           desc = "[g]o to [D]eclaration",
           buffer = ev.buf,
         })
-        keymap.set("n", "gt", vim.lsp.buf.type_definition, {
+        -- keymap.set("n", "gt", vim.lsp.buf.type_definition, {
+        -- desc = "[g]o to [t]ype definition",
+        -- buffer = ev.buf,
+        -- })
+        -- keymap.set("n", "gi", vim.lsp.buf.implementation, {
+        -- desc = "[g]o to [i]mplementation",
+        -- buffer = ev.buf,
+        -- })
+        -- keymap.set("n", "gr", vim.lsp.buf.references, {
+        -- desc = "[g]o to [r]eferences",
+        -- buffer = ev.buf,
+        -- })
+        keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<cr>", {
           desc = "[g]o to [t]ype definition",
           buffer = ev.buf,
         })
-        keymap.set("n", "gi", vim.lsp.buf.implementation, {
-          desc = "[g]o to [i]mplementation",
+        keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<cr>", {
+          desc = "[g]o to telescope [i]mplementation",
           buffer = ev.buf,
         })
-        keymap.set("n", "gr", vim.lsp.buf.references, {
-          desc = "[g]o to [r]eferences",
+        keymap.set("n", "gr", "<cmd>Telescope lsp_references<cr>", {
+          desc = "[g]o to telescope [r]eferences",
           buffer = ev.buf,
         })
         keymap.set("n", "<leader>dl", "<cmd>Telescope diagnostics<cr>", {
@@ -232,6 +249,10 @@ return {
             globals = {
               "vim",
               "require",
+            },
+            disable = {
+              -- NOTE: toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+              "missing-fields",
             },
           },
           workspace = {
