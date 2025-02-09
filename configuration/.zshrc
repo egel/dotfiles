@@ -275,6 +275,14 @@ function base64EncodeFile () {
     cat "${fullfile}" | base64 > "${fileNameOnly}${tmpSuffix}${fileExtOnly}"
 }
 
+# show git scopes in git conventional commits
+# example:
+#		feat(webapp): bla bla bla
+#			   ↳ this is scope
+function gscopes() {
+	git log --oneline | awk -F'[()]' '/\(/ {print $2}' | sort | uniq
+}
+
 #########################################
 # Virtualenvwrapper
 #########################################
