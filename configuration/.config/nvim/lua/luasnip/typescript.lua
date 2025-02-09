@@ -10,7 +10,9 @@ local fmt = require("luasnip.extras.fmt").fmt
 local fmta = require("luasnip.extras.fmt").fmta
 local rep = require("luasnip.extras").rep
 
-ls.add_snippets("all", {
+ls.add_snippets("typescript", {
   -- available in any file type
-  ls.parser.parse_snippet("expand", "-- expanded into this!"),
+  ls.parser.parse_snippet("log", "console.log($1)"),
+}, {
+  key = "typescript",
 })
