@@ -130,6 +130,7 @@ ln -sf ${PWD}/.fzf.zsh ${HOME}/.fzf.zsh
 > SSH is generally a very private space. To keep it clean use a protected directory to load your SSH configurations for each personal, or clients/servers, like in the example below:
 >
 > - ~/.ssh/config.d/personal
+> - ~/.ssh/config.d/work
 > - ~/.ssh/config.d/client1
 > - ~/.ssh/config.d/client2
 
@@ -140,19 +141,58 @@ It's good to add the below settings to your `~/.ssh/config`
 Include config.d/*
 ```
 
-Secure your configuration files & directories:
+> [!TIP]
+> The sample files in ssh/config.d directory could look like
+>
+> ```init
+> # ~/.ssh/config.d/personal
+>
+> # Default github
+> Host me.github.com
+>     HostName github.com
+>     PreferredAuthentications publickey
+>     IdentityFile ~/.ssh/me_rsa
+>
+> # vi: ft=sshconfig
+> ```
+>
+> ```init
+> # ~/.ssh/config.d/work
+>
+> # Work github
+> Host work.github.com
+>     HostName github.com
+>     PreferredAuthentications publickey
+>     IdentityFile ~/.ssh/work_rsa
+>
+> # vi: ft=sshconfig
+> ```
+
+Then if you want to pull and push as some specific user then set the git remote url to desired user. More you can find here [Specify an SSH key for git push for a given domain](https://stackoverflow.com/a/7927828/1977012)
+
+```bash
+# before modification print current remote
+git remote -v
+
+git remote add work git@work.github.com:whatever.git
+git remote add me git@me.github.com:whatever.git
+```
+
+Secure your configuration files & directories with proper rights:
 
 ```bash
 # main ssh directory
-chmod 700 ~/.ssh/
+chmod 700 ~/.ssh
 # public keys
 chmod 644 ~/.ssh/**/*.pub
 # private keys
-chmod 644 <set manually each file>
+chmod 600 <set manually each file>
 # authorized keys
-chmod 644 ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
+# known hosts
+chmod 644 ~/.ssh/known_host
 # configurations
-chmod 600 ~/.ssh/config/
+chmod 600 ~/.ssh/config
 ```
 
 ## alacritty
@@ -406,6 +446,66 @@ ln -sf ${PWD}/.muttrc ${HOME}/.muttrc
 
 # copy template with private variables and adjust
 cp ${PWD}/.configuration/.muttrc.private ${HOME}/.muttrc.private
+```
+
+## gpg
+
+### import own gpg key
+
+- you should have your `privatekey` and `publickey.pub`.
+
+```bash
+gpg --import privatekey
+```
+
+After importing if you try to sign commits all should work but when you check the repository for `git log --show-signature` then you may see something like:
+
+```
+commit 5a0fafb301f549e1277ca3b2fb92a8c141659ea2
+gpg: Signature made Wed Sep  4 09:36:32 2024 CEST
+gpg:                using RSA key 247A19A21F71CFD6F02AC05E10BC01ED9FF2F5BA
+gpg: Good signature from "John Doe <johndoe@gmail.com>" [unknown]
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 247A 19A2 1F71 CFD6 F02A  C05E 10BC 01ED 9FF2 F5BA
+Author: John Doe <johndoe@gmail.com>
+Date:   Wed Sep 4 09:36:32 2024 +0200
+
+    feat: add command to list all tags
+
+...
+```
+
+This tells that if you have your own key it would be good to increase trust level. To do so just edit your key trust level by:
+
+```bash
+# show keys with full long key-id
+gpg --list-secret-keys --keyid-format LONG
+
+# edit
+gpg --edit-key [key-id]
+
+trust
+
+5 # as ultimate trust
+
+quit
+```
+
+Now it you check the signature you should see:
+
+```
+commit 5a0fafb301f549e1277ca3b2fb92a8c141659ea2
+gpg: Signature made Wed Sep  4 09:36:32 2024 CEST
+gpg:                using RSA key 247A19A21F71CFD6F02AC05E10BC01ED9FF2F5BA
+gpg: Good signature from "John Doe <johndoe@gmail.com>" [unknown]
+Primary key fingerprint: 247A 19A2 1F71 CFD6 F02A  C05E 10BC 01ED 9FF2 F5BA
+Author: John Doe <johndoe@gmail.com>
+Date:   Wed Sep 4 09:36:32 2024 +0200
+
+    feat: add command to list all tags
+
+...
 ```
 
 ### create secure password
