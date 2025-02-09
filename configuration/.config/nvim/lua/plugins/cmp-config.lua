@@ -8,10 +8,11 @@ return {
     "hrsh7th/cmp-path",
     "hrsh7th/cmp-cmdline",
     "hrsh7th/nvim-cmp",
+    "saadparwaiz1/cmp_luasnip", -- for load luasnips
   },
   config = function()
     local lspkind = require("lspkind")
-
+    local ls = require("luasnip")
     -- Set up nvim-cmp.
     local cmp = require("cmp")
 
@@ -19,10 +20,7 @@ return {
       snippet = {
         -- REQUIRED - you must specify a snippet engine
         expand = function(args)
-          require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
-          -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-          -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-          -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+          ls.lsp_expand(args.body) -- For `luasnip` users.
         end,
       },
 
@@ -51,13 +49,13 @@ return {
       --    max_item_count  - useful when having to many results from specific section
       sources = cmp.config.sources({
         -- The order reflect in completion results
+        { name = "cmp_ai" }, -- include input from cmp-ai plugin
+        { name = "luasnip", options = { show_autosnippets = true } }, -- For luasnip users.
         { name = "cmp_git" },
         { name = "nvim_lsp" },
         { name = "path" },
         { name = "look" },
-        { name = "buffer", keyword_length = 2, max_item_count = 10 }, -- start suggesting from X chars
-        { name = "ultisnips" }, -- For ultisnips users.
-        { name = "luasnip" }, -- For luasnip users.
+        { name = "buffer", keyword_length = 1, max_item_count = 20 }, -- start suggesting from X chars
       }),
 
       formatting = {
