@@ -448,7 +448,24 @@ ln -sf ${PWD}/.muttrc ${HOME}/.muttrc
 cp ${PWD}/.configuration/.muttrc.private ${HOME}/.muttrc.private
 ```
 
-## gpg
+## GPG / PGP
+
+### Install GPG configs
+
+```bash
+mkdir -p ${HOME}/.gnupg
+
+ln -sf ${PWD}/.gnupg/dirmngr.conf ${HOME}/.gnupg/dirmngr.conf
+ln -sf ${PWD}/.gnupg/gpg-agent.conf ${HOME}/.gnupg/gpg-agent.conf
+ln -sf ${PWD}/.gnupg/gpg.conf ${HOME}/.gnupg/gpg.conf
+
+# make sure, the directory & contents belong to you:
+chown -R $(whoami) ~/.gnupg/
+
+# correct access rights for .gnupg and subfolders:
+find ~/.gnupg -type f -exec chmod 600 {} \;
+find ~/.gnupg -type d -exec chmod 700 {} \;
+```
 
 ### import own gpg key
 
@@ -507,6 +524,69 @@ Date:   Wed Sep 4 09:36:32 2024 +0200
 
 ...
 ```
+
+### Create new key
+
+> [!TIP] Before creating a new key, you need to disable `no-tty` option from `~/.gnupg/gpg.conf`. This option blocks unwanted creations of new keys. To be safe, enable `no-tty` option backe again after the creation of a new key is completed.
+
+> [!TIP] Remember to create a revocation certificate after.
+
+```bash
+gpg --full-gen-key
+gpg: WARNING: unsafe permissions on homedir '/Users/johndoe/.gnupg'
+gpg (GnuPG) 2.4.7; Copyright (C) 2024 g10 Code GmbH
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Please select what kind of key you want:
+   (1) RSA and RSA
+   (2) DSA and Elgamal
+   (3) DSA (sign only)
+   (4) RSA (sign only)
+   (9) ECC (sign and encrypt) *default*
+  (10) ECC (sign only)
+  (14) Existing key from card
+Your selection? 1
+RSA keys may be between 1024 and 4096 bits long.
+What keysize do you want? (3072) 4096
+Requested keysize is 4096 bits
+Please specify how long the key should be valid.
+         0 = key does not expire
+      <n>  = key expires in n days
+      <n>w = key expires in n weeks
+      <n>m = key expires in n months
+      <n>y = key expires in n years
+Key is valid for? (0) 5y
+Is this correct? (y/N) y
+
+GnuPG needs to construct a user ID to identify your key.
+
+Real name: John Doe
+Email address: johndoe@example.com
+Comment: Acme Company
+You selected this USER-ID:
+    "John Doe (Acme Company) <johndoe@example.com>"
+
+Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? o
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+gpg: directory '/Users/johndoe/.gnupg/openpgp-revocs.d' created
+gpg: revocation certificate stored as '/Users/johndoe/.gnupg/openpgp-revocs.d/BJ7PJGBAHFIJ7ZV9GWONX2PTBDOFOA78UBN6R8ZE.rev'
+public and secret key created and signed.
+
+pub   rsa4096 2025-01-31 [SC]
+      BJ7PJGBAHFIJ7ZV9GWONX2PTBDOFOA78UBN6R8ZE
+uid                      John Doe (Acme Company) <johndoe@example.com>
+sub   rsa4096 2025-01-31 [E]
+```
+
+BJ7PJGBAHFIJ7ZV9GWONX2PTBDOFOA78UBN6R8ZE
 
 ### create secure password
 
