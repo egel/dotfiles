@@ -7,10 +7,13 @@ return {
     local colorizer = require("colorizer")
 
     colorizer.setup({
+      "html",
       "css",
       "scss",
       "javascript",
       "typescript",
+      "javascriptreact",
+      "typescriptreact",
       html = {
         mode = "foreground",
       },
