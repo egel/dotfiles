@@ -1,9 +1,15 @@
---    https://github.com/tjdevries/config_manager/tree/master/xdg_config/nvim
 return {
   "rcarriga/nvim-notify",
+  version = "*",
   dependencies = {},
-  config = function()
+  config = function(_)
+    local notify = require("notify")
+
     -- 24-bit colour is required
     vim.opt.termguicolors = true
+
+    require("notify").setup({
+      background_colour = "#000000",
+    })
   end,
 }
