@@ -8,7 +8,7 @@ return {
   opts = {},
   config = function()
     local conform = require("conform")
-    local prettier = { "prettierd", "prettier" }
+    local prettier = { "prettierd", "prettier", stop_after_first = true }
 
     conform.setup({
       formatters_by_ft = {
@@ -16,7 +16,7 @@ return {
 
         -- Conform will run multiple formatters sequentially
         go = { "goimports", "gofmt" },
-        python = { "black" },
+        python = { "isort", "black" },
 
         -- Use a sub-list to run only the first available formatter
         javascript = prettier,
