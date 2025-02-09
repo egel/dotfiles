@@ -75,6 +75,9 @@ local plugins = {
   -- lazy = false, -- load during startup
   -- },
 
+  -- Add notification plugin
+  { import = "plugins/nvim-notify-config" },
+
   -- Add git info message after the line
   { import = "plugins/git-blame-nvim-config" },
 
