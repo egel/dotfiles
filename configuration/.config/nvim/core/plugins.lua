@@ -66,6 +66,9 @@ local plugins = {
   -- add sidebar tree window (for easier overview on directories structure)
   { import = "plugins/nvim-tree-config" },
 
+  -- sort plugin
+  "christoomey/vim-sort-motion",
+
   -- editorconfig plugin
   --
   -- nvim support editor config by default (https://neovim.io/doc/user/editorconfig.html)
