@@ -91,3 +91,69 @@ vim.opt.spellsuggest = "9" -- show 9 spell suggestions at most
 --vim.opt.mpletion behaviour
 --vim.opt.completeopt+=menuone  -- Show menu even if there is only one item
 --vim.opt.completeopt-=preview  -- Disable the preview window
+
+-- ##################################
+-- Diagnostics
+-- ##################################
+--
+local border = {
+  { "╭", "FloatBorder" },
+  { "─", "FloatBorder" },
+  { "╮", "FloatBorder" },
+  { "│", "FloatBorder" },
+  { "╯", "FloatBorder" },
+  { "─", "FloatBorder" },
+  { "╰", "FloatBorder" },
+  { "│", "FloatBorder" },
+}
+
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+  border = border,
+})
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+  border = border,
+})
+-- Show boarder in popup windows (diagnostic, hover, help)
+--
+vim.diagnostic.config({
+  border = border,
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = false,
+  virtual_text = {
+    source = false, -- source added in format message
+    prefix = "▎", -- Could be '■', '●', '▎', 'x'
+    suffix = "",
+    format = function(diagnostic)
+      -- print(vim.inspect(diagnostic)) -- uncomment to print what info is recorded
+      return string.format(
+        -- Even if multiple lines are set, they'll actually be displayed on
+        -- the same line, and if it's too long, it won't be fully visible.
+        -- Of course, you can reduce the text size to try to see the full
+        -- context (for example, if you use Neovide, you can lower
+        -- vim.g.neovide_scale_factor, and so on)
+        [[ %s (code: %s): %s ]],
+        -- diagnostic.severity,
+        diagnostic.source,
+        diagnostic.code,
+        diagnostic.message
+      )
+    end,
+  },
+  float = true,
+  -- {
+  -- border = border,
+  -- source = "always",
+  -- },
+})
+-- override theme's floating window background color to be same as in terminal
+vim.cmd("autocmd ColorScheme * highlight! link FloatBorder Normal")
+
+-- Change diagnostic symbols in the sign column (gutter)
+--
+local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
