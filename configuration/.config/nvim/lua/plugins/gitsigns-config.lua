@@ -30,7 +30,7 @@ return {
         delay = 3000,
         ignore_whitespace = false,
       },
-      current_line_blame_formatter = "<author>,asdfasfdasf <author_time:%Y-%m-%d> - <summary>",
+      current_line_blame_formatter = "<author>, <author_time:%Y-%m-%d> - <summary>",
       sign_priority = 6,
       update_debounce = 100,
       status_formatter = nil, -- Use default
@@ -61,7 +61,7 @@ return {
             gs.next_hunk()
           end)
           return "<Ignore>"
-        end, { expr = true })
+        end, { expr = true, desc = "navigate to next hunk" })
 
         map("n", "[c", function()
           if vim.wo.diff then
@@ -71,17 +71,17 @@ return {
             gs.prev_hunk()
           end)
           return "<Ignore>"
-        end, { expr = true })
+        end, { expr = true, desc = "navigate to previous hunk" })
 
         -- Actions
         map("n", "<leader>hs", gs.stage_hunk, { desc = "[h]unk [s]tage" })
-        map("n", "<leader>hr", gs.reset_hunk)
+        map("n", "<leader>hr", gs.reset_hunk, { desc = "[h]unk [r]eset" })
         map("v", "<leader>hs", function()
           gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
-        end)
+        end, { desc = "[h]unk [s]tage (visual mode)" })
         map("v", "<leader>hr", function()
           gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
-        end)
+        end, { desc = "[h]unk [r]eset (visual mode)" })
         map("n", "<leader>hS", gs.stage_buffer)
         map("n", "<leader>hu", gs.undo_stage_hunk, { desc = "[h]unk [u]ndo staged" })
         map("n", "<leader>hR", gs.reset_buffer)
@@ -89,6 +89,9 @@ return {
         map("n", "<leader>hb", function()
           gs.blame_line({ full = true })
         end)
+
+        -- Toggle
+        --
         map("n", "<leader>tb", gs.toggle_current_line_blame)
         map("n", "<leader>hd", gs.diffthis)
         map("n", "<leader>hD", function()
@@ -97,7 +100,7 @@ return {
         map("n", "<leader>td", gs.toggle_deleted)
 
         -- Text object
-        map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
+        map({ "o", "x" }, "ih", gs.select_hunk)
       end,
     })
   end,
