@@ -142,6 +142,12 @@ return {
       capabilities = capabilities,
     })
 
+    -- JSON
+    --
+    lspconfig["jsonls"].setup({
+      capabilities = capabilities,
+    })
+
     -- setup lsp for Python
     --
     lspconfig["pyright"].setup({
