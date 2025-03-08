@@ -65,11 +65,10 @@ vim.opt.sessionoptions = "unix,slash" -- For unix/windows compatibility
 
 vim.opt.splitbelow = true
 vim.opt.splitright = true
-
 -- vim.opt.commentstring = "#\ %s"           -- add space before adding comment
 
 vim.opt.breakindent = true -- preserve horizontal block indent
-vim.opt.showbreak = "↪" -- Character to show before the lines that have been soft-wrapped
+vim.opt.showbreak = "↳" -- e.g. ↳, ↪ - Character to show before the lines that have been soft-wrapped
 
 vim.wo.wrap = true
 
