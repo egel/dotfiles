@@ -215,13 +215,34 @@ function toFileName () {
     | tr "'" '-' \
     | tr '@' '-' \
     | tr ' ' '-' \
-    | sed -e 's@--@-@g' \
+    | tr '\n' '-' \
+    | tr '\r' '-' \
+    | tr '' '-' \
+    | sed -e 's@ü@ue@g' \
+    | sed -e 's@ö@oe@g' \
+    | sed -e 's@ä@ae@g' \
+    | sed -e 's@ę@e@g' \
+    | sed -e 's@ą@a@g' \
+    | sed -e 's@ć@c@g' \
+    | sed -e 's@ł@@g' \
+    | sed -e 's@ń@@g' \
+    | sed -e 's@ó@@g' \
+    | sed -e 's@ś@@g' \
+    | sed -e 's@ź@@g' \
+    | sed -e 's@ż@@g' \
+    | sed -e 's@--@-@g'
   )"
   # extra space below is necessary!
   lastChar=$(echo -n "$result" | tail -c 1)
   if [[ "$lastChar" == "-" ]]; then
     result=${result::-1}
   fi
+  # remove "-" if is first char
+  firstChar=$(echo -n "$result" | cut -c 1)
+  if [[ "$firstChar" == "-" ]]; then
+    result=${result:1}
+  fi
+
   printf "Original:\n\n\t%s\n\n" "${filename}"
   printf "Improved:\n\n\t%s\n" "${result}"
 }
