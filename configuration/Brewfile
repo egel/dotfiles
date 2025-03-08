@@ -70,6 +70,7 @@ brew "ollama"
 brew "audacity"
 brew "scroll-reverser" # when using trackball & mousepad
 brew "keycastr" # to show key inputs on screen
+brew "pdfgrep" # allow to search in pdf files
 
 # Browsers
 cask "google-chrome"
@@ -97,5 +98,15 @@ brew "nghttp2"
 
 # Networking
 cask "wireshark" # UI app
+
+# Utils
+brew "insect" # calculate lot
+brew "onefetch" # git project summary
+brew "task" # task manager
+brew "yt-dlp" # download vid/audio
+brew "cookiecutter" # templating engine
+brew "progress" # show progress of cp, mv, dd
+brew "difftastic" # show structural diff
+brew "usql" # universal cli interface for SQL
 
 # vi: ft=ruby
