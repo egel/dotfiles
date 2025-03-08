@@ -31,7 +31,7 @@ return {
     require("luasnip.loaders.from_lua").load({
       -- INFO: here using a path to previously simlinked directory
       --       See: configuration/README.md for more
-      paths = "~/.config/nvim/lua/luasnip/",
+      paths = { "~/.config/nvim/lua/luasnip/" },
     })
 
     --
@@ -72,7 +72,7 @@ return {
     })
 
     -- jump backward
-    vim.keymap.set({ "i", "s" }, "<C-j>", function()
+    vim.keymap.set({ "i", "s" }, "<C-h>", function()
       if ls.jumpable(-1) then
         ls.jump(-1)
       end

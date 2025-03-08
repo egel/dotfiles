@@ -66,17 +66,24 @@ ls.add_snippets("typescriptreact", {
     )
   ),
 
-  s({
-    trig = "if",
-    name = "if (single)",
-    desc = "Single if statement",
-  }, fmt([[
-    if (<>) {
-      <>
-    }]], {
-      i(1)},
+  s(
+    {
+      trig = "if",
+      name = "if (single)",
+      desc = "Single if statement",
+    },
+    fmt(
+      [[
+if (<>) {
+\t<>
+}]],
+      {
+        i(1),
+        i(2),
+      },
       { delimiters = "<>" }
-      ),
+    )
+  ),
 }, {
   key = "typescriptreact",
 })
