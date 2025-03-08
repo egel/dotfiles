@@ -20,6 +20,7 @@ return {
     "nvim-neotest/neotest-jest",
     "nvim-neotest/neotest-python",
     "nvim-neotest/neotest-go",
+    "marilari88/neotest-vitest",
   },
   keys = {
     {
@@ -82,10 +83,11 @@ return {
   config = function()
     local neotest = require("neotest")
     local neotest_jest = require("neotest-jest")
-    local neotest_python = require("neotest-python")
-    local neotest_plenary = require("neotest-plenary")
-    local neotest_vimtest = require("neotest-vim-test")
     local neotest_go = require("neotest-go")
+    local neotest_vitest = require("neotest-vitest")
+    -- local neotest_python = require("neotest-python")
+    -- local neotest_plenary = require("neotest-plenary")
+    -- local neotest_vimtest = require("neotest-vim-test")
 
     return neotest.setup({
       adapters = {
@@ -108,6 +110,13 @@ return {
           env = { CI = true },
           cwd = function(path)
             return vim.fn.getcwd()
+          end,
+        }),
+
+        neotest_vitest({
+          -- Filter directories when searching for test files. Useful in large projects (see Filter directories notes).
+          filter_dir = function(name, rel_path, root)
+            return name ~= "node_modules"
           end,
         }),
       },
