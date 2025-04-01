@@ -1,5 +1,4 @@
 @angular/cli@latest
-@angular/language-server@latest
 @compodoc/compodoc@latest
 eslint_d@latest
 jest@latest
