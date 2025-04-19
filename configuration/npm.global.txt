@@ -3,6 +3,7 @@
 eslint_d@latest
 jest@latest
 markdownlint@latest
+npm-check-updates@latest
 prettier@latest
 stylelint@latest
 ts-node@latest
