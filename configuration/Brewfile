@@ -37,6 +37,8 @@ brew "mutt" # console email client
 brew "awk" # for advance search & test manupulation
 brew "rustfmt"
 brew "ffmpeg" # for video
+brew "parallel" # concurrent tasks
+brew "hadolint" # lint Dockerfiles
 
 # GPG - to signed your commits
 brew "gnutls"
