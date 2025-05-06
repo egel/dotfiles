@@ -411,9 +411,9 @@ fi
 #
 IS_EXIST_FZF=$(command -v fzf)
 IS_EXIST_RG=$(command -v rg)
-if [ -s "${IS_FZF_EXIST}" ]; then
+if [ -s "${IS_EXIST_FZF}" ]; then
   # refer rg over ag
-  if type rg &> /dev/null; then
+  if [ -s "${IS_EXIST_RG}" ]; then
       export FZF_DEFAULT_COMMAND='rg \
           --files \
           --hidden \
@@ -423,7 +423,9 @@ if [ -s "${IS_FZF_EXIST}" ]; then
           --glob=!**/.nx/* \
           --glob=!**/.git/* \
           --glob=!**/.vim/plugged/* \
-          --glob=!**/.angular/*'
+          --glob=!**/.angular/* \
+          --glob=!**/venv/* \
+          --glob=!**/.venv/*'
   fi
 
   # enable completion for everything
