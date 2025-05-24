@@ -43,6 +43,9 @@ configuration/.config/nvim/plugged
 *.add.spl
 *.swp
 
+# Python virtual env
+venv/
+.venv/
 
 # NodeJS
 **/node_modules/
