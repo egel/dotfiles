@@ -15,6 +15,9 @@
 
 [color]
 	ui = auto
+	diff = auto
+	branch = auto
+	status = auto
 
 [push]
 	default = simple
