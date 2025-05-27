@@ -37,6 +37,7 @@ api.nvim_create_autocmd("FileType", {
   pattern = { "sql" },
   command = "setlocal commentstring='-- %s'",
 })
+
 -- Run gofmt on save
 --
 local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
