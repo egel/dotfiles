@@ -177,6 +177,20 @@ if [[ "$COLORTERM" == "xfce4-terminal" ]]; then
   export TERM="xterm-256color"
 fi;
 
+# fetch all repos from current path or given path (must be absolute path)
+function fetchAllRepos () {
+    local destPath=${1}
+
+    if [[ -z "${destPath}" ]]; then
+        # current path with all symbolic links resolved
+        destPath=$(pwd -P)
+    fi
+
+    printf "Requested destination path to search through: %s\n\n" $destPath
+
+    find ${destPath} -name .git -type d -prune | xargs -I {} sh -c 'cd {} && cd .. && printf "Repo: %s\n\n" $(realpath) && git fetch'
+}
+
 ###
 # Change a string in filename friendly for save:
 # - lowercase
