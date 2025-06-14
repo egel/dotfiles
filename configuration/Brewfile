@@ -67,6 +67,7 @@ brew "podman"
 # Productivity
 brew "ansible"
 brew "sshpass"
+cask "yed" # diagramming editor
 cask "amethyst"
 cask "font-hack"
 brew "watch"
