@@ -65,6 +65,8 @@ brew "yamllint"
 brew "podman"
 
 # Productivity
+brew "ansible"
+brew "sshpass"
 cask "amethyst"
 cask "font-hack"
 brew "watch"
