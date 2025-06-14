@@ -18,12 +18,11 @@ brew "pandoc"
 brew "k9s"
 brew "helm"
 brew "kubectx"
-brew "kubernetes-cli", link: false
-brew "awscli"
 brew "minikube"
-brew "shellcheck"
+brew "kubernetes-cli", link: false
+
+brew "awscli"
 brew "svgo"
-brew "jsonlint"
 brew "go"
 brew "golang-migrate" # go migrations
 brew "editorconfig"
@@ -31,14 +30,11 @@ brew "neovim"
 brew "vim"
 brew "fd" # nvim telescope
 brew "wrk" # measure http sever speed (req/res)
-brew "stylua" # lua formatter
 brew "git-delta" # helps with better visual diff the content
 brew "mutt" # console email client
 brew "awk" # for advance search & test manupulation
-brew "rustfmt"
 brew "ffmpeg" # for video
 brew "parallel" # concurrent tasks
-brew "hadolint" # lint Dockerfiles
 
 # GPG - to signed your commits
 brew "gnutls"
@@ -53,6 +49,17 @@ brew "luarocks"
 brew "python@3.9"
 brew "rbenv" # Ruby version manager
 brew "pyenv" # Python version manager
+
+# Linters, parsers & formatters
+brew "stylua" # lua formatter
+brew "hadolint" # lint Dockerfiles
+brew "jsonlint"
+brew "luacheck"
+brew "prettier"
+brew "rustfmt"
+brew "shellcheck"
+brew "yamlfmt"
+brew "yamllint"
 
 # Usibility
 brew "podman"
@@ -78,10 +85,6 @@ brew "pdfgrep" # allow to search in pdf files
 cask "google-chrome"
 cask "brave-browser"
 cask "firefox"
-
-# Linters & parsers
-brew "luacheck"
-brew "prettier"
 
 # Tmux
 brew "tmux"
