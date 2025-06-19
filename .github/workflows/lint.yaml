@@ -1,0 +1,30 @@
+name: checking project
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+      - develop
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+# Jobs
+jobs:
+  lint-stylua:
+    name: 🔍 Lint Stylua
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    steps:
+      - name: Pull Repo
+        uses: actions/checkout@v4
+      - uses: JohnnyMorganz/stylua-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: 2.1.0
+          args: false
+      - name: Run check
+        run: stylua --check .
