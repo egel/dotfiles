@@ -1,6 +1,6 @@
 -- source: https://github.com/ahmedkhalf/project.nvim
 
-require("project_nvim").setup {
+require("project_nvim").setup({
   -- Manual mode doesn't automatically change your root directory, so you have
   -- the option to manually do so using `:ProjectRoot` command.
   manual_mode = false,
@@ -34,13 +34,12 @@ require("project_nvim").setup {
   -- * global (default)
   -- * tab
   -- * win
-  scope_chdir = 'global',
+  scope_chdir = "global",
 
   -- Path where project.nvim will store the project history for use in
   -- telescope
   datapath = vim.fn.stdpath("data"),
-}
+})
 
 -- To enable telescope integration
-require('telescope').load_extension('projects')
-
+require("telescope").load_extension("projects")

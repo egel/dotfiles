@@ -1,3 +1,6 @@
+###
+# This editorconfig is used to track code inside this repository only
+#
 root = true
 
 [*]
@@ -19,3 +22,7 @@ indent_size = 4
 [.gitconfig, .gitconfig.*, .gitmodules]
 indent_style = tab
 indent_size = 4
+
+[Makefile]
+indent_style = tab
+indent_size = 8
