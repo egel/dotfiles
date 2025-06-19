@@ -7,7 +7,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "lint-md": "remark .",
+    "lint:md": "remark .",
+    "lint:stylua": "stylua --config-path=./.stylua.toml --check --verify --output-format=Summary .",
     "upgrade-list": "npx npm-check-updates"
   },
   "remarkConfig": {
