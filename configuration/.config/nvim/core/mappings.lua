@@ -181,9 +181,11 @@ keymap.set("n", "<leader>ee", vim.cmd.Explore) -- Open netrw explorer
 -- copy current filepath to clipboard
 -- (starting from base path - vim starting directory aka pwd)
 --
+-- WORKS ONLY in with my alacritty config for keybindings
+--
 keymap.set(
   "n",
-  "<S-F2>",
+  "⁂", -- ⁂  character will produce "Shift + F2"
   "<ESC>:let @+ = expand('%:p')<CR>",
   { desc = "Copy absolute path to currect file to system clipboard" }
 )

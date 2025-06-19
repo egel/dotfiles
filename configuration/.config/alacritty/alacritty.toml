@@ -23,3 +23,11 @@ size = 18
 style = { shape = "Block", blinking = "Off" }
 unfocused_hollow = true
 thickness = 0.15
+
+[keyboard]
+bindings = [
+  # Special mappings for alacritty + tmux + vim
+  #
+  # Helper list of rerest unicode chars https://graphicdesign.stackexchange.com/a/16492/102081
+  { chars = "\u2042", key = "F2", mods = "Shift" }, # special meaning for Shift+F2 = \u2042 = ⁂
+]
