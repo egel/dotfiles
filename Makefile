@@ -1,4 +1,4 @@
 .PHONY: lint
 lint:
 	echo "Lint *.lua files"
-	find ./configuration/ -name "*.lua" | xargs -I {} stylua --check {}
+	stylua --config-path=./.stylua.toml --check --verify --output-format=Json .
