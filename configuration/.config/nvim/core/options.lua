@@ -49,6 +49,8 @@ vim.opt.wildignore = "*.o,*.obj,*~" -- Stuff to ignore when tab completing
   .. "*/vendor" -- ignore Go related directory
   .. "*/node_modules/*" -- ignore Node related directory
   .. "*/.nx/*" -- ignore NX frontend monorepor building tool
+  .. "*/.venv/*" -- ignore Python virtual environment
+  .. "*/venv/*" -- ignore Python virtual environment
 
 vim.opt.history = 1000 -- Remember more commands and search history
 vim.opt.undolevels = 1000 -- Use many muchos levels of undo
