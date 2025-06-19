@@ -7,7 +7,6 @@ return {
   dependencies = {
     -- Mason (should be before lsp)
     "williamboman/mason.nvim",
-    "williamboman/mason-lspconfig.nvim",
 
     "hrsh7th/nvim-cmp",
     "hrsh7th/cmp-nvim-lsp",
@@ -18,18 +17,15 @@ return {
     "onsails/lspkind.nvim", -- " allows for showing better context/origin of hints
   },
   config = function()
-    local lspconfig = require("lspconfig")
-    local mason_lspconfig = require("mason-lspconfig")
-    local cmp_nvim_lsp = require("cmp_nvim_lsp")
-    local telescope = require("telescope.builtin")
-
     local vim_api = vim.api
     local keymap = vim.keymap
+
+    -- list of configs <https://github.com/neovim/nvim-vim.lsp.config/blob/master/doc/configs.md>
 
     -- Use LspAttach autocommand to only map the following keys
     -- after the language server attaches to the current buffer
     vim_api.nvim_create_autocmd("LspAttach", {
-      group = vim_api.nvim_create_augroup("UserLspConfig", {}),
+      group = vim_api.nvim_create_augroup("Uservim.lsp.config", {}),
       callback = function(ev)
         -- Enable completion triggered by <c-x><c-o>
         vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
@@ -97,26 +93,14 @@ return {
     -- setup languages
     -- ##################################
     --
-    -- More info: https://www.andersevenrud.net/neovim.github.io/lsp/configurations/
-    -- Enable (broadcasting) snippet capability for completion
-    --
-    local capabilities = cmp_nvim_lsp.default_capabilities()
-    --local capabilities = vim.lsp.protocol.make_client_capabilities()
-    --capabilities.textDocument.completion.completionItem.snippetSupport = true
 
     -- Docker
-    lspconfig["dockerls"].setup({
-      capabilities = capabilities,
-    })
-
-    -- Bash
-    lspconfig["bashls"].setup({
-      capabilities = capabilities,
-    })
+    vim.lsp.config("dockerls", {})
+    vim.lsp.enable("dockerls")
 
     -- GoLang
     --
-    lspconfig["gopls"].setup({
+    vim.lsp.config("gopls", {
       cmd = { "gopls" },
       -- on_attach = on_attach,
       -- capabilities = capabilities,
@@ -133,66 +117,67 @@ return {
       init_options = {
         usePlaceholders = true,
       },
-      capabilities = capabilities,
     })
+    vim.lsp.enable("gopls")
 
     -- SQL
     --
-    lspconfig["sqlls"].setup({
-      capabilities = capabilities,
-    })
+    vim.lsp.config("sqlls", {})
+    vim.lsp.enable("sqlls")
 
     -- JSON
     --
-    lspconfig["jsonls"].setup({
-      capabilities = capabilities,
-    })
+    vim.lsp.config("jsonls", {})
+    vim.lsp.enable("jsonls")
 
     -- setup lsp for Python
     --
-    lspconfig["pyright"].setup({
+    vim.lsp.config("pyright", {
       cmd = { "pyright" }, -- installed from :Mason
-      capabilities = capabilities,
     })
+    vim.lsp.enable("pyright")
 
     -- TypeScript
     --
-    lspconfig["ts_ls"].setup({
-      capabilities = capabilities,
-    }) -- installed from :Mason
+    vim.lsp.config("ts_ls", {
+      -- installed from :Mason
+    })
+    vim.lsp.enable("ts_ls")
 
     -- CSS
     --
-    lspconfig["cssls"].setup({
-      capabilities = capabilities,
+    vim.lsp.config("cssls", {
       -- cmd = { "vscode-html-languageservice", "--stdio" },
     })
+    vim.lsp.enable("cssls")
 
     -- HTML (css + javascript)
     --
-    lspconfig["tailwindcss"].setup({
-      capabilities = capabilities,
+    vim.lsp.config("tailwindcss", {
       --cmd = { "vscode-html-languageservice", "--stdio" },
     })
+    vim.lsp.enable("tailwindcss")
 
     -- HTML (css + javascript)
     --
-    lspconfig["html"].setup({
-      capabilities = capabilities,
+    vim.lsp.config("html", {
       --cmd = { "vscode-html-languageservice", "--stdio" },
     })
+    vim.lsp.enable("html")
 
     -- Angular
     --
-    -- nvim_lsp["angularls"].setup({})
+    -- nvim_lsp["angularls", = {})
 
     -- Shell / Bash
     --
-    lspconfig["bashls"].setup({})
+    vim.lsp.config("bashls", {})
+    vim.lsp.enable("bashls")
 
     -- Lua
     --
-    lspconfig["lua_ls"].setup({
+    vim.lsp.config("lua_ls", {
+      -- cmd = { "lua-language-server" },
       settings = {
         Lua = {
           runtime = {
@@ -221,19 +206,17 @@ return {
           },
         },
       },
-      capabilities = capabilities,
     })
+    vim.lsp.enable("luals")
 
     -- Zig
     --
-    lspconfig["zls"].setup({
-      capabilities = capabilities,
-    })
+    vim.lsp.config("zls", {})
+    vim.lsp.enable("zls")
 
     -- java
     --
-    lspconfig["jdtls"].setup({
-      capabilities = capabilities,
-    })
+    vim.lsp.config("jdtls", {})
+    vim.lsp.enable("jdtls")
   end,
 }
