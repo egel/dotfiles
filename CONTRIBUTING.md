@@ -19,5 +19,5 @@ We use `npm` as task manager to maintain repository tasks. You can find it in `p
 
 The project for better consitency use few internal linters:
 
--   prettier
--   yamllint
+- prettier
+- yamllint

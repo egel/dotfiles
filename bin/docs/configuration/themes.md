@@ -28,10 +28,10 @@ The tracked configuration files (in the repository) are stored in `~/.dotfiles/c
 
 Search a configuration object (`s:settings`) which defines multiple vim settings (including themes) e.g.:
 
--   theme name
--   background color
--   preferred type of background (dark/light)
--   airline theme
+- theme name
+- background color
+- preferred type of background (dark/light)
+- airline theme
 
 ### Tmux
 
@@ -42,8 +42,8 @@ Search a configuration object (`s:settings`) which defines multiple vim settings
 
 Install your favourite theme via:
 
--   [TPM](https://github.com/tmux-plugins/tpm)
--   or manually by pasting a theme directly at the end of configuration file
+- [TPM](https://github.com/tmux-plugins/tpm)
+- or manually by pasting a theme directly at the end of configuration file
 
 ### Mutt
 

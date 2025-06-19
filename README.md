@@ -23,32 +23,32 @@
 
 You can find here all available [detailed configurations][docs-configurations] and [assets][docs-assets].
 
--   ZSH (aliases)
--   git (modes: private, work)
--   tmux
--   prettier
--   markdownlint (prettier)
--   editorconfig
--   gnupg (gpg, git, email)
--   mutt
+- ZSH (aliases)
+- git (modes: private, work)
+- tmux
+- prettier
+- markdownlint (prettier)
+- editorconfig
+- gnupg (gpg, git, email)
+- mutt
 
 Packages
 
--   brew (macOS core packages)
--   gvm (golang)
--   nvm (node global packages)
--   pyenv (python)
--   rbenv (ruby gems)
+- brew (macOS core packages)
+- gvm (golang)
+- nvm (node global packages)
+- pyenv (python)
+- rbenv (ruby gems)
 
 Editors
 
--   nvim (lsp, linters, formatters, fast & battle tested)
--   vim (gvim, IntelliJ)
--   sublime-text-3
+- nvim (lsp, linters, formatters, fast & battle tested)
+- vim (gvim, IntelliJ)
+- sublime-text-3
 
 Assets
 
--   fonts
+- fonts
 
 [shortcuts-cheat-sheet]: http://bit.ly/1wqcChS
 [hack-font-webpage]: https://sourcefoundry.org/hack/

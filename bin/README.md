@@ -24,21 +24,21 @@ $ docker run -it egel/dotfiles:latest /bin/bash
 
 This set contains configuration for:
 
--   **[BASH][bash-webpage]/[ZSH][zsh-webpage]** shell (oh-my-zsh)
--   **[Git][git-webpage]** (account management, aliases)
--   **[nvim][nvim-webpage]**
--   **[Vim 8][vim-webpage]**
--   **[Tmux][tmux-webpage]** (key-bindings, copy-paste to system clipboard)
--   **[Mutt][mutt-webpage]** (themes, secure passwords)
--   **[EditorConfig][editorconfig-webpage]**
--   **[Virtualenvwrapper][virtulenvwrapper-webpage]**
+- **[BASH][bash-webpage]/[ZSH][zsh-webpage]** shell (oh-my-zsh)
+- **[Git][git-webpage]** (account management, aliases)
+- **[nvim][nvim-webpage]**
+- **[Vim 8][vim-webpage]**
+- **[Tmux][tmux-webpage]** (key-bindings, copy-paste to system clipboard)
+- **[Mutt][mutt-webpage]** (themes, secure passwords)
+- **[EditorConfig][editorconfig-webpage]**
+- **[Virtualenvwrapper][virtulenvwrapper-webpage]**
 
 Configurator features
 
--   Easy to set your personal configuration
--   Create backups in seconds
--   Intuitive and comfortable keybindings with [online cheatsheet][shortcuts-cheat-sheet]
--   and much more inside
+- Easy to set your personal configuration
+- Create backups in seconds
+- Intuitive and comfortable keybindings with [online cheatsheet][shortcuts-cheat-sheet]
+- and much more inside
 
 ## Installation
 

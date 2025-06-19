@@ -16,10 +16,10 @@
 
 1.  Enable "Use Option as Meta Key"
 1.  Fix the default behaviour of OSX terminal key mapping `Ctrl` + `<arrow keys>`:
-    -   `Ctrl` + `←` map to: `\033[1;5D`
-    -   `Ctrl` + `↑` map to: `\033[1;5A`
-    -   `Ctrl` + `→` map to: `\033[1;5C`
-    -   `Ctrl` + `↓` map to: `\033[1;5B`
+    - `Ctrl` + `←` map to: `\033[1;5D`
+    - `Ctrl` + `↑` map to: `\033[1;5A`
+    - `Ctrl` + `→` map to: `\033[1;5C`
+    - `Ctrl` + `↓` map to: `\033[1;5B`
 
 <a href="/docs/assets/fix-key-mapping-in-default-osx-terminal.png"><img src="/docs/assets/fix-key-mapping-in-default-osx-terminal.png" title="OSX terminal key-mapping" width="300" /></a>
 
