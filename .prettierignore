@@ -1,3 +1,6 @@
 # local packages
 **/.mutt/themes/mutt-colors-solarized
 **/.sublime-text-3/
+
+**/lazy-lock.json
+**/package-lock.json

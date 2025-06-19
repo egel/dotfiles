@@ -3,23 +3,16 @@
   "version": "0.0.0",
   "main": "index.js",
   "repository": "git@github.com:egel/dotfiles.git",
-  "author": "Maciej Sypień <maciejsypien@gmail.com>",
+  "author": "Maciej Sypien <maciejsypien@gmail.com>",
   "license": "MIT",
   "private": true,
   "scripts": {
-    "lint:md": "remark .",
+    "format:prettier": "prettier --write .",
+    "lint:prettier": "prettier --check .",
     "lint:stylua": "stylua --config-path=./.stylua.toml --check --verify --output-format=Summary .",
     "upgrade-list": "npx npm-check-updates"
   },
-  "remarkConfig": {
-    "plugins": [
-      "remark-preset-lint-recommended",
-      "remark-validate-links"
-    ]
-  },
   "devDependencies": {
-    "remark-cli": "^12.0.0",
-    "remark-preset-lint-recommended": "^6.1.3",
-    "remark-validate-links": "^13.0.0"
+    "prettier": "^3.5.3"
   }
 }
