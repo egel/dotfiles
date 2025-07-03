@@ -188,7 +188,7 @@ function fetchAllRepos () {
 
     printf "Requested destination path to search through: %s\n\n" $destPath
 
-    find ${destPath} -name .git -type d -prune | xargs -I {} sh -c 'cd {} && cd .. && printf "Repo: %s\n\n" $(realpath) && git fetch'
+    find ${destPath} -name .git -type d -prune | xargs -I {} sh -c 'cd {} && cd .. && printf "\n>>> Repo: %s\n" $(realpath) && git fetch'
 }
 
 ###
