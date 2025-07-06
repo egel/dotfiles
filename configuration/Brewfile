@@ -69,6 +69,7 @@ brew "ansible"
 brew "sshpass"
 cask "yed" # diagramming editor
 cask "amethyst"
+cask "dbeaver-community" # sql editor
 cask "font-hack"
 brew "watch"
 cask "lens"
