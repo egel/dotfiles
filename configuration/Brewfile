@@ -35,6 +35,7 @@ brew "mutt" # console email client
 brew "awk" # for advance search & test manupulation
 brew "ffmpeg" # for video
 brew "parallel" # concurrent tasks
+brew "rename" # Perl-powered file rename script with many helpful built-ins
 
 # GPG - to signed your commits
 brew "gnutls"
