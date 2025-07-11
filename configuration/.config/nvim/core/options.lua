@@ -45,7 +45,6 @@ vim.opt.wildignore = "*.o,*.obj,*~" -- Stuff to ignore when tab completing
   .. "*/.svn/*" -- ignore SVN directory for repository
   .. "*/.idea/*" -- ignore IntelliJ directory for repository
   .. "*/.vscode/*" -- ignore VSCode directory for repository
-  .. "*/venv/*" -- ignore default python virtual environment directory for repository
   .. "*/vendor" -- ignore Go related directory
   .. "*/node_modules/*" -- ignore Node related directory
   .. "*/.nx/*" -- ignore NX frontend monorepor building tool
