@@ -85,7 +85,8 @@ brew "audacity"
 brew "scroll-reverser" # when using trackball & mousepad
 brew "keycastr" # to show key inputs on screen
 brew "pdfgrep" # allow to search in pdf files
-brew "asitop" # monitor CPU, RAM, proc on screen
+brew "asitop" # monitor CPU, RAM, proceses on screen
+brew "stats" # ui widget showing CPU, RAM in top navigation bar
 
 # Browsers
 cask "google-chrome"
