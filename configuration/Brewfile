@@ -120,5 +120,6 @@ brew "cookiecutter" # templating engine
 brew "progress" # show progress of cp, mv, dd
 brew "difftastic" # show structural diff
 brew "usql" # universal cli interface for SQL
+brew "jesseduffield/lazydocker/lazydocker" # TUI for managing docker cotainers
 
 # vi: ft=ruby
