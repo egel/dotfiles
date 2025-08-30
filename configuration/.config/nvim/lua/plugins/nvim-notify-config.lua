@@ -8,8 +8,11 @@ return {
     -- 24-bit colour is required
     vim.opt.termguicolors = true
 
-    require("notify").setup({
+    notify.setup({
       background_colour = "#000000",
+      stages = "fade",
     })
+
+    vim.notify = notify
   end,
 }

@@ -36,11 +36,11 @@ return {
         sh = { "shfmt" }, -- beautysh
         proto = { "buf" },
         rust = { "rustfmt" },
-        yaml = { "yamlfmt" },
+        -- yaml = { "yamlfmt" },
         toml = { "taplo" },
         css = prettier,
         scss = prettier,
-        -- zig = { "zigfmt" },
+        zig = { "zig fmt" },
 
         -- TODO: ignore propose lint: *.min.css, *.min.js
       },
