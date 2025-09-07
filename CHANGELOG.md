@@ -19,6 +19,174 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Security
 
+## [3.1.0] - 2025-09-07
+
+### Added
+
+- **git**:
+    - add auto colors
+    - add git scopes for conventional commits
+    - add ignore orig files while merging
+    - enhance the command to update repos from the directory
+    - remove not working 'scopes' alias in favor of gscopes shell method
+- **cicd**: add lint check
+- **npm**: remove global legacy @angular/language-server@latest package
+- **shell**:
+    - add new commands base64EncodeFile, base64DecodeFile, jsonUglyfy, jsonBeautify, convertWebmToMp4, toFileName
+    - update toFileName method
+- **alacritty**:
+    - update font to HackNerdFont (not mono)
+    - update configuration to follow changes for v0.15
+    - reduce font size to 18
+- **doc**: improve docs for configuring ssh and gpg
+- **mutt**: update mutt configuration
+- **assets**: add HackNerdFonts
+- **brew**:
+    - add keycastr and scroll-reverser to base programs
+    - add new useful utility programs
+    - add yamllint and yamlfmt
+    - add ansible and sshpass
+    - add yed
+    - add dbeaver sql editor
+    - add rename
+    - add stats cpu/ram topbar widget
+    - add lazydocker
+    - add ffmpeg
+    - add audacity to Brewfile
+    - add awk to Brewfile
+    - add ollama and podman for basic brewfile
+- **vim**:
+    - add lazy lock file
+    - add zig to the standard list of treesitter syntax
+    - exclude default undodir from committing
+- **zsh**:
+    - add a command to quickly start and update the OpenWebUI container
+    - add new method gscopes
+    - add to PATH programs installed via cargo
+    - add toFileName method
+    - move fzf config to .zshrc
+    - update aliases
+- **nvim**:
+    - add bash lsp + formatting with shfmt
+    - add command to paste from system clipboard (after cursor)
+    - add css color support for html,jsx,tsx files
+    - add default sql comment style
+    - add en spell
+    - add experimental ollama code support
+    - add lsp capabilities for JSON files
+    - add missing linters & formatters
+    - add missing sort motion plugin
+    - add new snippets for markdown and typscriptreact
+    - add new spells
+    - add notify plugin
+    - add reaction to window switch in input mode
+    - add shfmt formatter
+    - add showing working/idle ollama status
+    - add some mappings for vim lsp with telescope
+    - add stopping prettier after first attempt
+    - add support to run test with vitest
+    - add tailwind support for class names
+    - add vscode-langservers-extracted for html/css/js lsp support
+    - enable support for truecolors
+    - exclude venv and .venv from telescope search
+    - exclude venv from wild complete
+    - fix configuration nomnivore/ollama
+    - increase timeout for format commands (e.g. prettier was too slow)
+    - move diagnostics to core options
+    - remove editorconfig plugin - nvim has default support
+    - update config and plugins
+    - update conform prettier
+    - update description for some keymappings in gitsigns plugin
+    - update lsp config for nvim 0.11+
+    - update mappings for opening references, implementations with telescope
+    - update nvim plugins
+    - update packages
+    - update plugins
+    - update setting to v0.11
+    - update showline break character
+- **lint**: move md lint to prettier
+- **gpg**: change default server to keyserver.ubuntu.com
+- **tmux**:
+    - set dark theme explicitly
+    - fix support for 16-bit color palette
+    - update config with tmux-gruvbox v2
+- add GPG_TTY
+- add asitop
+- add caffeine to standard programs
+- add chrome, brave, firefox to default installed browsers
+- add configuration for alacritty terminal
+- add lua lint with stylua and correct code
+- add muttrc to default treesitter list
+- add new bash method fetchAllRepos
+- add new spells
+- add npm-check-updates to global npm list
+- add parallel and hadolint
+- add shell initialization of gvm
+- add theme source
+- add to PATH program installed via go
+- add venv to gitignore
+- disable default tmux prefix in favor of using it in remote SSH sessions
+- enable gruvbox theme for alacritty
+- exclude ColorSlurp from yabai auto window-tiling
+- improve and document config for setup git
+- increase default alacritty window size
+- move lint stylua to npm runner
+- remove invalid gitsings config option
+- remove legacy gitmodules
+- update README
+- update conform nvim config
+- update docs to install go default version and disable telemetry
+- update gvm configuration
+- update mutt configuration for gmail
+- update nvim packages
+- update telescope to v1.8
+
+### Changed
+
+- **gpg**: add info on how to install gpg configs
+- add simple docs on how to set up alacritty
+- improve readme
+- remove duplicated export EDITOR in favor of zshenv
+- sort vim spell
+
+### Fixed
+
+- **lint**: correct files according to prettier
+- **nvim**:
+    - add missing web-devicons for lualine plugin
+    - update legacy name tsserver to new ts_ls
+    - correct execution of luasnip from dedicated files
+    - correct problem with missing notify background color for terminal transparent background
+    - fix mapping to get file's absolute path from alacritty
+- **shell**: correct searching in fzf with rg
+- **prettier**: use 2 spaces in yaml prettierrc files
+- change the default gpg server to keys.openpgp.org
+- correct typos
+- improve incorrect desc syntax while loading lspconfig file
+- improve output of fetchAllRepos command
+- rename the file to the new filename nomenclature
+- typos in configuration readme
+- update paths to be unified
+
+## [v3.0.0] - 2024-06-02
+
+# Features
+
+- feat: new nvim configuration
+    - frontend & backend battle-tested
+    - well organization of components
+    - fast start & support many useful editing plugins
+    - full LSP config with (js/ts, go, lua, python, shell)
+    - config mature enough to use it as an IntelliJ replacement
+    - and many, many more
+- feat: improved and more simpler configuration
+- feat: add configuration for a few popular package managers (gvm, nvm, brew, pyenv, rbenv)
+- feat: attach fonts to dotfiles
+- feat: add testing yabai window manager
+- docs: provide [configuration on how to start](https://github.com/egel/dotfiles/blob/v3.0.0/configuration/README.md)
+- revert: remove unused git submodules
+- revert: removed previous bash auto-installer script
+
 ## [v2.5.0][2.5.0] - 2019-06-09
 
 ### Added
