@@ -191,6 +191,27 @@ function fetchAllRepos () {
     find ${destPath} -name .git -type d -prune | xargs -S1024 -I {} sh -c 'cd {} && cd .. && printf "\n>>>>>> Repository: %s\n" $(realpath) && printf "Current branch: %s\n" $(git rev-parse --abbrev-ref HEAD) && git fetch && if [[ -z "$(git status --porcelain)" ]]; then git pull; fi'
 }
 
+function startOpenWebui() {
+    echo "Starting OpenWebUI within docker container"
+    (
+        cd ~/privatespace/github.com/egel/docker-openwebui  \
+            && docker compose up -d \
+            && echo "Running on: http://localhost:3001/" \
+        )
+}
+
+function updateOpenWebui() {
+    echo "Begin updating OpenWebUI docker image"
+    (
+        cd ~/privatespace/github.com/egel/docker-openwebui  \
+            && docker compose stop \
+            && docker compose down \
+            && docker compose pull \
+            && docker compose up -d --force-recreate --remove-orphans \
+            && echo "Running on: http://localhost:3001/" \
+        )
+}
+
 ###
 # Change a string in filename friendly for save:
 # - lowercase
