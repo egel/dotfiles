@@ -12,8 +12,8 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-#ZSH_THEME="clean"
-ZSH_THEME="honukai"
+ZSH_THEME="clean"
+#ZSH_THEME="honukai"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -359,12 +359,16 @@ export NVM_DIR="$HOME/.nvm"
 
 # add current node (+ node programs installed globally) to PATH
 # NOTE: nvm have to be installed & configured before to make it works
-CURRENT_NODE_VERSION=$(node --version)
-if [[ $PATH != *"nvm"* && -d "$HOME/.nvm" && $(find . -mindepth 1 -maxdepth 1 -type d | wc -l) ]]; then
-  export PATH="$PATH:$HOME/.nvm/versions/node/$CURRENT_NODE_VERSION/bin"
-elif [ ! -d "$HOME/.nvm" ]; then
-  echo "Missing NVM (Node Version Manager)."
-  echo "Visit https://github.com/nvm-sh/nvm to install it."
+IS_NODE_PATH="$(command -v node)"
+if [ -n "$IS_NODE_PATH" ]; then
+  # node is installed
+  CURRENT_NODE_VERSION=$(node --version)
+  if [[ $PATH != *"nvm"* && -d "$HOME/.nvm" && $(find . -mindepth 1 -maxdepth 1 -type d | wc -l) ]]; then
+    export PATH="$PATH:$HOME/.nvm/versions/node/$CURRENT_NODE_VERSION/bin"
+  elif [ ! -d "$HOME/.nvm" ]; then
+    echo "Missing NVM (Node Version Manager)."
+    echo "-► To install it visit https://github.com/nvm-sh/nvm"
+  fi
 fi
 
 
@@ -395,7 +399,11 @@ fi
 # kubectl
 #########################################
 #completition from https://kubernetes.io/docs/reference/kubectl/cheatsheet/
-[[ -f $(brew --prefix kubectl) ]] && source <(kubectl completion zsh)
+IS_KUBECTL_PATH=$(command -v kubectl)
+if [ -n "$IS_KUBECTL_PATH" ]; then
+  # kubectl is installed
+  source <(kubectl completion zsh)
+fi
 
 #########################################
 # Travis
@@ -408,20 +416,45 @@ fi
 # rbenv
 #########################################
 # Use local Ruby manager (rbenv) instead of system ruby version
-if [ -d "$(brew --prefix rbenv)" ]; then
-    eval "$(rbenv init -)"
+IS_PATH_RBENV=$(command -v rbenv)
+if [ -n "$IS_PATH_RBENV" ]; then
+  eval "$(rbenv init -)"
+else 
+  echo "Missing rbenv"
+  echo "-► To install it visit https://github.com/rbenv/rbenv"
 fi
 
 #########################################
 # pyenv
 #########################################
-if [ -d "$(brew --prefix pyenv)" ]; then
-    eval "$(pyenv init -)"
+IS_PATH_PYENV=$(command -v pyenv)
+if [ -n "$IS_PATH_PYENV" ]; then
+  eval "$(pyenv init -)"
+else 
+  echo "Missing pyenv"
+  echo "-► To install it visit https://github.com/pyenv/pyenv"
 fi
 
-## LLVM (CPP)
-if [ -d "$(brew --prefix llvm)" ]; then
+#########################################
+# LLVM (CPP)
+#########################################
+IS_PATH_LLVM=$(command -v llvm)
+if [ -n "$IS_PATH_LLVM" ]; then
+  # llvm installed
+  if [ -n "$(command -v brew)" ] && [ -d "$(brew --prefix llvm)" ]; then
     export PATH="$(brew --prefix llvm)/bin:$PATH"
+  fi
+else 
+  echo "Missing llvm"
+  echo "-► To install it visit https://github.com/llvm/llvm-project"
+fi
+
+#########################################
+# whisper-cpp (voice to text)
+#########################################
+if [ -n "$(command -v whisper-cpp)" ]; then
+  # whisper-cpp is installed
+  export GGML_METAL_PATH_RESOURCES="$(brew --prefix whisper-cpp)/share/whisper-cpp"
 fi
 
 #########################################
@@ -432,10 +465,21 @@ if [[ -d "$HOME/.cargo/bin" ]]; then
 fi
 
 #########################################
-# gvm
+# gvm (Go Version Manager)
 #########################################
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 # export GOROOT_BOOTSTRAP=$GOROOT
+
+#########################################
+# Golang (installed via 'go install')
+#########################################
+export PATH="$HOME/go/bin:$GOPATH/bin:$PATH"
+
+#########################################
+# sdkman (java version manager)
+#########################################
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 #########################################
 # fzf (fuzzy files finder)
@@ -446,9 +490,9 @@ fi
 #
 IS_EXIST_FZF=$(command -v fzf)
 IS_EXIST_RG=$(command -v rg)
-if [ -s "${IS_EXIST_FZF}" ]; then
+if [ -n "${IS_EXIST_FZF}" ]; then
   # refer rg over ag
-  if [ -s "${IS_EXIST_RG}" ]; then
+  if [ -n "${IS_EXIST_RG}" ]; then
       export FZF_DEFAULT_COMMAND='rg \
           --files \
           --hidden \
@@ -465,19 +509,11 @@ if [ -s "${IS_EXIST_FZF}" ]; then
 
   # enable completion for everything
   zstyle ':completion:*' fzf-search-display true
+else
+  echo "Missing fzf"
+  echo "-► To install it visit https://github.com/junegunn/fzf"
 fi
 
-#########################################
-# sdkman (java version manager)
-#########################################
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-
-
-#########################################
-# Golang (installed via 'go install')
-#########################################
-export PATH="$HOME/go/bin:$GOPATH/bin:$PATH"
 
 #########################################
 # ALWAYS AT THE END
@@ -487,6 +523,6 @@ if [[ -f "$ZSH/oh-my-zsh.sh" ]]; then
   source "$ZSH/oh-my-zsh.sh"
 else
   echo "Missing $ZSH/oh-my-zsh.sh file."
+  echo "-► To install it visit https://ohmyz.sh/#install"
 fi
 
-export GGML_METAL_PATH_RESOURCES="$(brew --prefix whisper-cpp)/share/whisper-cpp"
