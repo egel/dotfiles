@@ -423,19 +423,19 @@ fi
 #########################################
 # pyenv
 #########################################
-IS_PATH_PYENV=$(command -v pyenv)
-if [ -n "$IS_PATH_PYENV" ]; then
-  eval "$(pyenv init -)"
-else 
-  echo "Missing pyenv"
-  echo "-► To install it visit https://github.com/pyenv/pyenv"
+if [[ $(uname -sm) == "Darwin" ]]; then
+  if [ -n "$(command -v pyenv)" ]; then
+    eval "$(pyenv init -)"
+  else 
+    echo "Missing pyenv"
+    echo "-► To install it visit https://github.com/pyenv/pyenv"
+  fi
 fi
 
 #########################################
 # LLVM (CPP)
 #########################################
-IS_PATH_LLVM=$(command -v llvm)
-if [ -n "$IS_PATH_LLVM" ]; then
+if [ -n "$(command -v llvm-config)" ]; then
   # llvm installed
   if [ -n "$(command -v brew)" ] && [ -d "$(brew --prefix llvm)" ]; then
     export PATH="$(brew --prefix llvm)/bin:$PATH"
