@@ -121,7 +121,11 @@ alias vimdiff_old='vimdiff'
 #########################################
 # Dotfiles: Load personal settings .zshrc.local
 #########################################
-DOTFILES_ZSH_LOCAL_FILE=$HOME/.zshrc.local
+DOTFILES_ZSHRC_PERSONAL=$HOME/.zshrc.personal
+if [ -f "$DOTFILES_ZSHRC_PERSONAL" ]; then
+  source "$DOTFILES_ZSHRC_PERSONAL"
+fi
+DOTFILES_ZSH_LOCAL_FILE=$HOME/.zshrc.work
 if [ -f "$DOTFILES_ZSH_LOCAL_FILE" ]; then
   source "$DOTFILES_ZSH_LOCAL_FILE"
 fi
