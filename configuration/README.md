@@ -28,15 +28,25 @@ ln -sf ${PWD}/.zshenv ${HOME}/.zshenv
 ln -sf ${PWD}/.zprofile ${HOME}/.zprofile
 ```
 
-### shell personal config
-
-Optional.
-
-> [!TIP]
-> File `.zshrc.private` is excluded from accidental committing in this repo.
+Install [oh-my-zsh](https://ohmyz.sh/#install)
 
 ```
-touch ~/.
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+### shell personal configs
+
+(Optional) Sometimes you want to separate some personal configuration from being commited to repo. With the personal configs you can add some configuration that will also be collected but never commited to the repository.
+
+> [!TIP]
+> File `.zshrc.private` or `.zshrc.work` are excluded from accidental committing in this repo.
+
+```
+# private config
+touch ~/.zshrc.private
+
+# work-related only config
+touch ~/.zshrc.work
 ```
 
 ### shell aliases
