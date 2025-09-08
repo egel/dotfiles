@@ -114,14 +114,6 @@ alias vim_old='vim'
 alias vimdiff_old='vimdiff'
 
 #########################################
-# Dotfiles: Add private aliases
-#########################################
-DOTFILES_ALIASES_WORK=$HOME/.aliases.work
-if [ -s "${DOTFILES_ALIASES_WORK}" ]; then
-  source ${DOTFILES_ALIASES_WORK}
-fi
-
-#########################################
 # Dotfiles: Load private passwords
 #########################################
 [ -s "$HOME/.envpass.private" ] && . "$HOME/.envpass.private"
