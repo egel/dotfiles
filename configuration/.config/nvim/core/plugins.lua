@@ -130,7 +130,9 @@ local plugins = {
   -- tabs
   { import = "plugins/barbar-nvim-config" },
 
-  { import = "plugins/nomnivore-ollama-config" },
+  -- Ollama
+  -- { import = "plugins/nomnivore-ollama-config" },
+  { import = "plugins/david-kunz-ollama-gen-config" },
 
   -- Custom
   --{ import = "custom/mdx-config" },
