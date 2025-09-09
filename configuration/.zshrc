@@ -317,6 +317,22 @@ function base64DecodeFile () {
     cat "${fullfile}" | base64 -d > "${fileNameOnly}${tmpSuffix}${fileExtOnly}"
 }
 
+# decode ANY string and display it
+#
+# e.g. base64DecodeString 'lorem ipsum'
+function base64DecodeString () {
+    local str=$1
+    echo "${str}" | base64 -d
+}
+#
+# decode JSON string and display it
+#
+# e.g. base64DecodeString 'eyAiZm9vIjogImxvcmVtIiwgImJhciI6ICJpcHN1bSIgfQo='
+function base64DecodeJson () {
+    local str=$1
+    echo "${str}" | base64 -d | jq '.' || exit_on_error 'Fail to parse given string as JSON. Most probably fix proper JSON formatting.'
+}
+
 # encode file and save it in new file with `_encoded` suffix
 function base64EncodeFile () {
     local fullfile=$1
@@ -326,6 +342,23 @@ function base64EncodeFile () {
     local fileExtOnly="${filename##*.}" # .txt
     cat "${fullfile}" | base64 > "${fileNameOnly}${tmpSuffix}${fileExtOnly}"
 }
+
+# Encode ANY string and display it
+#
+# e.g. base64EncodeString 'lorem ipsum'
+function base64EncodeString () {
+    local str=$1
+    echo "${str}" | base64
+}
+
+# Encode JSON string, minify and display it
+#
+# e.g. base64EncodeJson '{ "foo": "lorem", "bar": "ipsum" }'
+function base64EncodeJson () {
+    local str=$1
+    echo "${str}" | jq -c . | base64
+}
+
 
 # show git scopes in git conventional commits
 # example:
