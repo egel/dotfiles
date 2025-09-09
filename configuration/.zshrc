@@ -119,7 +119,7 @@ alias vimdiff_old='vimdiff'
 [ -s "$HOME/.envpass.private" ] && . "$HOME/.envpass.private"
 
 #########################################
-# Dotfiles: Load personal settings .zshrc.local
+# Dotfiles: Load personal / work settings
 #########################################
 DOTFILES_ZSHRC_PERSONAL=$HOME/.zshrc.personal
 if [ -f "$DOTFILES_ZSHRC_PERSONAL" ]; then
@@ -173,111 +173,10 @@ if [[ "$COLORTERM" == "xfce4-terminal" ]]; then
   export TERM="xterm-256color"
 fi;
 
-# fetch all repos from current path or given path (must be absolute path)
-function fetchAllRepos () {
-    local destPath=${1}
-
-    if [[ -z "${destPath}" ]]; then
-        # current path with all symbolic links resolved
-        destPath=$(pwd -P)
-    fi
-
-    printf "Requested destination path to search through: %s\n\n" $destPath
-
-    find ${destPath} -name .git -type d -prune | xargs -S1024 -I {} sh -c 'cd {} && cd .. && printf "\n>>>>>> Repository: %s\n" $(realpath) && printf "Current branch: %s\n" $(git rev-parse --abbrev-ref HEAD) && git fetch && if [[ -z "$(git status --porcelain)" ]]; then git pull; fi'
-}
-
-function startOpenWebui() {
-    echo "Starting OpenWebUI within docker container"
-    (
-        cd ~/privatespace/github.com/egel/docker-openwebui  \
-            && docker compose up -d \
-            && echo "Running on: http://localhost:3001/" \
-        )
-}
-
-function updateOpenWebui() {
-    echo "Begin updating OpenWebUI docker image"
-    (
-        cd ~/privatespace/github.com/egel/docker-openwebui  \
-            && docker compose stop \
-            && docker compose down \
-            && docker compose pull \
-            && docker compose up -d --force-recreate --remove-orphans \
-            && echo "Running on: http://localhost:3001/" \
-        )
-}
-
-###
-# Change a string in filename friendly for save:
-# - lowercase
-# - kebab-case
-# - no spaces " "
-# - no colons ":"
-# - no curly brackets "{}"
-# - no brackets "()"
-# - no square brackets "[]"
-# - no angle brackets "<>"
-# - no dots in between "."
-# - no comas in between ","
-# - no doube quotes in between '"'
-# - no single quotes in between "'"
-# - no at signs in between "@"
-# - no double hyphens "--"
+#########################################
+# File converters
+#########################################
 #
-# min: POSIX compatible
-#
-function toFileName () {
-  local filename=$1
-  result="$(echo -n "${filename}" \
-    | tr '[:upper:]' '[:lower:]' \
-    | tr ':' '-' \
-    | tr '.' '-' \
-    | tr '(' '-' \
-    | tr ')' '-' \
-    | tr '{' '-' \
-    | tr '}' '-' \
-    | tr '[' '-' \
-    | tr ']' '-' \
-    | tr '<' '-' \
-    | tr '>' '-' \
-    | tr ',' '-' \
-    | tr '"' '-' \
-    | tr "'" '-' \
-    | tr '@' '-' \
-    | tr ' ' '-' \
-    | tr '\n' '-' \
-    | tr '\r' '-' \
-    | tr '' '-' \
-    | sed -e 's@ü@ue@g' \
-    | sed -e 's@ö@oe@g' \
-    | sed -e 's@ä@ae@g' \
-    | sed -e 's@ę@e@g' \
-    | sed -e 's@ą@a@g' \
-    | sed -e 's@ć@c@g' \
-    | sed -e 's@ł@@g' \
-    | sed -e 's@ń@@g' \
-    | sed -e 's@ó@@g' \
-    | sed -e 's@ś@@g' \
-    | sed -e 's@ź@@g' \
-    | sed -e 's@ż@@g' \
-    | sed -e 's@--@-@g'
-  )"
-  # extra space below is necessary!
-  lastChar=$(echo -n "$result" | tail -c 1)
-  if [[ "$lastChar" == "-" ]]; then
-    result=${result::-1}
-  fi
-  # remove "-" if is first char
-  firstChar=$(echo -n "$result" | cut -c 1)
-  if [[ "$firstChar" == "-" ]]; then
-    result=${result:1}
-  fi
-
-  printf "Original:\n\n\t%s\n\n" "${filename}"
-  printf "Improved:\n\n\t%s\n" "${result}"
-}
-
 # convert given "webm" file and convert into new with "mp4" extension
 function convertWebmToMp4 () {
     local fullfile=$1
@@ -287,6 +186,10 @@ function convertWebmToMp4 () {
     ffmpeg -y -fflags +genpts -i "${fullfile}" -r 24 "${fileNameOnly}.mp4"
 }
 
+#########################################
+# JSON helpers
+#########################################
+#
 # beautify JSON file (override current file)
 function jsonBeautify () {
     local fullfile=$1
@@ -297,7 +200,7 @@ function jsonBeautify () {
     jq --sort-keys . "${fullfile}" > "${fileNameOnly}${tmpSuffix}${fileExtOnly}" && mv "${fileNameOnly}${tmpSuffix}${fileExtOnly}" "${fullfile}"
 }
 
-# jsonUglyfy JSON file as save in new file with `_min` suffix
+# uglyfy JSON file as save in new file with `_min` suffix
 function jsonUglyfy () {
     local fullfile=$1
     local tmpSuffix="_min"
@@ -307,6 +210,10 @@ function jsonUglyfy () {
     cat "${fullfile}" | jq -c > "${fileNameOnly}${tmpSuffix}${fileExtOnly}"
 }
 
+#########################################
+# base64 helpers
+#########################################
+#
 # decode file and save in new file with `_decoded` suffix
 function base64DecodeFile () {
     local fullfile=$1
@@ -324,7 +231,7 @@ function base64DecodeString () {
     local str=$1
     echo "${str}" | base64 -d
 }
-#
+
 # decode JSON string and display it
 #
 # e.g. base64DecodeString 'eyAiZm9vIjogImxvcmVtIiwgImJhciI6ICJpcHN1bSIgfQo='
@@ -359,13 +266,63 @@ function base64EncodeJson () {
     echo "${str}" | jq -c . | base64
 }
 
-
+#########################################
+# Git helpers
+#########################################
+#
 # show git scopes in git conventional commits
 # example:
 #		feat(webapp): bla bla bla
 #			   ↳ this is scope
 function gscopes() {
 	git log --oneline | awk -F'[()]' '/\(/ {print $2}' | sort | uniq
+}
+
+# git diff (current branch) with develop
+function gddev() {
+  git diff $(git_current_branch) origin/$(git_develop_branch)
+}
+
+# git diff (current branch) with main
+function gdmain() {
+  git diff $(git_current_branch) origin/$(git_main_branch)
+}
+
+# fetch all repos from current path or given path (must be absolute path)
+function fetchAllRepos () {
+  local destPath=${1}
+
+  if [[ -z "${destPath}" ]]; then
+      # current path with all symbolic links resolved
+      destPath=$(pwd -P)
+  fi
+
+  printf "Requested destination path to search through: %s\n\n" $destPath
+
+  find ${destPath} -name .git -type d -prune | xargs -S1024 -I {} sh -c 'cd {} && cd .. && printf "\n>>>>>> Repository: %s\n" $(realpath) && printf "Current branch: %s\n" $(git rev-parse --abbrev-ref HEAD) && git fetch && if [[ -z "$(git status --porcelain)" ]]; then git pull; fi'
+}
+
+#########################################
+# Docker OpenWebUI
+#########################################
+function startOpenWebui() {
+  echo "Starting OpenWebUI within docker container"
+  (
+    cd ~/privatespace/github.com/egel/docker-openwebui  \
+      && docker compose up -d \
+      && echo "Running on: http://localhost:3001/" \
+  )
+}
+function updateOpenWebui() {
+  echo "Begin updating OpenWebUI docker image"
+  (
+    cd ~/privatespace/github.com/egel/docker-openwebui  \
+      && docker compose stop \
+      && docker compose down \
+      && docker compose pull \
+      && docker compose up -d --force-recreate --remove-orphans \
+      && echo "Running on: http://localhost:3001/" \
+  )
 }
 
 #########################################
@@ -448,7 +405,7 @@ fi
 IS_PATH_RBENV=$(command -v rbenv)
 if [ -n "$IS_PATH_RBENV" ]; then
   eval "$(rbenv init -)"
-else 
+else
   echo "Missing rbenv"
   echo "-► To install it visit https://github.com/rbenv/rbenv"
 fi
@@ -459,7 +416,7 @@ fi
 if [[ $(uname -sm) == "Darwin" ]]; then
   if [ -n "$(command -v pyenv)" ]; then
     eval "$(pyenv init -)"
-  else 
+  else
     echo "Missing pyenv"
     echo "-► To install it visit https://github.com/pyenv/pyenv"
   fi
@@ -473,7 +430,7 @@ if [ -n "$(command -v llvm-config)" ]; then
   if [ -n "$(command -v brew)" ] && [ -d "$(brew --prefix llvm)" ]; then
     export PATH="$(brew --prefix llvm)/bin:$PATH"
   fi
-else 
+else
   echo "Missing llvm"
   echo "-► To install it visit https://github.com/llvm/llvm-project"
 fi
