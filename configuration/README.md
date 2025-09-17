@@ -213,7 +213,9 @@ fast and simple terminal emulator (currently under test, if I like it)
 ln -sf ~/privatespace/github.com/egel/dotfiles/configuration/.config/alacritty ~/.config/alacritty
 ```
 
-## gvm
+## Golang
+
+### Installation via gvm
 
 | type | Version Manager |
 | ---- | --------------- |
@@ -238,7 +240,7 @@ $ which go
 go telemetry off
 ```
 
-**Alternatively go via brew**
+### Alternatively install via brew
 
 If you do not care or use a single `go` version, you can install it via brew, or other package managers.
 I have added a sample configuration below for better reference:
@@ -260,6 +262,25 @@ if [[ $PATH != *"go"* && -d "$GOPATH" && -d "$GOROOT" ]]; then
   export PATH=$PATH:$GOPATH/bin # additional go libraries
   export PATH=$PATH:$GOROOT/bin # path of go source
 fi
+```
+
+### Alternatively install via tarball
+
+Added for Debian installations.
+
+```sh
+# update
+sudo apt update && sudo apt upgrade
+
+# download packages
+cd ~/Downloads
+wget https://golang.org/dl/go1.25.1.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.25.1.linux-amd64.tar.gz
+
+# then add to .profile or .zshrc (my .zshrc already have it!)
+echo "export PATH=/usr/local/go/bin:${PATH}" | sudo tee -a $HOME/.profile
+
+source $HOME/.profile
 ```
 
 ### Go global packages
