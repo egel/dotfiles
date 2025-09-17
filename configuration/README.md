@@ -238,7 +238,7 @@ $ which go
 go telemetry off
 ```
 
-### Alternatively go via brew
+**Alternatively go via brew**
 
 If you do not care or use a single `go` version, you can install it via brew, or other package managers.
 I have added a sample configuration below for better reference:
@@ -260,6 +260,20 @@ if [[ $PATH != *"go"* && -d "$GOPATH" && -d "$GOROOT" ]]; then
   export PATH=$PATH:$GOPATH/bin # additional go libraries
   export PATH=$PATH:$GOROOT/bin # path of go source
 fi
+```
+
+### Go global packages
+
+```sh
+# protobuf
+go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+
+# golint tools
+go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@latest
+
+# generate changelog from commits
+go install github.com/golistic/xgo/cmd/changelog@latest
 ```
 
 ## nvim
