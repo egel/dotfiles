@@ -446,25 +446,40 @@ ruby 2.7.7p221 (2022-11-24 revision 168ec2b1e5) [arm64-darwin22]
 | type | Version Manager |
 | ---- | --------------- |
 
+macOS
+
 ```bash
 brew instal pyenv
+```
 
+Debian 12
+
+```sh
+curl -fsSL https://pyenv.run | bash
+
+# required to when later compile python version from the source
+sudo apt-get install libbz2-dev liblzma-dev
+```
+
+Configuration
+
+```sh
 # pyenv install --list   # list all available python versions to install
-pyenv install 3.11.6
+pyenv install 3.12.11
 
 # setup global version
-$ pyenv global 3.11.6
+$ pyenv global 3.12.11
 
 # test if global version is setup correctly
 $ pyenv global
-3.11.6
+3.12.11
 
 # test if using correct python
 $ which python
 /Users/johndoe/.pyenv/shims/python
 
 $ python --version
-Python 3.11.6
+Python 3.12.11
 ```
 
 #### python global packages
