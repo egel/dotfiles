@@ -293,7 +293,7 @@ Neovim - <https://github.com/neovim/neovim>
 > The full key-binding configuration can be found in [Shortcuts Cheatsheet][shortcuts-cheatsheet]
 
 ```bash
-makedir -p ${HOME}/.config/
+mkdir -p ${HOME}/.config/
 ln -sf ${PWD}/.config/nvim ${HOME}/.config/nvim
 ```
 
