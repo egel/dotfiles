@@ -307,7 +307,7 @@ go install golang.org/x/vuln/cmd/govulncheck@latest
 go install github.com/abenz1267/gomvp@latest
 ```
 
-### Ollama
+## Ollama
 
 local LLM model.
 
@@ -320,6 +320,12 @@ brew install ollama
 # install small model
 ollama pull codellama:7b  # nvim is already configured to use this model
 ```
+
+### Open WebUI
+
+to provide nice interface for local LLM models use [Open WebUI][weblink-docs-open-webui].
+
+Here is dedicated repository <https://github.com/egel/docker-openwebui> to install and run Open WebUI locally and privately (offline) on your system.
 
 ## vim
 
@@ -647,3 +653,4 @@ open mutt
 [shortcuts-cheatsheet]: http://bit.ly/1wqcChS
 [weblink-git-lfs]: https://git-lfs.com/
 [weblink-git-delta]: https://github.com/dandavison/delta
+[weblink-docs-open-webui]: https://docs.openwebui.com/
