@@ -43,6 +43,7 @@ return {
         "tailwindcss",
         "yamlls", -- yaml language-server
         "zls",
+        "astro", -- astro language-server
 
         "taplo",
         -- Additionally install npm package vscode-langservers-extracted

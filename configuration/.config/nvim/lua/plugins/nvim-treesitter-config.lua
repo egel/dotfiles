@@ -40,6 +40,7 @@ return {
         "latex",
         "muttrc",
         "zig",
+        "astro",
       },
 
       -- Install parsers synchronously (only applied to `ensure_installed`)
