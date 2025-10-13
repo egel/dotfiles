@@ -87,6 +87,7 @@ brew "keycastr" # to show key inputs on screen
 brew "pdfgrep" # allow to search in pdf files
 brew "asitop" # monitor CPU, RAM, proceses on screen
 brew "stats" # ui widget showing CPU, RAM in top navigation bar
+brew "mysql-client" # install mysql, mysqldump + other helper programs
 
 # Browsers
 cask "google-chrome"

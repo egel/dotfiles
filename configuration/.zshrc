@@ -133,19 +133,20 @@ fi
 #########################################
 # Additional programs (brew, mysql)
 #########################################
-case $(uname -s) in
-  Darwin)
+
+export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
     # support brew installs
     if [[ $PATH != *"/usr/local/sbin"* && -d "/usr/local/sbin" ]]; then
       export PATH="/usr/local/sbin:$PATH"
     fi
 
     # export mysql (and its sub-programs)
-    if [[ -d "/usr/local/mysql" && $PATH != *'mysql'* ]]; then
-      export PATH="/usr/local/mysql/bin:$PATH"
+    if [ -n "$(command -v brew)" ] && [ -d "$(brew --prefix mysql-client)" ]; then
+      export PATH="$(brew --prefix mysql-client)/bin:$PATH"
     fi
-    ;;
-esac
+fi
 
 #########################################
 # Configure dircolors
