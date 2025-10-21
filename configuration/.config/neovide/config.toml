@@ -1,0 +1,24 @@
+idle = true
+mouse-cursor-icon = "arrow"
+neovim-bin = "/opt/homebrew/bin/nvim"
+tabs = true
+title-hidden = false
+
+[font]
+normal = [
+  "FiraCode Nerd Font",
+  # "Hack Nerd Font",
+] # Will use the bundled Fira Code Nerd Font by default
+size = 19.0
+hinting = "full"
+edging = "antialias"
+
+[box-drawing]
+# "font-glyph", "native" or "selected-native"
+mode = "native"
+
+[box-drawing.sizes]
+default = [2, 4] # Thin and thick values respectively, for all sizes
+12 = [1, 2]      # 12px to 13.9999px
+14 = [2, 4]
+18 = [3, 6]

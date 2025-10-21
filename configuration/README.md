@@ -328,6 +328,20 @@ go install golang.org/x/vuln/cmd/govulncheck@latest
 go install github.com/abenz1267/gomvp@latest
 ```
 
+## neovide
+
+| type | Text Editor |
+| ---- | ----------- |
+
+This is GUI overlay over neovim text editor.
+
+Neovide - <https://neovide.dev/config-file.html>
+
+```bash
+mkdir -p ${HOME}/.config/
+ln -sf ${PWD}/.config/neovide ${HOME}/.config/neovide
+```
+
 ## Ollama
 
 local LLM model.
