@@ -1,5 +1,6 @@
 @angular/cli@latest
 @compodoc/compodoc@latest
+@fsouza/prettierd@latest
 eslint_d@latest
 jest@latest
 markdownlint@latest
