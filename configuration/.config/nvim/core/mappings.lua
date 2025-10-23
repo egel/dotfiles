@@ -154,18 +154,22 @@ vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 
 -- Go to next diagnostic warning/error
 --
--- keymap.set("n", "]d", vim.diagnostic.jump({ count = 1, float = true }), {
---   desc = "Go to next [d]iagnostic message",
+-- keymap.set("n", "]d", function()
+-- vim.diagnostic.jump({ count = 1, float = true })
+-- end, {
+-- desc = "Go to next [d]iagnostic message",
 -- })
--- keymap.set("n", "[d", vim.diagnostic.jump({ count = -1, float = true }), {
---   desc = "Go to previous [d]iagnostic message",
+-- keymap.set("n", "[d", function()
+-- vim.diagnostic.jump({ count = -1, float = true })
+-- end, {
+-- desc = "Go to previous [d]iagnostic message",
 -- })
-keymap.set("n", "]d", vim.diagnostic.goto_next, {
-  desc = "Go to next [d]iagnostic message",
-})
-keymap.set("n", "[d", vim.diagnostic.goto_prev, {
-  desc = "Go to previous [d]iagnostic message",
-})
+-- keymap.set("n", "]d", vim.diagnostic.goto_next, {
+-- desc = "Go to next [d]iagnostic message",
+-- })
+-- keymap.set("n", "[d", vim.diagnostic.goto_prev, {
+-- desc = "Go to previous [d]iagnostic message",
+-- })
 keymap.set("n", "<leader>e", vim.diagnostic.open_float, {
   desc = "Show diagnostic [E]rror messages",
   noremap = true,

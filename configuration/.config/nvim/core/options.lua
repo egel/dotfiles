@@ -143,6 +143,9 @@ vim.diagnostic.config({
     end,
   },
   float = true,
+  jump = {
+    float = true,
+  },
   -- {
   -- border = border,
   -- source = "always",
