@@ -427,10 +427,10 @@ fi
 # LLVM (CPP)
 #########################################
 if [ -n "$(command -v llvm-config)" ]; then
-  # llvm installed
-  if [ -n "$(command -v brew)" ] && [ -d "$(brew --prefix llvm)" ]; then
-    export PATH="$(brew --prefix llvm)/bin:$PATH"
-  fi
+  # llvm installed linux
+elif [ -n "$(command -v brew)" ] && [ -d "$(brew --prefix llvm)" ]; then
+  # macOs
+  export PATH="$(brew --prefix llvm)/bin:$PATH"
 else
   echo "Missing llvm"
   echo "-► To install it visit https://github.com/llvm/llvm-project"
