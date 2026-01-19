@@ -20,6 +20,7 @@ brew "helm"
 brew "kubectx"
 brew "minikube"
 brew "kubernetes-cli", link: false
+brew "rsync" # open source version
 
 brew "awscli"
 brew "svgo"
