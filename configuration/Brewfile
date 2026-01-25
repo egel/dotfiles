@@ -21,6 +21,7 @@ brew "kubectx"
 brew "minikube"
 brew "kubernetes-cli", link: false
 brew "rsync" # open source version
+brew "mactop" # just like top but for macs
 
 brew "awscli"
 brew "svgo"
