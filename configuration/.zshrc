@@ -75,7 +75,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git git-flow vi-mode kubectl colored-man-pages colorize tmux python npm yarn docker fzf)
+plugins=(git git-flow vi-mode kubectl colored-man-pages colorize tmux python npm yarn docker fzf zsh-autosuggestions)
 autoload -U compinit && compinit
 
 # Ignore ORIG_HEAD in zsh git autocomplete
