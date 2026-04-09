@@ -113,6 +113,9 @@ alias vimdiff='nvim -d'
 alias vim_old='vim'
 alias vimdiff_old='vimdiff'
 
+alias lll='ls -lrta' # from newest
+alias lls='ls -lrtaSh' # sort from largest
+
 #########################################
 # Dotfiles: Load private passwords
 #########################################
