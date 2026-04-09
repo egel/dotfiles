@@ -87,7 +87,6 @@ return {
         "yamlfmt",
         "htmlbeautifier", -- html
         "google-java-format", -- java
-        "rustfmt", -- rust
         "jsonlint", -- json
       },
     })

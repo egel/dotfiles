@@ -700,6 +700,16 @@ rm ~/.mutt/passwords
 
 open mutt
 
+## Rust
+
+Install rust <https://rust-lang.org/tools/install/>
+
+Install `rustfmt`
+
+```sh
+rustup component add rustfmt
+```
+
 [shortcuts-cheatsheet]: http://bit.ly/1wqcChS
 [weblink-git-lfs]: https://git-lfs.com/
 [weblink-git-delta]: https://github.com/dandavison/delta

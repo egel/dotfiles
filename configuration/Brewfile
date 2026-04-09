@@ -59,7 +59,6 @@ brew "hadolint" # lint Dockerfiles
 brew "jsonlint"
 brew "luacheck"
 brew "prettier"
-brew "rustfmt"
 brew "shellcheck"
 brew "yamlfmt"
 brew "yamllint"
