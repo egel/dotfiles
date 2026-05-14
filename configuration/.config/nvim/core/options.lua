@@ -93,6 +93,9 @@ vim.opt.spellsuggest = "9" -- show 9 spell suggestions at most
 --vim.opt.completeopt+=menuone  -- Show menu even if there is only one item
 --vim.opt.completeopt-=preview  -- Disable the preview window
 
+-- Set borders for all floating windows
+vim.o.winborder = "rounded"
+
 -- ##################################
 -- Diagnostics
 -- ##################################
@@ -108,12 +111,6 @@ local border = {
   { "│", "FloatBorder" },
 }
 
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-  border = border,
-})
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-  border = border,
-})
 -- Show boarder in popup windows (diagnostic, hover, help)
 --
 vim.diagnostic.config({
@@ -146,10 +143,6 @@ vim.diagnostic.config({
   jump = {
     float = true,
   },
-  -- {
-  -- border = border,
-  -- source = "always",
-  -- },
 })
 -- override theme's floating window background color to be same as in terminal
 vim.cmd("autocmd ColorScheme * highlight! link FloatBorder Normal")
