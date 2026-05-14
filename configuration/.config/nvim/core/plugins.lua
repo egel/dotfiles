@@ -130,7 +130,8 @@ local plugins = {
   -- tabs
   { import = "plugins/barbar-nvim-config" },
 
-  { import = "plugins/nomnivore-ollama-config" },
+  -- LLMs
+  { import = "plugins/huggingface-llm-nvim-config" },
 
   -- Custom
   --{ import = "custom/mdx-config" },
