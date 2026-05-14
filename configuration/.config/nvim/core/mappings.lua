@@ -121,6 +121,15 @@ keymap.set("v", "<leader>d", '"+y<Esc>gvd', { desc = "Copy to system clipboard a
 keymap.set("n", "<leader>p", '"+p', { desc = "Pasting from system clipboard (after cursor)" })
 keymap.set("n", "<leader>P", '"+P', { desc = "Pasting from system clipboard (before cursor)" })
 
+-- Documentation
+keymap.set("n", "K", function()
+  vim.lsp.buf.hover({
+    border = "single", -- rounded, single, double, solid, none
+    max_height = 25,
+    max_width = 120,
+  })
+end)
+
 -- Reload nvim configuration (without exit)
 --
 -- INFO: $MYVIMRC is a special variable used in nvim which points to configuration
@@ -152,7 +161,7 @@ vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 -- autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})
 -- ]])
 
--- Go to next diagnostic warning/error
+-- Go to next diagnostic warning/error (by default it use key: ]d -> next, [d <- previous)
 --
 -- keymap.set("n", "]d", function()
 -- vim.diagnostic.jump({ count = 1, float = true })
