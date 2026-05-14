@@ -44,6 +44,7 @@ return {
         "yamlls", -- yaml language-server
         "zls",
         "astro", -- astro language-server
+        "graphql", -- for .graphql files
 
         "taplo",
         -- Additionally install npm package vscode-langservers-extracted
