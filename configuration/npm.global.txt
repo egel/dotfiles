@@ -12,3 +12,4 @@ typescript-language-server@latest
 typescript@latest
 vscode-langservers-extracted@latest
 yarn@latest
+pnpm@latest
