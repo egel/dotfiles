@@ -90,6 +90,7 @@ brew "asitop" # monitor CPU, RAM, proceses on screen
 brew "stats" # ui widget showing CPU, RAM in top navigation bar
 brew "mysql-client" # install mysql, mysqldump + other helper programs
 brew "bcrypt" # generate bcrypt passwords localy
+cask "pika" # useful color picker
 
 # Browsers
 cask "google-chrome"
