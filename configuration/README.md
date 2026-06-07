@@ -525,7 +525,7 @@ ln -sf ${PWD}/.mutt/ ${HOME}/.mutt
 ln -sf ${PWD}/.muttrc ${HOME}/.muttrc
 
 # copy template with private variables and adjust
-cp ${PWD}/.configuration/.muttrc.private ${HOME}/.muttrc.private
+cp ${PWD}/configuration/.muttrc.private ${HOME}/.muttrc.private
 ```
 
 ## GPG / PGP
