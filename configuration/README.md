@@ -710,6 +710,13 @@ Install `rustfmt`
 rustup component add rustfmt
 ```
 
+## VSCode
+
+```sh
+# macOS
+ln -sf "${PWD}/configuration/.vscode/settings.json" "${HOME}/Library/Application Support/Code/User/settings.json"
+```
+
 [shortcuts-cheatsheet]: http://bit.ly/1wqcChS
 [weblink-git-lfs]: https://git-lfs.com/
 [weblink-git-delta]: https://github.com/dandavison/delta

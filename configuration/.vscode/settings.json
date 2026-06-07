@@ -1,0 +1,62 @@
+{
+  "workbench.colorTheme": "Gruvbox Dark Medium",
+  "editor.fontSize": 18,
+  "editor.rulers": [80, 100, 120],
+  "editor.fontFamily": "Hack Nerd Font, Hack, Monaco, 'Courier New', monospace",
+  "js/ts.updateImportsOnFileMove.enabled": "always",
+  "workbench.settings.applyToAllProfiles": [],
+  "editor.accessibilitySupport": "off",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "colorize.languages": [
+    "javascript",
+    "typescript",
+    "jsx",
+    "tsx",
+    "css",
+    "scss",
+    "less"
+  ],
+  "[file **/abbreviations.md]": {
+    "editor.formatOnSave": false
+  },
+  "go.formatTool": "goimports",
+  "[go]": {
+    "editor.defaultFormatter": "golang.go",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file",
+    "editor.codeActionsOnSave": {
+      "quickfix.insertSemicolon": "always",
+      "source.organizeImports": "always"
+    }
+  },
+  "[go.mod]": {
+    "editor.defaultFormatter": "golang.go",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file",
+    "editor.codeActionsOnSave": {
+      "quickfix.insertSemicolon": "always",
+      "source.organizeImports": "always"
+    }
+  },
+  "go.toolsManagement.autoUpdate": true,
+  "go.vetOnSave": "package",
+  "cSpell.userWords": ["containerd", "Cybulska", "Maciek", "multicore"],
+  "vim.smartRelativeLine": true,
+  "editor.lineNumbers": "relative",
+  "files.autoSave": "onFocusChange",
+  "editor.wordWrap": "on",
+  "editor.fontWeight": "normal",
+  "editor.codeActionsOnSave": {},
+  "workbench.editor.enablePreview": false,
+  "yaml.schemas": {
+    "file://~/.vscode/extensions/continue.continue-1.2.22-darwin-arm64/config-yaml-schema.json": [
+      ".continue/**/*.yaml"
+    ]
+  },
+  "docker.extension.enableComposeLanguageServer": false,
+  "editor.renderWhitespace": "all",
+  "editor.minimap.renderCharacters": false,
+  "cSpell.checkVSCodeSystemFiles": true,
+  "editor.dropIntoEditor.preferences": [],
+  "editor.formatOnSave": true
+}
