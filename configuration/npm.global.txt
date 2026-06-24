@@ -13,3 +13,5 @@ typescript@latest
 vscode-langservers-extracted@latest
 yarn@latest
 pnpm@latest
+chrome-devtools-mcp@latest
+@playwright/mcp@latest
