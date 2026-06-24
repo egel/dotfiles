@@ -12,12 +12,31 @@
       "npm": "@ai-sdk/openai-compatible",
       "options": {
         "baseURL": "http://127.0.0.1:11434/v1"
-      }
+      },
     }
   },
   "mcp": {
+    // src: https://github.com/ChromeDevTools/chrome-devtools-mcp
     "chrome-devtools": {
       "enabled": true,
-    }
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "chrome-devtools-mcp@latest",
+        "--slim",
+        "--headless"
+      ]
+    },
+    // https://github.com/microsoft/playwright-mcp
+    "playwright": {
+      "enabled": true,
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@playwright/mcp@latest",
+      ]
+    },
   }
 }

@@ -717,6 +717,13 @@ rustup component add rustfmt
 ln -sf "${PWD}/configuration/.vscode/settings.json" "${HOME}/Library/Application Support/Code/User/settings.json"
 ```
 
+## OpenCode
+
+```sh
+# macOS
+ln -sf "${PWD}/configuration/.config/opencode/opencode.jsonc" "${HOME}/.config/opencode/opencode.jsonc"
+```
+
 [shortcuts-cheatsheet]: http://bit.ly/1wqcChS
 [weblink-git-lfs]: https://git-lfs.com/
 [weblink-git-delta]: https://github.com/dandavison/delta
