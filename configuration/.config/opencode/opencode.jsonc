@@ -1,0 +1,23 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "ollama": {
+      // Available extra models to use with Ollama
+      "models": {
+        "glm-4.7-flash": {},
+        "gemma4:26b": {},
+        "qwen3.6:35b": {}
+      },
+      "name": "Ollama",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://127.0.0.1:11434/v1"
+      }
+    }
+  },
+  "mcp": {
+    "chrome-devtools": {
+      "enabled": true,
+    }
+  }
+}
