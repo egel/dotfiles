@@ -19,19 +19,37 @@ This document is meant to explain how to configure available features/programs.
 
 ## zsh
 
+> [!IMPORTANT]
+> To make this project more easy to organize most of configurations use `DOTFILES_DIR` as a reference path.
+> If not having yet your `.zshrc` as you will configure it later, then just export the var with the absolute path to your dotfiles root dir (don't forget to adjust it to your project location). For example like following:
+>
+> ```sh
+> # if not having ~/.zshrc
+> export DOTFILES_DIR="/Users/$USER/privatespace/github.com/egel/dotfiles"'
+>
+> # if you already have ~/.zshrc
+> echo 'export DOTFILES_DIR="/Users/$USER/privatespace/github.com/egel/dotfiles"' >> ~/.zshrc
+> ```
+
 | type | Shell |
 | ---- | ----- |
 
 ```bash
-ln -sf ${PWD}/.zshrc ${HOME}/.zshrc
-ln -sf ${PWD}/.zshenv ${HOME}/.zshenv
-ln -sf ${PWD}/.zprofile ${HOME}/.zprofile
+ln -sf ${DOTFILES_DIR}/configuration/.zshrc ${HOME}/.zshrc
+ln -sf ${DOTFILES_DIR}/configuration/.zshenv ${HOME}/.zshenv
+ln -sf ${DOTFILES_DIR}/configuration/.zprofile ${HOME}/.zprofile
 ```
 
-Install [oh-my-zsh](https://ohmyz.sh/#install)
+Install [oh-my-zsh][weblink-oh-my-zsh]
 
-```
+```sh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+### zsh-autosuggestions
+
+```sh
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 ```
 
 ### shell personal configs
@@ -96,23 +114,23 @@ Git configuration for multiple users (private/personal & work) to conveniently s
 cd configuration
 
 # link main configuration
-ln -sf ${PWD}/.gitconfig ${HOME}/.gitconfig
+ln -sf ${DOTFILES_DIR}/configuration/.gitconfig ${HOME}/.gitconfig
 
 # link git-delta themes
-ln -sf ${PWD}/.git-delta-themes ${HOME}/.git-delta-themes
+ln -sf ${DOTFILES_DIR}/configuration/.git-delta-themes ${HOME}/.git-delta-themes
 
 # copy config for personal/private account (root dir ~/privatespace)
-cp -sf ${PWD}/.gitconfig.private ${HOME}/.gitconfig.private
+cp -sf ${DOTFILES_DIR}/configuration/.gitconfig.private ${HOME}/.gitconfig.private
 # your private projects may need certain custom rules while committing messages
-cp -sf ${PWD}/.gitmessage.private ${HOME}/.gitmessage.private
+cp -sf ${DOTFILES_DIR}/configuration/.gitmessage.private ${HOME}/.gitmessage.private
 
 # copy config for work account (root dir ~/workspace)
-cp -sf ${PWD}/.gitconfig.work ${HOME}/.gitconfig.work
+cp -sf ${DOTFILES_DIR}/configuration/.gitconfig.work ${HOME}/.gitconfig.work
 # some jobs have certain, custom rules while committing messages
-cp -sf ${PWD}/.gitmessage.work
+cp -sf ${DOTFILES_DIR}/configuration/.gitmessage.work
 
 # optional: add global gitignore file to ignore files from any repo
-ln -sf ${PWD}/.gitignore_global ${HOME}/.gitignore_global
+ln -sf ${DOTFILES_DIR}/configuration/.gitignore_global ${HOME}/.gitignore_global
 ```
 
 ## fzf
@@ -125,13 +143,13 @@ Fuzzy finder
 > [!NOTE]
 > Requirements:
 >
-> - oh-my-zsh
+> - [oh-my-zsh][weblink-oh-my-zsh]
 
 ```bash
 # install oh-my-zsh and then
 git clone https://github.com/lincheney/fzf-tab-completion.git ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/fzf-tab-completion
 
-ln -sf ${PWD}/.fzf.zsh ${HOME}/.fzf.zsh
+ln -sf ${DOTFILES_DIR}/configuration/.fzf.zsh ${HOME}/.fzf.zsh
 ```
 
 ## SSH
@@ -205,12 +223,18 @@ chmod 644 ~/.ssh/known_host
 chmod 600 ~/.ssh/config
 ```
 
+Test connection with github.com
+
+```sh
+ssh -vT git@github.com
+```
+
 ## alacritty
 
 fast and simple terminal emulator (currently under test, if I like it)
 
 ```bash
-ln -sf ~/privatespace/github.com/egel/dotfiles/configuration/.config/alacritty ~/.config/alacritty
+ln -sf ${DOTFILES_DIR}/configuration/.config/alacritty ~/.config/alacritty
 ```
 
 ## Golang
@@ -315,7 +339,7 @@ Neovim - <https://github.com/neovim/neovim>
 
 ```bash
 mkdir -p ${HOME}/.config/
-ln -sf ${PWD}/.config/nvim ${HOME}/.config/nvim
+ln -sf ${DOTFILES_DIR}/configuration/.config/nvim ${HOME}/.config/nvim
 ```
 
 - Open nvim and install plugins `:Lazy` ([Lazy nvim](https://github.com/folke/lazy.nvim) package manager)
@@ -339,7 +363,7 @@ Neovide - <https://neovide.dev/config-file.html>
 
 ```bash
 mkdir -p ${HOME}/.config/
-ln -sf ${PWD}/.config/neovide ${HOME}/.config/neovide
+ln -sf ${DOTFILES_DIR}/configuration/.config/neovide ${HOME}/.config/neovide
 ```
 
 ## Ollama
@@ -517,15 +541,12 @@ Console e-mail client
 # install mutt client
 brew install mutt
 
-# enter config dir
-cd configuration
-
 # link config files
-ln -sf ${PWD}/.mutt/ ${HOME}/.mutt
-ln -sf ${PWD}/.muttrc ${HOME}/.muttrc
+ln -sf ${DOTFILES_DIR}/configuration/.mutt/ ${HOME}/.mutt
+ln -sf ${DOTFILES_DIR}/configuration/.muttrc ${HOME}/.muttrc
 
 # copy template with private variables and adjust
-cp ${PWD}/configuration/.muttrc.private ${HOME}/.muttrc.private
+cp ${DOTFILES_DIR}/configuration/.muttrc.private ${HOME}/.muttrc.private
 ```
 
 ## GPG / PGP
@@ -535,9 +556,9 @@ cp ${PWD}/configuration/.muttrc.private ${HOME}/.muttrc.private
 ```bash
 mkdir -p ${HOME}/.gnupg
 
-ln -sf ${PWD}/.gnupg/dirmngr.conf ${HOME}/.gnupg/dirmngr.conf
-ln -sf ${PWD}/.gnupg/gpg-agent.conf ${HOME}/.gnupg/gpg-agent.conf
-ln -sf ${PWD}/.gnupg/gpg.conf ${HOME}/.gnupg/gpg.conf
+ln -sf ${DOTFILES_DIR}/configuration/.gnupg/dirmngr.conf ${HOME}/.gnupg/dirmngr.conf
+ln -sf ${DOTFILES_DIR}/configuration/.gnupg/gpg-agent.conf ${HOME}/.gnupg/gpg-agent.conf
+ln -sf ${DOTFILES_DIR}/configuration/.gnupg/gpg.conf ${HOME}/.gnupg/gpg.conf
 
 # make sure, the directory & contents belong to you:
 chown -R $(whoami) ~/.gnupg/
@@ -712,19 +733,26 @@ rustup component add rustfmt
 
 ## VSCode
 
+Installation:
+
+```sh
+brew install --cask visual-studio-code
+```
+
 ```sh
 # macOS
-ln -sf "${PWD}/configuration/.vscode/settings.json" "${HOME}/Library/Application Support/Code/User/settings.json"
+ln -sf "${DOTFILES_DIR}/configuration/.vscode/settings.json" "${HOME}/Library/Application Support/Code/User/settings.json"
 ```
 
 ## OpenCode
 
 ```sh
 # macOS
-ln -sf "${PWD}/configuration/.config/opencode/opencode.jsonc" "${HOME}/.config/opencode/opencode.jsonc"
+ln -sf "${DOTFILES_DIR}/configuration/.config/opencode/opencode.jsonc" "${HOME}/.config/opencode/opencode.jsonc"
 ```
 
 [shortcuts-cheatsheet]: http://bit.ly/1wqcChS
 [weblink-git-lfs]: https://git-lfs.com/
 [weblink-git-delta]: https://github.com/dandavison/delta
 [weblink-docs-open-webui]: https://docs.openwebui.com/
+[weblink-oh-my-zsh]: https://ohmyz.sh/
