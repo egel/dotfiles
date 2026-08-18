@@ -16,7 +16,8 @@ option_as_alt = "Both"
 
 [font]
 # TIP: Hack Nerd Font have bigger icons, then Hack Nerd Font Mono
-normal = { family = "Hack Nerd Font", style = "Regular" }
+# normal = { family = "Hack Nerd Font", style = "Regular" }
+normal = { family = "FiraCode Nerd Font", style = "Regular" }
 size = 18
 
 [cursor]
