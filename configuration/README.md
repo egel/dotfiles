@@ -111,8 +111,6 @@ Git configuration for multiple users (private/personal & work) to conveniently s
 - optional: global gitignore to ignore
 
 ```bash
-cd configuration
-
 # link main configuration
 ln -sf ${DOTFILES_DIR}/configuration/.gitconfig ${HOME}/.gitconfig
 
@@ -229,9 +227,24 @@ Test connection with github.com
 ssh -vT git@github.com
 ```
 
+## ghostty
+
+fast and simple terminal emulator (currently under tests, if I like it)
+
+```bash
+mkdir -p ~/.config/ghostty # create dir if not exist yet
+ln -sf ${DOTFILES_DIR}/configuration/.config/ghostty/config ~/.config/ghostty/config
+```
+
+Check [docs with available themes](https://ghostty.org/docs/config/reference#theme), and/or execute to preview:
+
+```sh
+ghostty +list-themes
+```
+
 ## alacritty
 
-fast and simple terminal emulator (currently under test, if I like it)
+Alternative terminal, after Ghostty.
 
 ```bash
 ln -sf ${DOTFILES_DIR}/configuration/.config/alacritty ~/.config/alacritty

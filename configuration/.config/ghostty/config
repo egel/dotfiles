@@ -1,0 +1,5 @@
+theme = "Gruvbox Dark"
+font-size = 18
+font-family = Hack Nerd Font
+background-opacity = 0.9
+background-blur = true
