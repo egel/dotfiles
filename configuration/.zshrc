@@ -497,7 +497,9 @@ if [ -n "${IS_EXIST_FZF}" ]; then
           --glob=!**/.vim/plugged/* \
           --glob=!**/.angular/* \
           --glob=!**/venv/* \
-          --glob=!**/.venv/*'
+          --glob=!**/.venv/* \
+          --glob=!**/.vite/* \
+          --glob=!**/.next/*'
   fi
 
   # enable completion for everything
