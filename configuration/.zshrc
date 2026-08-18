@@ -161,7 +161,7 @@ case $(uname -s) in
   Darwin)
     if whence dircolors >/dev/null; then
       eval "$(dircolors -b)"
-      zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+      zstyle ':completion:*:default' list-colors "${(@s.:.)LS_COLORS}"
     else
       export CLICOLOR=1
       zstyle ':completion:*:default' list-colors ''
@@ -170,7 +170,7 @@ case $(uname -s) in
   Linux)
     if [ -d "~/.dircolors" ]; then
       eval $(dircolors ~/.dircolors)
-      zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+      zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
     fi
     ;;
 esac
@@ -420,7 +420,7 @@ fi
 #########################################
 # pyenv
 #########################################
-if [[ $(uname -sm) == "Darwin" ]]; then
+if [[ "$OSTYPE" == "darwin"* ]]; then
   if [ -n "$(command -v pyenv)" ]; then
     eval "$(pyenv init -)"
   else
@@ -518,4 +518,3 @@ else
   echo "Missing $ZSH/oh-my-zsh.sh file."
   echo "-► To install it visit https://ohmyz.sh/#install"
 fi
-
