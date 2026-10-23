@@ -54,7 +54,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 
 ### shell personal configs
 
-(Optional) Sometimes you want to separate some personal configuration from being commited to repo. With the personal configs you can add some configuration that will also be collected but never commited to the repository.
+(Optional) Sometimes you want to separate some personal configuration from being committed to repo. With the personal configs you can add some configuration that will also be collected but never committed to the repository.
 
 > [!TIP]
 > File `.zshrc.private` or `.zshrc.work` are excluded from accidental committing in this repo.
@@ -83,7 +83,7 @@ In case you may need private passwords accessible on the shell level.
 > [!TIP]
 > File `.passwords.private` is excluded from accidental committing in this repo.
 
-> [!DANGER]
+> [!CAUTION]
 > Do not store here any critical passwords!
 
 ```bash
@@ -229,7 +229,9 @@ ssh -vT git@github.com
 
 ## ghostty
 
-fast and simple terminal emulator (currently under tests, if I like it)
+Fast and simple terminal emulator. Best for local development; for connecting to some old servers via ssh sometimes iterm2 could be more compatible.
+
+Get install instructions on <https://ghostty.org/docs/install/binary>
 
 ```bash
 mkdir -p ~/.config/ghostty # create dir if not exist yet
@@ -758,6 +760,8 @@ ln -sf "${DOTFILES_DIR}/configuration/.vscode/settings.json" "${HOME}/Library/Ap
 ```
 
 ## OpenCode
+
+Install `opencode` via official website: <https://opencode.ai/download>
 
 ```sh
 # macOS
