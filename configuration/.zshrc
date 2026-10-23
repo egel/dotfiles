@@ -333,6 +333,17 @@ function updateOpenWebui() {
 }
 
 #########################################
+# Dotfiles NPM Global install
+#########################################
+function installNpmGlobal() {
+    DOTFILES_DIR_NPM_GLOBAL=$DOTFILES_DIR/configuration/npm.global.txt
+    echo "Starting installing NPM packages from DOTFILES_DIR"
+    echo "Current active node: $(node -v)"
+    echo "Source file: ${DOTFILES_DIR_NPM_GLOBAL}"
+    npm install -g $(<$DOTFILES_DIR_NPM_GLOBAL)
+}
+
+#########################################
 # Virtualenvwrapper
 #########################################
 export LC_ALL=en_US.UTF-8
