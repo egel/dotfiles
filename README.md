@@ -21,7 +21,7 @@
 
 ## Configurations
 
-You can find here all available [detailed configurations][docs-configurations] and [assets][docs-assets].
+You can find all available [detailed configurations][docs-configurations] and [assets][docs-assets] here.
 
 - ZSH (aliases)
 - git (modes: private, work)

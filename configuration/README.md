@@ -3,16 +3,16 @@
 This document is meant to explain how to configure available features/programs.
 
 > [!IMPORTANT]
-> All configurations are based on downloaded repository to localhost, and using symlinks connect files from the repository.
+> All configurations are based on a repository downloaded to localhost, and symlinks connect the files from the repository.
 >
 > I prefer this approach as it allows me to quickly update my configuration files when they change and update my main repository.
 >
-> If you prefer to copy files instead due to e.g.: security reasons, feel free to do so.
+> If you prefer to copy files instead (e.g. due to security reasons), feel free to do so.
 
 > [!NOTE]
-> I use custom keybindings for the configuration in this folder. If you're interested see [my keybindings cheatsheet][shortcuts-cheatsheet].
+> I use custom keybindings for the configuration in this folder. If you're interested, see [my keybindings cheatsheet][shortcuts-cheatsheet].
 >
-> In daily work I heavily rely on nvim used inside tmux sessions while using TKL keyboard types, so the configuration has the most effective shortcuts for this particular combination.
+> In daily work I heavily rely on nvim used inside tmux sessions while using a TKL keyboard, so the configuration has the most effective shortcuts for this particular combination.
 
 > [!TIP]
 > To avoid problems during setup, it's much safer to use absolute paths while creating symlinks.
@@ -20,11 +20,11 @@ This document is meant to explain how to configure available features/programs.
 ## zsh
 
 > [!IMPORTANT]
-> To make this project more easy to organize most of configurations use `DOTFILES_DIR` as a reference path.
-> If not having yet your `.zshrc` as you will configure it later, then just export the var with the absolute path to your dotfiles root dir (don't forget to adjust it to your project location). For example like following:
+> To make this project easier to organize, most of the configurations use `DOTFILES_DIR` as a reference path.
+> If you don't yet have your `.zshrc` (as you will configure it later), just export the variable with the absolute path to your dotfiles root dir (don't forget to adjust it to your project location). For example, like the following:
 >
 > ```sh
-> # if not having ~/.zshrc
+> # if you don't have ~/.zshrc yet
 > export DOTFILES_DIR="/Users/$USER/privatespace/github.com/egel/dotfiles"'
 >
 > # if you already have ~/.zshrc
@@ -57,7 +57,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 (Optional) Sometimes you want to separate some personal configuration from being committed to repo. With the personal configs you can add some configuration that will also be collected but never committed to the repository.
 
 > [!TIP]
-> File `.zshrc.private` or `.zshrc.work` are excluded from accidental committing in this repo.
+> Files `.zshrc.private` and `.zshrc.work` are excluded from accidental committing in this repo.
 
 ```
 # private config
@@ -81,7 +81,7 @@ ln -sf ${PWD}/.aliases ${HOME}/.aliases
 In case you may need private passwords accessible on the shell level.
 
 > [!TIP]
-> File `.passwords.private` is excluded from accidental committing in this repo.
+> File `.envpass.private` is excluded from accidental committing in this repo.
 
 > [!CAUTION]
 > Do not store here any critical passwords!
@@ -102,13 +102,13 @@ Requirements:
 - [`git-lfs`][weblink-git-lfs]
 - [`git-delta`][weblink-git-delta]
 
-Git configuration for multiple users (private/personal & work) to conveniently separate your private projects from the work.
+Git configuration for multiple users (private/personal & work) to conveniently separate your private projects from work.
 
 - git large files support
 - multiple git users support
 - large git repository support (see 'maintenance' section in related .gitconfig file)
 - better git diffs using git-delta
-- optional: global gitignore to ignore
+- optional: global gitignore
 
 ```bash
 # link main configuration
@@ -125,7 +125,7 @@ cp -sf ${DOTFILES_DIR}/configuration/.gitmessage.private ${HOME}/.gitmessage.pri
 # copy config for work account (root dir ~/workspace)
 cp -sf ${DOTFILES_DIR}/configuration/.gitconfig.work ${HOME}/.gitconfig.work
 # some jobs have certain, custom rules while committing messages
-cp -sf ${DOTFILES_DIR}/configuration/.gitmessage.work
+cp -sf ${DOTFILES_DIR}/configuration/.gitmessage.work ${HOME}/.gitmessage.work
 
 # optional: add global gitignore file to ignore files from any repo
 ln -sf ${DOTFILES_DIR}/configuration/.gitignore_global ${HOME}/.gitignore_global
@@ -153,7 +153,7 @@ ln -sf ${DOTFILES_DIR}/configuration/.fzf.zsh ${HOME}/.fzf.zsh
 ## SSH
 
 > [!TIP]
-> SSH is generally a very private space. To keep it clean use a protected directory to load your SSH configurations for each personal, or clients/servers, like in the example below:
+> SSH is generally a very private space. To keep it clean, use a protected directory to load your SSH configurations for personal, clients, or servers, like in the example below:
 >
 > - ~/.ssh/config.d/personal
 > - ~/.ssh/config.d/work
@@ -168,7 +168,7 @@ Include config.d/*
 ```
 
 > [!TIP]
-> The sample files in ssh/config.d directory could look like
+> The sample files in the ssh/config.d directory could look like
 >
 > ```init
 > # ~/.ssh/config.d/personal
@@ -194,7 +194,7 @@ Include config.d/*
 > # vi: ft=sshconfig
 > ```
 
-Then if you want to pull and push as some specific user then set the git remote url to desired user. More you can find here [Specify an SSH key for git push for a given domain](https://stackoverflow.com/a/7927828/1977012)
+Then, if you want to pull and push as a specific user, set the git remote URL to the desired user. More information can be found here [Specify an SSH key for git push for a given domain](https://stackoverflow.com/a/7927828/1977012)
 
 ```bash
 # before modification print current remote
@@ -216,7 +216,7 @@ chmod 600 <set manually each file>
 # authorized keys
 chmod 600 ~/.ssh/authorized_keys
 # known hosts
-chmod 644 ~/.ssh/known_host
+chmod 644 ~/.ssh/known_hosts
 # configurations
 chmod 600 ~/.ssh/config
 ```
@@ -229,7 +229,7 @@ ssh -vT git@github.com
 
 ## ghostty
 
-Fast and simple terminal emulator. Best for local development; for connecting to some old servers via ssh sometimes iterm2 could be more compatible.
+Fast and simple terminal emulator. Best for local development; for connecting to some old servers via ssh, sometimes iTerm2 may be more compatible.
 
 Get install instructions on <https://ghostty.org/docs/install/binary>
 
@@ -281,7 +281,7 @@ go telemetry off
 
 ### Alternatively install via brew
 
-If you do not care or use a single `go` version, you can install it via brew, or other package managers.
+If you do not care about versions or use only a single `go` version, you can install it via brew or other package managers.
 I have added a sample configuration below for better reference:
 
 ```bash
@@ -316,7 +316,7 @@ cd ~/Downloads
 wget https://golang.org/dl/go1.25.1.linux-amd64.tar.gz
 sudo tar -C /usr/local -xzf go1.25.1.linux-amd64.tar.gz
 
-# then add to .profile or .zshrc (my .zshrc already have it!)
+# then add to .profile or .zshrc (my .zshrc already has it!)
 echo "export PATH=/usr/local/go/bin:${PATH}" | sudo tee -a $HOME/.profile
 
 source $HOME/.profile
@@ -383,9 +383,9 @@ ln -sf ${DOTFILES_DIR}/configuration/.config/neovide ${HOME}/.config/neovide
 
 ## Ollama
 
-local LLM model.
+Local LLM model.
 
-to work on macOS requires an App from <https://github.com/ollama/ollama>
+To work on macOS, it requires installing the app from <https://github.com/ollama/ollama>
 
 ```bash
 # install ollama
@@ -397,7 +397,7 @@ ollama pull codellama:7b  # nvim is already configured to use this model
 
 ### Open WebUI
 
-to provide nice interface for local LLM models use [Open WebUI][weblink-docs-open-webui].
+To provide a nice interface for local LLM models, use [Open WebUI][weblink-docs-open-webui].
 
 Here is dedicated repository <https://github.com/egel/docker-openwebui> to install and run Open WebUI locally and privately (offline) on your system.
 
@@ -407,7 +407,7 @@ Here is dedicated repository <https://github.com/egel/docker-openwebui> to insta
 | ---- | ----------- |
 
 > [!WARNING]
-> I do not anymore actively plan to work/enhance my vim configuration. I switched to nvim as a daily driver.
+> I no longer actively plan to work on/enhance my vim configuration. I switched to nvim as a daily driver.
 
 ## nvm
 
@@ -418,7 +418,7 @@ Node package manager - <https://github.com/nvm-sh/nvm>
 
 ### npm global packages
 
-If you using different versions of nodes, it might be useful for you to persist the same global packages available when switching to different node versions.
+If you are using different versions of Node, it might be useful to persist the same global packages available when switching between Node versions.
 
 Install my personal list of global npm packages:
 
@@ -455,7 +455,7 @@ $ which yarn
 ```
 
 > [!TIP]
-> If you do not care how, you can install it via brew (info it will be bound to your local node version, possibly the latest). Below simple config for `.zshrc`:
+> If you do not care how, you can install it via brew (it will be bound to your local Node version, possibly the latest). Below is a simple config for `.zshrc`:
 >
 > ```bash
 > #########################################
@@ -474,14 +474,14 @@ Ruby environments - <https://github.com/rbenv/rbenv>
 ```bash
 brew install rbenv
 
-# Display list of all possible versions"
+# Display list of all possible versions
 rbenv install --list
 
 # install (example with 2.7.7)
 rbenv install -v 2.7.7
 rbenv global 2.7.7
 
-# add if not have already in .zshrc
+# add if you don't already have it in .zshrc
 echo 'eval "$(rbenv init -)"' >> ~/.zshrc
 source ~/.zshrc
 
@@ -502,7 +502,7 @@ ruby 2.7.7p221 (2022-11-24 revision 168ec2b1e5) [arm64-darwin22]
 macOS
 
 ```bash
-brew instal pyenv
+brew install pyenv
 ```
 
 Debian 12
@@ -510,7 +510,7 @@ Debian 12
 ```sh
 curl -fsSL https://pyenv.run | bash
 
-# required to when later compile python version from the source
+# required to later compile the Python version from the source
 sudo apt-get install libbz2-dev liblzma-dev
 ```
 
@@ -538,19 +538,19 @@ Python 3.12.11
 #### python global packages
 
 > [!NOTE]
-> When using many different python versions (or switching between them often) there is a need to persist come global packages that serve the need for other programs.
+> When using many different python versions (or switching between them often) there is a need to persist some global packages that serve the needs of other programs.
 >
 > The list below contains some packages that are used by other programs (e.g.: linters, checkers)
 
 ```bash
-python install -r python.global.txt
+pip install -r python.global.txt
 ```
 
 ## mutt
 
 Console e-mail client
 
-> config is for Gmail, if you use a different client please adapt the config
+> config is for Gmail; if you use a different client, please adapt the config
 
 ```bash
 # install mutt client
@@ -591,7 +591,7 @@ find ~/.gnupg -type d -exec chmod 700 {} \;
 gpg --import privatekey
 ```
 
-After importing if you try to sign commits all should work but when you check the repository for `git log --show-signature` then you may see something like:
+After importing, if you try to sign commits, all should work; but when you check the repository with `git log --show-signature`, you may see something like:
 
 ```
 commit 5a0fafb301f549e1277ca3b2fb92a8c141659ea2
@@ -609,7 +609,7 @@ Date:   Wed Sep 4 09:36:32 2024 +0200
 ...
 ```
 
-This tells that if you have your own key it would be good to increase trust level. To do so just edit your key trust level by:
+This means that if you have your own key, it is good to increase the trust level. To do so, edit your key trust level by:
 
 ```bash
 # show keys with full long key-id
@@ -625,7 +625,7 @@ trust
 quit
 ```
 
-Now it you check the signature you should see:
+Now, if you check the signature, you should see:
 
 ```
 commit 5a0fafb301f549e1277ca3b2fb92a8c141659ea2
@@ -643,7 +643,7 @@ Date:   Wed Sep 4 09:36:32 2024 +0200
 
 ### Create new key
 
-> [!TIP] Before creating a new key, you need to disable `no-tty` option from `~/.gnupg/gpg.conf`. This option blocks unwanted creations of new keys. To be safe, enable `no-tty` option backe again after the creation of a new key is completed.
+> [!TIP] Before creating a new key, you need to disable `no-tty` option from `~/.gnupg/gpg.conf`. This option blocks unwanted creations of new keys. To be safe, enable the `no-tty` option back again after the creation of a new key is completed.
 
 > [!TIP] Remember to create a revocation certificate after.
 
@@ -734,11 +734,11 @@ gpg -r johndoe@gmail.com -e ~/.mutt/passwords
 rm ~/.mutt/passwords
 ```
 
-open mutt
+Open mutt.
 
 ## Rust
 
-Install rust <https://rust-lang.org/tools/install/>
+Install Rust via <https://rust-lang.org/tools/install/>
 
 Install `rustfmt`
 
