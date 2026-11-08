@@ -46,6 +46,10 @@ return {
         "astro", -- astro language-server
         "graphql", -- for .graphql files
 
+        -- Installed rust packages via rustup
+        -- @see https://github.com/egel/dotfiles/tree/main/configuration#rust
+        -- "rust-analyzer",
+
         "taplo",
         -- Additionally install npm package vscode-langservers-extracted
         --
