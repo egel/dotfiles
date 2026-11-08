@@ -98,6 +98,10 @@ cask "google-chrome"
 cask "brave-browser"
 cask "firefox"
 
+# IDE / editing
+cask "tree-sitter"
+cask "tree-sitter-cli"
+
 # Tmux
 brew "tmux"
 brew "reattach-to-user-namespace" # for copy from tmux to mac namespace
