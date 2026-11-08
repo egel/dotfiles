@@ -497,20 +497,19 @@ IS_EXIST_RG=$(command -v rg)
 if [ -n "${IS_EXIST_FZF}" ]; then
   # refer rg over ag
   if [ -n "${IS_EXIST_RG}" ]; then
-      export FZF_DEFAULT_COMMAND='rg \
-          --files \
-          --hidden \
-          --glob=!**/node_modules/* \
-          --glob=!**/coverage/* \
-          --glob=!**/dist/* \
-          --glob=!**/.nx/* \
-          --glob=!**/.git/* \
-          --glob=!**/.vim/plugged/* \
-          --glob=!**/.angular/* \
-          --glob=!**/venv/* \
-          --glob=!**/.venv/* \
-          --glob=!**/.vite/* \
-          --glob=!**/.next/*'
+      export FZF_DEFAULT_COMMAND='rg --files --hidden \
+          --glob "!**/node_modules/**" \
+          --glob "!**/coverage/**" \
+          --glob "!**/dist/**" \
+          --glob "!**/.nx/**" \
+          --glob "!**/.git/**" \
+          --glob "!**/.vim/plugged/**" \
+          --glob "!**/.angular/**" \
+          --glob "!**/venv/**" \
+          --glob "!**/.venv/**" \
+          --glob "!**/.vite/**" \
+          --glob "!**/.next/**"'
+      export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
   fi
 
   # enable completion for everything
