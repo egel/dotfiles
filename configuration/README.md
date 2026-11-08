@@ -367,6 +367,15 @@ go install golang.org/x/vuln/cmd/govulncheck@latest
 go install github.com/abenz1267/gomvp@latest
 ```
 
+> [!TIP]
+> To analyze current problems with your neovim configuration use `:checkhealth`
+>
+> If you want get the checkhealth results and save it to the file use:
+>
+> ```sh
+> nvim --headless -c 'checkhealth' -c 'write! /tmp/health.log' -c 'qa!'
+> ```
+
 ## neovide
 
 | type | Text Editor |
@@ -738,12 +747,18 @@ Open mutt.
 
 ## Rust
 
-Install Rust via <https://rust-lang.org/tools/install/>
+Install Rust via <https://rust-lang.org/tools/install/> and update:
 
-Install `rustfmt`
+```sh
+rustup update
+```
+
+Install useful components:
 
 ```sh
 rustup component add rustfmt
+rustup component add rust-src
+rustup component add rust-analyzer
 ```
 
 ## VSCode
