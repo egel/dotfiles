@@ -1,7 +1,7 @@
 return {
-  "williamboman/mason.nvim",
+  "mason-org/mason.nvim",
   dependencies = {
-    "williamboman/mason-lspconfig.nvim",
+    "mason-org/mason-lspconfig.nvim",
     "WhoIsSethDaniel/mason-tool-installer.nvim",
   },
   config = function()
@@ -28,23 +28,23 @@ return {
       ensure_installed = {
         -- LSP
         "angularls",
+        "astro", -- astro language-server
         "bashls",
         "cssls",
         "docker_compose_language_service",
         "dockerls",
         "eslint",
+        "graphql", -- for .graphql files
         "helm_ls",
         "jdtls", -- java lsp
         "lua_ls",
         "pyright",
         "sqlls",
         "stylelint_lsp",
-        "ts_ls",
         "tailwindcss",
+        "ts_ls",
         "yamlls", -- yaml language-server
         "zls",
-        "astro", -- astro language-server
-        "graphql", -- for .graphql files
 
         -- Installed rust packages via rustup
         -- @see https://github.com/egel/dotfiles/tree/main/configuration#rust
@@ -73,6 +73,7 @@ return {
         "prettier",
         "isort", -- python
         "cspell",
+        "tailwindcss-language-server",
 
         -- Linter
         "luacheck",
@@ -80,6 +81,9 @@ return {
         "shellcheck",
         "yamllint",
         "eslint_d", -- node
+        "prettier",
+        "prettierd",
+        "tree-sitter-cli",
 
         -- Formatter
         "beautysh", -- shell
@@ -94,6 +98,8 @@ return {
         "google-java-format", -- java
         "jsonlint", -- json
       },
+      auto_update = false,
+      run_on_start = true,
     })
   end,
 }
