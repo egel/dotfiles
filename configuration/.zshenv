@@ -18,3 +18,4 @@ export SHELL=/bin/zsh
 # It is important to set the environment variable GPG_TTY in your login shell
 export GPG_TTY="$(tty)"
 
+. "$HOME/.cargo/env"
