@@ -1,10 +1,14 @@
 @angular/cli@latest
 @compodoc/compodoc@latest
 @fsouza/prettierd@latest
+@playwright/cli@latest
+@playwright/mcp@latest
+chrome-devtools-mcp@latest
 eslint_d@latest
 jest@latest
 markdownlint@latest
 npm-check-updates@latest
+pnpm@latest
 prettier@latest
 stylelint@latest
 ts-node@latest
@@ -12,6 +16,3 @@ typescript-language-server@latest
 typescript@latest
 vscode-langservers-extracted@latest
 yarn@latest
-pnpm@latest
-chrome-devtools-mcp@latest
-@playwright/mcp@latest
