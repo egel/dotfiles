@@ -1,30 +1,107 @@
 name: checking project
 on:
-    push:
-        branches:
-            - main
-    pull_request:
-        branches:
-            - main
-            - develop
-        types:
-            - opened
-            - synchronize
-            - reopened
-            - ready_for_review
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+      - develop
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
 # Jobs
 jobs:
-    lint-stylua:
-        name: 🔍 Lint Stylua
-        runs-on: ubuntu-latest
-        if: github.event.pull_request.draft == false
-        steps:
-            - name: Pull Repo
-              uses: actions/checkout@v4
-            - uses: JohnnyMorganz/stylua-action@v4
-              with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
-                  version: 2.1.0
-                  args: 'false'
-            - name: Run check
-              run: stylua --config-path=./.stylua.toml --check --verify --output-format=Summary .
+  lint-stylua:
+    name: 🔍 Lint Stylua
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    steps:
+      - name: Pull Repo
+        uses: actions/checkout@v4
+      - uses: JohnnyMorganz/stylua-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: 2.1.0
+          args: 'false'
+      - name: Run check
+        run: stylua --config-path=./.stylua.toml --check --verify --output-format=Summary .
+
+  lint-shell:
+    name: 🐚 Lint Shell
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    steps:
+      - name: Pull Repo
+        uses: actions/checkout@v4
+      - name: Install shfmt
+        run: go install mvdan.cc/sh/v3/cmd/shfmt@v3.14.1
+      - name: Run shellcheck
+        run: |
+          mapfile -t files < <(git ls-files '*.sh')
+          shellcheck "${files[@]}"
+      - name: Run shfmt
+        run: |
+          GOPATH_BIN="$(go env GOPATH)/bin"
+          export PATH="$GOPATH_BIN:$PATH"
+          mapfile -t files < <(git ls-files '*.sh')
+          shfmt -d -i 2 -ci "${files[@]}"
+
+  lint-yaml:
+    name: 📄 Lint YAML
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    steps:
+      - name: Pull Repo
+        uses: actions/checkout@v4
+      - name: Install yamllint
+        run: pipx install yamllint
+      - name: Run yamllint
+        run: |
+          mapfile -t files < <(git ls-files '*.yml' '*.yaml')
+          yamllint "${files[@]}"
+
+  lint-prettier:
+    name: 💅 Lint Prettier
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    steps:
+      - name: Pull Repo
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Run prettier check
+        run: npm run lint:prettier
+
+  lint-workflows:
+    name: 🤖 Lint GitHub Workflows
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    steps:
+      - name: Pull Repo
+        uses: actions/checkout@v4
+      - name: Run actionlint
+        uses: rhysd/actionlint-action@v1
+        with:
+          args: -color
+
+  secrets:
+    name: 🔐 Detect Secrets
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    steps:
+      - name: Pull Repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
