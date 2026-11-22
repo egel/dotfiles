@@ -140,9 +140,6 @@ vim.diagnostic.config({
     end,
   },
   float = true,
-  jump = {
-    float = true,
-  },
 })
 -- override theme's floating window background color to be same as in terminal
 vim.cmd("autocmd ColorScheme * highlight! link FloatBorder Normal")
