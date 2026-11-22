@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SESSION="dotfiles"
-FOLDER=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd ) # directory of this file
+FOLDER=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd) # directory of this file
 
 #create detached session named $SESSION
 tmux new-session -d -s $SESSION
