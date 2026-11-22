@@ -3,7 +3,7 @@
 # SC1091: Not following: (error message here)
 # SC2034: foo appears unused. Verify it or export it
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 _dotfiles_program="$DIR/../dotfiles"
 
 test_print_version() {

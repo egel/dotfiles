@@ -3,7 +3,7 @@
 # SOLARIZED color values
 # ---------------------------------------------------------------------
 # Download palettes and files from: http://ethanschoonover.com/solarized
-# 
+#
 # SOLARIZED HEX     16/8 TERMCOL  XTERM/HEX   L*A*B      RGB         HSB
 # --------- ------- ---- -------  ----------- ---------- ----------- -----------
 # base03    #002b36  8/4 brblack  234 #1c1c1c 15 -12 -12   0  43  54 193 100  21
@@ -23,7 +23,7 @@
 # cyan      #2aa198  6/6 cyan      37 #00afaf 60 -35 -05  42 161 152 175  74  63
 # green     #859900  2/2 green     64 #5f8700 60 -20  65 133 153   0  68 100  60
 
-cat > palette_dark.tmp <<SETPALETTEDARK
+cat >palette_dark.tmp <<SETPALETTEDARK
 J_base03        ,color234        ,brightblack     ,
 J_base02        ,color235        ,black           ,
 J_base01        ,color240        ,brightgreen     ,
@@ -45,7 +45,7 @@ J_fg            ,color244        ,default         ,
 J_statusfg      ,color241        ,brightyellow    ,
 J_statusbg      ,color235        ,black           ,
 SETPALETTEDARK
-cat > palette_light.tmp <<SETPALETTELIGHT
+cat >palette_light.tmp <<SETPALETTELIGHT
 J_base3         ,color233        ,brightblack     ,
 J_base2         ,color234        ,black           ,
 J_base1         ,color239        ,brightgreen     ,
@@ -77,13 +77,13 @@ rm "$MUTTTARGET-light-256$MUTTSUFFIX"
 rm "$MUTTTARGET-light-16$MUTTSUFFIX"
 
 awk 'NR==FNR {a[$1]=$2;next} {for ( i in a) gsub(i,a[i])}1' FS="," \
-    palette_dark.tmp $MUTTSOURCE > "$MUTTTARGET-dark-256$MUTTSUFFIX"
+  palette_dark.tmp $MUTTSOURCE >"$MUTTTARGET-dark-256$MUTTSUFFIX"
 awk 'NR==FNR {a[$1]=$3;next} {for ( i in a) gsub(i,a[i])}1' FS="," \
-    palette_dark.tmp $MUTTSOURCE > "$MUTTTARGET-dark-16$MUTTSUFFIX"
+  palette_dark.tmp $MUTTSOURCE >"$MUTTTARGET-dark-16$MUTTSUFFIX"
 awk 'NR==FNR {a[$1]=$2;next} {for ( i in a) gsub(i,a[i])}1' FS="," \
-    palette_light.tmp $MUTTSOURCE > "$MUTTTARGET-light-256$MUTTSUFFIX"
+  palette_light.tmp $MUTTSOURCE >"$MUTTTARGET-light-256$MUTTSUFFIX"
 awk 'NR==FNR {a[$1]=$3;next} {for ( i in a) gsub(i,a[i])}1' FS="," \
-    palette_light.tmp $MUTTSOURCE > "$MUTTTARGET-light-16$MUTTSUFFIX"
+  palette_light.tmp $MUTTSOURCE >"$MUTTTARGET-light-16$MUTTSUFFIX"
 
 rm palette_light.tmp
 rm palette_dark.tmp

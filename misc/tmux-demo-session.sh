@@ -20,9 +20,18 @@ DIR="${DOTFILES_DIR:-$HOME}"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --attach) ATTACH=1; shift ;;
-    --name) SESSION="$2"; shift 2 ;;
-    --dir) DIR="$2"; shift 2 ;;
+    --attach)
+      ATTACH=1
+      shift
+      ;;
+    --name)
+      SESSION="$2"
+      shift 2
+      ;;
+    --dir)
+      DIR="$2"
+      shift 2
+      ;;
     *)
       echo "unknown option: $1" >&2
       exit 1
