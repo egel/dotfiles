@@ -2,6 +2,14 @@
 --
 vim.opt.encoding = "UTF-8"
 
+-- Disable unused remote providers (no plugins use them). This silences the
+-- `:checkhealth vim.provider` warnings and avoids needless executable lookups.
+--
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_python3_provider = 0
+
 -- window-scoped options
 --
 vim.wo.colorcolumn = "80,120"
