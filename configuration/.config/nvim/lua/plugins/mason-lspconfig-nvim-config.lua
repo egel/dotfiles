@@ -62,6 +62,11 @@ return {
         -- Formatter
       },
       automatic_installation = false,
+
+      -- Disable mason-lspconfig's automatic enabling: servers are defined and
+      -- enabled explicitly in nvim-lspconfig-config.lua. Enabling here would
+      -- activate servers before their `vim.lsp.config()` exists.
+      automatic_enable = false,
     })
 
     local mason_tool_installer = require("mason-tool-installer")
