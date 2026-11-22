@@ -73,7 +73,7 @@ return {
 
     mason_tool_installer.setup({
       ensure_installed = {
-        -- LSP
+        -- Formatter
         "prettierd",
         "prettier",
         "isort", -- python
@@ -86,8 +86,6 @@ return {
         "shellcheck",
         "yamllint",
         "eslint_d", -- node
-        "prettier",
-        "prettierd",
         "tree-sitter-cli",
 
         -- Formatter
