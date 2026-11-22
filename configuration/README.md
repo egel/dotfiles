@@ -370,6 +370,8 @@ go install github.com/abenz1267/gomvp@latest
 > [!TIP]
 > To analyze current problems with your neovim configuration use `:checkhealth`
 >
+> The report includes the list of deprecations (deprecated APIs/options/plugins): a quick way to see what needs updating after upgrading neovim or plugins.
+>
 > If you want get the checkhealth results and save it to the file use:
 >
 > ```sh
