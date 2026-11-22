@@ -1,6 +1,6 @@
 return {
   "rcarriga/nvim-notify",
-  version = "*",
+  version = false, -- track master: upstream vim.validate deprecation fix is not tagged yet
   dependencies = {},
   config = function(_)
     local notify = require("notify")
