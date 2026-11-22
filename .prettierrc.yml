@@ -14,3 +14,8 @@ overrides:
       - 'package.json'
     options:
       tabWidth: 2
+  - files:
+      # markdown uses 4-space indentation (matches .editorconfig and vim ftplugin)
+      - '*.md'
+    options:
+      tabWidth: 4
