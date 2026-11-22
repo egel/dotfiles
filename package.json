@@ -10,6 +10,8 @@
     "format:prettier": "prettier --write .",
     "lint:prettier": "prettier --check .",
     "lint:stylua": "stylua --config-path=./.stylua.toml --check --verify --output-format=Summary .",
+    "lint:shell": "shellcheck $(git ls-files '*.sh') && shfmt -d -i 2 -ci $(git ls-files '*.sh')",
+    "lint:yaml": "yamllint $(git ls-files '*.yml' '*.yaml')",
     "upgrade-list": "npx npm-check-updates"
   },
   "devDependencies": {
