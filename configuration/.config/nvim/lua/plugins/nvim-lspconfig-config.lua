@@ -93,130 +93,126 @@ return {
     -- setup languages
     -- ##################################
     --
+    -- Declarative server list: every server installed via mason gets an
+    -- explicit `vim.lsp.config()` + `vim.lsp.enable()` here, which also
+    -- silences the "'config' config not found" health warnings.
+    -- Config reference: <https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md>
+    local servers = {
+      -- Docker
+      dockerls = {},
+      docker_compose_language_service = {},
 
-    -- Docker
-    vim.lsp.config("dockerls", {})
-    vim.lsp.enable("dockerls")
-
-    -- GoLang
-    --
-    vim.lsp.config("gopls", {
-      cmd = { "gopls" },
-      -- on_attach = on_attach,
-      -- capabilities = capabilities,
-      settings = {
-        gopls = {
-          experimentalPostfixCompletions = true,
-          analyses = {
-            unusedparams = true,
-            shadow = true,
+      -- GoLang
+      gopls = {
+        cmd = { "gopls" },
+        -- on_attach = on_attach,
+        -- capabilities = capabilities,
+        settings = {
+          gopls = {
+            experimentalPostfixCompletions = true,
+            analyses = {
+              unusedparams = true,
+              shadow = true,
+            },
+            staticcheck = true,
           },
-          staticcheck = true,
+        },
+        init_options = {
+          usePlaceholders = true,
         },
       },
-      init_options = {
-        usePlaceholders = true,
+
+      -- SQL
+      sqlls = {},
+
+      -- JSON / TOML
+      jsonls = {},
+      taplo = {},
+
+      -- Python
+      pyright = {
+        cmd = { "pyright" }, -- installed from :Mason
       },
-    })
-    vim.lsp.enable("gopls")
 
-    -- SQL
-    --
-    vim.lsp.config("sqlls", {})
-    vim.lsp.enable("sqlls")
+      -- TypeScript / JavaScript
+      ts_ls = {
+        -- installed from :Mason
+      },
+      eslint = {},
 
-    -- JSON
-    --
-    vim.lsp.config("jsonls", {})
-    vim.lsp.enable("jsonls")
+      -- CSS
+      cssls = {
+        -- cmd = { "vscode-html-languageservice", "--stdio" },
+      },
+      stylelint_lsp = {},
 
-    -- setup lsp for Python
-    --
-    vim.lsp.config("pyright", {
-      cmd = { "pyright" }, -- installed from :Mason
-    })
-    vim.lsp.enable("pyright")
+      -- HTML (css + javascript)
+      tailwindcss = {
+        --cmd = { "vscode-html-languageservice", "--stdio" },
+      },
+      html = {
+        --cmd = { "vscode-html-languageservice", "--stdio" },
+      },
 
-    -- TypeScript
-    --
-    vim.lsp.config("ts_ls", {
-      -- installed from :Mason
-    })
-    vim.lsp.enable("ts_ls")
+      -- Angular
+      angularls = {},
 
-    -- CSS
-    --
-    vim.lsp.config("cssls", {
-      -- cmd = { "vscode-html-languageservice", "--stdio" },
-    })
-    vim.lsp.enable("cssls")
+      -- Astro
+      astro = {},
 
-    -- HTML (css + javascript)
-    --
-    vim.lsp.config("tailwindcss", {
-      --cmd = { "vscode-html-languageservice", "--stdio" },
-    })
-    vim.lsp.enable("tailwindcss")
+      -- GraphQL (.graphql files)
+      graphql = {},
 
-    -- HTML (css + javascript)
-    --
-    vim.lsp.config("html", {
-      --cmd = { "vscode-html-languageservice", "--stdio" },
-    })
-    vim.lsp.enable("html")
+      -- Shell / Bash
+      bashls = {},
 
-    -- Angular
-    --
-    -- nvim_lsp["angularls", = {})
-
-    -- Shell / Bash
-    --
-    vim.lsp.config("bashls", {})
-    vim.lsp.enable("bashls")
-
-    -- Lua
-    --
-    vim.lsp.config("lua_ls", {
-      -- cmd = { "lua-language-server" },
-      settings = {
-        Lua = {
-          runtime = {
-            -- Tell the language server which version of Lua you're using
-            -- (most likely LuaJIT in the case of Neovim)
-            version = "LuaJIT",
-          },
-          diagnostics = {
-            -- Get the language server to recognize the `vim` global
-            globals = {
-              "vim",
-              "require",
+      -- Lua
+      lua_ls = {
+        -- cmd = { "lua-language-server" },
+        settings = {
+          Lua = {
+            runtime = {
+              -- Tell the language server which version of Lua you're using
+              -- (most likely LuaJIT in the case of Neovim)
+              version = "LuaJIT",
             },
-            disable = {
-              -- NOTE: toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              "missing-fields",
+            diagnostics = {
+              -- Get the language server to recognize the `vim` global
+              globals = {
+                "vim",
+                "require",
+              },
+              disable = {
+                -- NOTE: toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+                "missing-fields",
+              },
             },
-          },
-          workspace = {
-            -- Make the server aware of Neovim runtime files
-            library = vim.api.nvim_get_runtime_file("", true),
-          },
-          -- Do not send telemetry data containing a randomized but unique identifier
-          telemetry = {
-            enable = false,
+            workspace = {
+              -- Make the server aware of Neovim runtime files
+              library = vim.api.nvim_get_runtime_file("", true),
+            },
+            -- Do not send telemetry data containing a randomized but unique identifier
+            telemetry = {
+              enable = false,
+            },
           },
         },
       },
-    })
-    vim.lsp.enable("luals")
 
-    -- Zig
-    --
-    vim.lsp.config("zls", {})
-    vim.lsp.enable("zls")
+      -- Zig
+      zls = {},
 
-    -- java
-    --
-    vim.lsp.config("jdtls", {})
-    vim.lsp.enable("jdtls")
+      -- Java
+      jdtls = {},
+
+      -- YAML / Helm
+      yamlls = {},
+      helm_ls = {},
+    }
+
+    for server, server_config in pairs(servers) do
+      vim.lsp.config(server, server_config)
+      vim.lsp.enable(server)
+    end
   end,
 }
