@@ -485,6 +485,12 @@ export PATH="$HOME/go/bin:$GOPATH/bin:$PATH"
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
+
+#########################################
+# LM Studio CLI (lms)
+#########################################
+export PATH="$PATH:$HOME/.lmstudio/bin"
+
 #########################################
 # fzf (fuzzy files finder)
 #########################################
