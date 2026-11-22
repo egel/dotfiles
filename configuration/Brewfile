@@ -70,6 +70,7 @@ brew "podman"
 # Productivity
 brew "ansible"
 brew "sshpass"
+cask "hiddenbar" # hides try-icons in system
 cask "yed" # diagramming editor
 cask "amethyst"
 cask "dbeaver-community" # sql editor
