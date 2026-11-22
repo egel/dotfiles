@@ -1,4 +1,4 @@
-# Demo / screenshot setup
+# Demo screenshot setup
 
 Helpers to prepare a clean, beautiful tmux stage for taking screenshots
 (for example the one used in the root `README.md`).
@@ -13,19 +13,6 @@ Run it via the `DOTFILES_DIR` variable (exported by `.zshrc`):
 ```sh
 # create (or recreate) the session and attach to it
 ${DOTFILES_DIR}/misc/tmux-demo-session.sh --attach
-```
-
-### Optional: make it available on `$PATH`
-
-To run it as a plain command (`tmux-demo-session.sh --attach`), symlink it
-into a directory on your `$PATH`, for example `/usr/local/bin`:
-
-```sh
-# one-time setup on a new laptop
-ln -sf ${DOTFILES_DIR}/misc/tmux-demo-session.sh ${HOME}/.dotfiles-misc-tmux-demo-session
-
-# then simply run
-~/.dotfiles-misc-tmux-demo-session --attach
 ```
 
 Options:
@@ -47,39 +34,38 @@ The layout and pane contents are defined in one place: edit the
 `tmux split-window` / `tmux send-keys` lines at the bottom of the script to
 change what the demo shows.
 
-## Legacy: bin/extras/tmux_screenshot.sh
+## Optimize the screenshot with bir
 
-The original helper `bin/extras/tmux_screenshot.sh` builds a demo tmux session
-ready to be captured:
+Once you have the raw screenshot (macOS saves it as a heavy PNG), shrink it
+with [bir](https://github.com/egel/bir), my Bulk Image Resizer. It is a single
+self-contained Rust binary with ImageMagick baked in, so nothing else to
+install.
 
-- creates a detached session named `dotfiles`
-- splits the window into 4 panes
-- fills each pane with demo content:
-  - pane 0: runs `shell_colors.sh` (terminal color palette)
-  - pane 1: `git lg` log output
-  - pane 2: file listing (`ls -A`) of the dotfiles directory
-  - pane 3: opens `README.md` in vim
-- attaches to the session so you can take a screenshot of the window
-
-Usage:
+Install it once with cargo:
 
 ```sh
-bin/extras/tmux_screenshot.sh
+cargo install --git https://github.com/egel/bir
 ```
 
-Then capture the tmux window with your usual macOS screenshot tool
-(`Cmd+Shift+4`, then `Space` to capture the window).
-
-Notes:
-
-- `bin/` is deprecated, so this script is a legacy one-off helper. Prefer
-  `misc/tmux-demo-session.sh` on new machines.
-- The script expects `shell_colors.sh` to sit next to it in `bin/extras/`.
-- To reuse the stage later, the session stays alive after detaching:
+Then convert the screenshot to AVIF, which keeps the terminal text sharp while
+making the file tiny, perfect for a README:
 
 ```sh
-tmux attach -t dotfiles
+# single file, longest side 1600 px, quality 60
+bir screenshot.png -r 1600 -f avif -q 60
+
+# outputs land next to the source as screenshot_x1600.avif
 ```
+
+If you keep all demo screenshots in a folder, convert the whole folder at once:
+
+```sh
+bir ./screenshots -r 1600 -f avif -q 60 -o ./ready
+```
+
+AVIF encodes a bit slower than WebP but compresses much better and tolerates
+lower quality well, so `-q 60` is a good starting point. Re-running is safe:
+previous outputs are detected and skipped.
 
 ## Prepare the macOS desktop for a clean demo
 
