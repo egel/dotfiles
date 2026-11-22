@@ -5,19 +5,105 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased][unreleased]
+> The Changelog is created using [changelog cli](https://github.com/egel/changelog).
+
+## [unreleased]
+
+## [3.2.0] - 2026-11-22
 
 ### Added
 
+- **vim**: use 4 space for markdown files
+- **nvim**:
+    - update colorizer and notify plugins
+    - update and sync plugins
+    - temp disable remote providers
+    - fix deprecated warnings and enable remaining lsp servers
+    - update plugins
+    - remove deprecated diagnostic mappings
+    - remove deprecated jump.float
+    - improve mason and treesitter config for nvim v0.12
+    - update plugins
+    - update spells for en
+    - add config for notify plugin
+    - add lsp server for graphql files
+    - update barbar dependency to ^1.9.1
+    - add support for typeahead code hints with local llms
+    - add rounded borders to windows
+    - reduce window transparency
+    - add new mapping to open syntax doc strings with K words
+    - remove deprecated goto_next, goto_prev
+    - add neovide configuration
+    - add astro lsp and treesitter syntax
+    - update packages
+- **zsh**:
+    - add lmstudio config
+    - add cargo env
+    - add new function installNpmGlobal
+    - add few alias for quicker listing
+    - add zsh auto-suggestions
+    - add base64 encode/decode for plain text and JSON
+    - add personal and work zshrc config
+    - remove duplicated aliases
+- **git**: add autoSetupRemote enabled
+- **opencode**: update configuration for opencode v2
+- **tmux**:
+    - change from xterm to screen
+    - add tmux resurrect plugin
+- **brew**:
+    - update installing rustfmt via rustup instead vim mason
+    - add mactop
+    - add bcrypt to standard install
+    - add rsync to default install
+- **npm**: add prettierd to global packages
+- **assets**: add new fonts Incosolata, FiraCode, FiraMono; update Hack
+- **brew,zsh**: add mysql-client for macOS
+- **go**: add documentation to install go global packages
+- **lint**: reduce default tab width to 2
+- add script for shellcheck and yamllint
+- update prettierrc for markdown files
+- update yaml files
+- add github lint workflow
+- update readme with demo screenshot
+- add hiddenbar to default apps
+- add playwright and pnpm latest to global packages
+- add tree-sitter and cli
+- add ghostty config
+- exclude .next & .vite via glob search
+- export DOTFILES_DIR for better configuration
+- change font to fira
+- add mcp servers for chrome and playwright
+- add mcp servers to opencode
+- add opencode config
+- add opentofu to base programs
+- add pika color picker
+- add config for vscode
+- add pnpm to base npm globally installed packages
+
 ### Changed
 
-### Deprecated
-
-### Removed
+- **nvim**: remove duplicated formatters
+- **zsh**: group related elements and improve formatting
+- fix incorrect spacings
+- remove travis
 
 ### Fixed
 
-### Security
+- **fzf**: correct excluding dirs while search for ctrl+t
+- **zsh**:
+    - correct loading llvm config depend on macOS or linux
+    - sourcing zshrc in debian
+    - correct zshrc to work with debian 12
+- shellcheck errors
+- actionlint for validating workflows
+- update and remove deprecated packages
+- improve treesitter config to properly display syntax highlight:
+- improve code after shellcheck
+- incorrect path for mutt config
+
+### Uncategorized
+
+- improve configuration setup
 
 ## [3.1.0] - 2025-09-07
 
@@ -168,7 +254,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - typos in configuration readme
 - update paths to be unified
 
-## [v3.0.0] - 2024-06-02
+## [3.0.0] - 2024-06-02
 
 # Features
 
@@ -814,7 +900,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## 1.1.0 - 2015-05-18
 
-[unreleased]: https://github.com/egel/dotfiles/compare/v2.5.0...HEAD
+[unreleased]: https://github.com/egel/dotfiles/compare/v3.2.0...HEAD
+[3.2.0]: https://github.com/egel/dotfiles/compare/v3.1.0...v3.2.0
+[3.1.0]: https://github.com/egel/dotfiles/compare/v3.0.0...v3.1.0
+[3.0.0]: https://github.com/egel/dotfiles/compare/v2.5.0...v3.0.0
 [2.5.0]: https://github.com/egel/dotfiles/compare/v2.4.0...v2.5.0
 [2.4.0]: https://github.com/egel/dotfiles/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/egel/dotfiles/compare/v2.2.3...v2.3.0
