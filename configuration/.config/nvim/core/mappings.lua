@@ -157,28 +157,9 @@ vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
     vim.diagnostic.open_float(nil, { focus = false, scope = "cursor" })
   end,
 })
--- vim.cmd([[
--- autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})
--- ]])
-
--- Go to next diagnostic warning/error (by default it use key: ]d -> next, [d <- previous)
+-- Go to next/previous diagnostic uses Nvim's built-in default keymaps:
+-- ]d -> next diagnostic, [d -> previous diagnostic (both open the float)
 --
--- keymap.set("n", "]d", function()
--- vim.diagnostic.jump({ count = 1, float = true })
--- end, {
--- desc = "Go to next [d]iagnostic message",
--- })
--- keymap.set("n", "[d", function()
--- vim.diagnostic.jump({ count = -1, float = true })
--- end, {
--- desc = "Go to previous [d]iagnostic message",
--- })
--- keymap.set("n", "]d", vim.diagnostic.goto_next, {
--- desc = "Go to next [d]iagnostic message",
--- })
--- keymap.set("n", "[d", vim.diagnostic.goto_prev, {
--- desc = "Go to previous [d]iagnostic message",
--- })
 keymap.set("n", "<leader>e", vim.diagnostic.open_float, {
   desc = "Show diagnostic [E]rror messages",
   noremap = true,
