@@ -88,7 +88,7 @@ jobs:
       - name: Pull Repo
         uses: actions/checkout@v4
       - name: Run actionlint
-        uses: rhysd/actionlint-action@v1
+        uses: rhysd/actionlint@v1.6.27
         with:
           args: -color
 
